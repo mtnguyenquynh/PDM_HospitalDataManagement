@@ -69,9 +69,7 @@ public class TreatmentCode {
 
     public static void Display() {
         System.out.println("Display the pool of treatment code.");
-        for (String key : Pool.keySet()) {
-            System.out.println(key + ": " + Pool.get(key));
-        }
+        for (String key : Pool.keySet()) { System.out.println(key + " :  " + Pool.get(key)); }
     }
 
 }
