@@ -1,5 +1,7 @@
 package Treatment;
 import java.util.*;
+import java.nio.*;
+import java.io.*;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -28,20 +30,28 @@ public class TreatmentCode {
     // The pool here is a collection of key-value pairs, where the key is the code, 
     // and the value is the simple description found describing the code.
     // The key is a fixed-length 10-valued string (8 digits, separated by 2 dashes), and the value is a string.
+    // The argument `capacity` is the initial capacity of the pool, 
+    // the argument `loadFactor` controls a tradeoff between wasted space and the need for 
+    // rehash operations, which are time-consuming.
     private final static int capacity = 1000;
     private final static float loadFactor = (float) 0.75f;
     private final static Hashtable<String, String> Pool = new Hashtable<String, String>(capacity, loadFactor);
+    
+    // These two directory are the saved configuration of all treatment codes. 
+    private final static String MainJsonDirectory = "src/Treatment/TreatmentCode.json";
+    private final static String SafeJsonDirectory = "src/Treatment/TreatmentCode.json";
+
 
     public static void main(String[] args) {
         if (TreatmentCode.GetNumberOfCode() == 0) {
-            TreatmentCode.DeclareTreatmentCodePool();
+            TreatmentCode.InitializeTreatmentCodePool();
         }
 
     } 
     
     // ---------------------------------------------------------------------------------------------------------------------
     // Pool declaration
-    public static void DeclareTreatmentCodePool() {
+    public static void InitializeTreatmentCodePool() {
         System.out.println("----------------------------------------------------------------------------------");
         System.out.println("The pool of treatment code is generated once only at the beginning of the program.");
         
@@ -53,6 +63,37 @@ public class TreatmentCode {
         System.out.println("The pool of treatment code is finished execution.");
         System.out.println("----------------------------------------------------------------------------------");
     } 
+
+    public static void LoadJsonDatabase() {
+        File json_data = new File(TreatmentCode.MainJsonDirectory); 
+        if (json_data.exists()) {
+            System.out.println("----------------------------------------------------------------------------------");
+            System.out.println("The treatment code database is loaded from the file: " + TreatmentCode.MainJsonDirectory);
+            System.out.println("----------------------------------------------------------------------------------");
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(json_data));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] line_split = line.split(":");
+                    String code = line_split[0];
+                    String description = line_split[1];
+                    Pool.put(code, description);
+                }
+                br.close();
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        } 
+            
+
+
+        else {
+            System.out.println("----------------------------------------------------------------------------------");
+            System.out.println("The treatment code database is not found, and will be created.");
+            System.out.println("----------------------------------------------------------------------------------");
+            TreatmentCode.InitializeTreatmentCodePool();
+        }
+    }
     
     public static boolean containsKey(String code) { return Pool.containsKey(code); }
 
@@ -63,9 +104,7 @@ public class TreatmentCode {
     public static Hashtable<String, String> GetPool() { return Pool; }
 
     public static int GetCapacity() { return capacity; }
-
     public static float GetPreloadFactor() { return loadFactor; }
-    
     public static int GetNumberOfCode() { return Pool.size(); }
 
     public static void Display() {
