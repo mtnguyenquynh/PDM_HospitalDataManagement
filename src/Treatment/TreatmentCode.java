@@ -45,9 +45,10 @@ public class TreatmentCode {
         System.out.println("----------------------------------------------------------------------------------");
         System.out.println("The pool of treatment code is generated once only at the beginning of the program.");
         
-        Pool.put("00-00-0000", "Empty Treatment");
+        Pool.put("00-00-0000", "Empty treatment");
         Pool.put("00-00-0001", "X-rays");
-        Pool.put("00-00-0002", "X-rays");
+        Pool.put("00-00-0002", "Blood Test");
+        Pool.put("00-00-0003", "Surgery");
         
         System.out.println("The pool of treatment code is finished execution.");
         System.out.println("----------------------------------------------------------------------------------");
