@@ -12,15 +12,15 @@ import java.util.*;
 **/
 
 /**
-* This file described an implicit set of treatment codes, where 
-* we declared the definition of the our treatment record.
-* We can add new treatment codes in this file, and then we can
-* 
-* See references:
-* - https://www.tutorialspoint.com/java/java_enum_class.htm
-* - https://www.geeksforgeeks.org/differences-between-hashmap-and-hashtable-in-java/
-* - https://www.geeksforgeeks.org/hashtable-in-java/
-* - https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Hashtable.html 
+ * This file described an implicit set of treatment codes, where 
+ * we declared the definition of the our treatment record.
+ * We can add new treatment codes in this file, and then update it
+ * but it is another story.
+ * See references:
+ * - https://www.tutorialspoint.com/java/java_enum_class.htm
+ * - https://www.geeksforgeeks.org/differences-between-hashmap-and-hashtable-in-java/
+ * - https://www.geeksforgeeks.org/hashtable-in-java/
+ * - https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Hashtable.html 
 **/
 
 
