@@ -27,10 +27,9 @@ import java.util.*;
 public class TreatmentCode {
     // The pool here is a collection of key-value pairs, where the key is the code, 
     // and the value is the simple description found describing the code.
-    // The key is a fixed-length 10-valued string (8 digits, separated by 3 dashes), and the value is a string.
+    // The key is a fixed-length 10-valued string (8 digits, separated by 2 dashes), and the value is a string.
     private final static int capacity = 1000;
     private final static float loadFactor = (float) 0.75f;
-
     private final static Hashtable<String, String> Pool = new Hashtable<String, String>(capacity, loadFactor);
 
     public static void main(String[] args) {
@@ -39,6 +38,7 @@ public class TreatmentCode {
         }
 
     } 
+    
     // ---------------------------------------------------------------------------------------------------------------------
     // Pool declaration
     public static void DeclareTreatmentCodePool() {
@@ -56,6 +56,7 @@ public class TreatmentCode {
     
     public static boolean containsKey(String code) { return Pool.containsKey(code); }
 
+    public static boolean IsContainedThisCode(String code) { return TreatmentCode.containsKey(code); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter Function Only
