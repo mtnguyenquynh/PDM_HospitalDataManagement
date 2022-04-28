@@ -26,9 +26,15 @@ The project is protected under the BSD-3 license, which can be found under the r
    - ...
 
 
-References: 
+Programming References: 
 1) https://www.w3schools.com/java/
 2) https://howtodoinjava.com/java/library/json-simple-read-write-json-examples/
 3) https://www.loggly.com/ultimate-guide/java-logging-basics/
+
+
+Content References:
+1) https://www.vedantu.com/biology/hospital
+2) https://calhospitalcompare.org/learn/hospitals/choosing-a-hospital/consider-other-hospital-features/
+3) https://www.providencehealthcare.org/professionalpractice
 
  
