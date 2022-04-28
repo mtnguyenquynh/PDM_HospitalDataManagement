@@ -83,6 +83,8 @@ public class TreatmentCode {
             } catch (IOException e) {
                 System.out.println("Error: " + e.getMessage());
             }
+            System.out.println("----------------------------------------------------------------------------------");
+            return ;
         } 
             
 
@@ -95,9 +97,9 @@ public class TreatmentCode {
         }
     }
     
-    public static boolean containsKey(String code) { return Pool.containsKey(code); }
+    public static boolean ContainsThisKeyCode(String code) { return Pool.containsKey(code); }
 
-    public static boolean IsContainedThisCode(String code) { return TreatmentCode.containsKey(code); }
+    public static boolean IsContainedThisCode(String code) { return TreatmentCode.ContainsThisKeyCode(code); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter Function Only
