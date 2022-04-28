@@ -29,5 +29,6 @@ The project is protected under the BSD-3 license, which can be found under the r
 References: 
 1) https://www.w3schools.com/java/
 2) https://howtodoinjava.com/java/library/json-simple-read-write-json-examples/
+3) https://www.loggly.com/ultimate-guide/java-logging-basics/
 
  

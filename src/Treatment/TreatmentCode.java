@@ -47,20 +47,23 @@ public class TreatmentCode {
     private final static String SafeJsonDirectory = "src/Treatment/TreatmentCode-Restored.json";
     
     private final static String keyCodeName = "TreatmentCode";
+    private final static String keyCodePrefix = "TC-";
     private final static String[] keyCodeArgumentName = {"key_code", "description"};
 
 
     public static void main(String[] args) {
-        if (TreatmentCode.GetNumberOfCode() == 0) {
+        if (TreatmentCode.GetNumberOfCodeAvailable() == 0) {
             boolean status = TreatmentCode.LoadJsonDatabase();
-            if (TreatmentCode.GetNumberOfCode() == 0) { TreatmentCode.InitializePool(); }
+            if (TreatmentCode.GetNumberOfCodeAvailable() == 0 || status == false) { 
+                TreatmentCode.InitializePool(); 
+            }
         }
 
     } 
     
     // ---------------------------------------------------------------------------------------------------------------------
     // Pool declaration
-    public static boolean LoadJsonDatabase() {
+    private static boolean LoadJsonDatabase() {
         File json_data = new File(TreatmentCode.MainJsonDirectory); 
         String directory = null;
         if (json_data.exists() && directory == null) {
@@ -96,29 +99,38 @@ public class TreatmentCode {
         return status;
     }
     
-    public static boolean ContainsThisKeyCode(String code) { return Pool.containsKey(code); }
+    /**
+     * This static method is called as a restore point
+     */
+    private static void InitializePool() {
+        System.out.println("Warning: There is no JSON file found in the provided directory. " + 
+                            "This method is called as a restore point.");
+    }
 
-    public static boolean IsContainedThisCode(String code) { return TreatmentCode.ContainsThisKeyCode(code); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter Function Only
     public static Hashtable<String, String> GetPool() { return Pool; }
 
+    public static boolean ContainsThisKeyCode(String code) { return TreatmentCode.GetPool().containsKey(code); }
     public static int GetCapacity() { return capacity; }
     public static float GetPreloadFactor() { return loadFactor; }
-    public static int GetNumberOfCode() { return Pool.size(); }
+    public static int GetNumberOfCodeAvailable() { return Pool.size(); }
 
     public static void Display() {
         System.out.println("Display the pool of treatment code.");
         for (String key : Pool.keySet()) { System.out.println(key + " :  " + Pool.get(key)); }
     }
 
-    // ---------------------------------------------------------------------------------------------------------------------
-    /**
-     * This static method is called
-     */
-    private static void InitializePool() {
 
+    public static String GetValue(String code) { 
+        if (TreatmentCode.ContainsThisKeyCode(code)) {
+            return TreatmentCode.GetPool().get(code);
+        }
+        return null;
     }
+
+
+    // ---------------------------------------------------------------------------------------------------------------------
 
 }

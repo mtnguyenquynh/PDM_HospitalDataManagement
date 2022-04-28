@@ -45,7 +45,7 @@ public class TreatmentCodeUtils {
     
     public static boolean LoadJsonDataIntoHashTable(
         String json_directory, Hashtable<String, String> table, 
-        String key_wrapper, String[] key_value
+        String key_wrapper, String[] key_value 
     ) throws Exception, FileNotFoundException {
         TreatmentCodeUtils.ValidateKeyValue(key_value);
 
@@ -74,15 +74,16 @@ public class TreatmentCodeUtils {
      **/
     public static boolean SaveHashTableIntoJsonFile(
         String json_directory, Hashtable<String, String> table, 
-        String key_wrapper, String[] key_value
+        String key_wrapper, String[] key_value, String prefix
     ) throws Exception {
         TreatmentCodeUtils.ValidateKeyValue(key_value);
-        
+        if (prefix == null) { prefix = ""; }
+
         JSONArray json_file = new JSONArray();
         for (String key: table.keySet()) {
             JSONObject json_object = new JSONObject();
             json_object.put(key_value[0], key);
-            json_object.put(key_value[1], table.get(key));
+            json_object.put(key_value[1], prefix + table.get(key));
 
             JSONObject json_wrapper = new JSONObject();
             json_wrapper.put(key_wrapper, json_object);
