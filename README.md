@@ -1,5 +1,18 @@
 # PDM_HospitalDataManagement
 
+----------------------------------------
+# Description:
+""" Insert later """ 
+
+----------------------------------------
+# Setup:
+1) Install your Java and do configuration over the project
+2) Setup the JSON library:
+   - https://code.visualstudio.com/docs/languages/json
+   - Download .jar file at here: https://github.com/stleary/JSON-java (See README.md). See basic documentation at reference 02.
+	
+
+
 
 ----------------------------------------
 # Disclaimer & Acknowledgement
@@ -15,5 +28,6 @@ The project is protected under the BSD-3 license, which can be found under the r
 
 References: 
 1) https://www.w3schools.com/java/
+2) https://howtodoinjava.com/java/library/json-simple-read-write-json-examples/
 
  
