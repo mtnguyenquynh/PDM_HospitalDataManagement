@@ -1,15 +1,4 @@
-package Treatment;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Hashtable;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+package Utility;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -22,16 +11,37 @@ import org.json.simple.parser.ParseException;
 **/
 
 /**
- * This file contained several helper function which support for the
- * module TreatmentCode.java
+ * This file described an implicit set of treatment codes, where 
+ * we declared the definition of the our treatment record.
+ * We can add new treatment codes in this file, and then update it
+ * but it is another story.
  * See references:
- * - https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
+ * - https://www.tutorialspoint.com/java/java_enum_class.htm
+ * - https://www.geeksforgeeks.org/differences-between-hashmap-and-hashtable-in-java/
+ * - https://www.geeksforgeeks.org/hashtable-in-java/
+ * - https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Hashtable.html 
 **/
 
-public class TreatmentCodeUtils {
+
+import java.io.FileWriter;
+import java.io.IOException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Hashtable;
+
+
+
+public class Utils {
     
     // ---------------------------------------------------------------------------------------------------------------------
-    private static void ValidateKeyValue(String[] key_value) throws Exception {
+    private static void validate(String[] key_value) throws Exception {
         if (key_value.length != 2) {
             throw new Exception("The value_string array must have only two elements.");
         }
@@ -39,15 +49,13 @@ public class TreatmentCodeUtils {
     
     /**
      * This method will load everything from the json file into the 2-valued string hash table.
-     * Return True if the task proceeded successfully without any given error.
      * References: https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
      **/
-    
     public static boolean LoadJsonDataIntoHashTable(
-        String json_directory, Hashtable<String, String> table, 
+        String json_directory, Hashtable<Object, Object> table, 
         String key_wrapper, String[] key_value
     ) throws Exception, FileNotFoundException {
-        TreatmentCodeUtils.ValidateKeyValue(key_value);
+        Utils.validate(key_value);
 
         boolean success = true; // True if the task is successful.
         JSONParser jsonParser = new JSONParser();
@@ -65,44 +73,27 @@ public class TreatmentCodeUtils {
             success = false;
             System.out.println("Error: " + e.getMessage());
         }  
+
+        System.out.println("----------------------------------------------------------------------------------");
         return success;
     }
 
     /**
      * This method will save the result everything from the hash table to JSON file.
-     * References: https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
      **/
     public static boolean SaveHashTableIntoJsonFile(
         String json_directory, Hashtable<String, String> table, 
         String key_wrapper, String[] key_value
     ) throws Exception {
-        TreatmentCodeUtils.ValidateKeyValue(key_value);
-        
-        JSONArray json_file = new JSONArray();
-        for (String key: table.keySet()) {
-            JSONObject json_object = new JSONObject();
-            json_object.put(key_value[0], key);
-            json_object.put(key_value[1], table.get(key));
 
-            JSONObject json_wrapper = new JSONObject();
-            json_wrapper.put(key_wrapper, json_object);
-
-            json_file.add(json_wrapper);
-        }    
+        Utils.validate(key_value);
 
         boolean success = true; // True if the task is successful.
-        //Write JSON file
-        try (FileWriter file = new FileWriter(json_directory)) {
-            //We can write any JSONArray or JSONObject instance to the file
-            file.write(json_file.toJSONString()); 
-            file.flush();
- 
-        } catch (IOException e) {
-            success = false;
-            System.out.println("Error: " + e.getMessage());
-        }  
-        
+
+
+
         return success;
+        
     }
 
 }

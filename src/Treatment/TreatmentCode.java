@@ -2,6 +2,7 @@ package Treatment;
 import java.util.*;
 import java.nio.*;
 import java.io.*;
+import Treatment.TreatmentCodeUtils;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -26,6 +27,10 @@ import java.io.*;
 **/
 
 
+
+
+
+
 public class TreatmentCode {
     // The pool here is a collection of key-value pairs, where the key is the code, 
     // and the value is the simple description found describing the code.
@@ -39,62 +44,56 @@ public class TreatmentCode {
     
     // These two directory are the saved configuration of all treatment codes. 
     private final static String MainJsonDirectory = "src/Treatment/TreatmentCode.json";
-    private final static String SafeJsonDirectory = "src/Treatment/TreatmentCode.json";
+    private final static String SafeJsonDirectory = "src/Treatment/TreatmentCode-Restored.json";
+    
+    private final static String keyCodeName = "TreatmentCode";
+    private final static String[] keyCodeArgumentName = {"key_code", "description"};
 
 
     public static void main(String[] args) {
         if (TreatmentCode.GetNumberOfCode() == 0) {
-            TreatmentCode.InitializeTreatmentCodePool();
+            boolean status = TreatmentCode.LoadJsonDatabase();
+            if (TreatmentCode.GetNumberOfCode() == 0) { TreatmentCode.InitializePool(); }
         }
 
     } 
     
     // ---------------------------------------------------------------------------------------------------------------------
     // Pool declaration
-    public static void InitializeTreatmentCodePool() {
-        System.out.println("----------------------------------------------------------------------------------");
-        System.out.println("The pool of treatment code is generated once only at the beginning of the program.");
-        
-        Pool.put("00-00-0000", "Empty treatment");
-        Pool.put("00-00-0001", "X-rays");
-        Pool.put("00-00-0002", "Blood Test");
-        Pool.put("00-00-0003", "Surgery");
-        
-        System.out.println("The pool of treatment code is finished execution.");
-        System.out.println("----------------------------------------------------------------------------------");
-    } 
-
-    public static void LoadJsonDatabase() {
+    public static boolean LoadJsonDatabase() {
         File json_data = new File(TreatmentCode.MainJsonDirectory); 
-        if (json_data.exists()) {
+        String directory = null;
+        if (json_data.exists() && directory == null) {
             System.out.println("----------------------------------------------------------------------------------");
             System.out.println("The treatment code database is loaded from the file: " + TreatmentCode.MainJsonDirectory);
-            System.out.println("----------------------------------------------------------------------------------");
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(json_data));
-                String line;
-                while ((line = br.readLine()) != null) {
-                    String[] line_split = line.split(":");
-                    String code = line_split[0];
-                    String description = line_split[1];
-                    Pool.put(code, description);
-                }
-                br.close();
-            } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-            System.out.println("----------------------------------------------------------------------------------");
-            return ;
+            directory = TreatmentCode.MainJsonDirectory;
         } 
-            
 
-
-        else {
-            System.out.println("----------------------------------------------------------------------------------");
-            System.out.println("The treatment code database is not found, and will be created.");
-            System.out.println("----------------------------------------------------------------------------------");
-            TreatmentCode.InitializeTreatmentCodePool();
+        if (directory == null) {
+            json_data = new File(TreatmentCode.SafeJsonDirectory); 
+            if (json_data.exists()) {
+                System.out.println("The treatment code database is loaded from the file: " + TreatmentCode.SafeJsonDirectory);
+                directory = TreatmentCode.SafeJsonDirectory;
+            }
         }
+        
+        boolean status = false;
+        if (directory != null) {
+            try {
+                status = TreatmentCodeUtils.LoadJsonDataIntoHashTable(
+                    directory, TreatmentCode.Pool, TreatmentCode.keyCodeName, TreatmentCode.keyCodeArgumentName);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("The treatment code database is not found, and will be created.");
+        }
+        System.out.println("----------------------------------------------------------------------------------");
+        return status;
     }
     
     public static boolean ContainsThisKeyCode(String code) { return Pool.containsKey(code); }
@@ -112,6 +111,14 @@ public class TreatmentCode {
     public static void Display() {
         System.out.println("Display the pool of treatment code.");
         for (String key : Pool.keySet()) { System.out.println(key + " :  " + Pool.get(key)); }
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    /**
+     * This static method is called
+     */
+    private static void InitializePool() {
+
     }
 
 }
