@@ -40,12 +40,19 @@ public class TreatmentCodeUtils {
     /**
      * This method will load everything from the json file into the 2-valued string hash table.
      * Return True if the task proceeded successfully without any given error.
-     * References: https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
+     * 
+     * @param json_directory (str): The directory of the json file want to load.
+     * @param table (str): The hashed-table to store the result of our value.
+     * @param key_wrapper (str): The serialized name of our instance, for example TreatmentCode.
+     * @param key_value (str, str): The key-value pair of the json file. The first value is the code name
+     *      and the second value is the code value.
+     * @return (bool): True if the task proceeded successfully without any given error.
+     * @author HDM-Dev-Team, Ichiru Take
+     * 
      **/
-    
     public static boolean LoadJsonDataIntoHashTable(
         String json_directory, Hashtable<String, String> table, 
-        String key_wrapper, String[] key_value 
+        String key_wrapper, String[] key_value
     ) throws Exception, FileNotFoundException {
         TreatmentCodeUtils.ValidateKeyValue(key_value);
 
@@ -57,9 +64,9 @@ public class TreatmentCodeUtils {
             
             for (int idx = 0; idx < array.size(); idx++) {
                 JSONObject json_object = (JSONObject) array.get(idx);
-                String key = (String) json_object.get(key_value[0]);
+                String keyCode = (String) json_object.get(key_value[0]);
                 String value = (String) json_object.get(key_value[1]);
-                table.put(key, value);
+                table.put(keyCode, value);
             }
         } catch (IOException | ParseException e) {
             success = false;
@@ -70,20 +77,26 @@ public class TreatmentCodeUtils {
 
     /**
      * This method will save the result everything from the hash table to JSON file.
-     * References: https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
+     * Return True if the task proceeded successfully without any given error.
+     * @param json_directory (str): The directory of the json file want to save.
+     * @param table (str): The hashed-table to load our value.
+     * @param key_wrapper (str): The serialized name of our instance, for example TreatmentCode.
+     * @param key_value (str, str): The key-value pair of the json file. The first value is the code name
+     *      and the second value is the code value.
+     * @return (bool): True if the task proceeded successfully without any given error.
+     * @author HDM-Dev-Team, Ichiru Take
+     * 
      **/
     public static boolean SaveHashTableIntoJsonFile(
         String json_directory, Hashtable<String, String> table, 
-        String key_wrapper, String[] key_value, String prefix
+        String key_wrapper, String[] key_value
     ) throws Exception {
         TreatmentCodeUtils.ValidateKeyValue(key_value);
-        if (prefix == null) { prefix = ""; }
-
         JSONArray json_file = new JSONArray();
-        for (String key: table.keySet()) {
+        for (String keyCode: table.keySet()) {
             JSONObject json_object = new JSONObject();
-            json_object.put(key_value[0], key);
-            json_object.put(key_value[1], prefix + table.get(key));
+            json_object.put(key_value[0], keyCode);
+            json_object.put(key_value[1], table.get(keyCode));
 
             JSONObject json_wrapper = new JSONObject();
             json_wrapper.put(key_wrapper, json_object);

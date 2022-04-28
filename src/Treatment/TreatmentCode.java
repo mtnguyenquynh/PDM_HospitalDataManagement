@@ -1,8 +1,7 @@
 package Treatment;
 import java.util.*;
-import java.nio.*;
+import java.util.Map.Entry;
 import java.io.*;
-import Treatment.TreatmentCodeUtils;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -27,17 +26,10 @@ import Treatment.TreatmentCodeUtils;
 **/
 
 
-
-
-
-
 public class TreatmentCode {
     // The pool here is a collection of key-value pairs, where the key is the code, 
     // and the value is the simple description found describing the code.
-    // The key is a fixed-length 10-valued string (8 digits, separated by 2 dashes), and the value is a string.
-    // The argument `capacity` is the initial capacity of the pool, 
-    // the argument `loadFactor` controls a tradeoff between wasted space and the need for 
-    // rehash operations, which are time-consuming.
+    // The key_code is a fixed-length 13-valued string (8 digits separated by 2 dashes, and a 3-valued prefix)
     private final static int capacity = 1000;
     private final static float loadFactor = (float) 0.75f;
     private final static Hashtable<String, String> Pool = new Hashtable<String, String>(capacity, loadFactor);
@@ -45,17 +37,18 @@ public class TreatmentCode {
     // These two directory are the saved configuration of all treatment codes. 
     private final static String MainJsonDirectory = "src/Treatment/TreatmentCode.json";
     private final static String SafeJsonDirectory = "src/Treatment/TreatmentCode-Restored.json";
-    
-    private final static String keyCodeName = "TreatmentCode";
-    private final static String keyCodePrefix = "TC-";
-    private final static String[] keyCodeArgumentName = {"key_code", "description"};
+    private final static String prefix = "TC-";
+    private final static String Name = "TreatmentCode";
+    private final static String[] ArgName = {"key_code", "description"};
 
 
     public static void main(String[] args) {
         if (TreatmentCode.GetNumberOfCodeAvailable() == 0) {
             boolean status = TreatmentCode.LoadJsonDatabase();
-            if (TreatmentCode.GetNumberOfCodeAvailable() == 0 || status == false) { 
+            if (status == false || TreatmentCode.GetNumberOfCodeAvailable() == 0) { 
                 TreatmentCode.InitializePool(); 
+            } else {
+                TreatmentCode.ValidateAllKeyCodeInPool(false);
             }
         }
 
@@ -84,12 +77,10 @@ public class TreatmentCode {
         if (directory != null) {
             try {
                 status = TreatmentCodeUtils.LoadJsonDataIntoHashTable(
-                    directory, TreatmentCode.Pool, TreatmentCode.keyCodeName, TreatmentCode.keyCodeArgumentName);
+                    directory, TreatmentCode.Pool, TreatmentCode.Name, TreatmentCode.ArgName);
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else {
@@ -98,13 +89,37 @@ public class TreatmentCode {
         System.out.println("----------------------------------------------------------------------------------");
         return status;
     }
-    
-    /**
-     * This static method is called as a restore point
-     */
-    private static void InitializePool() {
+
+
+    private static void _InitPool_() {
+        TreatmentCode.Pool.clear();
+        TreatmentCode.Pool.put(TreatmentCode.prefix + "00-00-0000", "Null or Empty treatment");
+        TreatmentCode.Pool.put(TreatmentCode.prefix + "00-00-0001", "X-rays");
+        TreatmentCode.Pool.put(TreatmentCode.prefix + "00-00-0002", "Blood test");
+        TreatmentCode.Pool.put(TreatmentCode.prefix + "00-00-0003", "Surgical operation");
+        TreatmentCode.Pool.put(TreatmentCode.prefix + "00-00-0004", "Health-check");
+    }
+
+    private static void InitializePool() throws InternalError {
+        if (TreatmentCode.GetNumberOfCodeAvailable() != 0) { return ; }
+        
         System.out.println("Warning: There is no JSON file found in the provided directory. " + 
                             "This method is called as a restore point.");
+        // Step 01: Initialize the pool
+        TreatmentCode._InitPool_();
+
+        // Step 02: Validate the pool
+        TreatmentCode.ValidateAllKeyCodeInPool(false);
+
+        // Step 03: Save the pool into JSON file for later used
+        try {
+            TreatmentCodeUtils.SaveHashTableIntoJsonFile(
+                TreatmentCode.SafeJsonDirectory, TreatmentCode.Pool, 
+                TreatmentCode.Name, TreatmentCode.ArgName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("----------------------------------------------------------------------------------");
     }
 
 
@@ -118,10 +133,12 @@ public class TreatmentCode {
     public static int GetNumberOfCodeAvailable() { return Pool.size(); }
 
     public static void Display() {
-        System.out.println("Display the pool of treatment code.");
-        for (String key : Pool.keySet()) { System.out.println(key + " :  " + Pool.get(key)); }
+        Iterator<Entry<String, String>> iter = TreatmentCode.Pool.entrySet().iterator();
+        while (iter.hasNext()) {
+            Entry<String, String> entry = iter.next();
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
-
 
     public static String GetValue(String code) { 
         if (TreatmentCode.ContainsThisKeyCode(code)) {
@@ -129,6 +146,35 @@ public class TreatmentCode {
         }
         return null;
     }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Validation Function Only
+    public static boolean ValidateKeyCode(String code) {
+        if (code == null || code.length() != 13) { return false; }
+        if (!code.startsWith(TreatmentCode.prefix)) {return false; }
+        if (code.charAt(0) != 'T' || code.charAt(1) != 'C' || code.charAt(2) != '-') { return false; }
+        return true;
+    }
+
+    public static boolean ValidateAllKeyCodeInPool(boolean skip_error) throws InternalError {
+        Iterator<Entry<String, String>> iter = TreatmentCode.Pool.entrySet().iterator();
+        while (iter.hasNext()) {
+            Entry<String, String> entry = iter.next();
+            String keyCode = entry.getKey();
+            if (!TreatmentCode.ValidateKeyCode(keyCode)) {
+                String template = "This key code %s (desc=%s) is not valid";
+                String message = String.format(template, keyCode, entry.getValue());
+                if (skip_error) {
+                    System.out.println(message);
+                    return false;
+                } else {
+                    throw new InternalError(message);
+                }
+            }
+        }
+        return true;
+    }
+
 
 
     // ---------------------------------------------------------------------------------------------------------------------
