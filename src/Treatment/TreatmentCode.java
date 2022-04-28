@@ -15,9 +15,11 @@ import java.io.*;
 
 /**
  * This file described an implicit set of treatment codes, where 
- * we declared the definition of the our treatment record.
- * We can add new treatment codes in this file, and then update it
- * but it is another story.
+ * we declared the definition of the our treatment record. Most methods
+ * and attributes are the private-static, which shared through out the 
+ * program and being managed by the json file ONLY.
+ * @author Ichiru Take
+ * @version 0.0.1
  * See references:
  * - https://www.tutorialspoint.com/java/java_enum_class.htm
  * - https://www.geeksforgeeks.org/differences-between-hashmap-and-hashtable-in-java/
@@ -41,7 +43,6 @@ public class TreatmentCode {
     private final static String Name = "TreatmentCode";
     private final static String[] ArgName = {"key_code", "description"};
 
-
     public static void main(String[] args) {
         if (TreatmentCode.GetNumberOfCodeAvailable() == 0) {
             boolean status = TreatmentCode.LoadJsonDatabase();
@@ -51,7 +52,6 @@ public class TreatmentCode {
                 TreatmentCode.ValidateAllKeyCodeInPool(false);
             }
         }
-
     } 
     
     // ---------------------------------------------------------------------------------------------------------------------
