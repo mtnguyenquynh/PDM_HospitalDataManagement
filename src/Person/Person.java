@@ -32,19 +32,41 @@ public class Person {
         this.nationality = nationality;
     }
 
-    // ---------------------------------------------------------------------------------------------------------------------
-    // Getter Function
-    public String GetID() { return this.id; }
-    public String GetName() { return this.name; }
-    public String GetEmail() { return this.email; }
-    public String GetPhoneNumber() { return this.phone_number; }
-    public String GetGender() { return this.gender; }
-    public String GetNationality() { return this.nationality; }
-
-
-    // -----------------------------------------------------------
-    // Setter Function
-    public void SetEmail(String email) { this.email = email; }
-    public void SetPhoneNumber(String phone_number) { this.phone_number = phone_number; }
+    public String getID(){
+        return id;
+    }
+    public void setID(String id){
+        this.id = id;
+    }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getEmail(){
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getPhoneNumber() {
+        return phone_number;
+    }
+    public void setPhoneNumber(String phone_number) {
+        this.phone_number = phone_number;
+    }
+    public String getGender() {
+        return gender;
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    public String getNationality() {
+        return nationality;
+    }
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
     
 }
