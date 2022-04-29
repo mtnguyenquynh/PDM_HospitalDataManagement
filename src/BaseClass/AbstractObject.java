@@ -41,14 +41,14 @@ public class AbstractObject {
     
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
-    public Hashtable<String, Object> serialize() {
+    public Hashtable<String, Object> Serialize() {
         Hashtable<String, Object> result = new Hashtable<String, Object>();
         result.put("id", this.GetID());
         result.put("name", this.GetName());
         return result;
     }
 
-    public static AbstractObject deserialize(Hashtable<String, Object> data) {
+    public static AbstractObject Deserialize(Hashtable<String, Object> data) {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         return new AbstractObject(ID, name);

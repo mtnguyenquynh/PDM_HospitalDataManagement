@@ -1,5 +1,8 @@
 package Person;
 
+import BaseClass.AbstractObject;
+import java.util.Hashtable;
+
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
 * All Rights Reserved
@@ -17,13 +20,13 @@ package Person;
 **/
 
 
-public class Person {
-    private String id, name, email, phone_number, gender, nationality;
+public class Person extends AbstractObject {
+    // These attributes are the personal information of a particular person
+    private String email, phone_number, gender, nationality;        
 
-    public Person(String id, String name, String email, String phone_number, 
+    public Person(String ID, String name, String email, String phone_number, 
                   String gender, String nationality) {
-        this.id = id;
-        this.name = name;
+        super(ID, name);
         this.email = email;
         this.phone_number = phone_number;
         this.gender = gender;
@@ -31,18 +34,36 @@ public class Person {
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // Getter Function
-    public String GetID() { return this.id; }
-    public String GetName() { return this.name; }
+    // Getter & Setter
     public String GetEmail() { return this.email; }
     public String GetPhoneNumber() { return this.phone_number; }
     public String GetGender() { return this.gender; }
     public String GetNationality() { return this.nationality; }
 
-
     // -----------------------------------------------------------
     // Setter Function
     public void SetEmail(String email) { this.email = email; }
     public void SetPhoneNumber(String phone_number) { this.phone_number = phone_number; }
-    
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Serialization & Deserialization
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> result = super.Serialize();
+        result.put("email", this.GetEmail());
+        result.put("phone_number", this.GetPhoneNumber());
+        result.put("gender", this.GetGender());
+        result.put("nationality", this.GetNationality());
+        return result;
+    }
+
+    public static Person Deserialize(Hashtable<String, Object> data) {
+        String ID = (String) data.get("id");
+        String name = (String) data.get("name");
+        String email = (String) data.get("email");
+        String phone_number = (String) data.get("phone_number");
+        String gender = (String) data.get("gender");
+        String nationality = (String) data.get("nationality");
+        return new Person(ID, name, email, phone_number, gender, nationality);
+    }
+
 }

@@ -62,14 +62,14 @@ public class BaseObject extends AbstractObject {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
-    public Hashtable<String, Object> serialize() {
-        Hashtable<String, Object> result = super.serialize();
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> result = super.Serialize();
         result.put("description", this.GetDescription());
         result.put("amount", this.GetAmount());
         return result;
     }
 
-    public static BaseObject deserialize(Hashtable<String, Object> data) {
+    public static BaseObject Deserialize(Hashtable<String, Object> data) {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         String description = (String) data.get("description");

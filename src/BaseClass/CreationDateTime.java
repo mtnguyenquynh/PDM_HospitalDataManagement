@@ -73,11 +73,18 @@ public class CreationDateTime {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
-    public Hashtable<String, Object> serialize() {
+    public Hashtable<String, Object> Serialize() {
         Hashtable<String, Object> result = new Hashtable<String, Object>();
         result.put("date", this.GetDateAsString());
         result.put("time", this.GetTimeAsString());
         return result;
+    }
+
+    public static CreationDateTime Deserialize(Hashtable<String, Object> data) {
+        CreationDateTime creationDateTime = new CreationDateTime();
+        creationDateTime.SetDate((String) data.get("date"));
+        creationDateTime.SetTime((String) data.get("time"));
+        return creationDateTime;
     }
 
     
