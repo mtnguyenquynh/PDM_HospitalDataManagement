@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import BaseClass.CreationDateTime;
-import Treatment.TreatmentCode;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -40,12 +39,16 @@ import Treatment.TreatmentCode;
 **/
 
 
-
-
 public class Treatment extends CreationDateTime {
 	// ---------------------------------------------------------------------------------------------------------------------
+	// These attribute fields where we want to pre-allocate memory for our ArrayList (Medico && Descriptions).
+	// The number of elements can be more than pre-allocation, but this number should be enough.
+	private static final int MAX_NUM_MEDICO = 50;				// 50 medicos are pre-allocated
+	private static final int MAX_NUM_DESCRIPTIONS = 100;		// 100 descriptions are pre-allocated
+
+	// ---------------------------------------------------------------------------------------------------------------------
 	private String Patient_ID, MedicalRecord_ID; 		// Patient's Data
-	private ArrayList<String> Involved_Medico_ID;				// Medico's Data
+	private ArrayList<String> Involved_Medico_ID;		// Medico's Data
 	private String P_Name, P_Age, P_Gender; 			// Syncronized information only from patients
 	
 	// ----------------------------------------------------------
@@ -59,7 +62,7 @@ public class Treatment extends CreationDateTime {
 		super();							// Initialize the CreationDateTime
 		this.Patient_ID = Patient_ID;
 		this.MedicalRecord_ID = MedicalRecord_ID;
-		this.Involved_Medico_ID = new ArrayList<String>();
+		this.Involved_Medico_ID = new ArrayList<String>(Treatment.MAX_NUM_MEDICO);
 
 		this.P_Name = P_Name;
 		this.P_Age = P_Age;
@@ -74,8 +77,7 @@ public class Treatment extends CreationDateTime {
 		} else {
 			throw new IllegalArgumentException("Invalid code: " + code);
 		}
-		this.descriptions = new ArrayList<String[]>();
-
+		this.descriptions = new ArrayList<Hashtable<String, String>>(Treatment.MAX_NUM_DESCRIPTIONS);
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------
@@ -123,13 +125,10 @@ public class Treatment extends CreationDateTime {
 	 * @param writer (String): The name of the medico who writes the description, it could also 
 	 * 						   be the medico's signature.
 	 */
-
 	public void AddNewDescriptionAtTheEnd(String description, String writer) {
 		Description desc = new Description(description, writer);
 		Hashtable<String, String> serialized_description = desc.serialize();
 		this.descriptions.add(serialized_description);
 	}
-
-
 
 }
