@@ -44,7 +44,7 @@ public class TreatmentCode {
     private final static String MainJsonDirectory = "src/Treatment/TreatmentCode.json";
     private final static String SafeJsonDirectory = "src/Treatment/TreatmentCode-Restored.json";
     private final static String prefix = Prefix.TreatmentCode.GetPrefix();
-    private final static String Name = "TreatmentCode";
+    private final static String Name = TreatmentCode.class.getSimpleName();
     private final static String[] ArgName = {"key_code", "description"};
 
     public static void main(String[] args) {
