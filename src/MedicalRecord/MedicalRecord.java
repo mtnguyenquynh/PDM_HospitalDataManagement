@@ -1,4 +1,4 @@
-package Treatment;
+package MedicalRecord;
 
 public class MedicalRecord {
     

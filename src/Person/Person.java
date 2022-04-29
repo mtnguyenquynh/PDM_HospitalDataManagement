@@ -17,8 +17,6 @@ package Person;
 **/
 
 
-
-
 public class Person {
     private String id, name, email, phone_number, gender, nationality;
 

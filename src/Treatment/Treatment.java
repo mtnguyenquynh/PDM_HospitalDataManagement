@@ -17,6 +17,9 @@ package Treatment;
 
 
 public class Treatment {
+	private
+	
+	
 	private String code;
 	public Treatment(String code){
 		this.code = code;
