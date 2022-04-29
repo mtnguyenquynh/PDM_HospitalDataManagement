@@ -31,6 +31,7 @@ import org.json.simple.parser.ParseException;
 public class Utils {
     
     // ---------------------------------------------------------------------------------------------------------------------
+    // JSON Processing: Read & Write
     private static void ValidateKeyValue(String[] key_value) throws Exception {
         if (key_value.length != 2) {
             throw new Exception("The value_string array must have only two elements.");
@@ -117,6 +118,12 @@ public class Utils {
         }  
         
         return success;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Condition-checking
+    public static void CheckArgumentCondition(boolean condition, String message) throws IllegalArgumentException {
+        if (!condition) { throw new IllegalArgumentException(message); }
     }
 
 }

@@ -1,6 +1,7 @@
 package BaseClass;
 
 import java.time.*;
+import java.util.Hashtable;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -68,6 +69,15 @@ public class CreationDateTime {
     public void Display() {
         System.out.println("Date: " + this.GetDate() + " (Date: " + this.GetStringDayOfWeek() + ")");
         System.out.println("Time: " + this.GetTime());
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Serialization & Deserialization
+    public Hashtable<String, Object> serialize() {
+        Hashtable<String, Object> result = new Hashtable<String, Object>();
+        result.put("date", this.GetDateAsString());
+        result.put("time", this.GetTimeAsString());
+        return result;
     }
 
     
