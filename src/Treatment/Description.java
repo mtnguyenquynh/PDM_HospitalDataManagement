@@ -56,8 +56,8 @@ public class Description extends CreationDateTime {
         System.out.println("Medico: " + this.GetMedicoName());
     }
 
-    public Hashtable<String, String> serialize() {
-        Hashtable<String, String> result = new Hashtable<String, String>();
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> result = new Hashtable<String, Object>();
         result.put("date", this.GetDateAsString());
         result.put("time", this.GetTimeAsString());
         result.put("description", this.GetDescription());
@@ -65,10 +65,12 @@ public class Description extends CreationDateTime {
         return result;
     }
 
-    public static Description deserialize(Hashtable<String, String> data) {
-        Description desc = new Description(data.get("description"), data.get("medico_name"));
-        desc.SetDate(data.get("date"));
-        desc.SetTime(data.get("time"));
-        return desc;
+    public static Description deserialize(Hashtable<String, Object> data) {
+        String description = (String) data.get("description");
+        String medico_name = (String) data.get("medico_name");
+        Description desc = new Description(description, medico_name);
+        desc.SetDate((String) data.get("date"));
+        desc.SetTime((String) data.get("time"));
+        return new Description(description, medico_name);
     }
 }

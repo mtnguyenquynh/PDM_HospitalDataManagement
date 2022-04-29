@@ -35,7 +35,7 @@ public class TreatmentCode {
     // The key_code is a fixed-length 13-valued string (8 digits separated by 2 dashes, and a 3-valued prefix)
     private final static int capacity = 1000;
     private final static float loadFactor = (float) 0.75f;
-    private final static Hashtable<String, String> Pool = new Hashtable<String, String>(capacity, loadFactor);
+    private final static Hashtable<String, Object> Pool = new Hashtable<String, Object>(capacity, loadFactor);
     
     // These two directory are the saved configuration of all treatment codes. 
     private final static String MainJsonDirectory = "src/Treatment/TreatmentCode.json";
@@ -78,7 +78,8 @@ public class TreatmentCode {
         if (directory != null) {
             try {
                 status = Utils.LoadJsonDataIntoHashTable(
-                    directory, TreatmentCode.Pool, TreatmentCode.Name, TreatmentCode.ArgName);
+                    directory, TreatmentCode.Pool, 
+                    TreatmentCode.Name, TreatmentCode.ArgName);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -90,7 +91,6 @@ public class TreatmentCode {
         System.out.println("----------------------------------------------------------------------------------");
         return status;
     }
-
 
     private static void _InitPool_() {
         TreatmentCode.Pool.clear();
@@ -114,7 +114,7 @@ public class TreatmentCode {
 
         // Step 03: Save the pool into JSON file for later used
         try {
-            TreatmentCodeUtils.SaveHashTableIntoJsonFile(
+            Utils.SaveHashTableIntoJsonFile(
                 TreatmentCode.SafeJsonDirectory, TreatmentCode.Pool, 
                 TreatmentCode.Name, TreatmentCode.ArgName);
         } catch (Exception e) {
@@ -126,7 +126,7 @@ public class TreatmentCode {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter Function Only
-    public static Hashtable<String, String> GetPool() { return Pool; }
+    public static Hashtable<String, Object> GetPool() { return TreatmentCode.Pool; }
 
     public static boolean ContainsThisKeyCode(String code) { return TreatmentCode.GetPool().containsKey(code); }
     public static int GetCapacity() { return capacity; }
@@ -134,14 +134,14 @@ public class TreatmentCode {
     public static int GetNumberOfCodeAvailable() { return Pool.size(); }
 
     public static void Display() {
-        Iterator<Entry<String, String>> iter = TreatmentCode.Pool.entrySet().iterator();
+        Iterator<Entry<String, Object>> iter = TreatmentCode.Pool.entrySet().iterator();
         while (iter.hasNext()) {
-            Entry<String, String> entry = iter.next();
+            Entry<String, Object> entry = iter.next();
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 
-    public static String GetValue(String code) { 
+    public static Object GetValue(String code) { 
         if (TreatmentCode.ContainsThisKeyCode(code)) {
             return TreatmentCode.GetPool().get(code);
         }
@@ -158,9 +158,9 @@ public class TreatmentCode {
     }
 
     public static boolean ValidateAllKeyCodeInPool(boolean skip_error) throws InternalError {
-        Iterator<Entry<String, String>> iter = TreatmentCode.Pool.entrySet().iterator();
+        Iterator<Entry<String, Object>> iter = TreatmentCode.Pool.entrySet().iterator();
         while (iter.hasNext()) {
-            Entry<String, String> entry = iter.next();
+            Entry<String, Object> entry = iter.next();
             String keyCode = entry.getKey();
             if (!TreatmentCode.ValidateKeyCode(keyCode)) {
                 String template = "This key code %s (desc=%s) is not valid";
@@ -175,8 +175,6 @@ public class TreatmentCode {
         }
         return true;
     }
-
-
 
     // ---------------------------------------------------------------------------------------------------------------------
 

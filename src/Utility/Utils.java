@@ -1,4 +1,4 @@
-package Treatment;
+package Utility;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -52,7 +52,7 @@ public class Utils {
      * 
      **/
     public static boolean LoadJsonDataIntoHashTable(
-        String json_directory, Hashtable<String, String> table, 
+        String json_directory, Hashtable<String, Object> table, 
         String key_wrapper, String[] key_value
     ) throws Exception, FileNotFoundException {
         Utils.ValidateKeyValue(key_value);
@@ -89,7 +89,7 @@ public class Utils {
      * 
      **/
     public static boolean SaveHashTableIntoJsonFile(
-        String json_directory, Hashtable<String, String> table, 
+        String json_directory, Hashtable<String, Object> table, 
         String key_wrapper, String[] key_value
     ) throws Exception {
         Utils.ValidateKeyValue(key_value);

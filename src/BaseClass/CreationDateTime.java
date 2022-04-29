@@ -73,6 +73,7 @@ public class CreationDateTime {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
+    
     public Hashtable<String, Object> Serialize() {
         Hashtable<String, Object> result = new Hashtable<String, Object>();
         result.put("date", this.GetDateAsString());
