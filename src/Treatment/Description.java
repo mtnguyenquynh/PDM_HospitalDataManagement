@@ -15,7 +15,9 @@ import java.time.*;
 /**
  * This module describe a set of description attached for the treatment records, 
  * in a particular point of time. There are no identifier in this project and not
- * attached to the database relation. The time set rule is ISO-8601
+ * attached to the database relation. The time set rule is ISO-8601.
+ * Note that the datetime written as attribute is the creation time, 
+ * not the time displayed the patient's status.
  * 
  * @author Ichiru Take
  * @version 0.0.1

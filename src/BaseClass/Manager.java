@@ -1,4 +1,4 @@
-package AbstractClass;
+package BaseClass;
 
 public class Manager {
     
