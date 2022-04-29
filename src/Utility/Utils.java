@@ -23,12 +23,12 @@ import org.json.simple.parser.ParseException;
 
 /**
  * This file contained several helper function which support for the
- * multiple module TreatmentCode.java
+ * multiple module module TreatmentCode.java
  * See references:
  * - https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
 **/
 
-public class TreatmentCodeUtils {
+public class Utils {
     
     // ---------------------------------------------------------------------------------------------------------------------
     private static void ValidateKeyValue(String[] key_value) throws Exception {
@@ -54,7 +54,7 @@ public class TreatmentCodeUtils {
         String json_directory, Hashtable<String, String> table, 
         String key_wrapper, String[] key_value
     ) throws Exception, FileNotFoundException {
-        TreatmentCodeUtils.ValidateKeyValue(key_value);
+        Utils.ValidateKeyValue(key_value);
 
         boolean success = true; // True if the task is successful.
         JSONParser jsonParser = new JSONParser();
@@ -91,7 +91,7 @@ public class TreatmentCodeUtils {
         String json_directory, Hashtable<String, String> table, 
         String key_wrapper, String[] key_value
     ) throws Exception {
-        TreatmentCodeUtils.ValidateKeyValue(key_value);
+        Utils.ValidateKeyValue(key_value);
         JSONArray json_file = new JSONArray();
         for (String keyCode: table.keySet()) {
             JSONObject json_object = new JSONObject();
