@@ -11,7 +11,8 @@ package Treatment;
 **/
 
 /**
- * This file described a particular 
+ * This file described a particular how we directly load the treatment 
+ * item/instance in the project
 **/
 
 

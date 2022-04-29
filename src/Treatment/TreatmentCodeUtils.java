@@ -23,7 +23,7 @@ import org.json.simple.parser.ParseException;
 
 /**
  * This file contained several helper function which support for the
- * module TreatmentCode.java
+ * multiple module TreatmentCode.java
  * See references:
  * - https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
 **/

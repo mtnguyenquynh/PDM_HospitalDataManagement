@@ -1,4 +1,5 @@
 package Treatment;
+import Utility.Utils;
 import java.util.*;
 import java.util.Map.Entry;
 import java.io.*;
@@ -76,7 +77,7 @@ public class TreatmentCode {
         boolean status = false;
         if (directory != null) {
             try {
-                status = TreatmentCodeUtils.LoadJsonDataIntoHashTable(
+                status = Utils.LoadJsonDataIntoHashTable(
                     directory, TreatmentCode.Pool, TreatmentCode.Name, TreatmentCode.ArgName);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

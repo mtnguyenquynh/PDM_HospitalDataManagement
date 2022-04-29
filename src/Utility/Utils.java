@@ -1,4 +1,15 @@
-package Utility;
+package Treatment;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Hashtable;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -11,37 +22,16 @@ package Utility;
 **/
 
 /**
- * This file described an implicit set of treatment codes, where 
- * we declared the definition of the our treatment record.
- * We can add new treatment codes in this file, and then update it
- * but it is another story.
+ * This file contained several helper function which support for the
+ * multiple module module TreatmentCode.java
  * See references:
- * - https://www.tutorialspoint.com/java/java_enum_class.htm
- * - https://www.geeksforgeeks.org/differences-between-hashmap-and-hashtable-in-java/
- * - https://www.geeksforgeeks.org/hashtable-in-java/
- * - https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Hashtable.html 
+ * - https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
 **/
-
-
-import java.io.FileWriter;
-import java.io.IOException;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Hashtable;
-
-
 
 public class Utils {
     
     // ---------------------------------------------------------------------------------------------------------------------
-    private static void validate(String[] key_value) throws Exception {
+    private static void ValidateKeyValue(String[] key_value) throws Exception {
         if (key_value.length != 2) {
             throw new Exception("The value_string array must have only two elements.");
         }
@@ -49,13 +39,22 @@ public class Utils {
     
     /**
      * This method will load everything from the json file into the 2-valued string hash table.
-     * References: https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
+     * Return True if the task proceeded successfully without any given error.
+     * 
+     * @param json_directory (str): The directory of the json file want to load.
+     * @param table (str): The hashed-table to store the result of our value.
+     * @param key_wrapper (str): The serialized name of our instance, for example TreatmentCode.
+     * @param key_value (str, str): The key-value pair of the json file. The first value is the code name
+     *      and the second value is the code value.
+     * @return (bool): True if the task proceeded successfully without any given error.
+     * @author HDM-Dev-Team, Ichiru Take
+     * 
      **/
     public static boolean LoadJsonDataIntoHashTable(
-        String json_directory, Hashtable<Object, Object> table, 
+        String json_directory, Hashtable<String, String> table, 
         String key_wrapper, String[] key_value
     ) throws Exception, FileNotFoundException {
-        Utils.validate(key_value);
+        Utils.ValidateKeyValue(key_value);
 
         boolean success = true; // True if the task is successful.
         JSONParser jsonParser = new JSONParser();
@@ -65,35 +64,59 @@ public class Utils {
             
             for (int idx = 0; idx < array.size(); idx++) {
                 JSONObject json_object = (JSONObject) array.get(idx);
-                String key = (String) json_object.get(key_value[0]);
+                String keyCode = (String) json_object.get(key_value[0]);
                 String value = (String) json_object.get(key_value[1]);
-                table.put(key, value);
+                table.put(keyCode, value);
             }
         } catch (IOException | ParseException e) {
             success = false;
             System.out.println("Error: " + e.getMessage());
         }  
-
-        System.out.println("----------------------------------------------------------------------------------");
         return success;
     }
 
     /**
      * This method will save the result everything from the hash table to JSON file.
+     * Return True if the task proceeded successfully without any given error.
+     * @param json_directory (str): The directory of the json file want to save.
+     * @param table (str): The hashed-table to load our value.
+     * @param key_wrapper (str): The serialized name of our instance, for example TreatmentCode.
+     * @param key_value (str, str): The key-value pair of the json file. The first value is the code name
+     *      and the second value is the code value.
+     * @return (bool): True if the task proceeded successfully without any given error.
+     * @author HDM-Dev-Team, Ichiru Take
+     * 
      **/
     public static boolean SaveHashTableIntoJsonFile(
         String json_directory, Hashtable<String, String> table, 
         String key_wrapper, String[] key_value
     ) throws Exception {
+        Utils.ValidateKeyValue(key_value);
+        JSONArray json_file = new JSONArray();
+        for (String keyCode: table.keySet()) {
+            JSONObject json_object = new JSONObject();
+            json_object.put(key_value[0], keyCode);
+            json_object.put(key_value[1], table.get(keyCode));
 
-        Utils.validate(key_value);
+            JSONObject json_wrapper = new JSONObject();
+            json_wrapper.put(key_wrapper, json_object);
+
+            json_file.add(json_wrapper);
+        }    
 
         boolean success = true; // True if the task is successful.
-
-
-
-        return success;
+        //Write JSON file
+        try (FileWriter file = new FileWriter(json_directory)) {
+            //We can write any JSONArray or JSONObject instance to the file
+            file.write(json_file.toJSONString()); 
+            file.flush();
+ 
+        } catch (IOException e) {
+            success = false;
+            System.out.println("Error: " + e.getMessage());
+        }  
         
+        return success;
     }
 
 }
