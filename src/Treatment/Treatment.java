@@ -1,6 +1,10 @@
 package Treatment;
 
-import java.time.;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+import BaseClass.CreationDateTime;
+import Treatment.TreatmentCode;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -38,18 +42,66 @@ import java.time.;
 
 
 
-public class Treatment {
+public class Treatment extends CreationDateTime {
 	// ---------------------------------------------------------------------------------------------------------------------
 	private String Patient_ID, MedicalRecord_ID; 		// Patient's Data
-	private String[] Involved_Medico_ID;				// Medico's Data
+	private ArrayList<String> Involved_Medico_ID;				// Medico's Data
 	private String P_Name, P_Age, P_Gender; 			// Syncronized information only from patients
 	
 	// ----------------------------------------------------------
-	private String index; 			// This represented the index placed in the medical-record				
-	private String code;			// This connected directly to the treatment code pool
-	private Date start_day;
+	private final static String prefix = "TM-";
+	private String index; 						// This represented the index placed in the medical-record				
+	private String code;					// This connected directly to the treatment code pool
+	private ArrayList<Hashtable<String, String>> descriptions; 	// This is the description of the treatment
 
-	public Treatment(String code){
-		this.code = code;
+	public Treatment(String Patient_ID, String MedicalRecord_ID, String P_Name, String P_Age, 
+		String P_Gender, int index, String code) {
+		super();							// Initialize the CreationDateTime
+		this.Patient_ID = Patient_ID;
+		this.MedicalRecord_ID = MedicalRecord_ID;
+		this.Involved_Medico_ID = new ArrayList<String>();
+
+		this.P_Name = P_Name;
+		this.P_Age = P_Age;
+		this.P_Gender = P_Gender;
+
+		// ----------------------------------------------------------
+		this.index = Treatment.prefix + Integer.toString(index);
+		
+		TreatmentCode.ValidateKeyCode(code);
+		if (TreatmentCode.ValidateKeyCode(code)) {
+			this.code = code;
+		} else {
+			throw new IllegalArgumentException("Invalid code: " + code);
+		}
+		this.descriptions = new ArrayList<Hashtable<String, String>>();
+
 	}
+
+	// ---------------------------------------------------------------------------------------------------------------------
+	// Getters and Setters
+	public String GetPatientID() { return this.Patient_ID; }
+	public String GetMedicalRecordID() { return this.MedicalRecord_ID; }
+	public String GetPName() { return this.P_Name; }
+	public String GetPAge() { return this.P_Age; }
+	public String GetPGender() { return this.P_Gender; }
+
+	public String GetTreatmentIndex() { return this.index; }
+	public int GetTreatmentIndexAsInt() { 
+		return Integer.parseInt(this.index.replace(Treatment.prefix, ""));
+	}
+
+	public String GetTreatmentCode() { return this.code; }
+
+	// ----------------------------------------------------------
+	// Adding Functions to Involved_Medico and Descriptions
+	public void AddNewMedico(String medico_id) {
+		this.Involved_Medico_ID.
+	}
+
+
+	public void AddNewDescription() {}
+
+
+
 }

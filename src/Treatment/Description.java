@@ -1,6 +1,7 @@
 package Treatment;
 
 import java.time.*;
+import BaseClass.CreationDateTime;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -29,49 +30,26 @@ import java.time.*;
  * 4) https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html
 **/
 
-public class Description {
-    private LocalDate date;
-    private LocalTime time;
+public class Description extends CreationDateTime {
     private String description;
     private String medico_name; 
 
     public Description(String description, String medico_name) {
-        LocalDateTime current = LocalDateTime.now();
-        this.date = (LocalDate) current.toLocalDate();
-        this.time = (LocalTime) current.toLocalTime();
+        super();
         this.description = description;
         this.medico_name = medico_name;
     }
     
     // ---------------------------------------------------------------------------------------------------------------------
     // Getters and Setters
-    public LocalDate GetDate() { return this.date; }
-    public LocalTime GetTime() { return this.time; }
-
     public String GetDescription() { return this.description; }
     public String GetMedicoName() { return this.medico_name; }
 
     public void SetDescription(String description) { this.description = description; }
     
     // ----------------------------------------------------------
-    public int GetDayOfMonth() { return this.date.getDayOfMonth(); }
-    public int GetDayOfYear() { return this.date.getDayOfYear(); }
-    public int GetDayOfWeek() { return this.date.getDayOfWeek().getValue(); }
-    public DayOfWeek GetStringDayOfWeek() { return this.date.getDayOfWeek(); }
-    
-    public Month GetMonth() { return this.date.getMonth(); }
-    public int GetMonthValue() { return this.date.getMonthValue(); }
-    public int GetYearValue() { return this.date.getYear(); }
-
-    public int GetHour() { return this.time.getHour(); }
-    public int GetMinute() { return this.time.getMinute(); }
-    public int GetSecond() { return this.time.getSecond(); }
-    public int GetNano() { return this.time.getNano(); }
-
-    // ----------------------------------------------------------
     public void Display() {
-        System.out.println("Date: " + this.GetDate() + " (Date: " + this.GetStringDayOfWeek() + ")");
-        System.out.println("Time: " + this.GetTime());
+        super.Display();
         System.out.println("Description: " + this.GetDescription());
         System.out.println("Medico: " + this.GetMedicoName());
     }
