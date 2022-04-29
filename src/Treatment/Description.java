@@ -67,7 +67,7 @@ public class Description extends CreationDateTime {
         return result;
     }
 
-    public static Description deserialize(Hashtable<String, Object> data) {
+    public static Description Deserialize(Hashtable<String, Object> data) {
         String description = (String) data.get("description");
         String medico_name = (String) data.get("medico_name");
         Description desc = new Description(description, medico_name);
