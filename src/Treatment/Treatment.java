@@ -74,7 +74,7 @@ public class Treatment extends CreationDateTime {
 		} else {
 			throw new IllegalArgumentException("Invalid code: " + code);
 		}
-		this.descriptions = new ArrayList<Hashtable<String, String>>();
+		this.descriptions = new ArrayList<String[]>();
 
 	}
 
@@ -82,6 +82,7 @@ public class Treatment extends CreationDateTime {
 	// Getters and Setters
 	public String GetPatientID() { return this.Patient_ID; }
 	public String GetMedicalRecordID() { return this.MedicalRecord_ID; }
+
 	public String GetPName() { return this.P_Name; }
 	public String GetPAge() { return this.P_Age; }
 	public String GetPGender() { return this.P_Gender; }
@@ -90,17 +91,44 @@ public class Treatment extends CreationDateTime {
 	public int GetTreatmentIndexAsInt() { 
 		return Integer.parseInt(this.index.replace(Treatment.prefix, ""));
 	}
-
 	public String GetTreatmentCode() { return this.code; }
 
 	// ----------------------------------------------------------
-	// Adding Functions to Involved_Medico and Descriptions
-	public void AddNewMedico(String medico_id) {
-		this.Involved_Medico_ID.
+	public ArrayList<String> GetAllInvolvedMedicoIDs() { return this.Involved_Medico_ID; }
+	public int GetNumMedicoIDs() { return this.GetAllInvolvedMedicoIDs().size(); }
+	
+	public String GetMedicoIDAtIndex(int index) { return this.GetAllInvolvedMedicoIDs().get(index); }
+
+
+	public ArrayList<Hashtable<String, String>> GetAllDescriptions() { return this.descriptions; }
+	public int GetNumDescriptions() { return this.GetAllDescriptions().size(); }
+
+	public Hashtable<String, String> GetSerializedDescriptionAtIndex(int index) { 
+		return this.GetAllDescriptions().get(index); 
+	}
+	
+	public Description GetDescriptionAtIndex(int index) {
+		return Description.deserialize(this.GetSerializedDescriptionAtIndex(index));
 	}
 
+	// ----------------------------------------------------------
+	// Adding Functions to Involved_Medico and Descriptions
+	public void AddNewMedicoAtTheEnd(String medico_id) {
+		this.Involved_Medico_ID.add(medico_id);
+	}
 
-	public void AddNewDescription() {}
+	/**
+	 * This function is used to add a new description to the treatment as an array of string.
+	 * @param description (String): A set of description that a medico writes to the treatment.
+	 * @param writer (String): The name of the medico who writes the description, it could also 
+	 * 						   be the medico's signature.
+	 */
+
+	public void AddNewDescriptionAtTheEnd(String description, String writer) {
+		Description desc = new Description(description, writer);
+		Hashtable<String, String> serialized_description = desc.serialize();
+		this.descriptions.add(serialized_description);
+	}
 
 
 

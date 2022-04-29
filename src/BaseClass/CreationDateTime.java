@@ -14,7 +14,10 @@ import java.time.*;
 
 /**
  * This module describe a custom datetime class which describe the time of 
- * object instantiation (initialization/creation time). The time set rule is ISO-8601.
+ * object instantiation by default (initialization/creation time). However,
+ * you can re-declare the time by yourself using setter functions.
+ * The time set rule is ISO-8601. 
+ * 
  * @author Ichiru Take
  * @version 0.0.1
  * 
@@ -43,6 +46,9 @@ public class CreationDateTime {
     public LocalTime GetTime() { return this.time; }
     public String GetTimeAsString() { return this.time.toString(); }
 
+    public void SetDate(String date) { this.date = LocalDate.parse(date); }
+    public void SetTime(String time) { this.time = LocalTime.parse(time); }
+
     // ----------------------------------------------------------
     public int GetDayOfMonth() { return this.date.getDayOfMonth(); }
     public int GetDayOfYear() { return this.date.getDayOfYear(); }
@@ -63,5 +69,6 @@ public class CreationDateTime {
         System.out.println("Date: " + this.GetDate() + " (Date: " + this.GetStringDayOfWeek() + ")");
         System.out.println("Time: " + this.GetTime());
     }
+
     
 }

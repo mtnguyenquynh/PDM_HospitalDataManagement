@@ -1,6 +1,8 @@
 package Treatment;
 
 import java.time.*;
+import java.util.Hashtable;
+
 import BaseClass.CreationDateTime;
 
 /**
@@ -52,5 +54,21 @@ public class Description extends CreationDateTime {
         super.Display();
         System.out.println("Description: " + this.GetDescription());
         System.out.println("Medico: " + this.GetMedicoName());
+    }
+
+    public Hashtable<String, String> serialize() {
+        Hashtable<String, String> result = new Hashtable<String, String>();
+        result.put("date", this.GetDateAsString());
+        result.put("time", this.GetTimeAsString());
+        result.put("description", this.GetDescription());
+        result.put("medico_name", this.GetMedicoName());
+        return result;
+    }
+
+    public static Description deserialize(Hashtable<String, String> data) {
+        Description desc = new Description(data.get("description"), data.get("medico_name"));
+        desc.SetDate(data.get("date"));
+        desc.SetTime(data.get("time"));
+        return desc;
     }
 }
