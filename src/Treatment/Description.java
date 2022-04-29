@@ -56,6 +56,8 @@ public class Description extends CreationDateTime {
         System.out.println("Medico: " + this.GetMedicoName());
     }
 
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Serialization and Deserialization
     public Hashtable<String, Object> Serialize() {
         Hashtable<String, Object> result = new Hashtable<String, Object>();
         result.put("date", this.GetDateAsString());

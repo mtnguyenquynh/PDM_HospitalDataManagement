@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import BaseClass.CreationDateTime;
+import PrefixState.Prefix;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -54,7 +55,7 @@ public class Treatment extends CreationDateTime {
 	private String P_Name, P_Age, P_Gender; 			// Syncronized information only from patients
 	
 	// ----------------------------------------------------------
-	private final static String prefix = "TM-";
+	private final static String prefix = Prefix.Treatment.GetPrefix();
 	private String index; 						// This represented the index placed in the medical-record				
 	private String code;					// This connected directly to the treatment code pool
 	private ArrayList<Hashtable<String, String>> descriptions; 	// This is the description of the treatment

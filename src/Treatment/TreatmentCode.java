@@ -2,6 +2,9 @@ package Treatment;
 import Utility.Utils;
 import java.util.*;
 import java.util.Map.Entry;
+
+import PrefixState.Prefix;
+
 import java.io.*;
 
 /**
@@ -40,7 +43,7 @@ public class TreatmentCode {
     // These two directory are the saved configuration of all treatment codes. 
     private final static String MainJsonDirectory = "src/Treatment/TreatmentCode.json";
     private final static String SafeJsonDirectory = "src/Treatment/TreatmentCode-Restored.json";
-    private final static String prefix = "TC-";
+    private final static String prefix = Prefix.TreatmentCode.GetPrefix();
     private final static String Name = "TreatmentCode";
     private final static String[] ArgName = {"key_code", "description"};
 
@@ -132,6 +135,7 @@ public class TreatmentCode {
     public static int GetCapacity() { return capacity; }
     public static float GetPreloadFactor() { return loadFactor; }
     public static int GetNumberOfCodeAvailable() { return Pool.size(); }
+    public static String GetPrefix() { return TreatmentCode.prefix; }
 
     public static void Display() {
         Iterator<Entry<String, Object>> iter = TreatmentCode.Pool.entrySet().iterator();
@@ -151,9 +155,8 @@ public class TreatmentCode {
     // ---------------------------------------------------------------------------------------------------------------------
     // Validation Function Only
     public static boolean ValidateKeyCode(String code) {
-        if (code == null || code.length() != 13) { return false; }
+        if (code == null || code.length() != 10 + TreatmentCode.prefix.length()) { return false; }
         if (!code.startsWith(TreatmentCode.prefix)) {return false; }
-        if (code.charAt(0) != 'T' || code.charAt(1) != 'C' || code.charAt(2) != '-') { return false; }
         return true;
     }
 
