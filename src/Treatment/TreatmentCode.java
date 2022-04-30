@@ -97,7 +97,7 @@ public class TreatmentCode {
 
     private static void _InitPool_() {
         TreatmentCode.Pool.clear();
-        String prefix_code = TreatmentCode.prefix.GetPrefix();
+        String prefix_code = TreatmentCode.prefix.GetPrefixCode();
 
         TreatmentCode.Pool.put(prefix_code + "00-00-0000", "Null or Empty treatment");
         TreatmentCode.Pool.put(prefix_code + "00-00-0001", "X-rays");
@@ -138,7 +138,7 @@ public class TreatmentCode {
     public static float GetPreloadFactor() { return loadFactor; }
     public static int GetNumberOfCodeAvailable() { return Pool.size(); }
     public static Prefix GetPrefix() { return TreatmentCode.prefix; }
-    public static String GetPrefixCode() { return TreatmentCode.prefix.GetPrefix(); }
+    public static String GetPrefixCode() { return TreatmentCode.prefix.GetPrefixCode(); }
 
     public static void Display() {
         Iterator<Entry<String, Object>> iter = TreatmentCode.Pool.entrySet().iterator();

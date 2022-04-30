@@ -107,14 +107,11 @@ public enum ResourcesUnit {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Get-Default Functions
     public String GetName() { return this.name; }
-    public Object GetNameAsObject() { return (Object) this.GetName(); }
 
     public String GetType() { return this.type; }
-    public Object GetTypeAsObject() { return (Object) this.GetType(); }
 
     public double GetCoefficient() { return this.coefficient; }
     public float GetCoefficientAsFloat() { return (float) this.coefficient; }
-    public Object GetCoefficientAsObject() { return (Object) this.coefficient; }
     public int GetCoefficientAsInt() { return (int) this.coefficient; }
 
     public static ResourcesUnit GetStaticDefault() { return ResourcesUnit.UNIT; }
@@ -135,11 +132,9 @@ public enum ResourcesUnit {
                 continue;
             }
             // The type is guaranteed to be correct, so we can compare the name
-            if (p_name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
+            if (p_name.equals(name)) { return p; } 
             if (p_name.toLowerCase().equals(name.toLowerCase())) { return p; }
             if (p_name.toUpperCase().equals(name.toUpperCase())) { return p; }
-
-            
         }
         return null;
     }

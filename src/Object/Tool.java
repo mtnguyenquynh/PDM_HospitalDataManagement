@@ -32,7 +32,7 @@ import PrefixState.Prefix;
 public class Tool extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     private final ToolUnit unit;
-    private final Prefix prefix = Prefix.Tool;
+    private static final Prefix prefix = Prefix.Tool;
 
     public Tool(String ID, String name, String description, int amount, ToolUnit unit) {
         // You may want to add more fields or attributes here.
@@ -47,4 +47,8 @@ public class Tool extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter Function
     public ToolUnit GetUnit() { return this.unit; }
+    public static Prefix GetPrefix() { return Tool.prefix; }
+    public String GetPrefixCode() { return Tool.GetPrefix().GetPrefix(); }
+
+
 }

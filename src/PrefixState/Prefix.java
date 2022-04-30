@@ -57,22 +57,19 @@ public enum Prefix {
     Prefix(Object prefix) { this.prefix = (String) prefix; }
 
     public String GetPrefix() { return this.prefix; }
-    public Object GetPrefixAsObject() { return (Object) this.GetPrefix();}
+    public String GetPrefixCode() { return this.prefix; }
 
     // ----------------------------------------------------------
     // Magic here: Declare the enum constant as a static final field using the prefix.
-    public static Prefix GetEnumByPrefix(String prefix) {
-        String prefixNoDash = prefix.replace("-", "");
+    public static Prefix GetEnumByPrefixCode(String prefix_code) {
+        String prefixNoDash = prefix_code.replace("-", "");
         for (Prefix p : Prefix.values()) {
-            if (p.prefix.equals(prefix) || p.GetPrefixAsObject().equals(prefix)) { return p; } 
+            if (p.prefix.equals(prefix_code)) { return p; } 
             if (p.prefix.startsWith(prefixNoDash)) { return p; }
      }
         return null;
     }
-    public static Prefix GetEnumByPrefix(Object prefix) { return Prefix.GetEnumByPrefix(prefix.toString());  }
-    
-    public static boolean FindEnumByPrefix(String prefix) { return Prefix.GetEnumByPrefix(prefix) != null; }
-    public static boolean FindEnumByPrefix(Object prefix) { return Prefix.GetEnumByPrefix(prefix) != null; }
+    public static boolean FindEnumByPrefix(String prefix_code) { return Prefix.GetEnumByPrefixCode(prefix_code) != null; }
 
     // -----------------------------
     // Magic here: Declare the enum constant as a class name.
@@ -82,19 +79,16 @@ public enum Prefix {
         }
         return null;
     }
-
-    public static Prefix GetEnumByClassName(Object className) { return Prefix.GetEnumByClassName(className.toString()); }
     public static boolean FindEnumByClassName(String className) { return Prefix.GetEnumByClassName(className) != null; }
-    public static boolean FindEnumByClassName(Object className) { return Prefix.GetEnumByClassName(className) != null; }
 
     // ----------------------------- 
     // Find the correct enum using either the prefix or class-name without the use of `FindEnumBy...` functions
-    public static Prefix GetEnum(String inpuString) {
-        Prefix p = Prefix.GetEnumByPrefix(inpuString);
+    public static Prefix GetEnum(String inputString) {
+        Prefix p = Prefix.GetEnumByPrefixCode(inputString);
         if (p == null) { 
-            p = Prefix.GetEnumByClassName(inpuString); 
+            p = Prefix.GetEnumByClassName(inputString); 
         }
-        return null;
+        return p;
     }
 
 }
