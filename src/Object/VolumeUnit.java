@@ -59,19 +59,22 @@ public enum VolumeUnit {
     public float GetCoefficientAsFloat() { return (float) this.coefficient; }
 
     // ----------------------------------------------------------
-    // Magic here: Declare the enum constant as a static final field using the prefix.
-    public static VolumeUnit GetEnumByName(String name) {
+    // Find the correct enum here
+    public static VolumeUnit GetEnum(String name) {
         for (VolumeUnit p : VolumeUnit.values()) {
-            if (p.name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
-            if (p.name.toLowerCase().equals(name.toLowerCase())) { return p; }
-            if (p.name.toUpperCase().equals(name.toUpperCase())) { return p; }
+            String p_name = p.GetName();
+            if (p_name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
+            if (p_name.toLowerCase().equals(name.toLowerCase())) { return p; }
+            if (p_name.toUpperCase().equals(name.toUpperCase())) { return p; }
+
+            if (name == p.toString() || p.toString().equals(name)) { return p; }
         }
         return null;
     }
-    public static VolumeUnit GetEnumByName(Object name) { return VolumeUnit.GetEnumByName(name.toString());  }
+    public static VolumeUnit GetEnum(Object name) { return VolumeUnit.GetEnum(name.toString());  }
 
-    public static boolean FindEnumByName(String name) { return VolumeUnit.GetEnumByName(name) != null; }
-    public static boolean FindEnumByName(Object name) { return VolumeUnit.GetEnumByName(name) != null; }
+    public static boolean FindEnum(String name) { return VolumeUnit.GetEnum(name) != null; }
+    public static boolean FindEnum(Object name) { return VolumeUnit.GetEnum(name) != null; }
 
     public static VolumeUnit GetDefaultVolumetUnit() { return VolumeUnit.ML; }
 
@@ -80,5 +83,4 @@ public enum VolumeUnit {
     public static double Convert(VolumeUnit fromUnit, VolumeUnit toUnit) {
         return fromUnit.GetCoefficient() / toUnit.GetCoefficient();
     }
-}
 }

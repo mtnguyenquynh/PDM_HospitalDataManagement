@@ -86,6 +86,16 @@ public enum Prefix {
     public static boolean FindEnumByClassName(String className) { return Prefix.GetEnumByClassName(className) != null; }
     public static boolean FindEnumByClassName(Object className) { return Prefix.GetEnumByClassName(className) != null; }
 
+    // ----------------------------- 
+    // Find the correct enum using either the prefix or class-name without the use of `FindEnumBy...` functions
+    public static Prefix GetEnum(String inpuString) {
+        Prefix p = Prefix.GetEnumByPrefix(inpuString);
+        if (p == null) { 
+            p = Prefix.GetEnumByClassName(inpuString); 
+        }
+        return null;
+    }
+
 }
 
 

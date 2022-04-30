@@ -48,9 +48,11 @@ public enum ToolUnit {
     // Magic here: Declare the enum constant as a static final field using the prefix.
     public static ToolUnit GetEnumByName(String name) {
         for (ToolUnit p : ToolUnit.values()) {
-            if (p.name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
-            if (p.name.toLowerCase().equals(name.toLowerCase())) { return p; }
-            if (p.name.toUpperCase().equals(name.toUpperCase())) { return p; }
+            String p_name = p.GetName();
+            if (p_name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
+            if (p_name.toLowerCase().equals(name.toLowerCase())) { return p; }
+            if (p_name.toUpperCase().equals(name.toUpperCase())) { return p; }
+            if (name == p.toString()) { return p; }
         }
         return null;
     }

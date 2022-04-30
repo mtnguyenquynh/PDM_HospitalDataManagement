@@ -65,18 +65,21 @@ public enum WeightUnit {
 
     // ----------------------------------------------------------
     // Magic here: Declare the enum constant as a static final field using the prefix.
-    public static WeightUnit GetEnumByName(String name) {
+    public static WeightUnit GetEnum(String name) {
         for (WeightUnit p : WeightUnit.values()) {
-            if (p.name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
-            if (p.name.toLowerCase().equals(name.toLowerCase())) { return p; }
-            if (p.name.toUpperCase().equals(name.toUpperCase())) { return p; }
+            String p_name = p.GetName();
+            if (p_name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
+            if (p_name.toLowerCase().equals(name.toLowerCase())) { return p; }
+            if (p_name.toUpperCase().equals(name.toUpperCase())) { return p; }
+
+            if (name == p.toString() || p.toString().equals(name)) { return p; }
         }
         return null;
     }
-    public static WeightUnit GetEnumByName(Object name) { return WeightUnit.GetEnumByName(name.toString());  }
+    public static WeightUnit GetEnum(Object name) { return WeightUnit.GetEnum(name.toString());  }
 
-    public static boolean FindEnumByName(String name) { return WeightUnit.GetEnumByName(name) != null; }
-    public static boolean FindEnumByName(Object name) { return WeightUnit.GetEnumByName(name) != null; }
+    public static boolean FindEnum(String name) { return WeightUnit.GetEnum(name) != null; }
+    public static boolean FindEnum(Object name) { return WeightUnit.GetEnum(name) != null; }
 
     public static WeightUnit GetDefaultWeightUnit() { return WeightUnit.MG; }
 
