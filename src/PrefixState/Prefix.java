@@ -16,10 +16,6 @@ package PrefixState;
  * value of the (enum) constant must be the representation of the class. 
  * Note that all the prefixes are case-sensitive (zero-words duplication).
  * 
- * In the treatment record, we store the patient's ID, the medico record's ID,
- * all the involved medicos (ID), some syncronized information such as name, age 
- * and gender, and the optional description if we want to add some fields on it.
- * 
  * @author Ichiru Take
  * @version 0.0.1
  * 
