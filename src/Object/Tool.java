@@ -1,5 +1,7 @@
 package Object;
 
+import java.util.Hashtable;
+
 import BaseClass.BaseObject;
 import PrefixState.Prefix;
 
@@ -48,7 +50,23 @@ public class Tool extends BaseObject {
     // Getter Function
     public ToolUnit GetUnit() { return this.unit; }
     public static Prefix GetPrefix() { return Tool.prefix; }
-    public String GetPrefixCode() { return Tool.GetPrefix().GetPrefix(); }
+    public static String GetPrefixCode() { return Tool.GetPrefix().GetPrefixCode(); }
 
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Serialization & Deserialization
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> result = super.Serialize();
+        result.put("unit", Tool.prefix.GetPrefixCode());
+        return result;
+    }
+
+    public static Tool Deserialize(Hashtable<String, Object> data) {
+        String ID = (String) data.get("id");
+        String name = (String) data.get("name");
+        String description = (String) data.get("description");
+        int number = (int) data.get("number");
+        ToolUnit unit = ToolUnit.GetEnum((String) data.get("unit"));
+        return new Tool(ID, name, description, number, unit);
+    }
 
 }
