@@ -26,12 +26,12 @@ import Object.MeasurableUnit;
 **/
 
 
-public enum WeightUnit {
+public enum WeightUnit implements MeasurableUnit {
     // ---------------------------------------------------------------------------------------------------------------------
     // Declare enum constants here: This described the most common units of weight used in the hospital, 
     // along with the optimal scale for unit conversion. Set milligram to be default with relative 
     // coefficient as one (1).
-    uG("Microgram"), MG("Milligram"), G("Gram"), KG("Kilogram"), TON("Ton"),
+    UG("Microgram"), MG("Milligram"), G("Gram"), KG("Kilogram"), TON("Ton"),
     OZ("Ounce"), LB("Pound"), ST("Stone"), CARAT("Carat"), 
     ;
 
@@ -45,7 +45,7 @@ public enum WeightUnit {
     public static double SetCoefficient(WeightUnit unit) { 
         if (unit.coefficient == 0) {
             switch (unit) {
-                case uG: unit.coefficient = 1e-3;
+                case UG: unit.coefficient = 1e-3;
                 case CARAT: unit.coefficient = 0.2;
                 case MG: unit.coefficient = 1.0; 
                 case OZ: unit.coefficient = 28.349523; 
@@ -62,9 +62,11 @@ public enum WeightUnit {
     public Object GetNameAsObject() { return (Object) this.GetName(); }
     public double GetCoefficient() { return this.coefficient; }
     public float GetCoefficientAsFloat() { return (float) this.coefficient; }
+    public Object GetCoefficientAsObject()  { return (Object) this.coefficient; }
+    public int GetCoefficientAsInt() { return (int) this.coefficient; }
 
     // ----------------------------------------------------------
-    // Magic here: Declare the enum constant as a static final field using the prefix.
+    // Magic here: Declare the enum constant as a static final field using the name.
     public static WeightUnit GetEnum(String name) {
         for (WeightUnit p : WeightUnit.values()) {
             String p_name = p.GetName();
@@ -81,7 +83,7 @@ public enum WeightUnit {
     public static boolean FindEnum(String name) { return WeightUnit.GetEnum(name) != null; }
     public static boolean FindEnum(Object name) { return WeightUnit.GetEnum(name) != null; }
 
-    public static WeightUnit GetDefaultWeightUnit() { return WeightUnit.MG; }
+    public static WeightUnit GetDefault() { return WeightUnit.MG; }
 
     // ----------------------------------------------------------
     // Do conversion here

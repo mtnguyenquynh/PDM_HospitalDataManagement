@@ -33,14 +33,14 @@ import Utility.Utils;
 public class BaseObject extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     private String description;           // This is the description of the object
-    private int amount;                   // This is the amount or number of the object
+    private int number;                   // This is the amount or number of the object
     
-    public BaseObject(String ID, String name, String description, int amount) {
+    public BaseObject(String ID, String name, String description, int number) {
         super(ID, name);
 
-        Utils.CheckArgumentCondition(amount >= 0, "Amount/number cannot be negative.");
+        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         this.description = (description == null) ? "": description;
-        this.amount = amount;
+        this.number = number;
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -48,16 +48,16 @@ public class BaseObject extends AbstractObject {
     public String GetDescription() { return this.description; }
     public void SetDescription(String description) { this.description = (description == null) ? "" : description; }
 
-    public int GetAmount() { return this.amount; }
-    public void SetAmount(int amount) { this.amount = (amount < 0) ? 0 : amount; }
+    public int GetNumber() { return this.number; }
+    public void SetNumber(int number) { this.number = (number < 0) ? 0 : number; }
 
-    public void UpdateAmount(int amount) {
-        if (amount < 0) { throw new IllegalArgumentException("Amount/number cannot be negative."); }
-        this.amount += amount;
+    public void UpdateNumber(int number) {
+        if (number < 0) { throw new IllegalArgumentException("Number cannot be negative."); }
+        this.number += number;
     }
-    public void DecrementAmount(int amount) {
-        if (amount < 0) { throw new IllegalArgumentException("Amount/number cannot be negative."); }
-        this.amount -= amount;
+    public void DecrementNumber(int number) {
+        if (number < 0) { throw new IllegalArgumentException("Number cannot be negative."); }
+        this.number -= number;
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ public class BaseObject extends AbstractObject {
     public Hashtable<String, Object> Serialize() {
         Hashtable<String, Object> result = super.Serialize();
         result.put("description", this.GetDescription());
-        result.put("amount", this.GetAmount());
+        result.put("number", this.GetNumber());
         return result;
     }
 
@@ -73,7 +73,7 @@ public class BaseObject extends AbstractObject {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         String description = (String) data.get("description");
-        int amount = (int) data.get("amount");
-        return new BaseObject(ID, name, description, amount);
+        int number = (int) data.get("number");
+        return new BaseObject(ID, name, description, number);
     }
 }

@@ -12,7 +12,7 @@ package Object;
 
 /**
  * This module described a set/pool of enum-object (which can declared) 
- * used to measure the volume of something.
+ * used to measure the length of something.
  * Note that all the enum constant and its value are case-sensitive (zero-words duplication).
  * 
  * @author Ichiru Take
@@ -23,32 +23,34 @@ package Object;
  * 2) https://codereview.stackexchange.com/questions/88418/enum-constants-for-convert-units
 **/
 
-public enum VolumeUnit implements MeasurableUnit {
+public enum LengthUnit implements MeasurableUnit {
     // ---------------------------------------------------------------------------------------------------------------------
-    // Declare enum constants here: This described the most common units of volumes used in the hospital, 
-    // along with the optimal scale for unit conversion. Set milligram to be default with relative 
+    // Declare enum constants here: This described the most common units of length used in the hospital, 
+    // along with the optimal scale for unit conversion. Set milli-meter to be default with relative 
     // coefficient as one (1).
-    ML("Milli-liter"), L("Liter"), DROPLET("Droplet"),
-    OZ("Ounce"), PINT("Pint"), QUART("Quart"), GALLON("Gallon"),
+    MM("Millimeter"), CM("Centimeter"), M("Meter"), KM("Kilometer"),
+    IN("Inch"), FT("Foot"), YD("Yard"), MI("Mile"),
+
     ;
 
     // ---------------------------------------------------------------------------------------------------------------------
     private final String name;
     private double coefficient = 0.0d;
 
-    VolumeUnit(String name) { this.name = name; SetCoefficient(this); }
-    VolumeUnit(Object name) { this.name = (String) name; SetCoefficient(this);}
+    LengthUnit(String name) { this.name = name; SetCoefficient(this); }
+    LengthUnit(Object name) { this.name = (String) name; SetCoefficient(this);}
 
-    public static double SetCoefficient(VolumeUnit unit) { 
+    public static double SetCoefficient(LengthUnit unit) { 
         if (unit.coefficient == 0) {
             switch (unit) {
-                case ML: unit.coefficient = 1;
-                case L: unit.coefficient = 1000.0;
-                case DROPLET: unit.coefficient = 0.001;
-                case OZ: unit.coefficient = 29.5735295625;
-                case PINT: unit.coefficient = 473.176473;
-                case QUART: unit.coefficient = 946.352946;
-                case GALLON: unit.coefficient = 3785.411784;
+                case MM: unit.coefficient = 1.0;
+                case CM: unit.coefficient = 10.0;
+                case M: unit.coefficient = 1.0e3; 
+                case KM: unit.coefficient = 1.0e6; 
+                case IN: unit.coefficient = 25.4; 
+                case FT: unit.coefficient = 304.8; 
+                case YD: unit.coefficient = 914.4; 
+                case MI: unit.coefficient = 1609344.0;
             }
         }
         return unit.coefficient;
@@ -62,8 +64,8 @@ public enum VolumeUnit implements MeasurableUnit {
 
     // ----------------------------------------------------------
     // Find the correct enum here
-    public static VolumeUnit GetEnum(String name) {
-        for (VolumeUnit p : VolumeUnit.values()) {
+    public static LengthUnit GetEnum(String name) {
+        for (LengthUnit p : LengthUnit.values()) {
             String p_name = p.GetName();
             if (p_name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
             if (p_name.toLowerCase().equals(name.toLowerCase())) { return p; }
@@ -73,16 +75,14 @@ public enum VolumeUnit implements MeasurableUnit {
         }
         return null;
     }
-    public static VolumeUnit GetEnum(Object name) { return VolumeUnit.GetEnum(name.toString());  }
-
-    public static boolean FindEnum(String name) { return VolumeUnit.GetEnum(name) != null; }
-    public static boolean FindEnum(Object name) { return VolumeUnit.GetEnum(name) != null; }
-
-    public static VolumeUnit GetDefault() { return VolumeUnit.ML; }
+    public static LengthUnit GetEnum(Object name) { return LengthUnit.GetEnum(name.toString());  }
+    public static boolean FindEnum(String name) { return LengthUnit.GetEnum(name) != null; }
+    public static boolean FindEnum(Object name) { return LengthUnit.GetEnum(name) != null; }
+    public static LengthUnit GetDefault() { return LengthUnit.MM; }
 
     // ----------------------------------------------------------
     // Do conversion here
-    public static double Convert(VolumeUnit fromUnit, VolumeUnit toUnit) {
+    public static double Convert(LengthUnit fromUnit, LengthUnit toUnit) {
         return fromUnit.GetCoefficient() / toUnit.GetCoefficient();
     }
 }

@@ -45,8 +45,8 @@ public enum ToolUnit {
     public Object GetNameAsObject() { return (Object) this.GetName(); }
 
     // ----------------------------------------------------------
-    // Magic here: Declare the enum constant as a static final field using the prefix.
-    public static ToolUnit GetEnumByName(String name) {
+    // Magic here: Declare the enum constant as a static final field using the name.
+    public static ToolUnit GetEnum(String name) {
         for (ToolUnit p : ToolUnit.values()) {
             String p_name = p.GetName();
             if (p_name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
@@ -56,10 +56,10 @@ public enum ToolUnit {
         }
         return null;
     }
-    public static ToolUnit GetEnumByName(Object name) { return ToolUnit.GetEnumByName(name.toString());  }
+    public static ToolUnit GetEnum(Object name) { return ToolUnit.GetEnum(name.toString());  }
 
-    public static boolean FindEnumByName(String name) { return ToolUnit.GetEnumByName(name) != null; }
-    public static boolean FindEnumByName(Object name) { return ToolUnit.GetEnumByName(name) != null; }
+    public static boolean FindEnum(String name) { return ToolUnit.GetEnum(name) != null; }
+    public static boolean FindEnum(Object name) { return ToolUnit.GetEnum(name) != null; }
 
-    public static ToolUnit GetDefaultToolUnit() { return ToolUnit.UNIT; }
+    public static ToolUnit GetDefault() { return ToolUnit.UNIT; }
 }

@@ -24,21 +24,14 @@ package Object;
 **/
 
 
-public class MeasurableUnit {
-    // ---------------------------------------------------------------------------------------------------------------------
-    private final double coefficient;
-
-    public MeasurableUnit(double coefficient) { this.coefficient = coefficient; }
-    public MeasurableUnit(Object coefficient) { this.coefficient = (double) coefficient; }
-    public MeasurableUnit(float coefficient) { this.coefficient = (double) coefficient; }
-    public MeasurableUnit(int coefficient) { this.coefficient = (double) coefficient; }
-
+public interface MeasurableUnit {
+    
     // ----------------------------------------------------------
     // Getter
-    public double GetCoefficient() { return this.coefficient; }
-    public Object GetCoefficientAsObject() { return (Object) this.coefficient; }
-    public float GetCoefficientAsFloat() { return (float) this.coefficient; }
-    public int GetCoefficientAsInt() { return (int) this.coefficient; }
+    public double GetCoefficient();
+    public Object GetCoefficientAsObject();
+    public float GetCoefficientAsFloat();
+    public int GetCoefficientAsInt();
 
     // ----------------------------------------------------------
     // Calculate the conversion between two units.

@@ -1,5 +1,7 @@
 package Object;
 
+import java.lang.Enum;
+
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
 * All Rights Reserved
@@ -21,44 +23,19 @@ package Object;
  * 
  * References:
  * 1) https://stackoverflow.com/questions/23496165/initiating-an-enum-as-value
+ * 2) https://stackoverflow.com/questions/8732710/enum-within-an-enum
+ * 3) https://stackoverflow.com/questions/10017729/multiple-enum-classes-in-one-java-file (Recommended)
 **/
 
 
-public enum ResourcesUnit {
+public class ResourcesUnit {
     // ---------------------------------------------------------------------------------------------------------------------
-    // Please sort by the alphabetical order of the class name if another developers jump into.
-    BOX("Box"),
-    COMBO("Combo"), 
-    PACKAGE("Package"),
-    PAIRS("Pairs"),
-    SET("Set"),
-    UNIT("Unit"),
-
-    ;
-
-    // ---------------------------------------------------------------------------------------------------------------------
-    // Declare enum constants here.
-    private final String name;
-    ResourcesUnit(String name) { this.name = name; }
-    ResourcesUnit(Object name) { this.name = (String) name; }
-    
-    public String GetName() { return this.name; }
-    public Object GetNameAsObject() { return (Object) this.GetName(); }
-
-    // ----------------------------------------------------------
-    // Magic here: Declare the enum constant as a static final field using the prefix.
-    public static ResourcesUnit GetEnumByName(String name) {
-        for (ResourcesUnit p : ResourcesUnit.values()) {
-            if (p.name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
-            if (p.name.toLowerCase().equals(name.toLowerCase())) { return p; }
-            if (p.name.toUpperCase().equals(name.toUpperCase())) { return p; }
-        }
-        return null;
+    public static Enum GetEnum(String name) throws IllegalArgumentException {
+        Enum p = null;
+        if (p == null) { p = WeightUnit.GetEnum(name); }
+        if (p == null) { p = VolumeUnit.GetEnum(name); }
+        if (p == null) { p = LengthUnit.GetEnum(name); }
+        if (p == null) {throw new IllegalArgumentException("No such enum constant: " + name); }
+        return p;
     }
-    public static ResourcesUnit GetEnumByName(Object name) { return ResourcesUnit.GetEnumByName(name.toString());  }
-
-    public static boolean FindEnumByName(String name) { return ResourcesUnit.GetEnumByName(name) != null; }
-    public static boolean FindEnumByName(Object name) { return ResourcesUnit.GetEnumByName(name) != null; }
-
-    public static ResourcesUnit GetDefaultToolUnit() { return ResourcesUnit.UNIT; }
 }
