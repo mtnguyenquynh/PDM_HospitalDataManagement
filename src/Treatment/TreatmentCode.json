@@ -1,0 +1,7 @@
+[
+    {"TreatmentCode": {"key_code": "TmC-00-00-0000", "description": "Null or Empty treatment"}}, 
+    {"TreatmentCode": {"key_code": "TmC-00-00-0001", "description": "X-rays"}}, 
+    {"TreatmentCode": {"key_code": "TmC-00-00-0002", "description": "Blood test"}}, 
+    {"TreatmentCode": {"key_code": "TmC-00-00-0003", "description": "Surgical operation"}}, 
+    {"TreatmentCode": {"key_code": "TmC-00-00-0004", "description": "Health-check"}}
+]
