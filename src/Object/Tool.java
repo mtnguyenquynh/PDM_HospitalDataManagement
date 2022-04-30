@@ -56,7 +56,7 @@ public class Tool extends BaseObject {
     // Serialization & Deserialization
     public Hashtable<String, Object> Serialize() {
         Hashtable<String, Object> result = super.Serialize();
-        result.put("unit", Tool.prefix.GetPrefixCode());
+        result.put("unit", this.GetUnit().GetName());
         return result;
     }
 

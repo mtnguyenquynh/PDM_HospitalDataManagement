@@ -1,6 +1,9 @@
 package Object;
 
+import java.util.Hashtable;
+
 import BaseClass.BaseObject;
+import PrefixState.Prefix;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -29,8 +32,10 @@ import BaseClass.BaseObject;
 
 public class Resource extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
-    private float price;
     private final ResourcesUnit unit;
+    private float price;
+    private static final Prefix prefix = Prefix.Resource;
+   
 
     public Resource(String ID, String name, String description, int number, ResourcesUnit unit, 
                     float price) {
@@ -72,4 +77,28 @@ public class Resource extends BaseObject {
     // ----------------------------------------------------------
     public ResourcesUnit GetUnit() { return this.unit; }
     public String GetUnitAsString() { return this.unit.toString(); }
+
+    public static Prefix GetPrefix() { return Resource.prefix; }
+    public static String GetPrefixCode() { return Resource.GetPrefix().GetPrefixCode(); }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Serialization & Deserialization
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> result = super.Serialize();
+        result.put("price", this.price);
+        result.put("unit_name", this.GetUnit().GetName());
+        result.put("unit_type", this.GetUnit().GetType());
+        return result;
+    }
+
+    public static Resource Deserialize(Hashtable<String, Object> data) {
+        String ID = (String) data.get("id");
+        String name = (String) data.get("name");
+        String description = (String) data.get("description");
+        int number = (int) data.get("number");
+        ResourcesUnit unit = ResourcesUnit.GetEnum((String) data.get("unit_name"), (String) data.get("unit_type"));
+        float price = (float) data.get("price");
+        return new Resource(ID, name, description, number, unit, price);
+    }
+
 }
