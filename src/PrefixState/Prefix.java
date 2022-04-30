@@ -14,6 +14,7 @@ package PrefixState;
  * This file described a set/pool of prefix by the class name.
  * The enum constant must be the same as the class name, while the
  * value of the (enum) constant must be the representation of the class. 
+ * Note that all the prefixes are case-sensitive (zero-words duplication).
  * 
  * In the treatment record, we store the patient's ID, the medico record's ID,
  * all the involved medicos (ID), some syncronized information such as name, age 
@@ -28,18 +29,27 @@ package PrefixState;
 
 
 public enum Prefix {
-    // Declare enum constants here.
-    Patient("PT-"),
-    Doctor("DR-"),
-    Nurse("Nr-"),
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Declare enum constants here: Core System for Patient-Medico Interaction
+    Patient("Pt-"),
+    Doctor("Dt-"),
+    Nurse("Ns-"),
     MedicalRecord("MR-"),
 
     Treatment("Tm-"), 
     TreatmentCode("TmC-"), 
+    
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Declare enum constants here: Global Pool to keep track of objects in the hospital.
+    Tool("Tl-"),
+    Resources("Rs-"),
+    Room("Rm-"),
+    PatientRoom("PR-"),
+    MedicoRoom("MR-"),
+    ObjectRoom("OR-"),
+    LToolPool("LT-"),
+    LResourcesPool("LR-"),
     ;
-
-
-
 
 
 
