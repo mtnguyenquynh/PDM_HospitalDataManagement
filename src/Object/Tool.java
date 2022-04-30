@@ -1,6 +1,7 @@
 package Object;
 
 import BaseClass.BaseObject;
+import PrefixState.Prefix;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -31,6 +32,7 @@ import BaseClass.BaseObject;
 public class Tool extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     private final ToolUnit unit;
+    private final Prefix prefix = Prefix.Tool;
 
     public Tool(String ID, String name, String description, int amount, ToolUnit unit) {
         // You may want to add more fields or attributes here.

@@ -39,6 +39,7 @@ public enum Prefix {
     // Declare enum constants here: Global Pool to keep track of objects in the hospital.
     Tool("Tl-"),
     Resources("Rs-"),
+    
     Room("Rm-"),
     PatientRoom("PR-"),
     MedicoRoom("MR-"),

@@ -43,7 +43,7 @@ public class TreatmentCode {
     // These two directory are the saved configuration of all treatment codes. 
     private final static String MainJsonDirectory = "src/Treatment/TreatmentCode.json";
     private final static String SafeJsonDirectory = "src/Treatment/TreatmentCode-Restored.json";
-    private final static String prefix = Prefix.TreatmentCode.GetPrefix();
+    private final static Prefix prefix = Prefix.TreatmentCode;
     private final static String Name = TreatmentCode.class.getSimpleName();
     private final static String[] ArgName = {"key_code", "description"};
 
@@ -97,11 +97,13 @@ public class TreatmentCode {
 
     private static void _InitPool_() {
         TreatmentCode.Pool.clear();
-        TreatmentCode.Pool.put(TreatmentCode.prefix + "00-00-0000", "Null or Empty treatment");
-        TreatmentCode.Pool.put(TreatmentCode.prefix + "00-00-0001", "X-rays");
-        TreatmentCode.Pool.put(TreatmentCode.prefix + "00-00-0002", "Blood test");
-        TreatmentCode.Pool.put(TreatmentCode.prefix + "00-00-0003", "Surgical operation");
-        TreatmentCode.Pool.put(TreatmentCode.prefix + "00-00-0004", "Health-check");
+        String prefix_code = TreatmentCode.prefix.GetPrefix();
+
+        TreatmentCode.Pool.put(prefix_code + "00-00-0000", "Null or Empty treatment");
+        TreatmentCode.Pool.put(prefix_code + "00-00-0001", "X-rays");
+        TreatmentCode.Pool.put(prefix_code + "00-00-0002", "Blood test");
+        TreatmentCode.Pool.put(prefix_code + "00-00-0003", "Surgical operation");
+        TreatmentCode.Pool.put(prefix_code + "00-00-0004", "Health-check");
     }
 
     private static void InitializePool() throws InternalError {
@@ -135,7 +137,8 @@ public class TreatmentCode {
     public static int GetCapacity() { return capacity; }
     public static float GetPreloadFactor() { return loadFactor; }
     public static int GetNumberOfCodeAvailable() { return Pool.size(); }
-    public static String GetPrefix() { return TreatmentCode.prefix; }
+    public static Prefix GetPrefix() { return TreatmentCode.prefix; }
+    public static String GetPrefixCode() { return TreatmentCode.prefix.GetPrefix(); }
 
     public static void Display() {
         Iterator<Entry<String, Object>> iter = TreatmentCode.Pool.entrySet().iterator();
@@ -155,8 +158,8 @@ public class TreatmentCode {
     // ---------------------------------------------------------------------------------------------------------------------
     // Validation Function Only
     public static boolean ValidateKeyCode(String code) {
-        if (code == null || code.length() != 10 + TreatmentCode.prefix.length()) { return false; }
-        if (!code.startsWith(TreatmentCode.prefix)) {return false; }
+        if (code == null || code.length() != 10 + TreatmentCode.GetPrefixCode().length()) { return false; }
+        if (!code.startsWith(TreatmentCode.GetPrefixCode())) {return false; }
         return true;
     }
 
