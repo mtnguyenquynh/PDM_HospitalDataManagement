@@ -2,6 +2,7 @@
     "java.project.referencedLibraries": {
         "include": [
             "/lib/json-simple-1.1.jar",
+            "/lib/commons-lang3-3.12.0.jar",
             "lib/**/*.jar"
         ],
         "exclude": [

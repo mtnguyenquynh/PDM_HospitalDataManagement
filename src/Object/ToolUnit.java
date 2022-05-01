@@ -32,34 +32,26 @@ public enum ToolUnit {
     PAIRS("Pairs"),
     SET("Set"),
     UNIT("Unit"),
-
     ;
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Declare enum constants here.
     private final String name;
-    ToolUnit(String name) { this.name = name; }
-    ToolUnit(Object name) { this.name = (String) name; }
-    
+    ToolUnit(String name) { this.name = name; }    
     public String GetName() { return this.name; }
-    public Object GetNameAsObject() { return (Object) this.GetName(); }
 
     // ----------------------------------------------------------
     // Magic here: Declare the enum constant as a static final field using the name.
     public static ToolUnit GetEnum(String name) {
         for (ToolUnit p : ToolUnit.values()) {
             String p_name = p.GetName();
-            if (p_name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
+            if (p_name.equals(name)) { return p; } 
             if (p_name.toLowerCase().equals(name.toLowerCase())) { return p; }
             if (p_name.toUpperCase().equals(name.toUpperCase())) { return p; }
             if (name == p.toString()) { return p; }
         }
         return null;
     }
-    public static ToolUnit GetEnum(Object name) { return ToolUnit.GetEnum(name.toString());  }
-
     public static boolean FindEnum(String name) { return ToolUnit.GetEnum(name) != null; }
-    public static boolean FindEnum(Object name) { return ToolUnit.GetEnum(name) != null; }
-
     public static ToolUnit GetDefault() { return ToolUnit.UNIT; }
 }

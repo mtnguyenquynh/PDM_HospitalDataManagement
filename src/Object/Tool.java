@@ -1,6 +1,9 @@
 package Object;
 
+import java.util.Hashtable;
+
 import BaseClass.BaseObject;
+import PrefixState.Prefix;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -31,6 +34,7 @@ import BaseClass.BaseObject;
 public class Tool extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     private final ToolUnit unit;
+    private static final Prefix prefix = Prefix.Tool;
 
     public Tool(String ID, String name, String description, int amount, ToolUnit unit) {
         // You may want to add more fields or attributes here.
@@ -45,4 +49,31 @@ public class Tool extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter Function
     public ToolUnit GetUnit() { return this.unit; }
+    public static Prefix GetPrefix() { return Tool.prefix; }
+    public static String GetPrefixCode() { return Tool.GetPrefix().GetPrefixCode(); }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Serialization & Deserialization
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> result = super.Serialize();
+        result.put("unit", this.GetUnit().GetName());
+        return result;
+    }
+
+    public static Tool Deserialize(Hashtable<String, Object> data) {
+        String ID = (String) data.get("id");
+        String name = (String) data.get("name");
+        String description = (String) data.get("description");
+        int number = (int) data.get("number");
+        ToolUnit unit = ToolUnit.GetEnum((String) data.get("unit"));
+        return new Tool(ID, name, description, number, unit);
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    public boolean CheckToolID(String ToolID) { 
+        if (ToolID == null) { return false; }
+        return this.GetID() == ToolID || this.GetID().equals( ToolID); 
+    }
+    public boolean CheckToolID(Object ToolID) { return this.CheckToolID(ToolID.toString()); }
+
 }

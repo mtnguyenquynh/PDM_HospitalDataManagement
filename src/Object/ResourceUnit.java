@@ -28,7 +28,7 @@ import java.lang.Enum;
 **/
 
 
-public enum ResourcesUnit {
+public enum ResourceUnit {
     // ---------------------------------------------------------------------------------------------------------------------
     /**
      * This enums will contained all measurable units in real-world here
@@ -98,7 +98,7 @@ public enum ResourcesUnit {
     private final String name;
     private final String type;
     private final double coefficient;
-    ResourcesUnit(String name, String type, double coefficient) {
+    ResourceUnit(String name, String type, double coefficient) {
         this.name = name; 
         this.type = type;
         this.coefficient = coefficient; 
@@ -107,22 +107,19 @@ public enum ResourcesUnit {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Get-Default Functions
     public String GetName() { return this.name; }
-    public Object GetNameAsObject() { return (Object) this.GetName(); }
 
     public String GetType() { return this.type; }
-    public Object GetTypeAsObject() { return (Object) this.GetType(); }
 
     public double GetCoefficient() { return this.coefficient; }
     public float GetCoefficientAsFloat() { return (float) this.coefficient; }
-    public Object GetCoefficientAsObject() { return (Object) this.coefficient; }
     public int GetCoefficientAsInt() { return (int) this.coefficient; }
 
-    public static ResourcesUnit GetStaticDefault() { return ResourcesUnit.UNIT; }
+    public static ResourceUnit GetStaticDefault() { return ResourceUnit.UNIT; }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Find the correct enum here
-    public static ResourcesUnit GetEnum(String name, String type) {
-        for (ResourcesUnit p : ResourcesUnit.values()) {
+    public static ResourceUnit GetEnum(String name, String type) {
+        for (ResourceUnit p : ResourceUnit.values()) {
             if (name == p.toString() || p.toString().equals(name)) { return p; }
             if (type == p.toString() || p.toString().equals(type)) { return p; }
             
@@ -135,26 +132,24 @@ public enum ResourcesUnit {
                 continue;
             }
             // The type is guaranteed to be correct, so we can compare the name
-            if (p_name.equals(name) || p.GetNameAsObject().equals(name)) { return p; } 
+            if (p_name.equals(name)) { return p; } 
             if (p_name.toLowerCase().equals(name.toLowerCase())) { return p; }
             if (p_name.toUpperCase().equals(name.toUpperCase())) { return p; }
-
-            
         }
         return null;
     }
-    public static boolean FindEnum(String name, String type) { return ResourcesUnit.GetEnum(name, type) != null; }
-    public static ResourcesUnit GetDefault() { return ResourcesUnit.UNIT; }
+    public static boolean FindEnum(String name, String type) { return ResourceUnit.GetEnum(name, type) != null; }
+    public static ResourceUnit GetDefault() { return ResourceUnit.UNIT; }
 
     // ----------------------------------------------------------
     // Do conversion here
-    public static double Convert(ResourcesUnit fromUnit, ResourcesUnit toUnit) {
+    public static double Convert(ResourceUnit fromUnit, ResourceUnit toUnit) {
         if (!fromUnit.GetType().equals(toUnit.GetType()) ) {
             throw new IllegalArgumentException("The two units are not of the same type.");
         }
         return fromUnit.GetCoefficient() / toUnit.GetCoefficient();
     }
-    public double Convert(ResourcesUnit toUnit) { return ResourcesUnit.Convert(this, toUnit); }
+    public double Convert(ResourceUnit toUnit) { return ResourceUnit.Convert(this, toUnit); }
 
 
 }
