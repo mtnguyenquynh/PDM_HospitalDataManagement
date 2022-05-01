@@ -50,7 +50,11 @@ public class GToolPool {
     // Connection to Directory
     private final static String FOLDER_DIRECTORY = "database/GlobalPool/"; 
     private final static String DEFINITION_FILENAME = "Tool.json";
+
+    // Worked on later
     private final static String DB_FILENAME = "tool_pool.json"; // Later definition
+    private final static String ROOM_CODE_DIRECTORY = "database/StorageRoom/";
+
 
     // This is used to store a view for modification. This laid a foundation for GResourcePool,
     // which is much more complicated to program.
@@ -70,8 +74,13 @@ public class GToolPool {
         return new Tool(ID, name, description, amount, unit);
     }
 
+    public boolean CheckIsToolAtIndexANull(int index) { 
+        this.CheckIndexInRange(index);
+        return this.LocalPool.get(index) == null; 
+    }
+
     /**
-     * This function is to add a tool inside the (local) array here
+     * This function is to safely add a tool inside the (local) array here
      * @param tool (Tool): The considered `Tool` to insert in array
      * @param index (int): The index to insert the tool
      * @param force (boolean): If true, the tool will be inserted even if the index is occupied.
@@ -80,6 +89,8 @@ public class GToolPool {
      * @return Tool
      */
     public Tool AddToolToLocalPool(Tool tool, int index, boolean force) {
+        if (tool == null) { this.EmptyToolByIndex(index); return null;}
+
         this.CheckIndexInRange(index);
         if (this.GetToolByIndex(index) == null) {
             this.LocalPool.add(index, tool);
@@ -97,10 +108,9 @@ public class GToolPool {
      * @return Tool
      */
     public Tool GetTool(String ToolID) {
-        for (int i = 0; i < GToolPool.GetCapacity(); i++) {
-            Tool toolTemp = this.LocalPool.get(i);
-            if (toolTemp != null) {
-                if (toolTemp.CheckToolID(ToolID)) { return toolTemp; }
+        for (Tool tool: this.LocalPool) {
+            if (tool != null) {
+                 if (tool.CheckToolID(ToolID)) { return tool; }
             }
         }
         throw new IllegalArgumentException("The tool with ID: " + ToolID + " is not found.");
@@ -108,35 +118,32 @@ public class GToolPool {
 
     /**
      * This function is to get a tool inside the (local) array here but accept null output. 
-     * @param ToolID (String): If ToolID not found, then the method will raise an 
-     *                         IllegalArgumentException.
-     * @return Tool
+     * @param index (int): The index to get the tool
+     * @return Tool (Note that a null output is acceptable)
      */
-
     public Tool GetToolByIndex(int index) {
         this.CheckIndexInRange(index);
         return this.LocalPool.get(index);
     }
 
-    public Tool PopTool(String ToolID) {
-        this.CheckInputToolID(ToolID);
-        for (int i = 0; i < GToolPool.GetCapacity(); i++) {
-            Tool toolTemp = this.LocalPool.get(i);
-            if (toolTemp != null) {
-                if (toolTemp.CheckToolID(ToolID)) {
-                    return this.LocalPool.remove(i);
-                }
-            }
-        }
-        throw new IllegalArgumentException("The tool with ID: " + ToolID + " is not found.");
-    }
 
-    public Tool PopToolByIndex(int index) {
+    /**
+     * This function is to replace a tool inside the (local) array here
+     * @param tool (Tool): The considered `Tool` to insert in array
+     * @param index (int): The index to remove the tool
+     * @return Tool (the previous tool stored at `index`)
+     */
+    public Tool ReplaceTool(Tool tool, int index) {
         this.CheckIndexInRange(index);
-        return this.LocalPool.set(index, null);
+        return this.LocalPool.set(index, tool);
     }
 
-
+    /**
+     * This function is to remove a tool inside the (local) array here
+     * @param index (int): The index to remove the tool
+     * @return Tool (the previous tool stored at `index`)
+     */
+    public Tool EmptyToolByIndex(int index) { return this.ReplaceTool(null, index); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter Functions for Local Attributes
@@ -144,6 +151,8 @@ public class GToolPool {
     public static String GetDefinitionFilename() { return GToolPool.DEFINITION_FILENAME; } 
     public static String GetDBFilename() { return GToolPool.DB_FILENAME; }
     public static int GetCapacity() { return GToolPool.CAPACITY; }
+
+    public ArrayList<Tool> GetPool() { return this.LocalPool; }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Initialize the pool & Several Ultility Functions
@@ -160,10 +169,6 @@ public class GToolPool {
         if (index < 0 || index > GToolPool.GetCapacity()) { 
             throw new IndexOutOfBoundsException("The index must be between 0 and " + (GToolPool.GetCapacity() - 1));
         }
-    }
-
-    private void CheckInputToolID(String ToolID) {
-        if (ToolID == null) { throw new IllegalArgumentException("The ToolID cannot be null."); }
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
