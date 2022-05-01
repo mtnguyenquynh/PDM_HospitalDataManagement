@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import BaseClass.CreationDateTime;
+import PrefixState.Prefix;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -54,13 +55,13 @@ public class Treatment extends CreationDateTime {
 	private String P_Name, P_Age, P_Gender; 			// Syncronized information only from patients
 	
 	// ----------------------------------------------------------
-	private final static String prefix = "TM-";
+	private final static String prefix = Prefix.Treatment.GetPrefix();
 	private String index; 						// This represented the index placed in the medical-record				
 	private String code;					// This connected directly to the treatment code pool
-	private ArrayList<Hashtable<String, String>> descriptions; 	// This is the description of the treatment
+	private ArrayList<Hashtable<String, Object>> descriptions; 	// This is the description of the treatment
 
 	private ArrayList<String> supDirectoryList; 	// This field stored the directory of the supplementary materials (images)
-	private ArrayList<Hashtable<String, String>> resourcesTable; 	// This field records all resources as a table
+	private ArrayList<Hashtable<String, Object>> resourcesTable; 	// This field records all resources as a table
 
 
 	public Treatment(String Patient_ID, String MedicalRecord_ID, String P_Name, String P_Age, 
@@ -83,10 +84,10 @@ public class Treatment extends CreationDateTime {
 		} else {
 			throw new IllegalArgumentException("Invalid code: " + code);
 		}
-		this.descriptions = new ArrayList<Hashtable<String, String>>(Treatment.MAX_NUM_DESCRIPTIONS);
+		this.descriptions = new ArrayList<Hashtable<String, Object>>(Treatment.MAX_NUM_DESCRIPTIONS);
 
 		this.supDirectoryList = new ArrayList<String>(Treatment.MAX_NUM_SUP);
-		this.resourcesTable = new ArrayList<Hashtable<String, String>>(Treatment.MAX_NUM_RESOURCES);
+		this.resourcesTable = new ArrayList<Hashtable<String, Object>>(Treatment.MAX_NUM_RESOURCES);
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------
@@ -114,14 +115,14 @@ public class Treatment extends CreationDateTime {
 	}
 
 	// -----------------------------
-	public ArrayList<Hashtable<String, String>> GetAllDescriptions() { return this.descriptions; }
+	public ArrayList<Hashtable<String, Object>> GetAllDescriptions() { return this.descriptions; }
 	public int GetNumDescriptions() { return this.GetAllDescriptions().size(); }
 
-	public Hashtable<String, String> GetSerializedDescriptionAtIndex(int index) { 
+	public Hashtable<String, Object> GetSerializedDescriptionAtIndex(int index) { 
 		return this.GetAllDescriptions().get(index); 
 	}
 	public Description GetDescriptionAtIndex(int index) {
-		return Description.deserialize(this.GetSerializedDescriptionAtIndex(index));
+		return Description.Deserialize(this.GetSerializedDescriptionAtIndex(index));
 	}
 	/**
 	 * This function is used to add a new description to the treatment as an array of string.
@@ -131,7 +132,7 @@ public class Treatment extends CreationDateTime {
 	 */
 	public void AddNewDescriptionAtTheEnd(String description, String writer) {
 		Description desc = new Description(description, writer);
-		Hashtable<String, String> serialized_description = desc.serialize();
+		Hashtable<String, Object> serialized_description = desc.Serialize();
 		this.descriptions.add(serialized_description);
 	}
 
@@ -142,14 +143,14 @@ public class Treatment extends CreationDateTime {
 	public void AddNewSupDirAtTheEnd(String sup_dir) { this.supDirectoryList.add(sup_dir); }
 
 	// -----------------------------
-	public ArrayList<Hashtable<String, String>> GetAllResources() { return this.resourcesTable; }
+	public ArrayList<Hashtable<String, Object>> GetAllResources() { return this.resourcesTable; }
 	public int GetNumResources() { return this.GetAllResources().size(); }
-	public Hashtable<String, String> GetSerializedResourceAtIndex(int index) { 
+	public Hashtable<String, Object> GetSerializedResourceAtIndex(int index) { 
 		return this.GetAllResources().get(index); 
 	}
 
 	public void AddNewResourceAtTheEnd(String resource_id, int amount) {
-		Hashtable<String, String> new_resource = new Hashtable<String, String>(2);
+		Hashtable<String, Object> new_resource = new Hashtable<String, Object>(2);
 		new_resource.put("id", resource_id);
 		new_resource.put("amount", Integer.toString(amount));
 		this.resourcesTable.add(new_resource);
