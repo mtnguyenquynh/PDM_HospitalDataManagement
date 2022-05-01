@@ -78,7 +78,7 @@ public class RoomUnit extends IntermediateObject {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
-    public String GetRoomCodeID() { return this.GetID(); }
+    public String GetRoomCodeID() { return this.GetID(); }                  // Alias function of GetID()
     public static Prefix GetPrefix() { return RoomUnit.prefix; }
     public static String GetPrefixCode() { return RoomUnit.GetPrefix().GetPrefixCode(); }
     public static String GetPrefixCodeTerm() { return RoomUnit.GetPrefix().GetPrefixCode().replace("-", ""); }
@@ -250,10 +250,6 @@ public class RoomUnit extends IntermediateObject {
         return String.format("%03d", RoomNumber);
     }
 
-    private static boolean _IsNumeric_(String string) { return StringUtils.isNumeric((CharSequence) string); }
-
-
-
     public static String ConstructRoomCodeID(String RoomBlock, String RoomType, String RoomFloor, String RoomNumber) {
         // This function is to construct the room-code ID as a single identity.
         // As mentioned in the documentation above, we construct the room-code ID by
@@ -282,8 +278,8 @@ public class RoomUnit extends IntermediateObject {
             if (RoomNumberStr == null) { FullMessage += "Invalid RoomNumber: " + RoomNumber.toString() + "; "; }
             throw new IllegalArgumentException(FullMessage);
         }
-        String[] iterable = {RoomUnit.GetPrefixCodeTerm(), RoomBlockStr, RoomTypeStr, RoomFloorStr, RoomNumberStr};
-        return StringUtils.join(iterable, "-");
+        String[] iterable = {RoomBlockStr, RoomTypeStr, RoomFloorStr, RoomNumberStr};
+        return RoomUnit.GetPrefixCodeTerm() + StringUtils.join(iterable, "-");
     }
 
 
