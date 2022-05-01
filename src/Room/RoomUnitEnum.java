@@ -24,12 +24,11 @@ package Room;
  * References:
  * 1) https://www.verywellhealth.com/hospital-floors-and-units-3156895
  * 2) https://doh.wa.gov/public-health-healthcare-providers/healthcare-professions-and-facilities/healthcare-associated-infections/hai-reports/types-hospital-units
- * 3)  https://www.gilberter.com/2021/01/29/hospital-departments-abbreviations/
+ * 3) https://www.gilberter.com/2021/01/29/hospital-departments-abbreviations/
 **/
 
 public enum RoomUnitEnum {
     // ---------------------------------------------------------------------------------------------------------------------
-    // Declare enum constants here: Core System for Patient-Medico Interaction
     ICU(null, "Intensive Care Unit", "Seriously ill patients"),
     NICU("ICU", "Neonatal Intensive Care Unit", "Newborn-infant patients"),
     NCC("NICU", "Neurological Critical Care Unit", "Neurological patients"),
@@ -39,12 +38,20 @@ public enum RoomUnitEnum {
     SICU("ICU", "Surgical Intensive Care Unit", "Surgical patients"),
     MICU("ICU", "Mental Intensive Care Unit", "Chronic patients"),
     LTICU("ICU", "Long-term Intensive Care Unit", "Long-term patients"),
-    
+    PACU("ICU", "Post-Anesthesia Intensive Care Unit", "Patients after anesthesia or surgery"),
+    TICU("ICU", "Trauma Intensive Care Unit", "Patients with injuries"),
+
     // -----------------------------------------------------------
     ER(null, "Emergency Room", "Emergency patients after serious illness or injury."),
     ED("ER", "Emergency Department", "Emergency patients after serious illness or injury."),
     Onc(null, "Oncology", "Patients with cancer."),
-
+    OHR(null, "Open-Hearted Room", "Patients after Heart-surgery."),
+    OR(null, "Operating Room", "Patients during surgery."),
+    PrO(null, "Pre-Operative Unit", "Patients before surgery"),
+    RhU(null, "Rehabilitation Unit", "Recovery patients"),
+    LAB(null, "Laboratory", "Patients with lab tests or medical researchers"),
+    SDU(null, "Step-Down Unit", "Patients don't need intensive caring"),
+    
     ;
 
 
