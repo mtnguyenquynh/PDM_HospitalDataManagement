@@ -90,6 +90,8 @@ public enum Prefix {
         return p;
     }
 
+    public static boolean FindEnum(String inputString) { return Prefix.GetEnum(inputString) != null; }
+
 }
 
 
