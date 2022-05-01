@@ -91,7 +91,11 @@ public class RoomUnit extends IntermediateObject {
     public String GetRoomBlock() { return RoomUnit.GetRoomBlock(this.GetID()); }
 
     public static String GetRoomType(String RoomCodeID) {return RoomUnit.DecomposeRoomCodeID(RoomCodeID)[2]; }
+    public static RoomUnitEnum GetRoomTypeEnum(String RoomCodeID) { 
+        return RoomUnitEnum.GetEnum(RoomUnit.GetRoomType(RoomCodeID)); 
+    }
     public String GetRoomType() { return RoomUnit.GetRoomType(this.GetID()); }
+    public RoomUnitEnum GetRoomTypeEnum() { return RoomUnit.GetRoomTypeEnum(this.GetID()); }
 
     public static String GetRoomFloor(String RoomCodeID) {return RoomUnit.DecomposeRoomCodeID(RoomCodeID)[3]; }
     public String GetRoomFloor() { return RoomUnit.GetRoomFloor(this.GetID()); }
