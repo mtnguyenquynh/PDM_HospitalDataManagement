@@ -20,6 +20,9 @@ package GlobalPool;
  * to all distribution places/centers such as LToolPool.class and report them 
  * to GLogger.class.
  * 
+ * This class is connect to the SQL-DB database, but the description of each instance
+ * (in this pool: Tool) is stored in the module `Object.Tool.json` file.
+ * 
  * @author Ichiru Take
  * @version 0.0.1
  * 
@@ -28,5 +31,25 @@ package GlobalPool;
 **/
 
 public class GToolPool {
+    private final static String SQL_DB_DIRECTORY = "database/global_pool/"; 
+    private final static String TOOL_DEFINITION_FILENAME = "Tool.json";
+    private final static String fileName = "tool_pool.json"; // Later definition
+
+
+    public GToolPool() {
+        
+    }
+
+
+    // ---------------------------------------------------------------------------------------------------------------------
     
+
+
+
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Getter & Setter Functions for Local Attributes
+    public static String GetSQLDbDirectory() { return GToolPool.SQL_DB_DIRECTORY; }
+
+
 }
