@@ -41,8 +41,8 @@ public class TreatmentCode {
     private final static Hashtable<String, Object> Pool = new Hashtable<String, Object>(capacity, loadFactor);
     
     // These two directory are the saved configuration of all treatment codes. 
-    private final static String MainJsonDirectory = "src/Treatment/TreatmentCode.json";
-    private final static String SafeJsonDirectory = "src/Treatment/TreatmentCode-Restored.json";
+    private final static String MainJsonDirectory = "database/TreatmentCode/TreatmentCode.json";
+    private final static String SafeJsonDirectory = "database/TreatmentCode/TreatmentCode-Restored.json";
     private final static Prefix prefix = Prefix.TreatmentCode;
     private final static String Name = TreatmentCode.class.getSimpleName();
     private final static String[] ArgName = {"key_code", "description"};

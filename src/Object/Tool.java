@@ -69,4 +69,11 @@ public class Tool extends BaseObject {
         return new Tool(ID, name, description, number, unit);
     }
 
+    // ---------------------------------------------------------------------------------------------------------------------
+    public boolean CheckToolID(String ToolID) { 
+        if (ToolID == null) { return false; }
+        return this.GetID() == ToolID || this.GetID().equals( ToolID); 
+    }
+    public boolean CheckToolID(Object ToolID) { return this.CheckToolID(ToolID.toString()); }
+
 }

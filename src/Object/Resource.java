@@ -32,12 +32,12 @@ import PrefixState.Prefix;
 
 public class Resource extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
-    private final ResourcesUnit unit;
+    private final ResourceUnit unit;
     private float price;
     private static final Prefix prefix = Prefix.Resource;
    
 
-    public Resource(String ID, String name, String description, int number, ResourcesUnit unit, 
+    public Resource(String ID, String name, String description, int number, ResourceUnit unit, 
                     float price) {
         // You may want to add more fields or attributes here.
         super(ID, name, description, number);
@@ -45,7 +45,7 @@ public class Resource extends BaseObject {
         this.unit = unit;
     }
 
-    public Resource(String ID, String name, String description, int number, ResourcesUnit unit, 
+    public Resource(String ID, String name, String description, int number, ResourceUnit unit, 
                     double price) {
         // You may want to add more fields or attributes here.
         super(ID, name, description, number);
@@ -53,7 +53,7 @@ public class Resource extends BaseObject {
         this.unit = unit;
     }
 
-    public Resource(String ID, String name, String description, int number, ResourcesUnit unit, 
+    public Resource(String ID, String name, String description, int number, ResourceUnit unit, 
                     int price) {
         // You may want to add more fields or attributes here.
         super(ID, name, description, number);
@@ -75,7 +75,7 @@ public class Resource extends BaseObject {
     public void UpdatePriceByFixedCost(float cost) { this.price += cost; }
 
     // ----------------------------------------------------------
-    public ResourcesUnit GetUnit() { return this.unit; }
+    public ResourceUnit GetUnit() { return this.unit; }
     public String GetUnitAsString() { return this.unit.toString(); }
 
     public static Prefix GetPrefix() { return Resource.prefix; }
@@ -96,7 +96,7 @@ public class Resource extends BaseObject {
         String name = (String) data.get("name");
         String description = (String) data.get("description");
         int number = (int) data.get("number");
-        ResourcesUnit unit = ResourcesUnit.GetEnum((String) data.get("unit_name"), (String) data.get("unit_type"));
+        ResourceUnit unit = ResourceUnit.GetEnum((String) data.get("unit_name"), (String) data.get("unit_type"));
         float price = (float) data.get("price");
         return new Resource(ID, name, description, number, unit, price);
     }
