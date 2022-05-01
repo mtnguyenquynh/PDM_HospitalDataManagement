@@ -1,7 +1,6 @@
 package GlobalPool;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import Object.Tool;
 import Object.ToolUnit;

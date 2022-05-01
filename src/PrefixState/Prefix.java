@@ -40,14 +40,13 @@ public enum Prefix {
     Tool("Tl-"),
     Resource("Rs-"),
     
-    Room("Rm-"),
+    RoomUnit("RU-"),
     PatientRoom("PR-"),
     MedicoRoom("MR-"),
     ObjectRoom("OR-"),
     LToolPool("LT-"),
     LResourcesPool("LR-"),
     ;
-
 
 
     // ---------------------------------------------------------------------------------------------------------------------
