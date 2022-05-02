@@ -1,4 +1,4 @@
-package Room;
+package Object;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -30,6 +30,10 @@ package Room;
  *    the program, this constraint is undefined. But in a simple manner, there are no different
  *    between the LToolPool and LResourcePool, which are both the collection of <Tool> and 
  *    <Resource>. Thus the primary key of the "ObjectRoom" is the {"RoomUnit.ID", "Object.ID"}.
+ * 
+ * Ok so we have complete our task in five components: RoomUnit, PatientRoom, MedicoRoom,
+ * LToolPool, LResourcePool. Now, this class allow the module to bind the relationship between
+ * them.
  * 
  * @author Ichiru Take
  * @version 0.0.1

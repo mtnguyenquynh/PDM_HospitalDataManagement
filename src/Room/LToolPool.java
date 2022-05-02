@@ -157,6 +157,8 @@ public class LToolPool extends AbstractObject {
         Iterator<Entry<String, Object>> iter = data.entrySet().iterator();
         while (iter.hasNext()) {
             Entry<String, Object> entry = iter.next();
+            if (entry.getKey().equals("id")) { continue; }
+
             String[] ToolInformation = (String[]) entry.getValue();
             result.GetLocalPool().put(entry.getKey(), ToolInformation);
         }
