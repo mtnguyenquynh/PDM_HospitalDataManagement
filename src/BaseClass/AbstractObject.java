@@ -41,11 +41,6 @@ public class AbstractObject {
 
     public AbstractObject(String ID) { this(ID, ""); }
 
-    public static void main(String[] args) {
-        AbstractObject obj = new AbstractObject("123456789");
-        System.out.println(obj.GetID());
-    }
-
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
     public String GetID() { return this.ID; }
