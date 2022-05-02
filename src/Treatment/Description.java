@@ -3,6 +3,7 @@ package Treatment;
 import java.util.Hashtable;
 
 import BaseClass.CreationDateTime;
+import Utility.DataUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -58,9 +59,7 @@ public class Description extends CreationDateTime {
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization and Deserialization
     public Hashtable<String, Object> Serialize() {
-        Hashtable<String, Object> result = new Hashtable<String, Object>();
-        result.put("date", this.GetDateAsString());
-        result.put("time", this.GetTimeAsString());
+        Hashtable<String, Object> result = super.Serialize();
         result.put("description", this.GetDescription());
         result.put("medico_name", this.GetMedicoName());
         return result;

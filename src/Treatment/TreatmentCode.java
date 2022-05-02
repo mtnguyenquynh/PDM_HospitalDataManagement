@@ -126,8 +126,8 @@ public class TreatmentCode {
     public static Hashtable<String, Object> GetPool() { return TreatmentCode.Pool; }
 
     public static boolean ContainsThisKeyCode(String code) { return TreatmentCode.GetPool().containsKey(code); }
-    public static int GetCapacity() { return capacity; }
-    public static float GetPreloadFactor() { return loadFactor; }
+    public static int GetSerializationCapacity() { return capacity; }
+    public static float GetSerializationLoadFactor() { return loadFactor; }
     public static int GetNumberOfCodeAvailable() { return Pool.size(); }
     public static Prefix GetPrefix() { return TreatmentCode.prefix; }
     public static String GetPrefixCode() { return TreatmentCode.prefix.GetPrefixCode(); }

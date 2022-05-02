@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 import BaseClass.CreationDateTime;
 import PrefixState.Prefix;
+import Utility.DataUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -150,7 +151,7 @@ public class Treatment extends CreationDateTime {
 	}
 
 	public void AddNewResourceAtTheEnd(String resource_id, int amount) {
-		Hashtable<String, Object> new_resource = new Hashtable<String, Object>(2);
+		Hashtable<String, Object> new_resource = DataUtils.ForceGetEmptyHashtable(this.getClass());
 		new_resource.put("id", resource_id);
 		new_resource.put("amount", Integer.toString(amount));
 		this.resourcesTable.add(new_resource);

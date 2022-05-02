@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import BaseClass.BaseObject;
+import Utility.DataUtils;
 import Utility.Utils;
 
 import Staff.Medico;
@@ -116,7 +117,7 @@ public class MedicoRoom extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Serializaton & Deserialization
     public Hashtable<String, Object> Serialize() {
-        Hashtable<String, Object> result = new Hashtable<String, Object>();
+        Hashtable<String, Object> result = DataUtils.ForceGetEmptyHashtable(this.getClass());
         result.put("id", this.GetID());
         result.put("MainMedico", this.MainMedico);
         

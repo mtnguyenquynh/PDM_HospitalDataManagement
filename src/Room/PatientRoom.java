@@ -248,7 +248,7 @@ public class PatientRoom extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
     public Hashtable<String, Object> Serialize() {
-        Hashtable<String, Object> result = new Hashtable<String, Object>();
+        Hashtable<String, Object> result = DataUtils.ForceGetEmptyHashtable(this.getClass());
         Iterator<Entry<Integer, String[]>> iter = this.GetPoolIterator();
         while (iter.hasNext()) {
             Entry<Integer, String[]> entry = iter.next();

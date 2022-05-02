@@ -3,6 +3,8 @@ package BaseClass;
 import java.time.*;
 import java.util.Hashtable;
 
+import Utility.DataUtils;
+
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
  * All Rights Reserved
@@ -75,7 +77,7 @@ public class CreationDateTime {
     // Serialization & Deserialization
     
     public Hashtable<String, Object> Serialize() {
-        Hashtable<String, Object> result = new Hashtable<String, Object>();
+        Hashtable<String, Object> result = DataUtils.ForceGetEmptyHashtable(this.getClass());
         result.put("date", this.GetDateAsString());
         result.put("time", this.GetTimeAsString());
         return result;

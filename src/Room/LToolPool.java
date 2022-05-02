@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import BaseClass.AbstractObject;
 import Object.Tool;
+import Utility.DataUtils;
 import Utility.Utils;
 
 /**
@@ -70,7 +71,6 @@ public class LToolPool extends AbstractObject {
         int capacity = PatientRoom.GetSerializationCapacity();
         float loadFactor = PatientRoom.GetSerializationLoadFactor();
         this.LocalPool = new Hashtable<String, String[]>(capacity, loadFactor);
-        
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -140,7 +140,7 @@ public class LToolPool extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
     public Hashtable<String, Object> Serialize() {
-        Hashtable<String, Object> result = new Hashtable<String, Object>();
+        Hashtable<String, Object> result = DataUtils.ForceGetEmptyHashtable(this.getClass());
         result.put("id", this.GetID());
 
         Iterator<Entry<String, String[]>> iter = this.GetLocalPool().entrySet().iterator();
