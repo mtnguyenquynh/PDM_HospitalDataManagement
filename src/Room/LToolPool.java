@@ -90,12 +90,12 @@ public class LToolPool extends AbstractObject {
     }
 
     public String[] GetToolById(String ID) {
-        Utils.CheckArgumentCondition(ID != null, "ID cannot be null.");
+        Utils.CheckArgumentCondition(ID != null, "Tool's ID cannot be null.");
         return this.GetLocalPool().get(ID);
     }
 
     public String[] GetToolByName(String Name) {
-        Utils.CheckArgumentCondition(Name != null, "Name cannot be null.");
+        Utils.CheckArgumentCondition(Name != null, "Tool's Name cannot be null.");
         String[] ToolInformation = null;
         for (String[] Tool : this.GetLocalPool().values()) {
             if (Tool[1].equals(Name)) {
