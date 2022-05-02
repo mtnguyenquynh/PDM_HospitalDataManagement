@@ -55,6 +55,20 @@ public class PatientRoom extends RoomUnit {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter Function
     public int GetNumberOfBeds() { return this.NumberOfBeds; }
+    public void SetNumberOfBeds(int NumberOfBeds) { 
+        if (NumberOfBeds < 0) { throw new IllegalArgumentException("NumberOfBeds cannot be negative."); }
+        this.NumberOfBeds = NumberOfBeds; 
+    }
+
+    public void IncrementNumberOfBeds(int NumberOfBeds) { 
+        if (NumberOfBeds < 0) { throw new IllegalArgumentException("NumberOfBeds cannot be negative."); }
+        this.NumberOfBeds += NumberOfBeds; 
+    }
+
+    public void DecrementNumberOfBeds(int NumberOfBeds) { 
+        if (NumberOfBeds < 0) { throw new IllegalArgumentException("NumberOfBeds cannot be negative."); }
+        this.NumberOfBeds -= NumberOfBeds; 
+    }
     
 
 

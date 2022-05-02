@@ -52,14 +52,18 @@ public class BaseObject extends AbstractObject {
     public void SetDescription(String description) { this.description = (description == null) ? "" : description; }
 
     public int GetNumber() { return this.number; }
-    public void SetNumber(int number) { this.number = (number < 0) ? 0 : number; }
+    public void SetNumber(int number) { 
+        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        this.number = number; 
+    }
 
-    public void UpdateNumber(int number) {
-        if (number < 0) { throw new IllegalArgumentException("Number cannot be negative."); }
+    public void IncrementNumber(int number) {
+        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         this.number += number;
     }
     public void DecrementNumber(int number) {
-        if (number < 0) { throw new IllegalArgumentException("Number cannot be negative."); }
+        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        Utils.CheckArgumentCondition(number < this.GetNumber(), "Number cannot be negative.");
         this.number -= number;
     }
 
