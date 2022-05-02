@@ -12,18 +12,15 @@ package Person;
 
 /**
  * This is a dataclass which describes an instances of a person.
- * which is also a base/abstract class to have better description on 
+ * which is also a base/abstract class to have better description on
  * other classes such as Patient, Doctor, Nurse (medico)
-**/
-
-
-
+ **/
 
 public class Person {
     private String id, name, email, phone_number, gender, nationality;
 
-    public Person(String id, String name, String email, String phone_number, 
-                  String gender, String nationality) {
+    public Person(String id, String name, String email, String phone_number,
+            String gender, String nationality) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -32,19 +29,43 @@ public class Person {
         this.nationality = nationality;
     }
 
+    public Person() {
+    }
+
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter Function
-    public String GetID() { return this.id; }
-    public String GetName() { return this.name; }
-    public String GetEmail() { return this.email; }
-    public String GetPhoneNumber() { return this.phone_number; }
-    public String GetGender() { return this.gender; }
-    public String GetNationality() { return this.nationality; }
+    public String GetID() {
+        return this.id;
+    }
 
+    public String GetName() {
+        return this.name;
+    }
+
+    public String GetEmail() {
+        return this.email;
+    }
+
+    public String GetPhoneNumber() {
+        return this.phone_number;
+    }
+
+    public String GetGender() {
+        return this.gender;
+    }
+
+    public String GetNationality() {
+        return this.nationality;
+    }
 
     // -----------------------------------------------------------
     // Setter Function
-    public void SetEmail(String email) { this.email = email; }
-    public void SetPhoneNumber(String phone_number) { this.phone_number = phone_number; }
-    
+    public void SetEmail(String email) {
+        this.email = email;
+    }
+
+    public void SetPhoneNumber(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
 }
