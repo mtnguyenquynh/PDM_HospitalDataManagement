@@ -58,6 +58,9 @@ public class Person extends IntermediateObject {
 
     // -----------------------------------------------------------
     // Setter Function
+    public void SetName(String name) throws RuntimeException { 
+        throw new RuntimeException("This method is not allowed to be called.");
+    }
     public void SetEmail(String email) { this.email = email; }
     public void SetPhoneNumber(String phone_number) { this.phone_number = phone_number; }
 

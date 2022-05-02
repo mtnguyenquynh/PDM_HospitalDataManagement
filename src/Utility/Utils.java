@@ -133,9 +133,4 @@ public abstract class Utils {
         if (!condition) { throw new IllegalArgumentException(message); }
     }
 
-    // ---------------------------------------------------------------------------------------------------------------------
-    // Condition-checking
-
-    public static Hashtable<String, Object> GetEmptyHashtable(AbstractObject object)
-
 }

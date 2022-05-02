@@ -39,7 +39,7 @@ public class IntermediateObject extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
     public String GetDescription() { return this.description; }
-    public String SetDescription() { return this.description; }
+    public void SetDescription(String description) { this.description = description; }
     
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization

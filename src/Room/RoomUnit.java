@@ -70,6 +70,7 @@ import PrefixState.Prefix;
 public class RoomUnit extends IntermediateObject {
     public RoomUnit(String ID, String name, String description) { super(ID, name, description); }
 
+    public RoomUnit(String ID, String name) { super(ID, name, null); }
     public RoomUnit(String ID) { super(ID); }
 
     // ---------------------------------------------------------------------------------------------------------------------

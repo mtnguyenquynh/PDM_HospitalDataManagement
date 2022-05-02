@@ -47,6 +47,8 @@ public enum RoomUnitEnum {
     RhU(null, "Rehabilitation Unit", "Recovery patients"),
     LAB(null, "Laboratory", "Patients with lab tests or medical researchers"),
     SDU(null, "Step-Down Unit", "Patients don't need intensive caring"),
+
+    UNIT(null, "Unit", "Unknown funcionality"),
     
     ;
 

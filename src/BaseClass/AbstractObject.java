@@ -46,6 +46,7 @@ public class AbstractObject {
     // Getter and Setter
     public String GetID() { return this.ID; }
     public String GetName() { return this.name; }
+    public void SetName(String name) throws Exception { this.name = name; }
 
     public static int GetSerializationCapacity() { return AbstractObject.SERIALIZATION_CAPACITY; }
     public static float GetSerializationLoadFactor() { return AbstractObject.SERIALIZATION_LOAD_FACTOR; }
