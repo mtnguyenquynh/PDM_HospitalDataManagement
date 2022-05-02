@@ -25,10 +25,8 @@ import org.apache.commons.lang3.StringUtils;
  * 1) 
 **/
 
-public class RoomUnitUtils {
+public abstract class RoomUnitUtils {
     private static final Prefix prefix = PrefixState.Prefix.RoomUnit;
-
-    public RoomUnitUtils() {}
 
     public static Prefix GetPrefix() { return RoomUnitUtils.prefix; }
     public static String GetPrefixCode() { return RoomUnitUtils.GetPrefix().GetPrefixCode(); }
@@ -126,7 +124,7 @@ public class RoomUnitUtils {
     // method with different signature. With this integer method, you can cast back to String, 
     // call the respective method; but it is not necessary and this call is extremely faster.
 
-        private static String CastRoomBlock(String RoomBlock) {
+    private static String CastRoomBlock(String RoomBlock) {
         // This method will cast your RoomBlock to have two characters, except if the input is
         // the letter-like character with one character only.
         if (RoomBlock == null) { return null; }
@@ -149,7 +147,6 @@ public class RoomUnitUtils {
             return null;
         }
         return null;
-
     }
 
     private static String CastRoomBlock(int RoomBlock) {

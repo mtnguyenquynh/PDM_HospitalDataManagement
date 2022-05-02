@@ -28,7 +28,7 @@ import org.json.simple.parser.ParseException;
  * - https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
 **/
 
-public class Utils {
+public abstract class Utils {
     
     // ---------------------------------------------------------------------------------------------------------------------
     // JSON Processing: Read & Write

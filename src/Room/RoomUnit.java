@@ -95,9 +95,12 @@ public class RoomUnit extends IntermediateObject {
     public String GetRoomNumber() { return RoomUnitUtils.GetRoomNumber(this.GetID()); }
 
     // -----------------------------------------------------------
-    // Verifying the room-code
+    // Verifying & Constructing the room-code
     public boolean VerifyRoomCodeID() { return RoomUnitUtils.VerifyRoomCodeID(this.GetID()); }
 
+    public static String ConstructRoomCodeID(String RoomBlock, String RoomType, String RoomFloor, String RoomNumber) {
+        return RoomUnitUtils.ConstructRoomCodeID(RoomBlock, RoomType, RoomFloor, RoomNumber);
+    }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
