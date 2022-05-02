@@ -119,6 +119,13 @@ public class PatientRoom extends BaseObject {
         this.DistributePatient(patient, BedIndex, false);
     }
 
+    public String[] KickPatientOutOfThisBed(int BedIndex) {
+        this.CheckIsValidBed(BedIndex);
+        String[] PatientInformation = this.GetLocalPool().get(BedIndex);
+        this.GetLocalPool().replace(BedIndex, this.GetFakeEmptyPatient());
+        return PatientInformation;
+    }
+
     // ---------------------------------------------------------------------------------------------------------------------
     // Patient-related Methods
     public int FindPatient(String SearchingString) {
