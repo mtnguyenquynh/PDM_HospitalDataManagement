@@ -8,6 +8,15 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import Person.Person;
+/**
+ * Copyright (C) 2022-2022, HDM-Dev Team
+ * All Rights Reserved
+ * This file is part of HDM-Dev Team's project. The contents are
+ * fully covered, controlled, and acknowledged by the terms of the
+ * BSD-3 license, which is included in the file LICENSE.md, found
+ * at the root of the project's source code/tree repository.
+ **/
+
 public class Patient extends Person implements Serializable {
 
     public Patient(String id, String name, String email, String phone_number, String gender, String nationality) {
