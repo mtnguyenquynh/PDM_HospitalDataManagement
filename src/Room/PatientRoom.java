@@ -1,8 +1,11 @@
 package Room;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
-import javax.rmi.CORBA.Util;
+import org.apache.commons.lang3.StringUtils;
 
 import BaseClass.BaseObject;
 import Utility.Utils;
@@ -43,7 +46,13 @@ import Patient.Patient;
  * In the programming scheme of the "Room", we did not intended to use some special methods, but
  * just a basic data-classes wrapper on top of it. Note that we don't store any non-serializable
  * object but just a basic description into it, whhich comprised composite-reference key as 
- * the primary key, and some syncronizable data. 
+ * the primary key, and some syncronizable data.
+ * 
+ * Note that in some special real-world scenario, patient can switch across the bed, but this 
+ * information can be viewed as redundant as the possibility of not finding the accurate patient
+ * (from the data perspective) is neglibible. We may also have the possibility of switching the 
+ * patient from this room to another room, but this is the responsibility of "RoomManager.class".
+ * having multiple 
  * .
  * 
  * @author Ichiru Take
@@ -54,18 +63,147 @@ import Patient.Patient;
 **/
 
 public class PatientRoom extends BaseObject {
-    
-    private ArrayList<String> LocalPool;
+    private static final int NumberOfPatientInformation = 2;
+    private Hashtable<Integer, String[]> LocalPool;
     public PatientRoom(String ID, int NumberOfBeds) {
         super(ID, NumberOfBeds);
-        this.LocalPool = new ArrayList<String>();
+        this.LocalPool = new Hashtable<Integer, String[]>(100, 0.75f);
         this._InitPool_();
 
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
+    // Distribute patient
+
+    /**
+     * This method will enforce the patient to laid on this bed regardless who is occupying it.
+     * The data of patient who already occupied is unable to keep track, 
+     * so we attempted to make this method private.
+     * @param patient (Patient): The patient who will lay on this bed.
+     * @param BedIndex (int): The index of the bed (bed's ID).
+     */
+
+    private void DistributePatientToBed(Patient patient, int BedIndex) {
+        this.CheckIsValidBed(BedIndex);
+        this.GetLocalPool().put(BedIndex, this.GetPatientInformation(patient));
+    }
+
+    /**
+     * This method will enforce the patient to laid on this bed regardless who is occupying it.
+     * The data of patient who already occupied is unable to keep track, 
+     * so we attempted to make this method private.
+     * @param patient (Patient): The patient who will lay on this bed.
+     * @param BedIndex (int): The index of the bed (bed's ID).
+     * @param force (boolean): If True, we must setup an empty bed in this room if found an empty bed.
+     *                         Otherwise, we will throw an exception.
+     */
+
+    public void DistributePatient(Patient patient, int BedIndex, boolean force) 
+           throws RuntimeException {
+        if (true) { this.CheckIsValidBed(BedIndex); this.CheckIsValidPatient(patient); }
+        // We need to verify if this room have the empty bed;
+        // If yes, we can distribute the patient to this bed.
+        // If no, we need to find the empty bed and distribute the patient to it.
+        if (this.CheckIsContainEmptyBed()) {
+            this.DistributePatientToBed(patient, BedIndex);
+        } else {
+            int EmptyBedIndex = this.GetOneEmptyBed();
+            if (force && EmptyBedIndex != -1) {
+                this.DistributePatientToBed(patient, EmptyBedIndex);  
+            }
+        }
+        throw new RuntimeException("No empty bed in this room.");
+    }
+    
+    public void DistributePatient(Patient patient, int BedIndex) throws RuntimeException {
+        this.DistributePatient(patient, BedIndex, false);
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Patient-related Methods
+    public int FindPatient(String SearchingString) {
+        // The searching string can be the patient's ID, name, or even SSN 
+        // (Social Security Number, which is not currently available).
+        Iterator<Entry<Integer, String[]>> iter = this.GetPoolIterator();
+        while (iter.hasNext()) {
+            Entry<Integer, String[]> entry = iter.next();
+            int keyCode = entry.getKey();
+            String patient[] = entry.getValue();
+            if (patient[0].equals(SearchingString)) { return keyCode; }
+            if (patient[1].equals(SearchingString)) { return keyCode; } 
+        }
+        return -1;
+    }
+
+
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Several Ultility Functions
+    private String[] GetFakeEmptyPatient() {
+        String[] fakePatient = new String[PatientRoom.NumberOfPatientInformation];
+        for (int i = 0; i < PatientRoom.NumberOfPatientInformation; i++) { fakePatient[i] = ""; }
+        return fakePatient;
+    }
+
+    public Iterator<Entry<Integer, String[]>> GetPoolIterator() {
+        return this.GetLocalPool().entrySet().iterator();
+    }
+
+    public void CheckIsValidBed(int BedIndex) {
+        Utils.CheckArgumentCondition(BedIndex >= 0, "BedIndex cannot be negative.");
+        Utils.CheckArgumentCondition(BedIndex < this.GetNumberOfBeds(), 
+                                     "BedIndex cannot be larger than the current beds available.");
+    }
+
+    public void CheckIsValidPatient(Patient patient) {
+        Utils.CheckArgumentCondition(patient != null, "Patient cannot be null.");
+    }
+
+    public boolean CheckIfThisBedEmpty(int BedIndex) {
+        this.CheckIsValidBed(BedIndex);
+        String[] patient = this.GetLocalPool().get(BedIndex);
+        return (patient[0] == "" || patient[0].equals("") || patient[0] == null);
+    }
+
+    public boolean CheckIsContainEmptyBed() {
+        for (int i = 0; i < this.GetNumberOfBeds(); i++) {
+            if (this.CheckIfThisBedEmpty(i)) { return true; }
+        }
+        return false;
+    }
+
+    public int GetOneEmptyBed() {
+        for (int i = 0; i < this.GetNumberOfBeds(); i++) {
+            if (this.CheckIfThisBedEmpty(i)) { return i; }
+        }
+        return -1;
+    }
+
+    public int[] GetAllEmptyBeds() {       
+        int[] EmptyBeds = new int[this.GetNumberOfBeds()];
+        int EmptyBedsCount = 0;
+        for (int i = 0; i < this.GetNumberOfBeds(); i++) {
+            if (this.CheckIfThisBedEmpty(i)) {
+                EmptyBeds[EmptyBedsCount] = i;
+                EmptyBedsCount++;
+            }
+        }
+        return EmptyBeds;
+    }
+
+    public String[] GetPatientInformation(Patient patient) {
+        Utils.CheckArgumentCondition(patient != null, "Patient cannot be null.");
+        String[] patientInformation = new String[PatientRoom.NumberOfPatientInformation];
+        patientInformation[0] = patient.GetID();
+        patientInformation[1] = patient.GetName();
+        // We may want to get age, gender, or some recognizable information but this should be enough
+
+        return patientInformation;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter Function
-    private ArrayList<String> GetLocalPool() { return this.LocalPool; }
+    private Hashtable<Integer, String[]> GetLocalPool() { return this.LocalPool; }
     public int GetNumberOfBeds() { return this.GetNumber(); }
     public int GetCapacity() { return this.GetNumberOfBeds(); }         // Alias of GetNumberOfBeds()
 
@@ -87,27 +225,38 @@ public class PatientRoom extends BaseObject {
     }
     
     // ---------------------------------------------------------------------------------------------------------------------
-    // Distribute patient
-    public void DistributePatient(Patient patient, int BedIndex) {
-
-    }
-    
     // Initialize the pool & Several Ultility Functions
     private void CleanPool() { this.GetLocalPool().clear(); }
 
     private void _InitPool_() { 
         if (this.LocalPool.size() != 0) { this.CleanPool(); }
-        for (int i = 0; i < this.GetNumberOfBeds(); i++) {
-            this.LocalPool.add(null);
-        }
+        for (int i = 0; i < this.GetNumberOfBeds(); i++) { this.LocalPool.put(i, this.GetFakeEmptyPatient()); }
     }
 
-    private void CheckIndexInRange(int index) {
-        if (index < 0 || index > this.GetNumberOfBeds()) { 
-            throw new IndexOutOfBoundsException("The index must be between 0 and " + (this.GetNumberOfBeds() - 1));
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Serialization & Deserialization
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> result = new Hashtable<String, Object>();
+        Iterator<Entry<Integer, String[]>> iter = this.GetPoolIterator();
+        while (iter.hasNext()) {
+            Entry<Integer, String[]> entry = iter.next();
+            result.put(Integer.toString(entry.getKey()), entry.getValue());
         }
+        result.put("ID", this.GetID());
+        return result;  
+    } 
+
+    public static PatientRoom Deserialize(Hashtable<String, Object> data) {
+        PatientRoom room = new PatientRoom((String) data.get("ID"), data.size());
+        Iterator<Entry<String, Object>> iter = data.entrySet().iterator();
+        while (iter.hasNext()) {
+            Entry<String, Object> entry = iter.next();
+            String key = entry.getKey();
+            if (StringUtils.isNumeric(key)) {
+                room.GetLocalPool().put(Integer.parseInt(key), (String[]) entry.getValue());
+            }
+        }
+        return room;
     }
-
-
 
 }
