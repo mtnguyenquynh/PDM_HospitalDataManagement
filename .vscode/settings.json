@@ -26,7 +26,7 @@
     "java.completion.enabled": true,    
     "java.completion.maxResults": 0,
     "java.autobuild.enabled": true,
-    "java.sources.organizeImports.staticStarThreshold": 99, 
+
     "java.completion.guessMethodArguments": false,   
     "java.completion.overwrite": true,
     "vsintellicode.java.completionsEnabled": true,
@@ -36,7 +36,6 @@
     "java.debug.settings.enableRunDebugCodeLens": true,
     "java.debug.settings.maxStringLength": 0, 
     "java.debug.settings.numericPrecision": 6,
-
     "java.debug.settings.showLogicalStructure": true,
     "java.debug.settings.showToString": true,
     "java.debug.settings.showStaticVariables": false, 
@@ -62,6 +61,7 @@
 
     "java.quickfix.showAt": "line",
     "java.sources.organizeImports.starThreshold": 99, 
+    "java.sources.organizeImports.staticStarThreshold": 99, 
     "java.showBuildStatusOnStart.enabled": "notification", 
     "java.references.includeAccessors": true, 
     "java.references.includeDecompiledSources": true, 
@@ -102,7 +102,7 @@
         "editor.emptySelectionClipboard": true,
         "editor.find.autoFindInSelection": "always",
         "editor.find.loop": true,
-        "editor.find.addExtraSpaceOnTop": true,
+        "editor.find.addExtraSpaceOnTop": false,
         
         "editor.folding": true,
         "editor.foldingHighlight": true,
