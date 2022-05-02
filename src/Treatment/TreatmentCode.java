@@ -41,8 +41,7 @@ public class TreatmentCode {
     private final static Hashtable<String, Object> Pool = new Hashtable<String, Object>(capacity, loadFactor);
     
     // These two directory are the saved configuration of all treatment codes. 
-    private final static String MainJsonDirectory = "database/TreatmentCode/TreatmentCode.json";
-    private final static String SafeJsonDirectory = "database/TreatmentCode/TreatmentCode-Restored.json";
+    private final static String JsonDirectory = "database/TreatmentCode/TreatmentCode.json";
     private final static Prefix prefix = Prefix.TreatmentCode;
     private final static String Name = TreatmentCode.class.getSimpleName();
     private final static String[] ArgName = {"key_code", "description"};
@@ -62,20 +61,12 @@ public class TreatmentCode {
     // ---------------------------------------------------------------------------------------------------------------------
     // Pool declaration
     private static boolean LoadJsonDatabase() {
-        File json_data = new File(TreatmentCode.MainJsonDirectory); 
+        File json_data = new File(TreatmentCode.JsonDirectory); 
         String directory = null;
         if (json_data.exists() && directory == null) {
             System.out.println("----------------------------------------------------------------------------------");
-            System.out.println("The treatment code database is loaded from the file: " + TreatmentCode.MainJsonDirectory);
-            directory = TreatmentCode.MainJsonDirectory;
-        } 
-
-        if (directory == null) {
-            json_data = new File(TreatmentCode.SafeJsonDirectory); 
-            if (json_data.exists()) {
-                System.out.println("The treatment code database is loaded from the file: " + TreatmentCode.SafeJsonDirectory);
-                directory = TreatmentCode.SafeJsonDirectory;
-            }
+            System.out.println("The treatment code database is loaded from the file: " + TreatmentCode.JsonDirectory);
+            directory = TreatmentCode.JsonDirectory;
         }
         
         boolean status = false;
@@ -99,12 +90,12 @@ public class TreatmentCode {
     private static void _InitPool_() {
         TreatmentCode.Pool.clear();
         String prefix_code = TreatmentCode.prefix.GetPrefixCode();
-
-        TreatmentCode.Pool.put(prefix_code + "00-00-0000", "Null or Empty treatment");
-        TreatmentCode.Pool.put(prefix_code + "00-00-0001", "X-rays");
-        TreatmentCode.Pool.put(prefix_code + "00-00-0002", "Blood test");
-        TreatmentCode.Pool.put(prefix_code + "00-00-0003", "Surgical operation");
-        TreatmentCode.Pool.put(prefix_code + "00-00-0004", "Health-check");
+        ArrayList<String[]> pool = TreatmentCodeSavedPool.LoadPool();
+        for (String[] record : pool) {
+            String key_code = record[0];
+            String description = record[1];
+            TreatmentCode.Pool.put(prefix_code + key_code, description);
+        }
     }
 
     private static void InitializePool() throws InternalError {
@@ -121,7 +112,7 @@ public class TreatmentCode {
         // Step 03: Save the pool into JSON file for later used
         try {
             Utils.SaveHashTableIntoJsonFile(
-                TreatmentCode.SafeJsonDirectory, TreatmentCode.Pool, 
+                TreatmentCode.JsonDirectory, TreatmentCode.Pool, 
                 TreatmentCode.Name, TreatmentCode.ArgName);
         } catch (Exception e) {
             e.printStackTrace();
