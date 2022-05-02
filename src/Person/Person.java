@@ -1,6 +1,7 @@
 package Person;
 
-import BaseClass.AbstractObject;
+import BaseClass.IntermediateObject;
+
 import java.util.Hashtable;
 
 /**
@@ -20,9 +21,18 @@ import java.util.Hashtable;
 **/
 
 
-public class Person extends AbstractObject {
+public class Person extends IntermediateObject {
     // These attributes are the personal information of a particular person
     private String email, phone_number, gender, nationality;        
+
+    public Person(String ID, String name, String email, String phone_number, 
+                  String gender, String nationality, String description) {
+        super(ID, name, description);
+        this.email = email;
+        this.phone_number = phone_number;
+        this.gender = gender;
+        this.nationality = nationality;
+    }
 
     public Person(String ID, String name, String email, String phone_number, 
                   String gender, String nationality) {

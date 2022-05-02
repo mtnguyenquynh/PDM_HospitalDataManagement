@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 
+import BaseClass.AbstractObject;
 import BaseClass.BaseObject;
 import Utility.Utils;
 
@@ -51,8 +52,6 @@ import Patient.Patient;
  * information can be viewed as redundant as the possibility of not finding the accurate patient
  * (from the data perspective) is neglibible. We may also have the possibility of switching the 
  * patient from this room to another room, but this is the responsibility of "RoomManager.class".
- * having multiple 
- * .
  * 
  * @author Ichiru Take
  * @version 0.0.1
@@ -61,12 +60,19 @@ import Patient.Patient;
  * 1) 
 **/
 
-public class PatientRoom extends BaseObject {
+public class PatientRoom extends AbstractObject {
+    private final static int SERIALIZATION_CAPACTITY = 100;
+    private final static float SERIALIZATION_LOAD_FACTOR = 0.75f;
     private static final int NumberOfPatientInformation = 2;
+    private int NumberOfBeds;
+
     private Hashtable<Integer, String[]> LocalPool;
     public PatientRoom(String ID, int NumberOfBeds) {
-        super(ID, NumberOfBeds);
-        this.LocalPool = new Hashtable<Integer, String[]>(100, 0.75f);
+        super(ID);
+        this.NumberOfBeds = NumberOfBeds;
+        int capacity = PatientRoom.GetSerializationCapacity();
+        float loadFactor = PatientRoom.GetSerializationLoadFactor();
+        this.LocalPool = new Hashtable<Integer, String[]>(capacity, loadFactor);
         this._InitPool_();
     }
 
@@ -208,24 +214,27 @@ public class PatientRoom extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter Function
     private Hashtable<Integer, String[]> GetLocalPool() { return this.LocalPool; }
-    public int GetNumberOfBeds() { return this.GetNumber(); }
-    public int GetCapacity() { return this.GetNumberOfBeds(); }         // Alias of GetNumberOfBeds()
+    public static int GetSerializationCapacity() { return PatientRoom.SERIALIZATION_CAPACTITY; }
+    public static float GetSerializationLoadFactor() { return PatientRoom.SERIALIZATION_LOAD_FACTOR; }
+    
+    public int GetNumberOfBeds() { return this.NumberOfBeds; }
+    public int GetRoomCapacity() { return this.GetNumberOfBeds(); }         // Alias of GetNumberOfBeds()
 
     public void SetNumberOfBeds(int NumberOfBeds) { 
         Utils.CheckArgumentCondition(NumberOfBeds >= 0, "NumberOfBeds cannot be negative.");
-        super.SetNumber(NumberOfBeds);
+        this.NumberOfBeds = NumberOfBeds;
     }
 
     public void IncrementNumberOfBeds(int NumberOfBeds) { 
         Utils.CheckArgumentCondition(NumberOfBeds >= 0, "NumberOfBeds cannot be negative.");
-        super.IncrementNumber(NumberOfBeds);
+        if (NumberOfBeds > 0) { this.NumberOfBeds += NumberOfBeds; }
     }
 
     public void DecrementNumberOfBeds(int NumberOfBeds) { 
         Utils.CheckArgumentCondition(NumberOfBeds >= 0, "NumberOfBeds cannot be negative.");
         Utils.CheckArgumentCondition(NumberOfBeds <= this.GetNumberOfBeds(), 
                                      "NumberOfBeds cannot be smaller than the current beds available.");
-        super.DecrementNumber(NumberOfBeds);
+        if (NumberOfBeds > 0) { this.NumberOfBeds -= NumberOfBeds; }
     }
     
     // ---------------------------------------------------------------------------------------------------------------------
