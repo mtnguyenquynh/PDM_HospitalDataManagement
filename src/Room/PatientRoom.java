@@ -1,5 +1,14 @@
 package Room;
 
+import java.util.ArrayList;
+
+import javax.rmi.CORBA.Util;
+
+import BaseClass.BaseObject;
+import Utility.Utils;
+
+import Patient.Patient;
+
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
  * All Rights Reserved
@@ -44,32 +53,61 @@ package Room;
  * 1) 
 **/
 
-public class PatientRoom extends RoomUnit {
+public class PatientRoom extends BaseObject {
     
-    private int NumberOfBeds;
+    private ArrayList<String> LocalPool;
     public PatientRoom(String ID, int NumberOfBeds) {
-        super(ID);
-        this.NumberOfBeds = NumberOfBeds;
+        super(ID, NumberOfBeds);
+        this.LocalPool = new ArrayList<String>();
+        this._InitPool_();
+
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter Function
-    public int GetNumberOfBeds() { return this.NumberOfBeds; }
+    private ArrayList<String> GetLocalPool() { return this.LocalPool; }
+    public int GetNumberOfBeds() { return this.GetNumber(); }
+    public int GetCapacity() { return this.GetNumberOfBeds(); }         // Alias of GetNumberOfBeds()
+
     public void SetNumberOfBeds(int NumberOfBeds) { 
-        if (NumberOfBeds < 0) { throw new IllegalArgumentException("NumberOfBeds cannot be negative."); }
-        this.NumberOfBeds = NumberOfBeds; 
+        Utils.CheckArgumentCondition(NumberOfBeds >= 0, "NumberOfBeds cannot be negative.");
+        super.SetNumber(NumberOfBeds);
     }
 
     public void IncrementNumberOfBeds(int NumberOfBeds) { 
-        if (NumberOfBeds < 0) { throw new IllegalArgumentException("NumberOfBeds cannot be negative."); }
-        this.NumberOfBeds += NumberOfBeds; 
+        Utils.CheckArgumentCondition(NumberOfBeds >= 0, "NumberOfBeds cannot be negative.");
+        super.IncrementNumber(NumberOfBeds);
     }
 
     public void DecrementNumberOfBeds(int NumberOfBeds) { 
-        if (NumberOfBeds < 0) { throw new IllegalArgumentException("NumberOfBeds cannot be negative."); }
-        this.NumberOfBeds -= NumberOfBeds; 
+        Utils.CheckArgumentCondition(NumberOfBeds >= 0, "NumberOfBeds cannot be negative.");
+        Utils.CheckArgumentCondition(NumberOfBeds <= this.GetNumberOfBeds(), 
+                                     "NumberOfBeds cannot be smaller than the current beds available.");
+        super.DecrementNumber(NumberOfBeds);
     }
     
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Distribute patient
+    public void DistributePatient(Patient patient, int BedIndex) {
+
+    }
+    
+    // Initialize the pool & Several Ultility Functions
+    private void CleanPool() { this.GetLocalPool().clear(); }
+
+    private void _InitPool_() { 
+        if (this.LocalPool.size() != 0) { this.CleanPool(); }
+        for (int i = 0; i < this.GetNumberOfBeds(); i++) {
+            this.LocalPool.add(null);
+        }
+    }
+
+    private void CheckIndexInRange(int index) {
+        if (index < 0 || index > this.GetNumberOfBeds()) { 
+            throw new IndexOutOfBoundsException("The index must be between 0 and " + (this.GetNumberOfBeds() - 1));
+        }
+    }
+
 
 
 }

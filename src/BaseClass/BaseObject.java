@@ -59,12 +59,14 @@ public class BaseObject extends AbstractObject {
 
     public void IncrementNumber(int number) {
         Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
-        this.number += number;
+        if (number != 0) { this.number += number; }
     }
     public void DecrementNumber(int number) {
         Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
-        Utils.CheckArgumentCondition(number < this.GetNumber(), "Number cannot be negative.");
-        this.number -= number;
+        if (number != 0) {
+            Utils.CheckArgumentCondition(this.number >= number, "Number cannot be negative.");
+            this.number -= number;
+        }
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
