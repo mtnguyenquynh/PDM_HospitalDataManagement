@@ -38,6 +38,8 @@ public class AbstractObject {
         this.name = name;
     }
 
+    public AbstractObject(String ID) { this(ID, null); }
+
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
     public String GetID() { return this.ID; }
@@ -65,4 +67,5 @@ public class AbstractObject {
         String name = (String) data.get("name");
         return new AbstractObject(ID, name);
     }
+
 }

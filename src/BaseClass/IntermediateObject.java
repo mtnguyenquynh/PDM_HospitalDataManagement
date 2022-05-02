@@ -34,6 +34,8 @@ public class IntermediateObject extends AbstractObject {
         super(ID, name);
         this.description = description;
     }
+    
+    public IntermediateObject(String ID) { this(ID, null, null); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter

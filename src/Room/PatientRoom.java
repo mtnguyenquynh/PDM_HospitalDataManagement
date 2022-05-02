@@ -31,7 +31,11 @@ package Room;
  *    between the LToolPool and LResourcePool, which are both the collection of <Tool> and 
  *    <Resource>. Thus the primary key of the "ObjectRoom" is the {"RoomUnit.ID", "Object.ID"}.
  * 
- * In the programming scheme of the "Room", we did not 
+ * In the programming scheme of the "Room", we did not intended to use some special methods, but
+ * just a basic data-classes wrapper on top of it. Note that we don't store any non-serializable
+ * object but just a basic description into it, whhich comprised composite-reference key as 
+ * the primary key, and some syncronizable data. 
+ * .
  * 
  * @author Ichiru Take
  * @version 0.0.1
@@ -40,7 +44,17 @@ package Room;
  * 1) 
 **/
 
-public class PatientRoom {
+public class PatientRoom extends RoomUnit {
+    
+    private int NumberOfBeds;
+    public PatientRoom(String ID, int NumberOfBeds) {
+        super(ID);
+        this.NumberOfBeds = NumberOfBeds;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Getter & Setter Function
+    public int GetNumberOfBeds() { return this.NumberOfBeds; }
     
 
 
