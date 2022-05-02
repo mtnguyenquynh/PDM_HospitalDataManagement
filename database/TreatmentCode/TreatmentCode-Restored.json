@@ -1,7 +1,1 @@
-[
-    {"TreatmentCode": {"key_code": "TmC-00-00-0000", "description": "Null or Empty treatment"}}, 
-    {"TreatmentCode": {"key_code": "TmC-00-00-0001", "description": "X-rays"}}, 
-    {"TreatmentCode": {"key_code": "TmC-00-00-0002", "description": "Blood test"}}, 
-    {"TreatmentCode": {"key_code": "TmC-00-00-0003", "description": "Surgical operation"}}, 
-    {"TreatmentCode": {"key_code": "TmC-00-00-0004", "description": "Health-check"}}
-]
+[{"TreatmentCode":{"description":"Health-check","key_code":"TmC-00-00-0004"}},{"TreatmentCode":{"description":"Surgical operation","key_code":"TmC-00-00-0003"}},{"TreatmentCode":{"description":"Blood test","key_code":"TmC-00-00-0002"}},{"TreatmentCode":{"description":"X-rays","key_code":"TmC-00-00-0001"}},{"TreatmentCode":{"description":"Null or Empty treatment","key_code":"TmC-00-00-0000"}}]

@@ -28,7 +28,7 @@ import org.json.simple.parser.ParseException;
  * - https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
 **/
 
-public class Utils {
+public abstract class Utils {
     
     // ---------------------------------------------------------------------------------------------------------------------
     // JSON Processing: Read & Write
@@ -122,6 +122,12 @@ public class Utils {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Condition-checking
+    /**
+     * If the following condition is not met, the program will throw an exception.
+     * @param condition (boolean): The condition to be checked.
+     * @param message (String): The message to be printed if the condition is not met.
+     * @throws IllegalArgumentException
+     */
     public static void CheckArgumentCondition(boolean condition, String message) throws IllegalArgumentException {
         if (!condition) { throw new IllegalArgumentException(message); }
     }

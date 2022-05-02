@@ -1,6 +1,5 @@
 package Staff;
-import org.json.*;
-import java.io.*;
+
 public class MedicoTask {
     //Unit attributes
     public MedicoTask(){
