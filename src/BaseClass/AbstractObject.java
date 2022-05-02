@@ -33,10 +33,13 @@ public class AbstractObject {
 
     private String ID, name;                    
     public AbstractObject(String ID, String name) {
-        Utils.CheckArgumentCondition((ID == null || name == null), "ID or name cannot be negative.");
+        Utils.CheckArgumentCondition(ID != null, "ID cannot be null.");
+        Utils.CheckArgumentCondition(ID.length() > 0, "ID cannot be empty.");
         this.ID = ID;
         this.name = name;
     }
+
+    public AbstractObject(String ID) { this(ID, ""); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
@@ -65,4 +68,5 @@ public class AbstractObject {
         String name = (String) data.get("name");
         return new AbstractObject(ID, name);
     }
+
 }

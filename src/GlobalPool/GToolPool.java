@@ -3,7 +3,6 @@ package GlobalPool;
 import java.util.ArrayList;
 
 import Object.Tool;
-import Object.ToolUnit;
 
 /**
 * Copyright (C) 2022-2022, HDM-Dev Team
@@ -64,15 +63,8 @@ public class GToolPool {
         this._InitPool_();
     }
 
-
-    
-
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter to all Tools    
-    public Tool CreateTool(String ID, String name, String description, int amount, ToolUnit unit) {
-        return new Tool(ID, name, description, amount, unit);
-    }
-
     public boolean CheckIsToolAtIndexANull(int index) { 
         this.CheckIndexInRange(index);
         return this.LocalPool.get(index) == null; 

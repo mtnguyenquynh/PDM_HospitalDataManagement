@@ -56,6 +56,7 @@ public class TreatmentCode {
                 TreatmentCode.ValidateAllKeyCodeInPool(false);
             }
         }
+        System.out.println("Number of codes available: " + TreatmentCode.GetNumberOfCodeAvailable());
     } 
     
     // ---------------------------------------------------------------------------------------------------------------------

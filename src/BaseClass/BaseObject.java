@@ -43,21 +43,32 @@ public class BaseObject extends AbstractObject {
         this.number = number;
     }
 
+    public BaseObject(String ID) { this(ID, "", null, 0); }
+    public BaseObject(String ID, String name) { this(ID, name, null, 0); }
+    public BaseObject(String ID, int number) { this(ID, "", null, number); }
+    public BaseObject(String ID, String name, int number) { this(ID, name, null, number); }
+
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
     public String GetDescription() { return this.description; }
     public void SetDescription(String description) { this.description = (description == null) ? "" : description; }
 
     public int GetNumber() { return this.number; }
-    public void SetNumber(int number) { this.number = (number < 0) ? 0 : number; }
+    public void SetNumber(int number) { 
+        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        this.number = number; 
+    }
 
-    public void UpdateNumber(int number) {
-        if (number < 0) { throw new IllegalArgumentException("Number cannot be negative."); }
-        this.number += number;
+    public void IncrementNumber(int number) {
+        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        if (number != 0) { this.number += number; }
     }
     public void DecrementNumber(int number) {
-        if (number < 0) { throw new IllegalArgumentException("Number cannot be negative."); }
-        this.number -= number;
+        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        if (number != 0) {
+            Utils.CheckArgumentCondition(this.number >= number, "Number cannot be negative.");
+            this.number -= number;
+        }
     }
 
     // ---------------------------------------------------------------------------------------------------------------------

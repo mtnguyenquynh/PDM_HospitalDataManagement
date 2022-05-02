@@ -41,4 +41,8 @@ Content References:
 4) https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html (Documentation) (TODO)
 5) https://www.benchresources.net/various-ways-to-iterate-through-hashtable-in-java-6-ways/
 
+Resolve Conflict in VS Code:
+1) https://stackoverflow.com/questions/64273185/vscode-how-to-import-a-jar-file-into-your-java-project
+2) https://stackoverflow.com/questions/57243635/vscode-can-not-import-external-libraries
+3) https://code.visualstudio.com/docs/java/java-project
  
