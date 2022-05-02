@@ -54,7 +54,6 @@ public enum RoomUnitEnum {
     
     ;
 
-
     // ---------------------------------------------------------------------------------------------------------------------
     // Declare enum constants here.
     private String Parent, FullName, Functionality;
