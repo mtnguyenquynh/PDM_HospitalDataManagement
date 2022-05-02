@@ -39,7 +39,12 @@ public class AbstractObject {
         this.name = name;
     }
 
-    public AbstractObject(String ID) { this(ID, null); }
+    public AbstractObject(String ID) { this(ID, ""); }
+
+    public static void main(String[] args) {
+        AbstractObject obj = new AbstractObject("123456789");
+        System.out.println(obj.GetID());
+    }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter

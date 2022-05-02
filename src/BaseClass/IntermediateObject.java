@@ -2,8 +2,6 @@ package BaseClass;
 
 import java.util.Hashtable;
 
-import Utility.Utils;
-
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
  * All Rights Reserved
@@ -35,7 +33,8 @@ public class IntermediateObject extends AbstractObject {
         this.description = description;
     }
     
-    public IntermediateObject(String ID) { this(ID, null, null); }
+    public IntermediateObject(String ID) { this(ID, "", null); }
+    public IntermediateObject(String ID, String name) { this(ID, name, null); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter

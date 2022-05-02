@@ -43,8 +43,10 @@ public class BaseObject extends AbstractObject {
         this.number = number;
     }
 
-    public BaseObject(String ID) { this(ID, null, null, 0); }
-    public BaseObject(String ID, int number) { this(ID, null, null, number); }
+    public BaseObject(String ID) { this(ID, "", null, 0); }
+    public BaseObject(String ID, String name) { this(ID, name, null, 0); }
+    public BaseObject(String ID, int number) { this(ID, "", null, number); }
+    public BaseObject(String ID, String name, int number) { this(ID, name, null, number); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter

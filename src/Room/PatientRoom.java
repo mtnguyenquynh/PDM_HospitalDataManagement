@@ -1,6 +1,5 @@
 package Room;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -69,8 +68,8 @@ public class PatientRoom extends BaseObject {
         super(ID, NumberOfBeds);
         this.LocalPool = new Hashtable<Integer, String[]>(100, 0.75f);
         this._InitPool_();
-
     }
+
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Distribute patient
@@ -141,8 +140,6 @@ public class PatientRoom extends BaseObject {
         }
         return -1;
     }
-
-
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Several Ultility Functions
