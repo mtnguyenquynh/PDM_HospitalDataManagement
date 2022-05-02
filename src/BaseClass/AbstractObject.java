@@ -33,7 +33,7 @@ public class AbstractObject {
 
     private String ID, name;                    
     public AbstractObject(String ID, String name) {
-        Utils.CheckArgumentCondition(ID == null, "ID cannot be negative.");
+        Utils.CheckArgumentCondition(ID != null, "ID cannot be null.");
         Utils.CheckArgumentCondition(ID.length() > 0, "ID cannot be empty.");
         this.ID = ID;
         this.name = name;
