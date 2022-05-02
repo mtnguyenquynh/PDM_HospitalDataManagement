@@ -14,10 +14,6 @@ package Room;
  * This class recorded all functionalitites for the hospital room
  * which is used on <room-type> of the RoomUnit.
  * 
- * 
- * 
- * 
- * 
  * @author Ichiru Take
  * @version 0.0.1
  * 
