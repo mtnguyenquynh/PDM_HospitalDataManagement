@@ -2,6 +2,7 @@ package BaseClass;
 
 import java.util.Hashtable;
 
+import Utility.DataUtils;
 import Utility.Utils;
 
 /**
@@ -28,7 +29,7 @@ import Utility.Utils;
 
 public class AbstractObject {
     // This is the unique ID and the name of the object
-    private static final int SERIALIZATION_CAPACITY = 100;
+    private static final int SERIALIZATION_CAPACITY = 10000;
     private static final float SERIALIZATION_LOAD_FACTOR = 0.75f;  
 
     private String ID, name;                    
@@ -48,16 +49,11 @@ public class AbstractObject {
 
     public static int GetSerializationCapacity() { return AbstractObject.SERIALIZATION_CAPACITY; }
     public static float GetSerializationLoadFactor() { return AbstractObject.SERIALIZATION_LOAD_FACTOR; }
-    private static Hashtable<String, Object> GetEmptySerializeHashTable() {
-        int capacity = AbstractObject.GetSerializationCapacity();
-        float loadFactor = AbstractObject.GetSerializationLoadFactor();
-        return new Hashtable<String, Object>(capacity, loadFactor);
-    } 
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
     public Hashtable<String, Object> Serialize() {
-        Hashtable<String, Object> result = AbstractObject.GetEmptySerializeHashTable();
+        Hashtable<String, Object> result = DataUtils.ForceGetEmptyHashtable(this.getClass());
         result.put("id", this.GetID());
         result.put("name", this.GetName());
         return result;

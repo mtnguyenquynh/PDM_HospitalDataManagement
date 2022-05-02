@@ -22,8 +22,8 @@ import org.json.simple.parser.ParseException;
 **/
 
 /**
- * This file contained several helper function which support for the
- * multiple module module TreatmentCode.java
+ * This file contained several helper functions
+ * 
  * See references:
  * - https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
 **/
@@ -41,6 +41,7 @@ public abstract class Utils {
     /**
      * This method will load everything from the json file into the 2-valued string hash table.
      * Return True if the task proceeded successfully without any given error.
+     * TODO: This cannot be executed
      * 
      * @param json_directory (str): The directory of the json file want to load.
      * @param table (str): The hashed-table to store the result of our value.
@@ -131,5 +132,10 @@ public abstract class Utils {
     public static void CheckArgumentCondition(boolean condition, String message) throws IllegalArgumentException {
         if (!condition) { throw new IllegalArgumentException(message); }
     }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Condition-checking
+
+    public static Hashtable<String, Object> GetEmptyHashtable(AbstractObject object)
 
 }
