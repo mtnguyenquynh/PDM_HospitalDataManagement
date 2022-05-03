@@ -16,10 +16,9 @@ import Person.Person;
  * BSD-3 license, which is included in the file LICENSE.md, found
  * at the root of the project's source code/tree repository.
  **/
-
-public class Patient extends Person implements Serializable {
-
-    public Patient(String id, String name, String email, String phone_number, String gender, String nationality) {
+public class Patient extends Person {
+    public Patient(String id, String name, String email, String phone_number, String gender, String nationality)
+        throws Exception {
         super(id, name, email, phone_number, gender, nationality);
     }
 

@@ -14,10 +14,6 @@ package Room;
  * This class recorded all functionalitites for the hospital room
  * which is used on <room-type> of the RoomUnit.
  * 
- * 
- * 
- * 
- * 
  * @author Ichiru Take
  * @version 0.0.1
  * 
@@ -51,6 +47,8 @@ public enum RoomUnitEnum {
     RhU(null, "Rehabilitation Unit", "Recovery patients"),
     LAB(null, "Laboratory", "Patients with lab tests or medical researchers"),
     SDU(null, "Step-Down Unit", "Patients don't need intensive caring"),
+
+    UNIT(null, "Unit", "Unknown funcionality"),
     
     ;
 

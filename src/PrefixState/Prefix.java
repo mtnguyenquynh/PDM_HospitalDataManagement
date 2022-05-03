@@ -1,13 +1,13 @@
 package PrefixState;
 
 /**
-* Copyright (C) 2022-2022, HDM-Dev Team
-* All Rights Reserved
+ * Copyright (C) 2022-2022, HDM-Dev Team
+ * All Rights Reserved
 
-* This file is part of HDM-Dev Team's project. The contents are
-* fully covered, controlled, and acknowledged by the terms of the
-* BSD-3 license, which is included in the file LICENSE.md, found
-* at the root of the project's source code/tree repository.
+ * This file is part of HDM-Dev Team's project. The contents are
+ * fully covered, controlled, and acknowledged by the terms of the
+ * BSD-3 license, which is included in the file LICENSE.md, found
+ * at the root of the project's source code/tree repository.
 **/
 
 /**
@@ -54,9 +54,8 @@ public enum Prefix {
     private String prefix;
     Prefix(String prefix) { this.prefix = prefix; }
 
-    public String GetPrefix() { return this.prefix; }
     public String GetPrefixCode() { return this.prefix; }
-    public String GetPrefixCodeTerm() { return this.prefix.replace("-", ""); }
+    public String GetPrefixCodeNotation() { return this.prefix.replace("-", ""); }
 
     // ----------------------------------------------------------
     // Magic here: Declare the enum constant as a static final field using the prefix.

@@ -5,13 +5,13 @@ import java.util.Hashtable;
 import BaseClass.CreationDateTime;
 
 /**
-* Copyright (C) 2022-2022, HDM-Dev Team
-* All Rights Reserved
+ * Copyright (C) 2022-2022, HDM-Dev Team
+ * All Rights Reserved
 
-* This file is part of HDM-Dev Team's project. The contents are
-* fully covered, controlled, and acknowledged by the terms of the
-* BSD-3 license, which is included in the file LICENSE.md, found
-* at the root of the project's source code/tree repository.
+ * This file is part of HDM-Dev Team's project. The contents are
+ * fully covered, controlled, and acknowledged by the terms of the
+ * BSD-3 license, which is included in the file LICENSE.md, found
+ * at the root of the project's source code/tree repository.
 **/
 
 /**
@@ -58,9 +58,7 @@ public class Description extends CreationDateTime {
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization and Deserialization
     public Hashtable<String, Object> Serialize() {
-        Hashtable<String, Object> result = new Hashtable<String, Object>();
-        result.put("date", this.GetDateAsString());
-        result.put("time", this.GetTimeAsString());
+        Hashtable<String, Object> result = super.Serialize();
         result.put("description", this.GetDescription());
         result.put("medico_name", this.GetMedicoName());
         return result;
@@ -70,8 +68,9 @@ public class Description extends CreationDateTime {
         String description = (String) data.get("description");
         String medico_name = (String) data.get("medico_name");
         Description desc = new Description(description, medico_name);
+        
         desc.SetDate((String) data.get("date"));
         desc.SetTime((String) data.get("time"));
-        return new Description(description, medico_name);
+        return desc;
     }
 }

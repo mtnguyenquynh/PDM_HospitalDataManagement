@@ -30,15 +30,15 @@ public abstract class RoomUnitUtils {
 
     public static Prefix GetPrefix() { return RoomUnitUtils.prefix; }
     public static String GetPrefixCode() { return RoomUnitUtils.GetPrefix().GetPrefixCode(); }
-    public static String GetPrefixCodeTerm() { return RoomUnitUtils.GetPrefix().GetPrefixCodeTerm(); }
+    public static String GetPrefixCodeNotation() { return RoomUnitUtils.GetPrefix().GetPrefixCodeNotation(); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Extracting the information of the room-code
     public static String[] DecomposeRoomCodeID(String RoomCodeID) { return RoomCodeID.split("-"); }
     
-    public static String GetRoomBlock(String RoomCodeID) {return RoomUnitUtils.DecomposeRoomCodeID(RoomCodeID)[1]; }
+    public static String GetRoomType(String RoomCodeID) {return RoomUnitUtils.DecomposeRoomCodeID(RoomCodeID)[1]; }
     
-    public static String GetRoomType(String RoomCodeID) {return RoomUnitUtils.DecomposeRoomCodeID(RoomCodeID)[2]; }
+    public static String GetRoomBlock(String RoomCodeID) {return RoomUnitUtils.DecomposeRoomCodeID(RoomCodeID)[2]; }
     
     public static RoomUnitEnum GetRoomTypeEnum(String RoomCodeID) { 
         return RoomUnitEnum.GetEnum(RoomUnitUtils.GetRoomType(RoomCodeID)); 
@@ -50,7 +50,7 @@ public abstract class RoomUnitUtils {
     
     // -----------------------------------------------------------
     // Verifying the room-code
-    private static boolean VerifyRoomBlock(String RoomBlock) {
+    public static boolean VerifyRoomBlock(String RoomBlock) {
         // The <room-block> can have at most two characters either numeric or alphabetical.
         // If the <room-block> is a number, then it must be a two digit-like character.
         // If the <room-block> is a character, then it must have one or two characters.
@@ -70,7 +70,7 @@ public abstract class RoomUnitUtils {
         return false;
     }
 
-    private static boolean VerifyRoomType(String RoomType) {
+    public static boolean VerifyRoomType(String RoomType) {
         // The room-type is strongly dependent on the functionalities of the hospital room. 
         // So the length of the room-type is not limited. However, we can predict and set 
         // the constraint of the symbol's length. In this code, we choose the constraint to 
@@ -83,14 +83,14 @@ public abstract class RoomUnitUtils {
         return !RoomUnitEnum.FindEnum(RoomType);
     }
 
-    private static boolean VerifyRoomFloor(String RoomFloor) {
+    public static boolean VerifyRoomFloor(String RoomFloor) {
         if (RoomFloor.length() != 2) { return false; }
         if (!Character.isDigit(RoomFloor.charAt(0))) { return false; }
         if (!Character.isDigit(RoomFloor.charAt(1))) { return false; }
         return true;
     }
 
-    private static boolean VerifyRoomNumber(String RoomNumber) {
+    public static boolean VerifyRoomNumber(String RoomNumber) {
         if (RoomNumber.length() != 3) { return false; }
         if (!Character.isDigit(RoomNumber.charAt(0))) { return false; }
         if (!Character.isDigit(RoomNumber.charAt(1))) { return false; }
@@ -104,7 +104,7 @@ public abstract class RoomUnitUtils {
         // multiple parts using delimitor "-" and then verify each part.
         String[] DecomposedRoomCodeID = RoomUnitUtils.DecomposeRoomCodeID(RoomCodeID);
         if (DecomposedRoomCodeID.length != 5) { return false; }
-        if (!RoomUnitUtils.GetPrefixCodeTerm().equals(DecomposedRoomCodeID[0])) { return false; }
+        if (!RoomUnitUtils.GetPrefixCodeNotation().equals(DecomposedRoomCodeID[0])) { return false; }
         if (!RoomUnitUtils.VerifyRoomBlock(RoomUnitUtils.GetRoomBlock(RoomCodeID))) { return false; }
         if (!RoomUnitUtils.VerifyRoomType(RoomUnitUtils.GetRoomType(RoomCodeID))) { return false; }
         if (!RoomUnitUtils.VerifyRoomFloor(RoomUnitUtils.GetRoomFloor(RoomCodeID))) { return false; }
@@ -124,10 +124,14 @@ public abstract class RoomUnitUtils {
     // method with different signature. With this integer method, you can cast back to String, 
     // call the respective method; but it is not necessary and this call is extremely faster.
 
-    private static String CastRoomBlock(String RoomBlock) {
+    public static String CastRoomBlock(String RoomBlock) {
         // This method will cast your RoomBlock to have two characters, except if the input is
         // the letter-like character with one character only.
         if (RoomBlock == null) { return null; }
+        if (StringUtils.isNumeric((CharSequence) RoomBlock)) { 
+            return RoomUnitUtils.CastRoomBlock(Integer.parseInt(RoomBlock)); 
+        }
+
         if (RoomBlock.length() > 2 || RoomBlock.length() == 0) { return null; }
         if (RoomBlock.length() == 1) {
             char c = RoomBlock.charAt(0);
@@ -149,14 +153,14 @@ public abstract class RoomUnitUtils {
         return null;
     }
 
-    private static String CastRoomBlock(int RoomBlock) {
+    public static String CastRoomBlock(int RoomBlock) {
         if (RoomBlock <= 0 || RoomBlock >= 99) { return null; }
         // You can cast to string, call RoomUnitUtils.CastRoomBlock(String) and then cast back to int.
         // However, it is not necessary and this call is extremely faster.
         return String.format("%02d", RoomBlock); 
     }
 
-    private static String CastRoomType(String RoomType) {
+    public static String CastRoomType(String RoomType) {
         // This method will cast your RoomType to have at most five characters.
         if (RoomType == null) { return null; }
         if (RoomType.length() > 5) { return null; }
@@ -166,9 +170,12 @@ public abstract class RoomUnitUtils {
         return RoomType.toUpperCase();
     }
 
-    private static String CastRoomFloor(String RoomFloor) {
+    public static String CastRoomFloor(String RoomFloor) {
         // This method will cast your RoomFloor to have two digit-like characters.
         if (RoomFloor == null) { return null; }
+        if (StringUtils.isNumeric((CharSequence) RoomFloor)) { 
+            return RoomUnitUtils.CastRoomFloor(Integer.parseInt(RoomFloor)); 
+        }
         if (RoomFloor.length() == 0 || RoomFloor.length() > 2) { return null; }
         for (int i = 0; i < RoomFloor.length(); i++) {
             if (!Character.isDigit(RoomFloor.charAt(i))) { return null; }
@@ -176,14 +183,18 @@ public abstract class RoomUnitUtils {
         return String.format("%02d", Integer.parseInt(RoomFloor));
     }
 
-    private static String CastRoomFloor(int RoomFloor) {
+    public static String CastRoomFloor(int RoomFloor) {
         if (RoomFloor <= 0 || RoomFloor >= 99) { return null; }
         return String.format("%02d", RoomFloor);
     }
 
-    private static String CastRoomNumber(String RoomNumber) {
+    public static String CastRoomNumber(String RoomNumber) {
         // This method will cast your RoomNumber to have three digit-like characters.
         if (RoomNumber == null) { return null; }
+        if (StringUtils.isNumeric((CharSequence) RoomNumber)) { 
+            return RoomUnitUtils.CastRoomNumber(Integer.parseInt(RoomNumber)); 
+        }
+
         if (RoomNumber.length() == 0 || RoomNumber.length() > 3) { return null; }
         for (int i = 0; i < RoomNumber.length(); i++) {
             if (!Character.isDigit(RoomNumber.charAt(i))) { return null; }
@@ -191,30 +202,19 @@ public abstract class RoomUnitUtils {
         return String.format("%03d", Integer.parseInt(RoomNumber));
     }
 
-    private static String CastRoomNumber(int RoomNumber) {
+    public static String CastRoomNumber(int RoomNumber) {
         if (RoomNumber <= 0 || RoomNumber >= 999) { return null; }
         return String.format("%03d", RoomNumber);
     }
 
-    public static String ConstructRoomCodeID(String RoomBlock, String RoomType, String RoomFloor, String RoomNumber) {
+    public static String ConstructRoomCodeID(String RoomType, String RoomBlock, String RoomFloor, String RoomNumber) {
         // This function is to construct the room-code ID as a single identity.
         // As mentioned in the documentation above, we construct the room-code ID by
-        // concatenating the parts of the room-code ID.
-        String RoomBlockStr, RoomTypeStr, RoomFloorStr, RoomNumberStr;
-         
-        if (StringUtils.isNumeric((CharSequence) RoomBlock)) { 
-            RoomBlockStr = RoomUnitUtils.CastRoomBlock(Integer.parseInt(RoomBlock)); 
-        } else { RoomBlockStr = RoomUnitUtils.CastRoomBlock(RoomBlock); }
-
-        RoomTypeStr = RoomUnitUtils.CastRoomType(RoomType);
-
-        if (StringUtils.isNumeric((CharSequence) RoomFloor)) { 
-            RoomFloorStr = RoomUnitUtils.CastRoomFloor(Integer.parseInt(RoomFloor)); 
-        } else { RoomFloorStr = RoomUnitUtils.CastRoomFloor(RoomFloor); }
-
-        if (StringUtils.isNumeric((CharSequence) RoomNumber)) { 
-            RoomNumberStr = RoomUnitUtils.CastRoomNumber(Integer.parseInt(RoomNumber)); 
-        } else { RoomNumberStr = RoomUnitUtils.CastRoomNumber(RoomNumber); }
+        // concatenating the parts of the room-code ID.        
+        String RoomBlockStr = RoomUnitUtils.CastRoomBlock(RoomBlock); 
+        String RoomTypeStr = RoomUnitUtils.CastRoomType(RoomType);
+        String RoomFloorStr = RoomUnitUtils.CastRoomFloor(RoomFloor); 
+        String RoomNumberStr = RoomUnitUtils.CastRoomNumber(RoomNumber);
 
         if (RoomBlockStr == null || RoomTypeStr == null || RoomFloorStr == null || RoomNumberStr == null) { 
             String FullMessage = "";
@@ -224,8 +224,38 @@ public abstract class RoomUnitUtils {
             if (RoomNumberStr == null) { FullMessage += "Invalid RoomNumber: " + RoomNumber.toString() + "; "; }
             throw new IllegalArgumentException(FullMessage);
         }
-        String[] iterable = {RoomBlockStr, RoomTypeStr, RoomFloorStr, RoomNumberStr};
-        return RoomUnitUtils.GetPrefixCodeTerm() + StringUtils.join(iterable, "-");
+        String[] iterable = {RoomTypeStr, RoomBlockStr, RoomFloorStr, RoomNumberStr};
+        return RoomUnitUtils.GetPrefixCode() + StringUtils.join(iterable, "-");
     }
     
+    public static String ConstructRoomCodeID(String RoomBlock, String RoomFloor, String RoomNumber) {
+        String RoomBlockStr = RoomUnitUtils.CastRoomBlock(RoomBlock); 
+        String RoomFloorStr = RoomUnitUtils.CastRoomFloor(RoomFloor); 
+        String RoomNumberStr = RoomUnitUtils.CastRoomNumber(RoomNumber);
+
+        if (RoomBlockStr == null || RoomFloorStr == null || RoomNumberStr == null) { 
+            String FullMessage = "";
+            if (RoomBlockStr == null) { FullMessage += "Invalid RoomBlock: " + RoomBlock.toString() + "; "; }
+            if (RoomFloorStr == null) { FullMessage += "Invalid RoomFloor: " + RoomFloor.toString() + "; "; }
+            if (RoomNumberStr == null) { FullMessage += "Invalid RoomNumber: " + RoomNumber.toString() + "; "; }
+            throw new IllegalArgumentException(FullMessage);
+        }
+        String[] iterable = {RoomBlockStr, RoomFloorStr, RoomNumberStr};
+        return StringUtils.join(iterable, "-");
+    }
+
+    public static String ConstructRoomCodeID(String RoomFloor, String RoomNumber) {
+        String RoomFloorStr = RoomUnitUtils.CastRoomFloor(RoomFloor); 
+        String RoomNumberStr = RoomUnitUtils.CastRoomNumber(RoomNumber);
+        if (RoomFloorStr == null || RoomNumberStr == null) { 
+            String FullMessage = "";
+            if (RoomFloorStr == null) { FullMessage += "Invalid RoomFloor: " + RoomFloor.toString() + "; "; }
+            if (RoomNumberStr == null) { FullMessage += "Invalid RoomNumber: " + RoomNumber.toString() + "; "; }
+            throw new IllegalArgumentException(FullMessage);
+        }
+        String[] iterable = {RoomFloorStr, RoomNumberStr};
+        return StringUtils.join(iterable, "-");
+    }
+
+
 }
