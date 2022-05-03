@@ -56,11 +56,11 @@ public abstract class TreatmentCodeUtils {
      * This function will convert every data from JSONArray into ArrayList.
      * 
      * @param json_directory (String): The json_directory you want to load.
-     * @param key_identifier (String): The name of the key wrapping on each object
+     * @param name (String): The name of the key wrapping on each object
      * @return ArrayList<Hashtable<String, Object>>
      **/
     public static ArrayList<Hashtable<String, Object>> SaveJsonDataIntoHashTable(
-        String json_directory, String key_identifier) throws Exception, FileNotFoundException 
+        String json_directory, String name) throws Exception, FileNotFoundException 
     {    
         ArrayList<Hashtable<String, Object>> data = new ArrayList<Hashtable<String, Object>>(10000);
         JSONParser jsonParser = new JSONParser();
@@ -68,11 +68,11 @@ public abstract class TreatmentCodeUtils {
             JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader(json_directory));
             for (Object obj : jsonArray) {
                 JSONObject jsonObject = (JSONObject) obj;
-                if (key_identifier == null) {
+                if (name == null) {
                     data.add(LoadOneUnitJsonData(jsonObject));
                 } else {
                     try {
-                        JSONObject NewJsonObject = (JSONObject) jsonObject.get(key_identifier);
+                        JSONObject NewJsonObject = (JSONObject) jsonObject.get(name);
                         data.add(LoadOneUnitJsonData(NewJsonObject));
                     } catch (Exception e) { data.add(LoadOneUnitJsonData(jsonObject)); }
                 }
@@ -88,7 +88,8 @@ public abstract class TreatmentCodeUtils {
      * This method will save the result everything from the hash table to JSON file.
      * Return True if the task proceeded successfully without any given error.
      * @param json_directory (String): The json_directory you want to load.
-     * @param key_identifier (String): The name of the key wrapping on each object
+     * @param data (ArrayList<Hashtable<String, Object>>): The data you want to serialize.
+     * @param name (String): The name of the key wrapping on each object
      * @param table (str): The hashed-table to load our value.
      * @param key_wrapper (str): The serialized name of our instance, for example TreatmentCode.
      * @param key_value (str, str): The key-value pair of the json file. The first value is the code name
@@ -99,7 +100,7 @@ public abstract class TreatmentCodeUtils {
      **/
     public static boolean SaveHashTableIntoJsonFile(
         String json_directory, ArrayList<Hashtable<String, Object>> data, 
-        String key_identifier) throws Exception {
+        String name) throws Exception {
         JSONArray jsonArray = new JSONArray();
 
         for (Hashtable<String, Object> table : data) {
@@ -109,10 +110,13 @@ public abstract class TreatmentCodeUtils {
                 jsonObject.put(key, value);
             }
 
-            JSONObject JsonObjectWrapper = new JSONObject();
-            JsonObjectWrapper.put(key_identifier, jsonObject);
-
-            jsonArray.add(jsonObject);
+            if (name != null) {
+                JSONObject JsonObjectWrapper = new JSONObject();
+                JsonObjectWrapper.put(name, jsonObject);
+                jsonArray.add(JsonObjectWrapper);
+            } else {
+                jsonArray.add(jsonObject);
+            }
         }
     
 
@@ -131,5 +135,19 @@ public abstract class TreatmentCodeUtils {
         return success;
     }
 
+
+    public JSONObject ConvertPoolToJsonObject(Hashtable<String, Object> data, String name) {
+        JSONObject jsonObject = new JSONObject();
+        for (String key : data.keySet()) {
+            Object value = data.get(key);
+            jsonObject.put(key, value);
+        }
+        if (name != null) {
+            JSONObject JsonObjectWrapper = new JSONObject();
+            JsonObjectWrapper.put(name, jsonObject);
+            return JsonObjectWrapper;
+        }
+        return jsonObject;
+    }
 
 }

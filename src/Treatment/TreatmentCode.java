@@ -72,7 +72,7 @@ public class TreatmentCode {
 
             try {
                 ArrayList<Hashtable<String, Object>> array = 
-                    TreatmentCodeUtils.SaveJsonDataIntoHashTable(directory, TreatmentCode.GetClassName());
+                    TreatmentCodeUtils.SaveJsonDataIntoHashTable(directory, null);
                 
                 String[] ArgName = TreatmentCode.GetArgName();
                 for (Hashtable<String, Object> item : array) {
@@ -117,7 +117,7 @@ public class TreatmentCode {
         try {
             ArrayList<Hashtable<String, Object>> array = TreatmentCode.ConvertPool();
             TreatmentCodeUtils.SaveHashTableIntoJsonFile(TreatmentCode.JsonDirectory, array, 
-                                                         TreatmentCode.GetClassName());
+                                                         null);
 
         } catch (Exception e) {
             e.printStackTrace();
