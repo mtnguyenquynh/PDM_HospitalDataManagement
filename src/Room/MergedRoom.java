@@ -117,7 +117,7 @@ public class MergedRoom {
      * "LToolPool", and "LResourcePool" and to deserialize the JSON file.
      * @throws IOException
      */
-    private void BuildComponents() throws IOException {
+    private void BuildComponents() throws Exception {
         String dir = MergedRoom.GetRoomDirectory();
         String room_code = this.GetRoom().GetID();
 

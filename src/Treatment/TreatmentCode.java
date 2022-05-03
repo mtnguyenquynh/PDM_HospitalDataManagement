@@ -3,6 +3,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import PrefixState.Prefix;
+import Utility.Utils;
 
 import java.io.*;
 
@@ -71,8 +72,7 @@ public class TreatmentCode {
             directory = TreatmentCode.JsonDirectory;
 
             try {
-                ArrayList<Hashtable<String, Object>> array = 
-                    TreatmentCodeUtils.SaveJsonDataIntoHashTable(directory, null);
+                ArrayList<Hashtable<String, Object>> array = Utils.SaveJsonDataIntoHashTable(directory, null);
                 
                 String[] ArgName = TreatmentCode.GetArgName();
                 for (Hashtable<String, Object> item : array) {
@@ -116,8 +116,7 @@ public class TreatmentCode {
         // Step 03: Save the pool into JSON file for later used
         try {
             ArrayList<Hashtable<String, Object>> array = TreatmentCode.ConvertPool();
-            TreatmentCodeUtils.SaveHashTableIntoJsonFile(TreatmentCode.JsonDirectory, array, 
-                                                         null);
+            Utils.SaveHashTableIntoJsonFile(TreatmentCode.JsonDirectory, array, null);
 
         } catch (Exception e) {
             e.printStackTrace();
