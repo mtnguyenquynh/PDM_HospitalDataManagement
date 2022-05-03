@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -42,14 +42,11 @@ public abstract class TreatmentCodeUtils {
      **/
     public static Hashtable<String, Object> LoadOneUnitJsonData(JSONObject data) {
         Hashtable<String, Object> table = new Hashtable<String, Object>(1000, 0.75f);
-        JSONArray key_name = data.names();
-        if (key_name != null) {
-            key_name.forEach(key -> {
-                try {
-                    String key_str = key.toString();
-                    table.put(key_str, data.get(key_str));
-                } catch (Exception e) { e.printStackTrace(); }
-            });
+        // Iterate over keys
+        for (Object key : data.keySet()) {
+            // Get the value
+            Object value = data.get(key);
+            table.put(key.toString(), value);
         }
         return table;
     }
@@ -108,13 +105,14 @@ public abstract class TreatmentCodeUtils {
         for (Hashtable<String, Object> table : data) {
             JSONObject jsonObject = new JSONObject();
             for (String key : table.keySet()) {
-                jsonObject.put(key, table.get(key));
+                Object value = table.get(key);
+                jsonObject.put(key, value);
             }
 
             JSONObject JsonObjectWrapper = new JSONObject();
             JsonObjectWrapper.put(key_identifier, jsonObject);
 
-            jsonArray.put(jsonObject);
+            jsonArray.add(jsonObject);
         }
     
 

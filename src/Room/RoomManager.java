@@ -8,11 +8,6 @@ import java.nio.file.Paths;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONParser;
-import org.json.parser.ParseException;
-
 import Utility.DataUtils;
 import Utility.Utils;
 
