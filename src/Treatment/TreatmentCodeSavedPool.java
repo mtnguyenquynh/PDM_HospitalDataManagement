@@ -34,6 +34,7 @@ public class TreatmentCodeSavedPool {
         pool.add(new String[]{"00-00-0003", "CT Scan"});
         pool.add(new String[]{"00-00-0004", "MRI"});
         pool.add(new String[]{"00-00-0005", "Blood test"});
+        pool.add(new String[]{"00-00-0006", "Urine test"});
         pool.add(new String[]{"00-00-0007", "Surgical operation"});
         pool.add(new String[]{"00-00-0008", "Health-check"});        
         return pool;

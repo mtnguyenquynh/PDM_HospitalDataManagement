@@ -1,7 +1,10 @@
 package Treatment;
+import Utility.DataUtils;
 import Utility.Utils;
 import java.util.*;
 import java.util.Map.Entry;
+
+import javax.jws.Oneway;
 
 import PrefixState.Prefix;
 
@@ -29,6 +32,9 @@ import java.io.*;
  * - https://www.geeksforgeeks.org/differences-between-hashmap-and-hashtable-in-java/
  * - https://www.geeksforgeeks.org/hashtable-in-java/
  * - https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Hashtable.html 
+ * - https://www.geeksforgeeks.org/parse-json-java/
+ * - https://stackhowto.com/how-to-read-a-json-file-with-java/
+ * - https://attacomsian.com/blog/java-read-write-json-files
 **/
 
 
@@ -43,8 +49,6 @@ public class TreatmentCode {
     // These two directory are the saved configuration of all treatment codes. 
     private final static String JsonDirectory = "database/TreatmentCode/TreatmentCode.json";
     private final static Prefix prefix = Prefix.TreatmentCode;
-    private final static String Name = TreatmentCode.class.getSimpleName();
-    private final static String[] ArgName = {"key_code", "description"};
 
     public static void main(String[] args) {
         if (TreatmentCode.GetNumberOfCodeAvailable() == 0) {
@@ -63,18 +67,24 @@ public class TreatmentCode {
     private static boolean LoadJsonDatabase() {
         File json_data = new File(TreatmentCode.JsonDirectory); 
         String directory = null;
+        boolean status = false;
+        
         if (json_data.exists() && directory == null) {
             System.out.println("----------------------------------------------------------------------------------");
             System.out.println("The treatment code database is loaded from the file: " + TreatmentCode.JsonDirectory);
             directory = TreatmentCode.JsonDirectory;
-        }
-        
-        boolean status = false;
-        if (directory != null) {
+
             try {
-                status = Utils.LoadJsonDataIntoHashTable(
-                    directory, TreatmentCode.Pool, 
-                    TreatmentCode.Name, TreatmentCode.ArgName);
+                ArrayList<Hashtable<String, Object>> array = 
+                    TreatmentCodeUtils.SaveJsonDataIntoHashTable(directory, TreatmentCode.GetClassName());
+                
+                String[] ArgName = TreatmentCode.GetArgName();
+                for (Hashtable<String, Object> item : array) {
+                    String code = (String) item.get(ArgName[0]);
+                    String description = (String) item.get(ArgName[1]);
+                    TreatmentCode.GetPool().put(code, (Object) description);
+                }
+                status = true;
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -92,9 +102,7 @@ public class TreatmentCode {
         String prefix_code = TreatmentCode.prefix.GetPrefixCode();
         ArrayList<String[]> pool = TreatmentCodeSavedPool.LoadPool();
         for (String[] record : pool) {
-            String key_code = record[0];
-            String description = record[1];
-            TreatmentCode.Pool.put(prefix_code + key_code, description);
+            TreatmentCode.Pool.put(prefix_code + record[0], record[1]);
         }
     }
 
@@ -111,9 +119,10 @@ public class TreatmentCode {
 
         // Step 03: Save the pool into JSON file for later used
         try {
-            Utils.SaveHashTableIntoJsonFile(
-                TreatmentCode.JsonDirectory, TreatmentCode.Pool, 
-                TreatmentCode.Name, TreatmentCode.ArgName);
+            ArrayList<Hashtable<String, Object>> array = TreatmentCode.ConvertPool();
+            TreatmentCodeUtils.SaveHashTableIntoJsonFile(TreatmentCode.JsonDirectory, array, 
+                                                         TreatmentCode.GetClassName());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,15 +131,18 @@ public class TreatmentCode {
 
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // Getter Function Only
+    // Getter Function
     public static Hashtable<String, Object> GetPool() { return TreatmentCode.Pool; }
 
     public static boolean ContainsThisKeyCode(String code) { return TreatmentCode.GetPool().containsKey(code); }
     public static int GetSerializationCapacity() { return capacity; }
     public static float GetSerializationLoadFactor() { return loadFactor; }
     public static int GetNumberOfCodeAvailable() { return Pool.size(); }
+    public static String GetClassName() { return TreatmentCode.class.getSimpleName(); }
+    public static String[] GetArgName() { return new String[] {"code", "description"}; }
+
     public static Prefix GetPrefix() { return TreatmentCode.prefix; }
-    public static String GetPrefixCode() { return TreatmentCode.prefix.GetPrefixCode(); }
+    public static String GetPrefixCode() { return TreatmentCode.GetPrefix().GetPrefixCode(); }
 
     public static void Display() {
         Iterator<Entry<String, Object>> iter = TreatmentCode.Pool.entrySet().iterator();
@@ -148,7 +160,7 @@ public class TreatmentCode {
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // Validation Function Only
+    // Validation Function
     public static boolean ValidateKeyCode(String code) {
         if (code == null || code.length() != 10 + TreatmentCode.GetPrefixCode().length()) { return false; }
         if (!code.startsWith(TreatmentCode.GetPrefixCode())) {return false; }
@@ -175,5 +187,21 @@ public class TreatmentCode {
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
+    // Converting Function
+    private static ArrayList<Hashtable<String, Object>> ConvertPool() {
+        ArrayList<Hashtable<String, Object>> array = new ArrayList<Hashtable<String, Object>>(TreatmentCode.GetSerializationCapacity());
+        Iterator<Entry<String, Object>> iter = TreatmentCode.GetPool().entrySet().iterator();
+        
+        String[] ArgName = TreatmentCode.GetArgName();
+        while (iter.hasNext()) {
+            Entry<String, Object> entry = iter.next();
+            Hashtable<String, Object> item = new Hashtable<String, Object>(2, 1.0f);
+            item.put(ArgName[0], entry.getKey());
+            item.put(ArgName[1], entry.getValue());
+            array.add(item);
+        }
+        return array;
+    }
+
 
 }

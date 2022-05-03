@@ -51,7 +51,7 @@ public class GToolPool {
 
     // Worked on later
     private final static String DB_FILENAME = "tool_pool.json"; // Later definition
-    private final static String ROOM_CODE_DIRECTORY = "database/StorageRoom/";
+    private final static String ROOM_CODE_DIRECTORY = "database/GlobalPool/";
 
 
     // This is used to store a view for modification. This laid a foundation for GResourcePool,
@@ -161,9 +161,5 @@ public class GToolPool {
             throw new IndexOutOfBoundsException("The index must be between 0 and " + (GToolPool.GetCapacity() - 1));
         }
     }
-
-    // ---------------------------------------------------------------------------------------------------------------------
-    // Initialize the pool 
-
 
 }

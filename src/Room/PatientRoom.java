@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.StringUtils;
 
 import BaseClass.AbstractObject;
+import Utility.DataUtils;
 import Utility.Utils;
 
 import Patient.Patient;
@@ -68,12 +69,15 @@ public class PatientRoom extends AbstractObject {
     private Hashtable<Integer, String[]> LocalPool;
     public PatientRoom(String ID, int NumberOfBeds) {
         super(ID);
+        if (NumberOfBeds < -1) {NumberOfBeds = 2;}
         this.NumberOfBeds = NumberOfBeds;
         int capacity = PatientRoom.GetSerializationCapacity();
         float loadFactor = PatientRoom.GetSerializationLoadFactor();
         this.LocalPool = new Hashtable<Integer, String[]>(capacity, loadFactor);
         this._InitPool_();
     }
+
+    public PatientRoom(String ID) {this(ID, 3);}            // A common room may have 2-3 beds ?
 
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -254,12 +258,13 @@ public class PatientRoom extends AbstractObject {
             Entry<Integer, String[]> entry = iter.next();
             result.put(Integer.toString(entry.getKey()), entry.getValue());
         }
-        result.put("ID", this.GetID());
+        result.put("id", this.GetID());
+        result.put("NumberOfBeds", this.GetNumberOfBeds());
         return result;  
     } 
 
     public static PatientRoom Deserialize(Hashtable<String, Object> data) {
-        PatientRoom room = new PatientRoom((String) data.get("ID"), data.size());
+        PatientRoom room = new PatientRoom((String) data.get("id"), (int) data.get("NumberOfBeds"));
         Iterator<Entry<String, Object>> iter = data.entrySet().iterator();
         while (iter.hasNext()) {
             Entry<String, Object> entry = iter.next();

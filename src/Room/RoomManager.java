@@ -1,10 +1,19 @@
 package Room;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Hashtable;
+import java.util.Map.Entry;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONParser;
+import org.json.parser.ParseException;
+
+import Utility.DataUtils;
 import Utility.Utils;
 
 /**
@@ -48,10 +57,12 @@ import Utility.Utils;
  * 
  * References:
  * 1) https://stackoverflow.com/questions/10926353/how-to-read-json-file-into-java-with-simple-json-library
+ * 2) https://stackoverflow.com/questions/28947250/create-a-directory-if-it-does-not-exist-and-then-create-the-files-in-that-direct
 **/
 
 public class RoomManager {
-    private static final String ROOM_CODE_DIRECTORY = "database/Room/RoomCode.json";
+    private static final String ROOM_DIRECTORY = "database/Room";
+    private static final String ROOM_CODE_FILE = "database/Room/RoomCode.json";
     private static final String[] SAVED_NAME = {"RoomCode", "name", "description"};
     private static final String[] COMPONENT_NAME = {"PatientRoom", "MedicoRoom", "LToolPool", "LResourcePool"};
 
@@ -71,7 +82,7 @@ public class RoomManager {
         String TempRoomCode = RoomUnitUtils.ConstructRoomCodeID(RoomFloor, RoomNumber);
         
         JSONParser parser = new JSONParser();
-        JSONArray array = (JSONArray) parser.parse(RoomManager.GetRoomCodeDirectory());
+        JSONArray array = (JSONArray) parser.parse(RoomManager.GetRoomCodeFile());
 
         String[] Argument = RoomManager.GetSavedName();
 
@@ -125,13 +136,71 @@ public class RoomManager {
         return this.Room;
     }
 
+    /**
+     * This function is to create a folder for the room at the database/Room directory.
+     * The folder-name is the same as the room-code.
+     * In each folder, there are four different files named: "PatientRoom", "MedicoRoom", 
+     * "LToolPool", and "LResourcePool" and to deserialize the JSON file.
+     * @throws IOException
+     */
+    private void BuildComponents() throws IOException {
+        String dir = RoomManager.GetRoomDirectory();
+        String room_code = this.GetRoom().GetID();
+
+
+        Files.createDirectories(Paths.get(dir + "/" + room_code));
+        this.PtRoom = new PatientRoom(room_code, 3);
+
+        Files.createFile(Paths.get("database/Room/" + this.GetRoom().GetID() + "/" + this.GetRoom().GetID() + "_PtRoom.json"));
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Ultility functions
+
+    private void LoadPatientRoom() {
+        // Build the PatientRoom
+        String room_code = this.GetRoom().GetID();
+        String working_directory = this.GetWorkingDirectory();
+        String component_filename = RoomManager.GetSavedName()[0];
+        
+
+        // Create the file
+        try {
+            Path path = Files.createTempFile(working_directory + "/" + component_filename, ".json");
+            if (Files.exists(path)) {
+                // Read that JSON file
+                JSONParser parser = new JSONParser();
+                JSONArray array = (JSONArray) parser.parse(path.toString());
+                Hashtable<String, Object> data = DataUtils.ForceGetEmptyHashtable(PatientRoom.class);
+                
+                Object obj = array.get(0);
+                JSONObject jsonObject = (JSONObject) obj;
+                jsonObject.keySet().forEach(key -> { data.put(key, jsonObject.get(key)); });
+                this.PtRoom = PatientRoom.Deserialize(data);
+                
+
+            } else {
+                // Create the file
+                this.PtRoom = new PatientRoom(room_code, 3);
+            }
+
+
+        }
+
+    }
 
 
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
-    public static String GetRoomCodeDirectory() { return RoomManager.ROOM_CODE_DIRECTORY; }
+    public static String GetRoomDirectory() { return RoomManager.ROOM_DIRECTORY; }
+    public static String GetRoomCodeFilename() { return RoomManager.ROOM_CODE_FILE; }
+    public static String GetRoomCodeFile() { return RoomManager.GetRoomDirectory() + "/" + RoomManager.GetRoomCodeFilename(); }
     public static String[] GetSavedName() { return RoomManager.SAVED_NAME; }
+    public String GetWorkingDirectory() { 
+        Utils.CheckArgumentCondition(this.GetRoom().GetID() != null, "The room cannot be loaded.");
+        return RoomManager.GetRoomDirectory() + "/" + this.GetRoom().GetID(); 
+    }
 
     public RoomUnit GetRoom() { return this.Room; }
     public void SetRoomName(String RoomName) throws Exception { this.GetRoom().SetName(RoomName); }

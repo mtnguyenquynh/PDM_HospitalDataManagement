@@ -1,1 +1,11 @@
-[{"TreatmentCode":{"description":"Health-check","key_code":"TmC-00-00-0008"}},{"TreatmentCode":{"description":"Surgical operation","key_code":"TmC-00-00-0007"}},{"TreatmentCode":{"description":"Blood test","key_code":"TmC-00-00-0005"}},{"TreatmentCode":{"description":"MRI","key_code":"TmC-00-00-0004"}},{"TreatmentCode":{"description":"CT Scan","key_code":"TmC-00-00-0003"}},{"TreatmentCode":{"description":"Ultrasound","key_code":"TmC-00-00-0002"}},{"TreatmentCode":{"description":"X-rays","key_code":"TmC-00-00-0001"}},{"TreatmentCode":{"description":"Null or Empty treatment","key_code":"TmC-00-00-0000"}}]
+[
+    {"TreatmentCode":{"description":"Health-check","code":"TmC-00-00-0008"}},
+    {"TreatmentCode":{"description":"Surgical operation","code":"TmC-00-00-0007"}},
+    {"TreatmentCode":{"description":"Urine test","code":"TmC-00-00-0006"}},
+    {"TreatmentCode":{"description":"Blood test","code":"TmC-00-00-0005"}},
+    {"TreatmentCode":{"description":"MRI","code":"TmC-00-00-0004"}},
+    {"TreatmentCode":{"description":"CT Scan","code":"TmC-00-00-0003"}},
+    {"TreatmentCode":{"description":"Ultrasound","code":"TmC-00-00-0002"}},
+    {"TreatmentCode":{"description":"X-rays","code":"TmC-00-00-0001"}},
+    {"TreatmentCode":{"description":"Null or Empty treatment","code":"TmC-00-00-0000"}}
+]
