@@ -1,31 +1,47 @@
 package Person;
 
-import BaseClass.AbstractObject;
+import BaseClass.IntermediateObject;
+
 import java.util.Hashtable;
 
 /**
-* Copyright (C) 2022-2022, HDM-Dev Team
-* All Rights Reserved
+ * Copyright (C) 2022-2022, HDM-Dev Team
+ * All Rights Reserved
 
-* This file is part of HDM-Dev Team's project. The contents are
-* fully covered, controlled, and acknowledged by the terms of the
-* BSD-3 license, which is included in the file LICENSE.md, found
-* at the root of the project's source code/tree repository.
+ * This file is part of HDM-Dev Team's project. The contents are
+ * fully covered, controlled, and acknowledged by the terms of the
+ * BSD-3 license, which is included in the file LICENSE.md, found
+ * at the root of the project's source code/tree repository.
 **/
 
 /**
  * This is a dataclass which describes an instances of a person.
  * which is also a base/abstract class to have better description on 
- * other classes such as Patient, Doctor, Nurse (medico)
+ * other classes such as Patient, Doctor, Nurse (medico).
+ * 
+ * @author Ichiru Take
+ * @version 0.0.1
+ * 
+ * References:
+ * 1) 
 **/
 
 
-public class Person extends AbstractObject {
+public class Person extends IntermediateObject {
     // These attributes are the personal information of a particular person
     private String email, phone_number, gender, nationality;        
 
     public Person(String ID, String name, String email, String phone_number, 
-                  String gender, String nationality) {
+                  String gender, String nationality, String description)  throws Exception {
+        super(ID, name, description);
+        this.email = email;
+        this.phone_number = phone_number;
+        this.gender = gender;
+        this.nationality = nationality;
+    }
+
+    public Person(String ID, String name, String email, String phone_number, 
+                  String gender, String nationality)  throws Exception {
         super(ID, name);
         this.email = email;
         this.phone_number = phone_number;
@@ -42,6 +58,9 @@ public class Person extends AbstractObject {
 
     // -----------------------------------------------------------
     // Setter Function
+    public void SetName(String name) throws RuntimeException { 
+        throw new RuntimeException("This method is not allowed to be called.");
+    }
     public void SetEmail(String email) { this.email = email; }
     public void SetPhoneNumber(String phone_number) { this.phone_number = phone_number; }
 
@@ -56,7 +75,7 @@ public class Person extends AbstractObject {
         return result;
     }
 
-    public static Person Deserialize(Hashtable<String, Object> data) {
+    public static Person Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         String email = (String) data.get("email");

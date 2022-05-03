@@ -6,13 +6,13 @@ import BaseClass.BaseObject;
 import PrefixState.Prefix;
 
 /**
-* Copyright (C) 2022-2022, HDM-Dev Team
-* All Rights Reserved
+ * Copyright (C) 2022-2022, HDM-Dev Team
+ * All Rights Reserved
 
-* This file is part of HDM-Dev Team's project. The contents are
-* fully covered, controlled, and acknowledged by the terms of the
-* BSD-3 license, which is included in the file LICENSE.md, found
-* at the root of the project's source code/tree repository.
+ * This file is part of HDM-Dev Team's project. The contents are
+ * fully covered, controlled, and acknowledged by the terms of the
+ * BSD-3 license, which is included in the file LICENSE.md, found
+ * at the root of the project's source code/tree repository.
 **/
 
 /**
@@ -36,13 +36,13 @@ public class Tool extends BaseObject {
     private final ToolUnit unit;
     private static final Prefix prefix = Prefix.Tool;
 
-    public Tool(String ID, String name, String description, int amount, ToolUnit unit) {
+    public Tool(String ID, String name, String description, int amount, ToolUnit unit) throws Exception {
         // You may want to add more fields or attributes here.
         super(ID, name, description, amount);
         this.unit = unit;
     }
 
-    public Tool(String ID, String name, String description, int amount) {
+    public Tool(String ID, String name, String description, int amount) throws Exception {
         this(ID, name, description, amount, ToolUnit.GetDefault());
     }
 
@@ -60,7 +60,7 @@ public class Tool extends BaseObject {
         return result;
     }
 
-    public static Tool Deserialize(Hashtable<String, Object> data) {
+    public static Tool Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         String description = (String) data.get("description");

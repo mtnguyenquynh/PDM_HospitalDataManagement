@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import Object.Tool;
 
 /**
-* Copyright (C) 2022-2022, HDM-Dev Team
-* All Rights Reserved
+ * Copyright (C) 2022-2022, HDM-Dev Team
+ * All Rights Reserved
 
-* This file is part of HDM-Dev Team's project. The contents are
-* fully covered, controlled, and acknowledged by the terms of the
-* BSD-3 license, which is included in the file LICENSE.md, found
-* at the root of the project's source code/tree repository.
+ * This file is part of HDM-Dev Team's project. The contents are
+ * fully covered, controlled, and acknowledged by the terms of the
+ * BSD-3 license, which is included in the file LICENSE.md, found
+ * at the root of the project's source code/tree repository.
 **/
 
 /**
@@ -51,7 +51,7 @@ public class GToolPool {
 
     // Worked on later
     private final static String DB_FILENAME = "tool_pool.json"; // Later definition
-    private final static String ROOM_CODE_DIRECTORY = "database/StorageRoom/";
+    private final static String ROOM_CODE_DIRECTORY = "database/GlobalPool/";
 
 
     // This is used to store a view for modification. This laid a foundation for GResourcePool,
@@ -161,9 +161,5 @@ public class GToolPool {
             throw new IndexOutOfBoundsException("The index must be between 0 and " + (GToolPool.GetCapacity() - 1));
         }
     }
-
-    // ---------------------------------------------------------------------------------------------------------------------
-    // Initialize the pool 
-
 
 }
