@@ -33,14 +33,14 @@ public class AbstractObject {
     private static final float SERIALIZATION_LOAD_FACTOR = 0.75f;  
 
     private String ID, name;                    
-    public AbstractObject(String ID, String name) {
+    public AbstractObject(String ID, String name) throws Exception {
         Utils.CheckArgumentCondition(ID != null, "ID cannot be null.");
         Utils.CheckArgumentCondition(ID.length() > 0, "ID cannot be empty.");
         this.ID = ID;
         this.name = name;
     }
 
-    public AbstractObject(String ID) { this(ID, ""); }
+    public AbstractObject(String ID) throws Exception { this(ID, ""); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
@@ -60,7 +60,7 @@ public class AbstractObject {
         return result;
     }
 
-    public static AbstractObject Deserialize(Hashtable<String, Object> data) {
+    public static AbstractObject Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         return new AbstractObject(ID, name);

@@ -38,7 +38,7 @@ public class Resource extends BaseObject {
    
 
     public Resource(String ID, String name, String description, int number, ResourceUnit unit, 
-                    float price) {
+                    float price) throws Exception {
         // You may want to add more fields or attributes here.
         super(ID, name, description, number);
         this.price = price;
@@ -46,7 +46,7 @@ public class Resource extends BaseObject {
     }
 
     public Resource(String ID, String name, String description, int number, ResourceUnit unit, 
-                    double price) {
+                    double price) throws Exception {
         // You may want to add more fields or attributes here.
         super(ID, name, description, number);
         this.price = (float) price;
@@ -54,7 +54,7 @@ public class Resource extends BaseObject {
     }
 
     public Resource(String ID, String name, String description, int number, ResourceUnit unit, 
-                    int price) {
+                    int price) throws Exception {
         // You may want to add more fields or attributes here.
         super(ID, name, description, number);
         this.price = (float) price;
@@ -91,7 +91,7 @@ public class Resource extends BaseObject {
         return result;
     }
 
-    public static Resource Deserialize(Hashtable<String, Object> data) {
+    public static Resource Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         String description = (String) data.get("description");

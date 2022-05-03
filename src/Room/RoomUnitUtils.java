@@ -36,9 +36,9 @@ public abstract class RoomUnitUtils {
     // Extracting the information of the room-code
     public static String[] DecomposeRoomCodeID(String RoomCodeID) { return RoomCodeID.split("-"); }
     
-    public static String GetRoomBlock(String RoomCodeID) {return RoomUnitUtils.DecomposeRoomCodeID(RoomCodeID)[1]; }
+    public static String GetRoomType(String RoomCodeID) {return RoomUnitUtils.DecomposeRoomCodeID(RoomCodeID)[1]; }
     
-    public static String GetRoomType(String RoomCodeID) {return RoomUnitUtils.DecomposeRoomCodeID(RoomCodeID)[2]; }
+    public static String GetRoomBlock(String RoomCodeID) {return RoomUnitUtils.DecomposeRoomCodeID(RoomCodeID)[2]; }
     
     public static RoomUnitEnum GetRoomTypeEnum(String RoomCodeID) { 
         return RoomUnitEnum.GetEnum(RoomUnitUtils.GetRoomType(RoomCodeID)); 
@@ -207,7 +207,7 @@ public abstract class RoomUnitUtils {
         return String.format("%03d", RoomNumber);
     }
 
-    public static String ConstructRoomCodeID(String RoomBlock, String RoomType, String RoomFloor, String RoomNumber) {
+    public static String ConstructRoomCodeID(String RoomType, String RoomBlock, String RoomFloor, String RoomNumber) {
         // This function is to construct the room-code ID as a single identity.
         // As mentioned in the documentation above, we construct the room-code ID by
         // concatenating the parts of the room-code ID.        
@@ -224,14 +224,27 @@ public abstract class RoomUnitUtils {
             if (RoomNumberStr == null) { FullMessage += "Invalid RoomNumber: " + RoomNumber.toString() + "; "; }
             throw new IllegalArgumentException(FullMessage);
         }
-        String[] iterable = {RoomBlockStr, RoomTypeStr, RoomFloorStr, RoomNumberStr};
+        String[] iterable = {RoomTypeStr, RoomBlockStr, RoomFloorStr, RoomNumberStr};
         return RoomUnitUtils.GetPrefixCodeTerm() + StringUtils.join(iterable, "-");
     }
     
+    public static String ConstructRoomCodeID(String RoomBlock, String RoomFloor, String RoomNumber) {
+        String RoomBlockStr = RoomUnitUtils.CastRoomBlock(RoomBlock); 
+        String RoomFloorStr = RoomUnitUtils.CastRoomFloor(RoomFloor); 
+        String RoomNumberStr = RoomUnitUtils.CastRoomNumber(RoomNumber);
+
+        if (RoomBlockStr == null || RoomFloorStr == null || RoomNumberStr == null) { 
+            String FullMessage = "";
+            if (RoomBlockStr == null) { FullMessage += "Invalid RoomBlock: " + RoomBlock.toString() + "; "; }
+            if (RoomFloorStr == null) { FullMessage += "Invalid RoomFloor: " + RoomFloor.toString() + "; "; }
+            if (RoomNumberStr == null) { FullMessage += "Invalid RoomNumber: " + RoomNumber.toString() + "; "; }
+            throw new IllegalArgumentException(FullMessage);
+        }
+        String[] iterable = {RoomBlockStr, RoomFloorStr, RoomNumberStr};
+        return StringUtils.join(iterable, "-");
+    }
+
     public static String ConstructRoomCodeID(String RoomFloor, String RoomNumber) {
-        // This function is to construct the room-code ID as a single identity.
-        // As mentioned in the documentation above, we construct the room-code ID by
-        // concatenating the parts of the room-code ID.
         String RoomFloorStr = RoomUnitUtils.CastRoomFloor(RoomFloor); 
         String RoomNumberStr = RoomUnitUtils.CastRoomNumber(RoomNumber);
         if (RoomFloorStr == null || RoomNumberStr == null) { 

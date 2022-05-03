@@ -32,7 +32,7 @@ public class Person extends IntermediateObject {
     private String email, phone_number, gender, nationality;        
 
     public Person(String ID, String name, String email, String phone_number, 
-                  String gender, String nationality, String description) {
+                  String gender, String nationality, String description)  throws Exception {
         super(ID, name, description);
         this.email = email;
         this.phone_number = phone_number;
@@ -41,7 +41,7 @@ public class Person extends IntermediateObject {
     }
 
     public Person(String ID, String name, String email, String phone_number, 
-                  String gender, String nationality) {
+                  String gender, String nationality)  throws Exception {
         super(ID, name);
         this.email = email;
         this.phone_number = phone_number;
@@ -75,7 +75,7 @@ public class Person extends IntermediateObject {
         return result;
     }
 
-    public static Person Deserialize(Hashtable<String, Object> data) {
+    public static Person Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         String email = (String) data.get("email");

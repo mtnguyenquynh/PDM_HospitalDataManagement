@@ -4,6 +4,7 @@ import BaseClass.IntermediateObject;
 import java.util.Hashtable;
 
 import PrefixState.Prefix;
+import Utility.Utils;
 
 
 /**
@@ -26,13 +27,13 @@ import PrefixState.Prefix;
  * Among that:
  * <prefix>: (String-like) is a prefix, denoted to be "RU" for "Room Unit".
  *           (see in the Prefix.java).
+ * <room-type>: This described the functionalities of the room. For example,
+ *              "ICU" for "Intensive Care Unit" or "ER" for "Emergency Room".
  * <room-block>: Depends on the real-world hospital, but usually an upper-case
  *               character, such as "A" or "B". If the room-block is not character 
  *               (a number), then use two digit-like character to specified the 
  *               room-block such as such as "01" or "02". Note that this is not 
  *               a special character such as "#" or "@". 
- * <room-type>: This described the functionalities of the room. For example,
- *              "ICU" for "Intensive Care Unit" or "ER" for "Emergency Room".
  * <room-floor>: This is the floor of the room using the ideology of the US as 
  *               our fake data comes the US-like person. This implies that the 
  *               ground-floor is the first floor (1st). Similarly, we use two 
@@ -51,8 +52,8 @@ import PrefixState.Prefix;
  * For example, the code ID is "RU-A-ICU-01-001". Then we can extract the following
  * information from the code ID: 
  * 1) The prefix: "RU"
- * 2) The room-block: "A"
- * 3) The room-type: "ICU"
+ * 2) The room-type: "ICU" 
+ * 3) The room-block: "A"
  * 4) The room-floor: "01"
  * 5) The room-number: "001"        
  * 
@@ -68,10 +69,13 @@ import PrefixState.Prefix;
 **/
 
 public class RoomUnit extends IntermediateObject {
-    public RoomUnit(String ID, String name, String description) { super(ID, name, description); }
+    public RoomUnit(String ID, String name, String description) throws Exception { 
+        super(ID, name, description);
+        Utils.CheckArgumentCondition(RoomUnitUtils.VerifyRoomCodeID(ID), "Invalid Room Code ID: " + ID);
+    }
 
-    public RoomUnit(String ID, String name) { super(ID, name, null); }
-    public RoomUnit(String ID) { super(ID); }
+    public RoomUnit(String ID, String name) throws Exception { this(ID, name, ""); }
+    public RoomUnit(String ID) throws Exception { this(ID, "", ""); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
@@ -82,15 +86,10 @@ public class RoomUnit extends IntermediateObject {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Extracting the information of the room-code
-    public static String[] DecomposeRoomCodeID(String RoomCodeID) { return RoomCodeID.split("-"); }
+    public String[] DecomposeRoomCodeID(String RoomCodeID) { return this.GetID().split("-"); }
 
     public String GetRoomBlock() { return RoomUnitUtils.GetRoomBlock(this.GetID()); }
-
-    public static RoomUnitEnum GetRoomTypeEnum(String RoomCodeID) { 
-        return RoomUnitEnum.GetEnum(RoomUnitUtils.GetRoomType(RoomCodeID)); 
-    }
     public RoomUnitEnum GetRoomTypeEnum() { return RoomUnitUtils.GetRoomTypeEnum(this.GetID()); }
-
     public String GetRoomFloor() { return RoomUnitUtils.GetRoomFloor(this.GetID()); }
     public String GetRoomNumber() { return RoomUnitUtils.GetRoomNumber(this.GetID()); }
 
@@ -104,13 +103,8 @@ public class RoomUnit extends IntermediateObject {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
-    public Hashtable<String, Object> Serialize() {
-        Hashtable<String, Object> result = super.Serialize();
-        result.put("description", this.GetDescription());
-        return result;
-    }
 
-    public static RoomUnit Deserialize(Hashtable<String, Object> data) {
+    public static RoomUnit Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         String description = (String) data.get("description");

@@ -66,7 +66,7 @@ public class LToolPool extends AbstractObject {
     private final static int NumberOfToolInformation = 2;
     private Hashtable<String, String[]> LocalPool;
 
-    public LToolPool(String ID) {
+    public LToolPool(String ID) throws Exception {
         super(ID);
         int capacity = PatientRoom.GetSerializationCapacity();
         float loadFactor = PatientRoom.GetSerializationLoadFactor();
@@ -151,7 +151,7 @@ public class LToolPool extends AbstractObject {
         return result;
     }
 
-    public static LToolPool Deserialize(Hashtable<String, Object> data) {
+    public static LToolPool Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         LToolPool result = new LToolPool(ID);
         Iterator<Entry<String, Object>> iter = data.entrySet().iterator();

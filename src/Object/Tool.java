@@ -36,13 +36,13 @@ public class Tool extends BaseObject {
     private final ToolUnit unit;
     private static final Prefix prefix = Prefix.Tool;
 
-    public Tool(String ID, String name, String description, int amount, ToolUnit unit) {
+    public Tool(String ID, String name, String description, int amount, ToolUnit unit) throws Exception {
         // You may want to add more fields or attributes here.
         super(ID, name, description, amount);
         this.unit = unit;
     }
 
-    public Tool(String ID, String name, String description, int amount) {
+    public Tool(String ID, String name, String description, int amount) throws Exception {
         this(ID, name, description, amount, ToolUnit.GetDefault());
     }
 
@@ -60,7 +60,7 @@ public class Tool extends BaseObject {
         return result;
     }
 
-    public static Tool Deserialize(Hashtable<String, Object> data) {
+    public static Tool Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         String description = (String) data.get("description");

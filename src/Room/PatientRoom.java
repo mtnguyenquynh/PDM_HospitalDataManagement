@@ -67,7 +67,7 @@ public class PatientRoom extends AbstractObject {
     private int NumberOfBeds;
 
     private Hashtable<Integer, String[]> LocalPool;
-    public PatientRoom(String ID, int NumberOfBeds) {
+    public PatientRoom(String ID, int NumberOfBeds) throws Exception {
         super(ID);
         if (NumberOfBeds < -1) {NumberOfBeds = 2;}
         this.NumberOfBeds = NumberOfBeds;
@@ -77,7 +77,7 @@ public class PatientRoom extends AbstractObject {
         this._InitPool_();
     }
 
-    public PatientRoom(String ID) {this(ID, 3);}            // A common room may have 2-3 beds ?
+    public PatientRoom(String ID) throws Exception {this(ID, 3);}            // A common room may have 2-3 beds ?
 
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -263,7 +263,7 @@ public class PatientRoom extends AbstractObject {
         return result;  
     } 
 
-    public static PatientRoom Deserialize(Hashtable<String, Object> data) {
+    public static PatientRoom Deserialize(Hashtable<String, Object> data)  throws Exception {
         PatientRoom room = new PatientRoom((String) data.get("id"), (int) data.get("NumberOfBeds"));
         Iterator<Entry<String, Object>> iter = data.entrySet().iterator();
         while (iter.hasNext()) {

@@ -28,29 +28,11 @@ import org.json.simple.parser.ParseException;
 
 /**
  * This class is to bind the relationship between the "RoomUnit" with the "ObjectRoom", 
- * "PatientRoom", and "MedicoRoom". In the "ObjectRoom" (which is a combination of the
- * "LToolPool" and "LResourcesPool"). The relationship can be implicitly described below:
+ * "PatientRoom", and "MedicoRoom". See the description in each components. 
  * 
- * Denoted a "RoomUnit" is a single room in the hospital. According to the "Software Architecture, 
- * Desgin & Engineering" and the "Principle of Database Management":
- * 1) PatientRoom: On each room, we assume a bed is for one patient, but since the number of
- *    bed is not fixed (undefined), but because the bed can be either empty or not, so the 
- *    primary key of the "PatientRoom" is the {"RoomUnit.ID", "Patient.ID", "Bed Index"}.
- *  
- * 2) MedicoRoom: In this scenario, the relationship is somehow related to the business logic.
- *    rather than the common ideology. In the "MedicoRoom", we assume that there must be at 
- *    least one medico responsible for that room (can be more than two). Thus the primary 
- *    key is the {"RoomUnit.ID", (Responsible) "Medico.ID"}.
+ * Task 01: Finding a room:
  * 
- * 3) ObjectRoom: In this scenario, the relationship is somehow related to the Medico, but in 
- *    the program, this constraint is undefined. But in a simple manner, there are no different
- *    between the LToolPool and LResourcePool, which are both the collection of <Tool> and 
- *    <Resource>. Thus the primary key of the "ObjectRoom" is the {"RoomUnit.ID", "Object.ID"}.
  * 
- * Ok so we have complete our task in five components: RoomUnit, PatientRoom, MedicoRoom,
- * LToolPool, LResourcePool. Now, this class allow the module to bind the relationship between
- * them. Note that we are dealing with one room only and once declare, you cannot change the 
- * room
  * 
  * @author Ichiru Take
  * @version 0.0.1
@@ -60,7 +42,7 @@ import org.json.simple.parser.ParseException;
  * 2) https://stackoverflow.com/questions/28947250/create-a-directory-if-it-does-not-exist-and-then-create-the-files-in-that-direct
 **/
 
-public class RoomManager {
+public class MergedRoom {
     private static final String ROOM_DIRECTORY = "database/Room";
     private static final String ROOM_CODE_FILE = "database/Room/RoomCode.json";
     private static final String[] SAVED_NAME = {"RoomCode", "name", "description"};
@@ -73,23 +55,25 @@ public class RoomManager {
     private LResourcePool LRPoolRoom = null;
 
 
-    public RoomManager() {  }
+    public MergedRoom() {  }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Load-er functions
-    public RoomUnit LoadOneRoom(String RoomBlock, String RoomType, String RoomFloor, String RoomNumber) throws ParseException {
+    public RoomUnit LoadOneRoom(String RoomType, String RoomBlock, String RoomFloor, String RoomNumber) throws ParseException {
         String RoomCode = RoomUnit.ConstructRoomCodeID(RoomBlock, RoomType, RoomFloor, RoomNumber);
-        String TempRoomCode = RoomUnitUtils.ConstructRoomCodeID(RoomFloor, RoomNumber);
+        String Temp1RoomCode = RoomUnitUtils.ConstructRoomCodeID(RoomBlock, RoomFloor, RoomNumber);
+        String Temp2RoomCode = RoomUnitUtils.ConstructRoomCodeID(RoomFloor, RoomNumber);
         
         JSONParser parser = new JSONParser();
-        JSONArray array = (JSONArray) parser.parse(RoomManager.GetRoomCodeFile());
+        JSONArray array = (JSONArray) parser.parse(MergedRoom.GetRoomCodeFile());
 
-        String[] Argument = RoomManager.GetSavedName();
+        String[] Argument = MergedRoom.GetSavedName();
 
         for (Object obj: array) {
             JSONObject jsonObject = (JSONObject) obj;
             String JsonRoomCode = (String) jsonObject.get(Argument[0]);
-            if (JsonRoomCode.equals(RoomCode) || JsonRoomCode.contains(TempRoomCode)) {
+            if (JsonRoomCode.equals(RoomCode) || JsonRoomCode.contains(Temp1RoomCode) || 
+            JsonRoomCode.contains(Temp2RoomCode)) {
                 String JsonRoomName = (String) jsonObject.get(Argument[1]);
                 String JsonRoomDescription = (String) jsonObject.get(Argument[2]);
 
@@ -101,34 +85,24 @@ public class RoomManager {
         return null;
     }
 
-    public RoomUnit LoadOneRoom(String RoomFloor, String RoomNumber) throws ParseException {
-        return this.LoadOneRoom(null, null, RoomFloor, RoomNumber);
+    public RoomUnit LoadOneRoom(String RoomBlock, String RoomFloor, String RoomNumber) throws ParseException {
+        return this.LoadOneRoom("", RoomBlock, RoomFloor, RoomNumber);
     }
 
+    public RoomUnit LoadOneRoom(String RoomFloor, String RoomNumber) throws ParseException {
+        return this.LoadOneRoom("", "", RoomFloor, RoomNumber);
+    }
     
     private void LoadAllComponents() {
         Utils.CheckArgumentCondition(this.GetRoom() != null, "The room is not loaded.");
-        // Use the os to load the serialized file inside the directory
-        // this.PtRoom = (PatientRoom) Utils.LoadSerializedObject(this.GetRoom().GetRoomCode() + "_PtRoom.ser");
-        // this.MedRoom = (MedicoRoom) Utils.LoadSerializedObject(this.GetRoom().GetRoomCode() + "_MedRoom.ser");
-
-        // Use the json file to load the serialized file inside the directory
-        this.PtRoom = (PatientRoom) Utils.LoadSerializedObject(this.GetRoom().GetRoomCode() + "_PtRoom.json");
-        this.MedRoom = (MedicoRoom) Utils.LoadSerializedObject(this.GetRoom().GetRoomCode() + "_MedRoom.json");
-        this.LTPoolRoom = (LToolPool) Utils.LoadSerializedObject(this.GetRoom().GetRoomCode() + "_LTPoolRoom.json");
-
-
-        this.PtRoom = new PatientRoom(this.Room);
-        this.MedRoom = new MedicoRoom(this.Room);
-        this.LTPoolRoom = new LToolPool(this.Room);
-        this.LRPoolRoom = new LResourcePool(this.Room);
+        
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Build-er functions
 
     public RoomUnit BuildOneRoom(String RoomBlock, String RoomType, String RoomFloor, String RoomNumber, 
-                                 String RoomName, String RoomDescription) throws ParseException {
+                                 String RoomName, String RoomDescription) throws Exception {
         String RoomCode = RoomUnit.ConstructRoomCodeID(RoomBlock, RoomType, RoomFloor, RoomNumber);
         if (RoomName == null) { RoomName = "";}
         this.Room = new RoomUnit(RoomCode, RoomName, RoomDescription);
@@ -144,7 +118,7 @@ public class RoomManager {
      * @throws IOException
      */
     private void BuildComponents() throws IOException {
-        String dir = RoomManager.GetRoomDirectory();
+        String dir = MergedRoom.GetRoomDirectory();
         String room_code = this.GetRoom().GetID();
 
 
@@ -161,7 +135,7 @@ public class RoomManager {
         // Build the PatientRoom
         String room_code = this.GetRoom().GetID();
         String working_directory = this.GetWorkingDirectory();
-        String component_filename = RoomManager.GetSavedName()[0];
+        String component_filename = MergedRoom.GetSavedName()[0];
         
 
         // Create the file
@@ -175,7 +149,6 @@ public class RoomManager {
                 
                 Object obj = array.get(0);
                 JSONObject jsonObject = (JSONObject) obj;
-                jsonObject.keySet().forEach(key -> { data.put(key, jsonObject.get(key)); });
                 this.PtRoom = PatientRoom.Deserialize(data);
                 
 
@@ -193,13 +166,13 @@ public class RoomManager {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
-    public static String GetRoomDirectory() { return RoomManager.ROOM_DIRECTORY; }
-    public static String GetRoomCodeFilename() { return RoomManager.ROOM_CODE_FILE; }
-    public static String GetRoomCodeFile() { return RoomManager.GetRoomDirectory() + "/" + RoomManager.GetRoomCodeFilename(); }
-    public static String[] GetSavedName() { return RoomManager.SAVED_NAME; }
+    public static String GetRoomDirectory() { return MergedRoom.ROOM_DIRECTORY; }
+    public static String GetRoomCodeFilename() { return MergedRoom.ROOM_CODE_FILE; }
+    public static String GetRoomCodeFile() { return MergedRoom.GetRoomDirectory() + "/" + MergedRoom.GetRoomCodeFilename(); }
+    public static String[] GetSavedName() { return MergedRoom.SAVED_NAME; }
     public String GetWorkingDirectory() { 
         Utils.CheckArgumentCondition(this.GetRoom().GetID() != null, "The room cannot be loaded.");
-        return RoomManager.GetRoomDirectory() + "/" + this.GetRoom().GetID(); 
+        return MergedRoom.GetRoomDirectory() + "/" + this.GetRoom().GetID(); 
     }
 
     public RoomUnit GetRoom() { return this.Room; }

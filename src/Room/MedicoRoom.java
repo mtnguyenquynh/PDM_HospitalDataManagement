@@ -60,15 +60,14 @@ public class MedicoRoom extends BaseObject {
     private String[] MainMedico;
     private Hashtable<String, String[]> OtherMedico;
 
-    public MedicoRoom(String ID) {
+    public MedicoRoom(String ID) throws Exception {
         super(ID);
-        
         int capacity = MedicoRoom.GetSerializationCapacity();
         float load_factor = MedicoRoom.GetSerializationLoadFactor();
         this.OtherMedico = new Hashtable<String, String[]>(capacity, load_factor);
     }
 
-    public MedicoRoom(String ID, Medico medico) {
+    public MedicoRoom(String ID, Medico medico) throws Exception {
         this(ID);
         Utils.CheckArgumentCondition(medico != null, "Medico cannot be null");
         this.SetMainMedico(medico);
@@ -129,7 +128,7 @@ public class MedicoRoom extends BaseObject {
         return result;
     }
     
-    public static MedicoRoom Deserialize(Hashtable<String, Object> data) {
+    public static MedicoRoom Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         MedicoRoom result = new MedicoRoom(ID);
 

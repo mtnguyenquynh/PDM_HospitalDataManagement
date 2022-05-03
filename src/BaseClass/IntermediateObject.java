@@ -28,13 +28,13 @@ import java.util.Hashtable;
 
 public class IntermediateObject extends AbstractObject {
     private String description;                    
-    public IntermediateObject(String ID, String name, String description) {
+    public IntermediateObject(String ID, String name, String description) throws Exception {
         super(ID, name);
         this.description = description;
     }
     
-    public IntermediateObject(String ID) { this(ID, "", null); }
-    public IntermediateObject(String ID, String name) { this(ID, name, null); }
+    public IntermediateObject(String ID) throws Exception { this(ID, "", null); }
+    public IntermediateObject(String ID, String name) throws Exception { this(ID, name, null); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
@@ -49,7 +49,7 @@ public class IntermediateObject extends AbstractObject {
         return result;
     }
 
-    public static IntermediateObject Deserialize(Hashtable<String, Object> data) {
+    public static IntermediateObject Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         String description = (String) data.get("description");

@@ -1,4 +1,4 @@
-[
+{"Rs"}
     {"RoomCode": "A" },
     {"RoomCode": "B" },
     {"RoomCode": "C" },
@@ -25,5 +25,3 @@
     {"RoomCode": "X" },
     {"RoomCode": "Y" },
     {"RoomCode": "Z" } 
-
-]

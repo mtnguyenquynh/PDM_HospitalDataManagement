@@ -35,18 +35,17 @@ public class BaseObject extends AbstractObject {
     private String description;           // This is the description of the object
     private int number;                   // This is the amount or number of the object
     
-    public BaseObject(String ID, String name, String description, int number) {
+    public BaseObject(String ID, String name, String description, int number) throws Exception {
         super(ID, name);
 
         Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         this.description = (description == null) ? "": description;
         this.number = number;
     }
-
-    public BaseObject(String ID) { this(ID, "", null, 0); }
-    public BaseObject(String ID, String name) { this(ID, name, null, 0); }
-    public BaseObject(String ID, int number) { this(ID, "", null, number); }
-    public BaseObject(String ID, String name, int number) { this(ID, name, null, number); }
+    public BaseObject(String ID) throws Exception { this(ID, "", null, 0); }
+    public BaseObject(String ID, String name) throws Exception { this(ID, name, null, 0); }
+    public BaseObject(String ID, int number) throws Exception { this(ID, "", null, number); }
+    public BaseObject(String ID, String name, int number) throws Exception { this(ID, name, null, number); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
@@ -80,7 +79,7 @@ public class BaseObject extends AbstractObject {
         return result;
     }
 
-    public static BaseObject Deserialize(Hashtable<String, Object> data) {
+    public static BaseObject Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
         String description = (String) data.get("description");
