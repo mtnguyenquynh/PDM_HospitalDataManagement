@@ -82,7 +82,7 @@ public class RoomUnit extends IntermediateObject {
     public String GetRoomCodeID() { return this.GetID(); }                  // Alias function of GetID()
     public static Prefix GetPrefix() { return RoomUnitUtils.GetPrefix(); }
     public static String GetPrefixCode() { return RoomUnitUtils.GetPrefix().GetPrefixCode(); }
-    public static String GetPrefixCodeTerm() { return RoomUnitUtils.GetPrefix().GetPrefixCodeTerm(); }
+    public static String GetPrefixCodeNotation() { return RoomUnitUtils.GetPrefix().GetPrefixCodeNotation(); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Extracting the information of the room-code

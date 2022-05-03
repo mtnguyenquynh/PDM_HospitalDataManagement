@@ -24,6 +24,7 @@ import java.io.*;
  * program and being managed by the json file ONLY.
  * @author Ichiru Take
  * @version 0.0.1
+ * 
  * See references:
  * - https://www.tutorialspoint.com/java/java_enum_class.htm
  * - https://www.geeksforgeeks.org/differences-between-hashmap-and-hashtable-in-java/

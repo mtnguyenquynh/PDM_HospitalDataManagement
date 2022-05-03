@@ -54,9 +54,8 @@ public enum Prefix {
     private String prefix;
     Prefix(String prefix) { this.prefix = prefix; }
 
-    public String GetPrefix() { return this.prefix; }
     public String GetPrefixCode() { return this.prefix; }
-    public String GetPrefixCodeTerm() { return this.prefix.replace("-", ""); }
+    public String GetPrefixCodeNotation() { return this.prefix.replace("-", ""); }
 
     // ----------------------------------------------------------
     // Magic here: Declare the enum constant as a static final field using the prefix.

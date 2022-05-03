@@ -30,7 +30,7 @@ public abstract class RoomUnitUtils {
 
     public static Prefix GetPrefix() { return RoomUnitUtils.prefix; }
     public static String GetPrefixCode() { return RoomUnitUtils.GetPrefix().GetPrefixCode(); }
-    public static String GetPrefixCodeTerm() { return RoomUnitUtils.GetPrefix().GetPrefixCodeTerm(); }
+    public static String GetPrefixCodeNotation() { return RoomUnitUtils.GetPrefix().GetPrefixCodeNotation(); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Extracting the information of the room-code
@@ -104,7 +104,7 @@ public abstract class RoomUnitUtils {
         // multiple parts using delimitor "-" and then verify each part.
         String[] DecomposedRoomCodeID = RoomUnitUtils.DecomposeRoomCodeID(RoomCodeID);
         if (DecomposedRoomCodeID.length != 5) { return false; }
-        if (!RoomUnitUtils.GetPrefixCodeTerm().equals(DecomposedRoomCodeID[0])) { return false; }
+        if (!RoomUnitUtils.GetPrefixCodeNotation().equals(DecomposedRoomCodeID[0])) { return false; }
         if (!RoomUnitUtils.VerifyRoomBlock(RoomUnitUtils.GetRoomBlock(RoomCodeID))) { return false; }
         if (!RoomUnitUtils.VerifyRoomType(RoomUnitUtils.GetRoomType(RoomCodeID))) { return false; }
         if (!RoomUnitUtils.VerifyRoomFloor(RoomUnitUtils.GetRoomFloor(RoomCodeID))) { return false; }
@@ -225,7 +225,7 @@ public abstract class RoomUnitUtils {
             throw new IllegalArgumentException(FullMessage);
         }
         String[] iterable = {RoomTypeStr, RoomBlockStr, RoomFloorStr, RoomNumberStr};
-        return RoomUnitUtils.GetPrefixCodeTerm() + StringUtils.join(iterable, "-");
+        return RoomUnitUtils.GetPrefixCode() + StringUtils.join(iterable, "-");
     }
     
     public static String ConstructRoomCodeID(String RoomBlock, String RoomFloor, String RoomNumber) {

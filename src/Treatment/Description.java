@@ -68,8 +68,9 @@ public class Description extends CreationDateTime {
         String description = (String) data.get("description");
         String medico_name = (String) data.get("medico_name");
         Description desc = new Description(description, medico_name);
+        
         desc.SetDate((String) data.get("date"));
         desc.SetTime((String) data.get("time"));
-        return new Description(description, medico_name);
+        return desc;
     }
 }
