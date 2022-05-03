@@ -1,20 +1,14 @@
 package Room;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Hashtable;
-import java.util.Map.Entry;
 
-import Utility.DataUtils;
 import Utility.Utils;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -44,9 +38,7 @@ import org.json.simple.parser.ParseException;
 
 public class MergedRoom {
     private static final String ROOM_DIRECTORY = "database/Room";
-    private static final String ROOM_CODE_FILE = "database/Room/RoomCode.json";
-    private static final String[] SAVED_NAME = {"RoomCode", "name", "description"};
-    private static final String[] COMPONENT_NAME = {"PatientRoom", "MedicoRoom", "LToolPool", "LResourcePool"};
+    private static final String ROOM_CODE_FILE = "RoomCode.json";
 
     private RoomUnit Room = null;
     private PatientRoom PtRoom = null;
@@ -58,8 +50,31 @@ public class MergedRoom {
     public MergedRoom() {  }
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // Load-er functions
-    public RoomUnit LoadOneRoom(String RoomType, String RoomBlock, String RoomFloor, String RoomNumber) throws ParseException {
+    // Load-er && Build-er functions
+    private void LoadComponentRoom() {
+        // This method is to load (or build) a component room.
+        // Step 01: Load constant value
+        String ID = this.GetRoom().GetID();
+        String working_directory = this.GetWorkingDirectory();
+        String[] COMPONENT_FILENAME = MergedRoom.GetSavedName();
+
+        // Step 02: Try to find the component file with ".json" extension
+        // If failed, then create a new file with ".json" extension and load back 
+
+        for (int i = 0; i < COMPONENT_FILENAME.length; i++) {
+            try {
+                Path path = Files.createTempFile(working_directory + "/" + COMPONENT_FILENAME[i], ".json");
+                if (Files.exists(path)) {
+                    JSONObject obj = Utils.ReadJsonFileAsObject(path.toString());
+                    Hashtable<String, Object> data = Utils.CastJsonToHashtable(obj, null);
+                    this.MakeComponentRoom(i, data);
+                } else { this.MakeComponentRoom(i, ID); }
+            } catch (Exception e) { e.printStackTrace(); }
+        }
+        return ;
+    }
+
+    public RoomUnit LoadOneRoom(String RoomType, String RoomBlock, String RoomFloor, String RoomNumber) throws Exception {
         String RoomCode = RoomUnit.ConstructRoomCodeID(RoomBlock, RoomType, RoomFloor, RoomNumber);
         String Temp1RoomCode = RoomUnitUtils.ConstructRoomCodeID(RoomBlock, RoomFloor, RoomNumber);
         String Temp2RoomCode = RoomUnitUtils.ConstructRoomCodeID(RoomFloor, RoomNumber);
@@ -74,93 +89,37 @@ public class MergedRoom {
             String JsonRoomCode = (String) jsonObject.get(Argument[0]);
             if (JsonRoomCode.equals(RoomCode) || JsonRoomCode.contains(Temp1RoomCode) || 
             JsonRoomCode.contains(Temp2RoomCode)) {
-                String JsonRoomName = (String) jsonObject.get(Argument[1]);
-                String JsonRoomDescription = (String) jsonObject.get(Argument[2]);
+                String RoomName = (String) jsonObject.get(Argument[1]);
+                String RoomDescription = (String) jsonObject.get(Argument[2]);
 
-                this.Room = new RoomUnit(RoomCode, JsonRoomName, JsonRoomDescription);
-                this.LoadAllComponents();
-                return this.Room;
+                return this.BuildOneRoom(RoomBlock, RoomType, RoomFloor, RoomNumber, RoomName, RoomDescription);
             }
         }
         return null;
     }
 
-    public RoomUnit LoadOneRoom(String RoomBlock, String RoomFloor, String RoomNumber) throws ParseException {
+    public RoomUnit LoadOneRoom(String RoomBlock, String RoomFloor, String RoomNumber) throws Exception {
         return this.LoadOneRoom("", RoomBlock, RoomFloor, RoomNumber);
     }
 
-    public RoomUnit LoadOneRoom(String RoomFloor, String RoomNumber) throws ParseException {
+    public RoomUnit LoadOneRoom(String RoomFloor, String RoomNumber) throws Exception {
         return this.LoadOneRoom("", "", RoomFloor, RoomNumber);
     }
-    
-    private void LoadAllComponents() {
-        Utils.CheckArgumentCondition(this.GetRoom() != null, "The room is not loaded.");
-        
-    }
-
-    // ---------------------------------------------------------------------------------------------------------------------
-    // Build-er functions
 
     public RoomUnit BuildOneRoom(String RoomBlock, String RoomType, String RoomFloor, String RoomNumber, 
                                  String RoomName, String RoomDescription) throws Exception {
         String RoomCode = RoomUnit.ConstructRoomCodeID(RoomBlock, RoomType, RoomFloor, RoomNumber);
         if (RoomName == null) { RoomName = "";}
-        this.Room = new RoomUnit(RoomCode, RoomName, RoomDescription);
+        if (RoomDescription == null) { RoomDescription = "";}
 
+        try { this.Room = new RoomUnit(RoomCode, RoomName, RoomDescription); } 
+        catch (Exception e) { e.printStackTrace(); }
+        this.LoadComponentRoom();
         return this.Room;
-    }
-
-    /**
-     * This function is to create a folder for the room at the database/Room directory.
-     * The folder-name is the same as the room-code.
-     * In each folder, there are four different files named: "PatientRoom", "MedicoRoom", 
-     * "LToolPool", and "LResourcePool" and to deserialize the JSON file.
-     * @throws IOException
-     */
-    private void BuildComponents() throws Exception {
-        String dir = MergedRoom.GetRoomDirectory();
-        String room_code = this.GetRoom().GetID();
-
-
-        Files.createDirectories(Paths.get(dir + "/" + room_code));
-        this.PtRoom = new PatientRoom(room_code, 3);
-
-        Files.createFile(Paths.get("database/Room/" + this.GetRoom().GetID() + "/" + this.GetRoom().GetID() + "_PtRoom.json"));
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Ultility functions
-
-    private void LoadPatientRoom() {
-        // Build the PatientRoom
-        String room_code = this.GetRoom().GetID();
-        String working_directory = this.GetWorkingDirectory();
-        String component_filename = MergedRoom.GetSavedName()[0];
-        
-
-        // Create the file
-        try {
-            Path path = Files.createTempFile(working_directory + "/" + component_filename, ".json");
-            if (Files.exists(path)) {
-                // Read that JSON file
-                JSONParser parser = new JSONParser();
-                JSONArray array = (JSONArray) parser.parse(path.toString());
-                Hashtable<String, Object> data = DataUtils.ForceGetEmptyHashtable(PatientRoom.class);
-                
-                Object obj = array.get(0);
-                JSONObject jsonObject = (JSONObject) obj;
-                this.PtRoom = PatientRoom.Deserialize(data);
-                
-
-            } else {
-                // Create the file
-                this.PtRoom = new PatientRoom(room_code, 3);
-            }
-
-
-        }
-
-    }
 
 
 
@@ -168,11 +127,22 @@ public class MergedRoom {
     // Getter & Setter
     public static String GetRoomDirectory() { return MergedRoom.ROOM_DIRECTORY; }
     public static String GetRoomCodeFilename() { return MergedRoom.ROOM_CODE_FILE; }
-    public static String GetRoomCodeFile() { return MergedRoom.GetRoomDirectory() + "/" + MergedRoom.GetRoomCodeFilename(); }
-    public static String[] GetSavedName() { return MergedRoom.SAVED_NAME; }
+    public static String GetRoomCodeFile() { return MergedRoom.GetRoomDirectory() + "/" + MergedRoom.GetRoomCodeFilename(); }    
+    public static String[] GetSavedName() { 
+        return new String[] {"RoomCode", "name", "description"} ; 
+    }
+    
+    public static String[] GetComponentName() { 
+        return new String[] {"PatientRoom", "MedicoRoom", "LToolPool", "LResourcePool"}; 
+    }
+
     public String GetWorkingDirectory() { 
         Utils.CheckArgumentCondition(this.GetRoom().GetID() != null, "The room cannot be loaded.");
         return MergedRoom.GetRoomDirectory() + "/" + this.GetRoom().GetID(); 
+    }
+
+    public String GetComponentDirectory(int index) {
+        return this.GetWorkingDirectory() + "/" + MergedRoom.GetComponentName()[index];
     }
 
     public RoomUnit GetRoom() { return this.Room; }
@@ -185,4 +155,56 @@ public class MergedRoom {
     public LToolPool GetLTPoolRoom() { return this.LTPoolRoom; }
     public LResourcePool GetLRPoolRoom() { return this.LRPoolRoom; }
 
+    // -----------------------------------------------------------
+    // Setter
+    private void MakePtRoom(String ID) throws Exception { this.PtRoom = new PatientRoom(ID); }
+    private void MakeMedRoom(String ID) throws Exception { this.MedRoom = new MedicoRoom(ID); }
+    private void MakeLTPoolRoom(String ID) throws Exception { this.LTPoolRoom = new LToolPool(ID); }
+    private void MakeLRPoolRoom(String ID) throws Exception { this.LRPoolRoom = new LResourcePool(ID); }
+
+    private void MakePtRoom(Hashtable<String, Object> data) throws Exception { this.PtRoom = PatientRoom.Deserialize(data); }
+    private void MakeMedRoom(Hashtable<String, Object> data) throws Exception { this.MedRoom = MedicoRoom.Deserialize(data); }
+    private void MakeLTPoolRoom(Hashtable<String, Object> data) throws Exception { this.LTPoolRoom = LToolPool.Deserialize(data); }
+    private void MakeLRPoolRoom(Hashtable<String, Object> data) throws Exception { this.LRPoolRoom = LResourcePool.Deserialize(data); }
+
+    private void MakeComponentRoom(int index, Hashtable<String, Object> data) throws Exception {
+        switch(index) {
+            case 0: this.MakePtRoom(data); break;
+            case 1: this.MakeMedRoom(data); break;
+            case 2: this.MakeLTPoolRoom(data); break;
+            case 3: this.MakeLRPoolRoom(data); break;
+            default: throw new Exception("The index is out of range.");
+        }
+    }
+
+    private void MakeComponentRoom(int index, String ID) throws Exception {
+        switch(index) {
+            case 0: this.MakePtRoom(ID); break;
+            case 1: this.MakeMedRoom(ID); break;
+            case 2: this.MakeLTPoolRoom(ID); break;
+            case 3: this.MakeLRPoolRoom(ID); break;
+            default: throw new Exception("The index is out of range.");
+        }
+    }
+
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    public void Reset() throws Exception {
+        // Serialize all component room -> Set null -> Run garbage collector
+        Utils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(0), 
+                                        this.GetPtRoom().Serialize(), null);
+        Utils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(1), 
+                                        this.GetMedRoom().Serialize(), null);
+        Utils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(2), 
+                                        this.GetLTPoolRoom().Serialize(), null);
+        Utils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(3), 
+                                        this.GetLRPoolRoom().Serialize(), null);
+        
+        this.Room = null;
+        this.PtRoom = null;
+        this.MedRoom = null;
+        this.LTPoolRoom = null;
+        this.LRPoolRoom = null;
+        System.gc();
+    }
 }
