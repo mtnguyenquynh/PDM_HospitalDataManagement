@@ -1,5 +1,7 @@
 package Person;
 
+import Utility.Utils;
+
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
  * All Rights Reserved
@@ -60,6 +62,8 @@ public abstract class PersonUtils {
 
         // Step 01) Remove all unnecessary spaces at the first and the last of the string 
         //          and lower-case all characters 
+        Utils.CheckArgumentCondition(name != null, "The input name is null");
+
         String NewName = name.trim().replaceAll("\\s+", " ").toLowerCase();
 
         // Step 02) Do validation: Check if there are any digit-like or special characters
@@ -98,6 +102,7 @@ public abstract class PersonUtils {
 
     public static int CountNameLength(String name, boolean IsStandardized) throws Exception {
         // This function is used to count the length of the name
+        Utils.CheckArgumentCondition(name != null, "The input name is null");
         if (!IsStandardized) { name = PersonUtils.StandardizeName(name); }
         return name.split(" ").length;
     }
@@ -124,6 +129,7 @@ public abstract class PersonUtils {
      * @throws Exception If the name is not valid
      */
     public static String GetDivisionPath(String FirstName, boolean IsStandardized) throws Exception {
+        Utils.CheckArgumentCondition(FirstName != null, "The input name is null");
         if (!IsStandardized) { FirstName = PersonUtils.StandardizeName(FirstName); }
         if (FirstName.contains(".")) { throw new Exception("The name cannot contain a single dot."); }
         if (FirstName.contains(" ")) { throw new Exception("The name must be a single word."); }
@@ -139,7 +145,8 @@ public abstract class PersonUtils {
     // ----------------------------------------------------------------------------------------------------------------------
     // Email
     public static String StandardizeEmail(String email) throws Exception {
-        return email;
+        Utils.CheckArgumentCondition(FirstName != null, "The input name is null");
+        return email; 
     }
 
 
