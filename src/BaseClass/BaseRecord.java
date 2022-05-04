@@ -68,7 +68,7 @@ public class BaseRecord extends AbstractRecord {
         String Pt_LastName = (String) data.get("Pt_LastName");
         String Pt_Age = (String) data.get("Pt_Age");
         String Pt_Gender = (String) data.get("Pt_Gender");
-        boolean writable = (boolean) data.get("Pt_Gender");
+        boolean writable = (boolean) data.get("writable");
 
         BaseRecord record = new BaseRecord(Pt_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, writable);
         record.SetDate((String) data.get("date"));
