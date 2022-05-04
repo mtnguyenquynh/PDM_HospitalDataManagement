@@ -14,10 +14,21 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Copyright (C) 2022-2022, HDM-Dev Team
+ * All Rights Reserved
+
+ * This file is part of HDM-Dev Team's project. The contents are
+ * fully covered, controlled, and acknowledged by the terms of the
+ * BSD-3 license, which is included in the file LICENSE.md, found
+ * at the root of the project's source code/tree repository.
+**/
+
+/**This file initialize the GUI to access the hospital database**/
 public class Login_Page {
 
-	private JFrame frmHospitalDatabaseManagement;
-	private JTextField txtUsername;
+	private JFrame frmHDM;
+	private JTextField UsernameField;
 	private JPasswordField passwordField;
 
 	/**
@@ -28,7 +39,7 @@ public class Login_Page {
 			public void run() {
 				try {
 					Login_Page window = new Login_Page();
-					window.frmHospitalDatabaseManagement.setVisible(true);
+					window.frmHDM.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -47,56 +58,61 @@ public class Login_Page {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmHospitalDatabaseManagement = new JFrame();
-		frmHospitalDatabaseManagement.setTitle("Hospital Data Management");
-		frmHospitalDatabaseManagement.setBounds(0, 0, 1382, 809);
-		frmHospitalDatabaseManagement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmHospitalDatabaseManagement.getContentPane().setLayout(null);
-		frmHospitalDatabaseManagement.setResizable(true);
-		JLabel lblNewLabel = new JLabel("");
+		frmHDM = new JFrame();
+		frmHDM.setTitle("Hospital Data Management");
+		frmHDM.setBounds(0, 0, 1382, 809);
+		frmHDM.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmHDM.getContentPane().setLayout(null);
+		frmHDM.setResizable(true);
+		JLabel lblNewLabel = new JLabel("");//what is this for?
 		lblNewLabel.setBounds(186, -11, 1200, 334);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setIcon(new ImageIcon("src\\LoginPage.png"));
-		frmHospitalDatabaseManagement.getContentPane().add(lblNewLabel);
+		frmHDM.getContentPane().add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Username");
-		lblNewLabel_1.setBounds(378, 368, 147, 49);
-		lblNewLabel_1.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_1.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		frmHospitalDatabaseManagement.getContentPane().add(lblNewLabel_1);
+		//Handling username field
+		JLabel username = new JLabel("Username");
+		username.setBounds(378, 368, 147, 49);
+		username.setVerticalAlignment(SwingConstants.TOP);
+		username.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
+		username.setHorizontalAlignment(SwingConstants.CENTER);
+		frmHDM.getContentPane().add(username);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Password");
-		lblNewLabel_1_1.setBounds(378, 427, 147, 49);
-		lblNewLabel_1_1.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
-		frmHospitalDatabaseManagement.getContentPane().add(lblNewLabel_1_1);
-		
-		txtUsername = new JTextField();
-		txtUsername.setBounds(561, 370, 599, 30);
-		frmHospitalDatabaseManagement.getContentPane().add(txtUsername);
-		txtUsername.setColumns(10);
+		UsernameField = new JTextField();
+		UsernameField.setBounds(561, 370, 599, 30);
+		frmHDM.getContentPane().add(UsernameField);
+		UsernameField.setColumns(10);
+
+		//Handling password field
+		JLabel password = new JLabel("Password");
+		password.setBounds(378, 427, 147, 49);
+		password.setVerticalAlignment(SwingConstants.TOP);
+		password.setHorizontalAlignment(SwingConstants.CENTER);
+		password.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
+		frmHDM.getContentPane().add(password);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(561, 429, 599, 30);
-		frmHospitalDatabaseManagement.getContentPane().add(passwordField);
+		passwordField.setEchoChar('•');
+		frmHDM.getContentPane().add(passwordField);
 		
-		JButton btnNewButton = new JButton("Log In");
-		btnNewButton.setBounds(1064, 494, 96, 40);
-		btnNewButton.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnLogin = new JButton("Log In");
+		btnLogin.setBounds(1064, 494, 96, 40);
+		btnLogin.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
+		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username = txtUsername.getText();
-				String password = passwordField.getText();
-				if(username.equals("pdm")&&password.equals("123")) {
-					
+				String username = UsernameField.getText();
+				String password = String.valueOf(passwordField.getPassword());
+				if(username.equals("pdm") && password.equals("123")) {
+					JOptionPane.showMessageDialog(lblNewLabel, 
+					"Welcome!","Hospital Database Management",JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
-					JOptionPane.showMessageDialog(lblNewLabel, "Invalid password or username!");
+					JOptionPane.showMessageDialog(lblNewLabel, 
+					"Invalid password or username!","Hospital Database Management",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
-		frmHospitalDatabaseManagement.getContentPane().add(btnNewButton);
+		frmHDM.getContentPane().add(btnLogin);
 	}
 }
