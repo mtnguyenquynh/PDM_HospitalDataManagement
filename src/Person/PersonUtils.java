@@ -205,11 +205,27 @@ public abstract class PersonUtils {
         // Step 05) Construct the standardized email
         return EmailName + "@" + EmailSupplier;
     }
+    
+
 
     public static String StandardizePhoneNumber(String phone) throws Exception {
+        // The phone number can have multiple representation formats depending on the region.
+        // The phone number can be mistaken as the home number, or the office number.
+        // Thus we only generalize the phone number to the following format
+        // The phone number can have region code (i.e +84, +86, etc)
         Utils.CheckArgumentCondition(phone != null, "The input phone number is null");
         String NewPhone = phone.trim();
-        if (NewPhone.length() == 0) { throw new Exception("The phone number is empty"); }
+
+        Utils.CheckArgumentCondition(NewPhone.length() > 0, "The phone number is empty.");
+        Utils.CheckArgumentCondition(!NewPhone.matches("[+?][0-9]+"),
+                                     "The phone number contain invalid special characters.");
+        int length = NewPhone.length();
+        if (NewPhone.contains("+")) { length -= 1; }
+        
+        // This is to prevent magic phone number such as 113, 115 which are the emergency number
+        // This condition is not created to fully compatible on all region.
+        Utils.CheckArgumentCondition((length >= 8 && length <= 16), 
+                                     "The phone number must be between 8 and 16 digits.");
 
         return NewPhone;
 
@@ -257,8 +273,5 @@ public abstract class PersonUtils {
         String directory = PersonUtils.GetMedicoTaskDirectory();
         return PersonUtils.GetMergedDirectory(directory, name, IsStandardized);
     }
-
-
-
 
 }
