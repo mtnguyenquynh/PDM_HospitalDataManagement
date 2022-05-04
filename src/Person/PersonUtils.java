@@ -128,7 +128,8 @@ public abstract class PersonUtils {
      * @return (String) The relative path of the person's information
      * @throws Exception If the name is not valid
      */
-    public static String GetTreePathByName(String FirstName, boolean IsStandardized) throws Exception {
+    public static String GetDivisionPath(String FirstName, boolean IsStandardized) throws Exception {
+        Utils.CheckArgumentCondition(FirstName != null, "The input name is null");
         if (!IsStandardized) { FirstName = PersonUtils.StandardizeName(FirstName); }
         if (FirstName.contains(".")) { throw new Exception("The name cannot contain a single dot."); }
         if (FirstName.contains(" ")) { throw new Exception("The name must be a single word."); }
@@ -144,7 +145,6 @@ public abstract class PersonUtils {
     // ----------------------------------------------------------------------------------------------------------------------
     // Email
     public static String StandardizeEmail(String email) throws Exception {
-        Utils.CheckArgumentCondition(email != null, "The input name is null");
         return email; 
     }
 
