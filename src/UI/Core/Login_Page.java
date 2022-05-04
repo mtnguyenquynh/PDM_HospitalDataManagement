@@ -1,5 +1,6 @@
-import java.awt.EventQueue;
+package UI.Core;
 
+import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.io.*;
@@ -67,7 +68,7 @@ public class Login_Page {
 		JLabel lblNewLabel = new JLabel("");//what is this for?
 		lblNewLabel.setBounds(186, -11, 1200, 334);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("src\\LoginPage.png"));
+		lblNewLabel.setIcon(new ImageIcon("src\\UI\\Core\\LoginPage.png"));
 		frmHDM.getContentPane().add(lblNewLabel);
 		
 		//Handling username field
