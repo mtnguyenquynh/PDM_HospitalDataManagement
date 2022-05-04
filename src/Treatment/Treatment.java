@@ -10,6 +10,9 @@ import BaseClass.BaseRecord;
 import Object.Resource;
 import PrefixState.Prefix;
 import Staff.Medico;
+import Utility.Utils;
+import Person.PersonUtils;
+
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -196,11 +199,30 @@ public class Treatment extends BaseRecord {
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// Serialization & Deserialization
-	public Hashtable<String, Object> Serialize() {
+	public Hashtable<String, Object> Serialize() throws Exception {
 		Hashtable<String, Object> TreatmentInformation = super.Serialize();
 		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
 		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndexAsInt());
 		TreatmentInformation.put("ClassificationCode", this.GetClassificationCode());
+		
+		String folder;
+		try { 
+			folder = PersonUtils.GetPatientRecordDirectory(this.GetPtFirstName(), false); 
+			TreatmentInformation.put("folder", folder);
+		} catch (Exception e) { // This is never called as standardization is done in the Patient class.
+			
+		}
+		
+		folder = (String) TreatmentInformation.get("folder") + Integer.toString(index) + "-";
+
+		Utils.SaveHashTableIntoJsonFile(folder + "MedicoInfo.json", this.GetMedicoInfo(), null);
+
+		Utils.SaveArrayListIntoJsonFile(folder + "Supplementary.json", this.GetSupplementary(), null);
+
+		Utils.SaveHashTableIntoJsonFile(folder + "Resources.json", this.GetResources(), null);
+
+		Utils.SaveHashTableIntoJsonFile(folder + "Descriptions.json", this.GetDescriptions(), null);
+		
 
 		Iterator<Entry<String, Object>> iter;
 

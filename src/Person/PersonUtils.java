@@ -115,10 +115,10 @@ public abstract class PersonUtils {
      * 
      * For example, (given a standardized name "Harry Potter")
      * 1) "Harry Potter" -> Error (More than one word)
-     * 2) "Harry" -> "h/a/r"
-     * 3) "Potter" -> "p/o/t"
+     * 2) "Harry" -> "h/a/r/"
+     * 3) "Potter" -> "p/o/t/"
      * 4) "G." -> Error (Contain invalid character)
-     * 5) "Ga" -> "g/a"
+     * 5) "Ga" -> "g/a/"
      *  
      * 
      * @param FirstName (String) The first name of the person (which has only one word)
@@ -126,7 +126,7 @@ public abstract class PersonUtils {
      * @return (String) The relative path of the person's information
      * @throws Exception If the name is not valid
      */
-    public static String GetDivisionPath(String FirstName, boolean IsStandardized) throws Exception {
+    public static String GetPathByFirstName(String FirstName, boolean IsStandardized) throws Exception {
         Utils.CheckArgumentCondition(FirstName != null, "The input name is null");
         if (!IsStandardized) { FirstName = PersonUtils.StandardizeName(FirstName); }
         if (FirstName.contains(".")) { throw new Exception("The name cannot contain a single dot."); }
@@ -249,7 +249,7 @@ public abstract class PersonUtils {
     // -----------------------------------------------------------
     // Getter in Advance
     private static String GetMergedDirectory(String directory, String name, boolean IsStandardized) throws Exception {
-        try { return directory + "/" + PersonUtils.GetDivisionPath(name, IsStandardized); } 
+        try { return directory + "/" + PersonUtils.GetPathByFirstName(name, IsStandardized); } 
         catch (Exception e) { e.printStackTrace(); return null; }
     }
 

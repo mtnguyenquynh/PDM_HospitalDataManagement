@@ -96,12 +96,12 @@ public abstract class Utils {
      * @return Hashtable<String, Object>
      **/
     public static Hashtable<String, Object> CastJsonToHashtable(JSONObject data, String name) {
-        Hashtable<String, Object> table = new Hashtable<String, Object>(1000, 0.75f);
         // Iterate over keys
         if (name != null && data.size() == 1) {
             Object item = data.get(name);
             return Utils.CastJsonToHashtable((JSONObject) item, null);
         }
+        Hashtable<String, Object> table = new Hashtable<String, Object>(1000, 0.75f);
         for (Object key : data.keySet()) {
             // Get the value
             Object value = data.get(key);
@@ -110,7 +110,6 @@ public abstract class Utils {
         return table;
     }
 
-    
     public static JSONObject CastHashtableToJson(Hashtable<String, Object> data, String name) {
         JSONObject jsonObject = new JSONObject();
         for (String key : data.keySet()) {
@@ -122,6 +121,22 @@ public abstract class Utils {
         JSONObject JsonObjectWrapper = new JSONObject();
         JsonObjectWrapper.put(name, jsonObject);
         return JsonObjectWrapper;
+    }
+
+    public static JSONArray CastArrayListToJsonArray(ArrayList<Object> data) {
+        JSONArray jsonArray = new JSONArray();
+        for (Object item : data) {
+            jsonArray.add(item);
+        }
+        return jsonArray;
+    }
+
+    public static JSONObject CastArrayListToJsonObject(ArrayList<Object> data) {
+        JSONObject jsonObject = new JSONObject();
+        for (int i = 0; i < data.size(); i++) {
+            jsonObject.put(String.valueOf(i), data.get(i));
+        }
+        return jsonObject;
     }
 
     /**
@@ -167,6 +182,11 @@ public abstract class Utils {
                                                     String name) throws Exception {
         JSONObject jsonObject = Utils.CastHashtableToJson(data, name);
         return Utils.WriteJsonFile(directory, jsonObject); // Write JSON file
+    }
+
+    public static boolean SaveArrayListIntoJsonFile(String directory, ArrayList<Object> data) throws Exception {
+        JSONArray jsonArray = Utils.CastArrayListToJsonArray(data);
+        return Utils.WriteJsonFile(directory, jsonArray); // Write JSON file
     }
 
 }
