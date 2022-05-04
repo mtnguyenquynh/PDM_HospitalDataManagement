@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
  * at the root of the project's source code/tree repository.
 **/
 
-/**This file initialize the GUI to access the hospital database**/
+/** This file initialize the GUI to access the hospital database **/
 public class Login_Page {
 
 	private JFrame frmHDM;
@@ -65,38 +65,38 @@ public class Login_Page {
 		frmHDM.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmHDM.getContentPane().setLayout(null);
 		frmHDM.setResizable(true);
-		JLabel lblNewLabel = new JLabel("");//what is this for?
+		JLabel lblNewLabel = new JLabel("");// what is this for?
 		lblNewLabel.setBounds(186, -11, 1200, 334);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setIcon(new ImageIcon("src\\UI\\Core\\LoginPage.png"));
 		frmHDM.getContentPane().add(lblNewLabel);
-		
-		//Handling username field
+
+		// Handling username field
 		JLabel username = new JLabel("Username");
 		username.setBounds(378, 368, 147, 49);
 		username.setVerticalAlignment(SwingConstants.TOP);
 		username.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
 		username.setHorizontalAlignment(SwingConstants.CENTER);
 		frmHDM.getContentPane().add(username);
-		
+
 		UsernameField = new JTextField();
 		UsernameField.setBounds(561, 370, 599, 30);
 		frmHDM.getContentPane().add(UsernameField);
 		UsernameField.setColumns(10);
 
-		//Handling password field
+		// Handling password field
 		JLabel password = new JLabel("Password");
 		password.setBounds(378, 427, 147, 49);
 		password.setVerticalAlignment(SwingConstants.TOP);
 		password.setHorizontalAlignment(SwingConstants.CENTER);
 		password.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
 		frmHDM.getContentPane().add(password);
-		
+
 		passwordField = new JPasswordField();
 		passwordField.setBounds(561, 429, 599, 30);
 		passwordField.setEchoChar('•');
 		frmHDM.getContentPane().add(passwordField);
-		
+
 		JButton btnLogin = new JButton("Log In");
 		btnLogin.setBounds(1064, 494, 96, 40);
 		btnLogin.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
@@ -104,13 +104,13 @@ public class Login_Page {
 			public void actionPerformed(ActionEvent e) {
 				String username = UsernameField.getText();
 				String password = String.valueOf(passwordField.getPassword());
-				if(username.equals("pdm") && password.equals("123")) {
-					JOptionPane.showMessageDialog(lblNewLabel, 
-					"Welcome!","Hospital Database Management",JOptionPane.INFORMATION_MESSAGE);
-				}
-				else {
-					JOptionPane.showMessageDialog(lblNewLabel, 
-					"Invalid password or username!","Hospital Database Management",JOptionPane.WARNING_MESSAGE);
+				if (username.equals("pdm") && password.equals("123")) {
+					JOptionPane.showMessageDialog(lblNewLabel,
+							"Welcome!", "Hospital Database Management", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(lblNewLabel,
+							"Invalid password or username!", "Hospital Database Management",
+							JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
