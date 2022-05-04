@@ -50,6 +50,7 @@ public abstract class PersonUtils {
 
 
     // ----------------------------------------------------------------------------------------------------------------------
+    // Name Tree
     public static String StandardizeName(String name) throws Exception {
         // This function is attempted to standardize any given name to a standard format
         // 0) First, validate the input name so that there are no digit-like or special characters
@@ -137,6 +138,13 @@ public abstract class PersonUtils {
         }
         return sb.toString();
     }
+
+    // ----------------------------------------------------------------------------------------------------------------------
+    // Email
+    public static String StandardizeEmail(String email) throws Exception {
+        return email;
+    }
+
 
 
     // ----------------------------------------------------------------------------------------------------------------------
