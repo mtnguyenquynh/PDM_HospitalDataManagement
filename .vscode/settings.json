@@ -15,7 +15,6 @@
     ],
     "java.progressReports.enabled": true,
     "java.project.exportJar.targetPath": "PDM_HospitalData_0_0_1.jar",
-    "java.project.outputPath": "bin/",
     "java.codeGeneration.hashCodeEquals.useInstanceof": true,
     "java.codeGeneration.toString.limitElements": 0,
     "java.codeGeneration.toString.listArrayContents": true,

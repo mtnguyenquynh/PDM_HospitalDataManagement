@@ -56,7 +56,7 @@ public class Login_Page {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(186, -11, 1200, 334);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("src\LoginPage.png"));
+		lblNewLabel.setIcon(new ImageIcon("src\\LoginPage.png"));
 		frmHospitalDatabaseManagement.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Username");
