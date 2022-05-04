@@ -109,25 +109,31 @@ public abstract class PersonUtils {
      * database. The mechanism is to first split the "FirstName" (which have ONLY one word) 
      * into every letters (in String datatype). Then, we construct a relative name tree
      * at maximum depth of "FIRST_NAME_DEPTH". Note that the name must be standardized and 
-     * not contained any dot (".").
+     * not contained any dot ("."). Note that the output path is not a full path, but a 
+     * relative tree-based path with lower-case character.
      * 
-     * Note that the output path is not a full path, but a relative tree-based path with 
-     * lower-case character.
+     * For example, (given a standardized name "Harry Potter")
+     * 1) "Harry Potter" -> Error (More than one word)
+     * 2) "Harry" -> "h/a/r"
+     * 3) "Potter" -> "p/o/t"
+     * 4) "G." -> Error (Contain invalid character)
+     * 5) "Ga" -> "g/a"
+     *  
      * 
-     * @param name (Stirng) The first name of the person (which has only one word)
+     * @param FirstName (String) The first name of the person (which has only one word)
      * @param IsStandardized (boolean) Whether the name is assumed to be already standardized or not
      * @return (String) The relative path of the person's information
      * @throws Exception If the name is not valid
      */
-    public static String GetDivisionPath(String name, boolean IsStandardized) throws Exception {
-        if (!IsStandardized) { name = PersonUtils.StandardizeName(name); }
-        if (name.contains(".")) { throw new Exception("The name cannot contain a single dot."); }
-        if (name.contains(" ")) { throw new Exception("The name must be a single word."); }
+    public static String GetDivisionPath(String FirstName, boolean IsStandardized) throws Exception {
+        if (!IsStandardized) { FirstName = PersonUtils.StandardizeName(FirstName); }
+        if (FirstName.contains(".")) { throw new Exception("The name cannot contain a single dot."); }
+        if (FirstName.contains(" ")) { throw new Exception("The name must be a single word."); }
         
-        int MaxLength = Math.min(PersonUtils.GetFirstNameDepth(), name.length());
+        int MaxLength = Math.min(PersonUtils.GetFirstNameDepth(), FirstName.length());
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < MaxLength; i++) {
-            sb.append(name.substring(i, i + 1).toLowerCase() + "/");
+            sb.append(FirstName.substring(i, i + 1).toLowerCase() + "/");
         }
         return sb.toString();
     }
@@ -148,6 +154,35 @@ public abstract class PersonUtils {
     public static String GetLetterChars() { return PersonUtils.LETTER_CHARS; }
     public static String GetAlphanumericChars() { return PersonUtils.ALPHANUMERIC_CHARS; }
     public static String GetSpecialChars() { return PersonUtils.SPECIAL_CHARS; }
+
+    // -----------------------------------------------------------
+    // Getter in Advance
+    private static String GetMergedDirectory(String directory, String name, boolean IsStandardized) throws Exception {
+        try { return directory + "/" + PersonUtils.GetDivisionPath(name, IsStandardized); } 
+        catch (Exception e) { e.printStackTrace(); return null; }
+    }
+
+    public static String GetMedicoDataDirectory(String name, boolean IsStandardized) throws Exception {
+        String directory = PersonUtils.GetMedicoDataDirectory();
+        return PersonUtils.GetMergedDirectory(directory, name, IsStandardized);
+    }
+
+    public static String GetPatientDataDirectory(String name, boolean IsStandardized) throws Exception {
+        String directory = PersonUtils.GetPatientDataDirectory();
+        return PersonUtils.GetMergedDirectory(directory, name, IsStandardized);
+    }
+
+    public static String GetPatientRecordDirectory(String name, boolean IsStandardized) throws Exception {
+        String directory = PersonUtils.GetPatientRecordDirectory();
+        return PersonUtils.GetMergedDirectory(directory, name, IsStandardized);
+    }
+
+    public static String GetMedicoTaskDirectory(String name, boolean IsStandardized) throws Exception {
+        String directory = PersonUtils.GetMedicoTaskDirectory();
+        return PersonUtils.GetMergedDirectory(directory, name, IsStandardized);
+    }
+
+
 
 
 }
