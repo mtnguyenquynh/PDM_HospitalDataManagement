@@ -22,10 +22,9 @@ import Utility.Utils;
  * 
  * References:
  * 1) https://stackoverflow.com/questions/18057962/regex-pattern-including-all-special-characters
- * 
  * 2) https://bobbyhadz.com/blog/javascript-check-if-string-contains-special-characters
- * 
  * 3) https://metapx.org/slash-s-plus-java/
+ * 4) https://stringr.tidyverse.org/articles/regular-expressions.html
 **/
 
 public abstract class PersonUtils {
@@ -67,19 +66,18 @@ public abstract class PersonUtils {
         String NewName = name.trim().replaceAll("\\s+", " ").toLowerCase();
 
         // Step 02) Do validation: Check if there are any digit-like or special characters
-        if (NewName.matches("[0-9]+")) { throw new Exception("The name cannot be a digit-like string"); }
-        if (NewName.matches(PersonUtils.GetSpecialChars())) { 
-            throw new Exception("The name cannot contain special characters"); 
-        }
+        Utils.CheckArgumentCondition(!NewName.matches("[0-9]+"), 
+                                     "The name cannot be a digit-like string.");
+        Utils.CheckArgumentCondition(!NewName.matches("[^a-zA-Z0-9.\\s]+"),
+                                     "The name cannot contain special characters.");
 
         // Step 02) For each word, captialize the first character. For example: "harry" -> "Harry"
         String[] words = NewName.split(" ");
         for (String word: words) {
-            if (word.length() == 1 && word.equals(".")) { 
-                throw new Exception("The name cannot contain a single dot"); 
-            }
+            Utils.CheckArgumentCondition(word.length() != 1 || !word.equals("."), 
+                                         "The name cannot contain a dot.");
         }
-
+        
         StringBuilder sb = new StringBuilder();
         for (String word: words) {
             int length = word.length();
@@ -144,12 +142,78 @@ public abstract class PersonUtils {
 
     // ----------------------------------------------------------------------------------------------------------------------
     // Email
+
+    /**
+     * This method is called to verify to be at least an email address is considered to be valid. 
+     * The email structure is something as this: "email_name@supplier". Where as the "email_name"
+     * contained letter-like, digit-like, "dot" or "underscore" characters. Meanwhile, the 
+     * suppliers only accepted lower-case letter-like and "dot" characters only.
+     * 
+     * The email address is considered to be valid if and only if:
+     * 1) The email address contains only one "@" character between the "email_name" and the "supplier"
+     * 2) The email address contains at least one "." character at the "supplier" part. The dot cannot 
+     *    be located next to the "@" character or at the end of the string.
+     * 
+     * 3) The email address contained special characters (including whitespace " ")
+     * 3) Validate each part 
+     * 
+     * 
+     * @param email
+     * @return
+     * @throws Exception
+     */
+
     public static String StandardizeEmail(String email) throws Exception {
-        Utils.CheckArgumentCondition(email != null, "The input name is null");
-        return email; 
+        Utils.CheckArgumentCondition(email != null, "The input email is null");
+        String NewEmail = email.trim();
+        if (NewEmail.length() == 0) { throw new Exception("The email is empty"); }
+        
+        // Step 01) Validation: Check if there are any "@" or "." characters
+        Utils.CheckArgumentCondition(!NewEmail.contains(" "), "The email contain whitespace character.");
+        Utils.CheckArgumentCondition(NewEmail.contains("@"), "The email does not contain an '@' character.");
+        Utils.CheckArgumentCondition(NewEmail.contains("."), "The email does not contain a '.' character.");
+
+        // Step 02) Validate each-part
+        String[] parts = NewEmail.split("\\@");
+        Utils.CheckArgumentCondition(parts.length == 2, "The email contain more than one '@' characters.");
+
+        String EmailName = parts[0];
+        String EmailSupplier = parts[1];
+
+        // Step 03) Validate the email name
+        Utils.CheckArgumentCondition(EmailName.length() > 0, "The email name is empty.");
+        Utils.CheckArgumentCondition(!EmailName.matches("[a-zA-Z0-9._]+"), 
+                                     "The email name contain invalid special characters.");
+        Utils.CheckArgumentCondition(!EmailName.substring(0).matches("[a-zA-Z0-9]"), 
+                                     "The email name contain invalid special characters at the beginning.");
+        Utils.CheckArgumentCondition(!EmailName.substring(EmailName.length() - 1).matches("[a-zA-Z0-9]"), 
+                                     "The email name contain invalid special characters at the end.");                                                     
+
+        // Step 04) Validate the email supplier
+        Utils.CheckArgumentCondition(EmailSupplier.contains("."), 
+                                     "The email address does not contain a '.' character.");
+        String[] SupplierParts = EmailSupplier.split("\\.");
+
+        Utils.CheckArgumentCondition(EmailSupplier.length() > 0, "The email address is empty.");
+        Utils.CheckArgumentCondition(!EmailSupplier.matches("[a-zA-Z._]+"),
+                                     "The email address contain invalid special characters.");
+        Utils.CheckArgumentCondition(!EmailSupplier.substring(0).matches("[a-zA-Z]"),
+                                     "The email address contain invalid special characters at the beginning.");     
+        Utils.CheckArgumentCondition(!EmailSupplier.substring(EmailSupplier.length() - 1).matches("[a-zA-Z]"),
+                                     "The email address contain invalid special characters at the end.");
+
+        // Step 05) Construct the standardized email
+        return EmailName + "@" + EmailSupplier;
     }
 
+    public static String StandardizePhoneNumber(String phone) throws Exception {
+        Utils.CheckArgumentCondition(phone != null, "The input phone number is null");
+        String NewPhone = phone.trim();
+        if (NewPhone.length() == 0) { throw new Exception("The phone number is empty"); }
 
+        return NewPhone;
+
+    }
 
     // ----------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
