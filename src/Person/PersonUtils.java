@@ -139,7 +139,7 @@ public abstract class PersonUtils {
     // ----------------------------------------------------------------------------------------------------------------------
     // Email
     public static String StandardizeEmail(String email) throws Exception {
-        return email;
+        return email; 
     }
 
 
