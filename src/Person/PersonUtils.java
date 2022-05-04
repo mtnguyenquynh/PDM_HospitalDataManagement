@@ -228,7 +228,6 @@ public abstract class PersonUtils {
                                      "The phone number must be between 8 and 16 digits.");
 
         return NewPhone;
-
     }
 
     // ----------------------------------------------------------------------------------------------------------------------
