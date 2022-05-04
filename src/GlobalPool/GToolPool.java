@@ -3,6 +3,7 @@ package GlobalPool;
 import java.util.ArrayList;
 
 import Object.Tool;
+import Room.LToolPool;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -15,7 +16,8 @@ import Object.Tool;
 **/
 
 /**
- * This class is similar as an local tool pool, but it managed all tools 
+ * This class is similar as an local tool pool, but it managed all tools available in the 
+ * hospital as a manager
  * available in the hospital (i.e manager), included the ones stored in the 
  * storage room. This class connects to the SQL-DB database, but the description 
  * of each instance (in this pool: Tool) is stored in the module 
@@ -32,9 +34,7 @@ import Object.Tool;
  * to all distribution places/centers such as LToolPool.class and report them 
  * to GLogger.class.
  * 
- * Note that the pool and the cache are guaranteed to have the fixed-size
- *
- * TODO: GLogger.java will be write later
+ * The architecture of 
  * 
  * @author Ichiru Take
  * @version 0.0.1
@@ -43,7 +43,7 @@ import Object.Tool;
  * 1) 
 **/
 
-public class GToolPool {
+public class GToolPool extends LToolPool {
     // ---------------------------------------------------------------------------------------------------------------------
     // Connection to Directory
     private final static String FOLDER_DIRECTORY = "database/GlobalPool/"; 
