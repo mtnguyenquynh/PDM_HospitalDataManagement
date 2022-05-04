@@ -145,7 +145,7 @@ public abstract class PersonUtils {
     // ----------------------------------------------------------------------------------------------------------------------
     // Email
     public static String StandardizeEmail(String email) throws Exception {
-        Utils.CheckArgumentCondition(FirstName != null, "The input name is null");
+        Utils.CheckArgumentCondition(email != null, "The input name is null");
         return email; 
     }
 
