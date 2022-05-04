@@ -192,7 +192,6 @@ public abstract class PersonUtils {
         // Step 04) Validate the email supplier
         Utils.CheckArgumentCondition(EmailSupplier.contains("."), 
                                      "The email address does not contain a '.' character.");
-        String[] SupplierParts = EmailSupplier.split("\\.");
 
         Utils.CheckArgumentCondition(EmailSupplier.length() > 0, "The email address is empty.");
         Utils.CheckArgumentCondition(!EmailSupplier.matches("[a-zA-Z._]+"),

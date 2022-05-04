@@ -143,6 +143,29 @@ public abstract class Utils {
         return JsonObjectWrapper;
     }
 
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Read/load a JSON file by its path/directory
+    public static Hashtable<String, Object> LoadJSONFileToHashtable(String directory, String name) {
+        JSONObject jsonObject = Utils.ReadJsonFileAsObject(directory);
+        return Utils.CastJsonToHashtable(jsonObject, name);
+    }
+
+    public static ArrayList<Object> LoadJSONFileToArrayList(String directory, String name) {
+        ArrayList<Object> arrayList = new ArrayList<Object>(10000);
+        JSONArray jsonArray = Utils.ReadJsonFileAsArray(directory);
+        if (name == null) { for (Object item : jsonArray) { arrayList.add(item); } } 
+        else {
+            for (Object item : jsonArray) {
+                JSONObject jsonObject = (JSONObject) item;
+                Object result = jsonObject.get(name);
+                if (result != null) { arrayList.add(result); }
+            }
+        }
+        return arrayList;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Write a JSON file by its path/directory
     /**
      * This function will convert every data from JSONArray into ArrayList.
      * 
