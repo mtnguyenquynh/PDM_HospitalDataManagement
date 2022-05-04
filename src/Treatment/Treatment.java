@@ -75,9 +75,10 @@ public class Treatment extends BaseRecord {
 	private Hashtable<String, Object> Resources;		// The drug/medicine information
 	private Hashtable<String, Object> Descriptions;		// The desciption of the treatment
 
-	public Treatment(String Patient_ID, String MedicalRecord_ID, String P_Name, String P_Age, 
-		String P_Gender, int index, String code, boolean writable) {
-		super(Patient_ID, P_Name, P_Age, P_Gender, writable);
+	public Treatment(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName, 
+		String Pt_Age, String Pt_Gender, int index, String code, boolean writable) {
+		super(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, 
+		      Pt_Gender, writable);
 
 		this.MedicalRecord_ID = MedicalRecord_ID;
 		this.index = index;
@@ -90,9 +91,10 @@ public class Treatment extends BaseRecord {
 		this.Descriptions = new Hashtable<String, Object>(Treatment.MAX_NUM_DESCRIPTIONS, 0.75f);
 	}
 
-	public Treatment(String Patient_ID, String MedicalRecord_ID, String P_Name, String P_Age, 
-		String P_Gender, int index, String code) {
-		this(Patient_ID, MedicalRecord_ID, P_Name, P_Age, P_Gender, index, code, true);
+	public Treatment(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName,
+		String Pt_Age, String Pt_Gender, int index, String code) {
+		this(Patient_ID, MedicalRecord_ID, Pt_FirstName, Pt_LastName, Pt_Age, 
+		     Pt_Gender, index, code, true);
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------
@@ -217,43 +219,13 @@ public class Treatment extends BaseRecord {
 
 		Utils.SaveHashTableIntoJsonFile(folder + "MedicoInfo.json", this.GetMedicoInfo(), null);
 
-		Utils.SaveArrayListIntoJsonFile(folder + "Supplementary.json", this.GetSupplementary(), null);
+		Utils.SaveArrayListIntoJsonFile(folder + "Supplementary.json", (ArrayList<Object>) this.GetSupplementary());
 
 		Utils.SaveHashTableIntoJsonFile(folder + "Resources.json", this.GetResources(), null);
 
 		Utils.SaveHashTableIntoJsonFile(folder + "Descriptions.json", this.GetDescriptions(), null);
-		
 
-		Iterator<Entry<String, Object>> iter;
 
-		Hashtable<String, Object> MedicoInfo = this.GetMedicoInfo();
-		List<String[]> MedicoInfoList = new ArrayList<String[]>(MedicoInfo.size());
-		iter = MedicoInfo.entrySet().iterator();
-		while (iter.hasNext()) {
-			Entry<String, Object> entry = iter.next();
-			MedicoInfoList.add((String[]) entry.getValue());
-		}
-
-		TreatmentInformation.put("MedicoInfo", MedicoInfoList.toArray());
-		TreatmentInformation.put("Supplementary", this.GetSupplementary().toArray());
-
-		Hashtable<String, Object> Resources = this.GetResources();
-		List<String[]> ResourcesList = new ArrayList<String[]>(Resources.size());
-		iter = Resources.entrySet().iterator();
-		while (iter.hasNext()) {
-			Entry<String, Object> entry = iter.next();
-			ResourcesList.add((String[]) entry.getValue());
-		}
-		TreatmentInformation.put("Resources", ResourcesList.toArray());
-
-		Hashtable<String, Object> Descriptions = this.GetDescriptions();
-		List<String[]> DescriptionsList = new ArrayList<String[]>(Descriptions.size());
-		iter = Descriptions.entrySet().iterator();
-		while (iter.hasNext()) {
-			Entry<String, Object> entry = iter.next();
-			DescriptionsList.add((String[]) entry.getValue());
-		}
-		TreatmentInformation.put("Descriptions", DescriptionsList.toArray());
 
 		return TreatmentInformation;
 	}
