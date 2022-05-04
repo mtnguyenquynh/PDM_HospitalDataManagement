@@ -24,9 +24,9 @@ import org.json.simple.parser.ParseException;
 **/
 
 /**
- * This file contained several helper functions
+ * This file contained several helper functions to support reading and writing JSON files
  * 
- * See references:
+ * Rferences:
  * - https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
 **/
 
@@ -131,12 +131,16 @@ public abstract class Utils {
         return jsonArray;
     }
 
-    public static JSONObject CastArrayListToJsonObject(ArrayList<Object> data) {
+    public static JSONObject CastArrayListToJsonObject(ArrayList<Object> data, String name) {
         JSONObject jsonObject = new JSONObject();
         for (int i = 0; i < data.size(); i++) {
             jsonObject.put(String.valueOf(i), data.get(i));
         }
-        return jsonObject;
+        if (name == null) { return jsonObject; }
+
+        JSONObject JsonObjectWrapper = new JSONObject();
+        JsonObjectWrapper.put(name, jsonObject);
+        return JsonObjectWrapper;
     }
 
     /**
@@ -184,9 +188,15 @@ public abstract class Utils {
         return Utils.WriteJsonFile(directory, jsonObject); // Write JSON file
     }
 
-    public static boolean SaveArrayListIntoJsonFile(String directory, ArrayList<Object> data) throws Exception {
-        JSONArray jsonArray = Utils.CastArrayListToJsonArray(data);
-        return Utils.WriteJsonFile(directory, jsonArray); // Write JSON file
+    public static boolean SaveArrayListIntoJsonFile(String directory, ArrayList<Object> data, 
+                                                    String name) throws Exception {
+        if (name == null) {
+            JSONArray jsonArray = Utils.CastArrayListToJsonArray(data);
+            return Utils.WriteJsonFile(directory, jsonArray); // Write JSON file
+        } else {
+            JSONObject jsonObject = Utils.CastArrayListToJsonObject(data, name);
+            return Utils.WriteJsonFile(directory, jsonObject); // Write JSON file
+        }
     }
 
 }

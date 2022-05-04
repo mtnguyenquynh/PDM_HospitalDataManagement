@@ -10,6 +10,7 @@ import BaseClass.BaseRecord;
 import Object.Resource;
 import PrefixState.Prefix;
 import Staff.Medico;
+import Utility.JsonUtils;
 import Utility.Utils;
 import Person.PersonUtils;
 
@@ -201,7 +202,7 @@ public class Treatment extends BaseRecord {
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// Serialization & Deserialization
-	public Hashtable<String, Object> Serialize() throws Exception {
+	public Hashtable<String, Object> Serialize() {
 		Hashtable<String, Object> TreatmentInformation = super.Serialize();
 		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
 		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndexAsInt());
@@ -219,7 +220,7 @@ public class Treatment extends BaseRecord {
 
 		Utils.SaveHashTableIntoJsonFile(folder + "MedicoInfo.json", this.GetMedicoInfo(), null);
 
-		Utils.SaveArrayListIntoJsonFile(folder + "Supplementary.json", (ArrayList<Object>) this.GetSupplementary());
+		JsonUtils.SaveArrayListIntoJsonFile(folder + "Supplementary.json", this.GetSupplementary());
 
 		Utils.SaveHashTableIntoJsonFile(folder + "Resources.json", this.GetResources(), null);
 
