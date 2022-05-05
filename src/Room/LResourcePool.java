@@ -3,6 +3,7 @@ package Room;
 import java.util.Hashtable;
 
 import BaseClass.BaseObjectPool;
+import Object.Resource;
 
 
 /**
@@ -50,6 +51,36 @@ public class LResourcePool extends BaseObjectPool {
     public LResourcePool(String ID) throws Exception { super(ID); }
 
     public LResourcePool(BaseObjectPool object_pool) throws Exception { super(object_pool); }
+
+    public LResourcePool(LResourcePool object_pool) throws Exception { super((BaseObjectPool) object_pool); }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Method Getter
+    protected static String[] GetObjectInformation(Resource object, int number) {
+        return BaseObjectPool.GetObjectInformation(object, number);
+    }
+
+    protected static Object[] GetObjectInformationAsObjectList(Resource object, int number) {
+        return BaseObjectPool.GetObjectInformationAsObjectList(object, number);
+    }
+
+    protected static Object GetObjectInformationAsObject(Resource object, int number) {
+        return BaseObjectPool.GetObjectInformationAsObject(object, number);
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Updater
+    protected boolean UpdateObject(Resource object, int amount) throws Exception {
+        return this.UpdateObject(object.GetID(), amount);
+    }
+
+    protected boolean AddNewObject(Resource object, int amount) throws Exception {
+        return this.AddNewObject(object.GetID(), object.GetName(), amount);
+    }
+
+    protected boolean RemoveObject(Resource object) {
+        return this.RemoveObject(object.GetID());
+    }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization

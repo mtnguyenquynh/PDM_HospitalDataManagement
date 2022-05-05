@@ -39,7 +39,7 @@ public abstract class PersonUtils {
     // This attribute is used to construct a relative name tree to support fast search, query and retrieval
     private final static int FIRST_NAME_DEPTH = 3;
     private final static int MAX_NAME_OF_WORD = 16;                         // This may not be used
-    private final static int MAX_CHAR_OF_WORD = 16;                         // This may not be used
+    private final static int MAX_CHAR_OF_WORD = 32;                         // This may not be used
 
     private final static String NUMERIC_CHARS = "[0-9]+";
     private final static String LETTER_CHARS = "[a-zA-Z]+";

@@ -3,6 +3,7 @@ package Room;
 import java.util.Hashtable;
 
 import BaseClass.BaseObjectPool;
+import Object.Tool;
 
 
 /**
@@ -50,6 +51,35 @@ public class LToolPool extends BaseObjectPool {
     
     public LToolPool(BaseObjectPool object_pool) throws Exception { super(object_pool); }
 
+    public LToolPool(LToolPool object_pool) throws Exception { super((BaseObjectPool) object_pool); }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Method Getter
+    protected static String[] GetObjectInformation(Tool object, int number) {
+        return BaseObjectPool.GetObjectInformation(object, number);
+    }
+
+    protected static Object[] GetObjectInformationAsObjectList(Tool object, int number) {
+        return BaseObjectPool.GetObjectInformationAsObjectList(object, number);
+    }
+
+    protected static Object GetObjectInformationAsObject(Tool object, int number) {
+        return BaseObjectPool.GetObjectInformationAsObject(object, number);
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Updater
+    protected boolean UpdateObject(Tool object, int amount) throws Exception {
+        return this.UpdateObject(object.GetID(), amount);
+    }
+
+    protected boolean AddNewObject(Tool object, int amount) throws Exception {
+        return this.AddNewObject(object.GetID(), object.GetName(), amount);
+    }
+
+    protected boolean RemoveObject(Tool object) {
+        return this.RemoveObject(object.GetID());
+    }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization

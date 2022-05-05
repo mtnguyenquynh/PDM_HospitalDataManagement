@@ -35,7 +35,7 @@ import Utility.Utils;
  * 2) https://stackoverflow.com/questions/47800155/is-protected-method-in-super-class-visible-in-sub-class-in-a-different-package
 **/
 
-public class BaseObjectPool extends AbstractObject {
+public class BaseRoom extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Plus one here is to store the ID of this class.
     private final static int MAX_CAPACTIY = 10000;
@@ -43,14 +43,14 @@ public class BaseObjectPool extends AbstractObject {
     private final static float SERIALIZATION_LOAD_FACTOR = 0.75f;
     private Hashtable<String, Object> LocalPool;
 
-    public BaseObjectPool(String ID) throws Exception {
+    public BaseRoom(String ID) throws Exception {
         super(ID);
         int capacity = BaseObjectPool.GetSerializationCapacity();
         float loadFactor = BaseObjectPool.GetSerializationLoadFactor();
         this.LocalPool = new Hashtable<String, Object>(capacity, loadFactor);
     }
 
-    public BaseObjectPool(BaseObjectPool obj) throws Exception {
+    public BaseRoom(BaseRoom obj) throws Exception {
         super(obj.GetID());
         this.LocalPool = obj.LocalPool;
     }
@@ -58,7 +58,7 @@ public class BaseObjectPool extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Find object in pool
     public static String[] GetObjectInformation(String ID, String name, int number) {
-        BaseObjectPool.ValidateInput(ID, name, number);
+        BaseRoom.ValidateInput(ID, name, number);
         String[] ObjectInfo = {ID, name, String.valueOf(number)};
         return ObjectInfo;
     }
@@ -106,7 +106,7 @@ public class BaseObjectPool extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Add-er & Remove-r functions
     public boolean UpdateObject(String ID, int amount) throws Exception {
-        BaseObjectPool.ValidateInput(ID, "", amount, false);
+        BaseRoom.ValidateInput(ID, "", amount, false);
         if (!this.IsObjectAvailable(ID)) {
             throw new Exception("Object is not available."); 
         }
@@ -127,7 +127,7 @@ public class BaseObjectPool extends AbstractObject {
     }
 
     public boolean AddNewObject(String ID, String name, int amount) throws Exception {
-        BaseObjectPool.ValidateInput(ID, name, amount);
+        BaseRoom.ValidateInput(ID, name, amount);
         if (this.GetCurrentCapacity() > BaseObjectPool.GetMaxCapacity()) {
             throw new Exception("The pool inside is full.");
         }
@@ -154,11 +154,11 @@ public class BaseObjectPool extends AbstractObject {
     // Getter Function
     public Hashtable<String, Object> GetLocalPool() { return this.LocalPool; }   
     private void SetLocalPool(Hashtable<String, Object> LocalPool) { this.LocalPool = LocalPool; }
-    public void copyTo(BaseObjectPool other) { other.SetLocalPool(this.GetLocalPool()); }
+    public void copyTo(BaseRoom other) { other.SetLocalPool(this.GetLocalPool()); }
 
-    public static int GetSerializationCapacity() { return BaseObjectPool.SERIALIZATION_CAPACTITY; }
-    public static float GetSerializationLoadFactor() { return BaseObjectPool.SERIALIZATION_LOAD_FACTOR; }
-    public static int GetMaxCapacity() { return BaseObjectPool.MAX_CAPACTIY; }
+    public static int GetSerializationCapacity() { return BaseRoom.SERIALIZATION_CAPACTITY; }
+    public static float GetSerializationLoadFactor() { return BaseRoom.SERIALIZATION_LOAD_FACTOR; }
+    public static int GetMaxCapacity() { return BaseRoom.MAX_CAPACTIY; }
     
     public int GetCurrentCapacity() { return this.GetLocalPool().size(); }
     
@@ -169,11 +169,11 @@ public class BaseObjectPool extends AbstractObject {
     }
 
     private static void ValidateInput(String ID, String name, int amount) {
-        BaseObjectPool.ValidateInput(ID, name, amount, true);
+        BaseRoom.ValidateInput(ID, name, amount, true);
     }
 
     public boolean IsEmpty() { return this.GetLocalPool().isEmpty(); }
-    public boolean IsPoolHasExtraSlot() { return this.GetCurrentCapacity() < BaseObjectPool.GetMaxCapacity(); }
+    public boolean IsPoolHasExtraSlot() { return this.GetCurrentCapacity() < BaseRoom.GetMaxCapacity(); }
     public boolean IsPoolFull() { return !this.IsPoolHasExtraSlot(); }
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -183,22 +183,20 @@ public class BaseObjectPool extends AbstractObject {
         Iterator<Entry<String, Object>> it = pool.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, Object> entry = it.next();
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            result.put(key, value);
+            result.put(entry.getKey(), entry.getValue());
         }
         return result;
     }
 
-    public static BaseObjectPool Deserialize(Hashtable<String, Object> data) throws Exception {
+    public static BaseRoom Deserialize(Hashtable<String, Object> data) throws Exception {
         String id = (String) data.get("id");
-        BaseObjectPool result = new BaseObjectPool(id);
-        Hashtable<String, Object> pool = result.GetLocalPool();
+        BaseRoom room = new BaseRoom(id);
+        Hashtable<String, Object> pool = room.GetLocalPool();
         Iterator<Entry<String, Object>> it = data.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, Object> entry = it.next();
             pool.put(entry.getKey(), entry.getValue());
         }
-        return result;
+        return room;
     }
 }
