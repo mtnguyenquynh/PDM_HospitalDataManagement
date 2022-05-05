@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import Person.Person;
 import Utility.JsonUtils;
 
 /**
@@ -166,13 +167,13 @@ public class BaseRoomContainer extends AbstractObject {
         return 0;
     }
     
-    public int AddOrUpdatePerson(String ID, String name) throws Exception {
+    public int AddOrUpdatePerson(String ID, String name, String phone_number) throws Exception {
         RoomUtils.ValidateInput(ID, "");
 
         String[] PoolObjectInfo = this.GetObject(ID);
         if (PoolObjectInfo == null) {
             if (this.IsPoolFull()) { throw new Exception("Pool is full."); }
-            String[] ObjectInfo = RoomUtils.GetObjectInformation(ID, name); 
+            String[] ObjectInfo = RoomUtils.GetPersonInformation(ID, name, phone_number); 
             this.GetLocalPool().put(ID, ObjectInfo);
             return 1;
         } else {
@@ -181,35 +182,35 @@ public class BaseRoomContainer extends AbstractObject {
         }
     }
 
-    protected int AddOrUpdatePerson(AbstractObject object) throws Exception {
-        JsonUtils.CheckArgumentCondition(object != null, "Person cannot be null.");
-        return this.AddOrUpdatePerson(object.GetID(), object.GetName());
+    protected int AddOrUpdatePerson(Person person) throws Exception {
+        JsonUtils.CheckArgumentCondition(person != null, "Person cannot be null.");
+        return this.AddOrUpdatePerson(person.GetID(), person.GetName(), person.GetPhoneNumber());
     }
 
-    public boolean AddNewPerson(String ID, String name) throws Exception {
+    public boolean AddNewPerson(String ID, String name, String phone_number) throws Exception {
         if (this.TestPersonMode(ID) == 1) {
-            this.AddOrUpdatePerson(ID, "");
+            this.AddOrUpdatePerson(ID, "", phone_number);
             return true;
         }
         return false;
     }
 
-    protected boolean AddNewPerson(AbstractObject object) throws Exception {
-        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
-        return this.AddNewPerson(object.GetID(), object.GetName());
+    protected boolean AddNewPerson(Person person) throws Exception {
+        JsonUtils.CheckArgumentCondition(person != null, "Person cannot be null.");
+        return this.AddNewPerson(person.GetID(), person.GetName(), person.GetPhoneNumber());
     }
 
     public boolean RemovePerson(String ID) throws Exception {
         if (this.TestPersonMode(ID) == 0) {
-            this.AddOrUpdatePerson(ID, "");
+            this.AddOrUpdatePerson(ID, "", "");
             return true;
         }
         return false;
     }
 
-    protected boolean RemovePerson(AbstractObject object) throws Exception {
-        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
-        return this.RemovePerson(object.GetID());
+    protected boolean RemovePerson(Person person) throws Exception {
+        JsonUtils.CheckArgumentCondition(person != null, "Person cannot be null.");
+        return this.RemovePerson(person.GetID());
     }
 
     // ---------------------------------------------------------------------------------------------------------------------

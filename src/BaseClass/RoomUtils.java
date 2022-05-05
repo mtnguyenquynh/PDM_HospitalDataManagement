@@ -1,5 +1,6 @@
 package BaseClass;
 
+import Person.Person;
 import Utility.JsonUtils;
 
 /**
@@ -29,40 +30,23 @@ public abstract class RoomUtils {
     
     // ---------------------------------------------------------------------------------------------------------------------
     // Person-related information
-    public static String[] GetObjectInformation(String ID, String name) {
+    public static String[] GetPersonInformation(String ID, String name, String phone_number) {
         RoomUtils.ValidateInput(ID, name, 1, false);
-        String[] ObjectInfo = {ID, name};
+        String[] ObjectInfo = {ID, name, phone_number};
         return ObjectInfo;
     }
 
-    public static String[] GetPersonInformation(String ID, String name) {
-        return RoomUtils.GetObjectInformation(ID, name);
+    public static String[] GetPersonInformation(Person person) {
+        JsonUtils.CheckArgumentCondition(person != null, "Person cannot be null.");
+        return RoomUtils.GetPersonInformation(person.GetID(), person.GetName(), person.GetPhoneNumber());
     }
 
-    public static String[] GetObjectInformation(AbstractObject object) {
-        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
-        return RoomUtils.GetObjectInformation(object.GetID(), object.GetName());
+    public static Object[] GetPersonInformationAsObjectList(Person person) {
+        return (Object[]) RoomUtils.GetPersonInformation(person);
     }
 
-    public static Object[] GetObjectInformationAsObjectList(AbstractObject object) {
-        return (Object[]) RoomUtils.GetObjectInformation(object);
-    }
-
-    public static Object GetObjectInformationAsObject(AbstractObject object) {
-        return (Object) RoomUtils.GetObjectInformation(object);
-    }
-
-    public static String[] GetPersonInformation(AbstractObject object) {
-        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
-        return RoomUtils.GetPersonInformation(object.GetID(), object.GetName());
-    }
-
-    public static Object[] GetPersonInformationAsObjectList(AbstractObject object) {
-        return (Object[]) RoomUtils.GetPersonInformation(object);
-    }
-
-    public static Object GetPersonInformationAsObject(AbstractObject object) {
-        return (Object) RoomUtils.GetPersonInformation(object);
+    public static Object GetPersonInformationAsObject(Person person) {
+        return (Object) RoomUtils.GetPersonInformation(person);
     }
 
     // ---------------------------------------------------------------------------------------------------------------------

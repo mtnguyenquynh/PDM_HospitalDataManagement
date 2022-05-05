@@ -69,15 +69,17 @@ public class MedicoRoom extends BaseRoomContainer {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Updater
-    public boolean AddNewMedico(String ID, String name) throws Exception { return this.AddNewPerson(ID, name); }
+    public boolean AddNewMedico(String ID, String name, String phone_number) throws Exception { 
+        return this.AddNewPerson(ID, name, phone_number); 
+    }
 
-    public boolean AddNewMedico(Medico object) throws Exception {
-        return this.AddNewPerson(object.GetID(), object.GetName());
+    public boolean AddNewMedico(Medico person) throws Exception {
+        return this.AddNewPerson(person.GetID(), person.GetName(), person.GetPhoneNumber());
     }
 
     public boolean RemoveMedico(String ID) throws Exception { return this.RemovePerson(ID); }
 
-    public boolean RemoveMedico(Medico object) throws Exception { return this.RemovePerson(object.GetID()); }
+    public boolean RemoveMedico(Medico person) throws Exception { return this.RemovePerson(person.GetID()); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter Function

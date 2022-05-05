@@ -69,15 +69,17 @@ public class PatientRoom extends BaseRoomContainer {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Updater
-    public boolean AddNewPatient(String ID, String name) throws Exception { return this.AddNewPerson(ID, name); }
+    public boolean AddNewPatient(String ID, String name, String phone_number) throws Exception { 
+        return this.AddNewPerson(ID, name, phone_number); 
+    }
 
-    public boolean AddNewPatient(Patient object) throws Exception {
-        return this.AddNewPerson(object.GetID(), object.GetName());
+    public boolean AddNewPatient(Patient person) throws Exception {
+        return this.AddNewPerson(person.GetID(), person.GetName(), person.GetPhoneNumber());
     }
 
     public boolean RemovePatient(String ID) throws Exception { return this.RemovePerson(ID); }
 
-    public boolean RemovePatient(Patient object) throws Exception { return this.RemovePerson(object.GetID()); }
+    public boolean RemovePatient(Patient person) throws Exception { return this.RemovePerson(person.GetID()); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter Function
