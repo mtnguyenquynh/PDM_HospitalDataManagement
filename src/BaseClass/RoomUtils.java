@@ -1,9 +1,5 @@
 package BaseClass;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import Utility.Utils;
 
 /**
@@ -17,7 +13,7 @@ import Utility.Utils;
 **/
 
 /**
- * This class is to support the data retrieval for each object
+ * This class is to support the data retrieval for the local pool
  *
  *  
  * @author Ichiru Take

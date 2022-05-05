@@ -2,7 +2,7 @@ package Room;
 
 import java.util.Hashtable;
 
-import BaseClass.BaseObjectPool;
+import BaseClass.BaseRoomContainer;
 import Object.Resource;
 
 
@@ -46,27 +46,13 @@ import Object.Resource;
  * 1) 
 **/
 
-public class LResourcePool extends BaseObjectPool {
+public class LResourcePool extends BaseRoomContainer {
     
     public LResourcePool(String ID) throws Exception { super(ID); }
 
-    public LResourcePool(BaseObjectPool object_pool) throws Exception { super(object_pool); }
+    public LResourcePool(BaseRoomContainer object_pool) throws Exception { super(object_pool); }
 
-    public LResourcePool(LResourcePool object_pool) throws Exception { super((BaseObjectPool) object_pool); }
-
-    // ---------------------------------------------------------------------------------------------------------------------
-    // Method Getter
-    protected static String[] GetObjectInformation(Resource object, int number) {
-        return BaseObjectPool.GetObjectInformation(object, number);
-    }
-
-    protected static Object[] GetObjectInformationAsObjectList(Resource object, int number) {
-        return BaseObjectPool.GetObjectInformationAsObjectList(object, number);
-    }
-
-    protected static Object GetObjectInformationAsObject(Resource object, int number) {
-        return BaseObjectPool.GetObjectInformationAsObject(object, number);
-    }
+    public LResourcePool(LResourcePool object_pool) throws Exception { super((BaseRoomContainer) object_pool); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Updater
@@ -78,7 +64,7 @@ public class LResourcePool extends BaseObjectPool {
         return this.AddNewObject(object.GetID(), object.GetName(), amount);
     }
 
-    protected boolean RemoveObject(Resource object) {
+    protected boolean RemoveObject(Resource object) throws Exception {
         return this.RemoveObject(object.GetID());
     }
 
@@ -87,7 +73,7 @@ public class LResourcePool extends BaseObjectPool {
     public Hashtable<String, Object> Serialize() { return super.Serialize(); }
 
     public static LResourcePool Deserialize(Hashtable<String, Object> data) throws Exception {
-        return new LResourcePool(BaseObjectPool.Deserialize(data));
+        return new LResourcePool(BaseRoomContainer.Deserialize(data));
     }
 
 }

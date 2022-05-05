@@ -21,11 +21,7 @@ import Utility.Utils;
  * of "LToolPool", "LResourcesPool", "GToolPool", "GResourcesPool". The information storage is to 
  * map the ID of the object to {ID, name, amount}.
  * 
- * Designing this class is a little bit tricky and not. The hidden reason is that its structure 
- * is similar to the "PatientRoom" but the limitation from the amount is unknown, which implied 
- * that in theory, the number of "Object" and "Resource" is unlimited. Thus, one of the greatest 
- * option is to set a constraint to prevent memory-overflow and serialize the data.
-
+ * It also support to be the super-class of the "PatientRoom" and "MedicoRoom"
  *  
  * @author Ichiru Take
  * @version 0.0.1
@@ -35,7 +31,7 @@ import Utility.Utils;
  * 2) https://stackoverflow.com/questions/47800155/is-protected-method-in-super-class-visible-in-sub-class-in-a-different-package
 **/
 
-public class BaseRoom extends AbstractObject {
+public class BaseRoomContainer extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Plus one here is to store the ID of this class.
     private final static int SERIALIZATION_CAPACTITY = 10000 + 1;
@@ -44,17 +40,17 @@ public class BaseRoom extends AbstractObject {
     private Hashtable<String, Object> LocalPool;
     private int MaxCapacity;
 
-    public BaseRoom(String ID, int MaxCapacity) throws Exception {
+    public BaseRoomContainer(String ID, int MaxCapacity) throws Exception {
         super(ID);
         this.MaxCapacity = MaxCapacity;
-        int capacity = BaseRoom.GetSerializationCapacity();
-        float loadFactor = BaseRoom.GetSerializationLoadFactor();
+        int capacity = BaseRoomContainer.GetSerializationCapacity();
+        float loadFactor = BaseRoomContainer.GetSerializationLoadFactor();
         this.LocalPool = new Hashtable<String, Object>(capacity, loadFactor);
     }
 
-    public BaseRoom(String ID) throws Exception { this(ID, 10000); }
+    public BaseRoomContainer(String ID) throws Exception { this(ID, 10000); }
 
-    public BaseRoom(BaseRoom obj) throws Exception {
+    public BaseRoomContainer(BaseRoomContainer obj) throws Exception {
         super(obj.GetID());
         this.LocalPool = obj.LocalPool;
     }
@@ -218,8 +214,8 @@ public class BaseRoom extends AbstractObject {
     // Getter Function
     public Hashtable<String, Object> GetLocalPool() { return this.LocalPool; }   
 
-    public static int GetSerializationCapacity() { return BaseRoom.SERIALIZATION_CAPACTITY; }
-    public static float GetSerializationLoadFactor() { return BaseRoom.SERIALIZATION_LOAD_FACTOR; }
+    public static int GetSerializationCapacity() { return BaseRoomContainer.SERIALIZATION_CAPACTITY; }
+    public static float GetSerializationLoadFactor() { return BaseRoomContainer.SERIALIZATION_LOAD_FACTOR; }
     public int GetMaxCapacity() { return this.MaxCapacity; }
     public void SetMaxCapacity(int capacity) { this.MaxCapacity = capacity; }
     
@@ -243,11 +239,11 @@ public class BaseRoom extends AbstractObject {
         return result;
     }
 
-    public static BaseRoom Deserialize(Hashtable<String, Object> data) throws Exception {
+    public static BaseRoomContainer Deserialize(Hashtable<String, Object> data) throws Exception {
         String id = (String) data.get("id");
         int MaxCapacity = (int) data.get("MaxCapacity");
 
-        BaseRoom room = new BaseRoom(id, MaxCapacity);
+        BaseRoomContainer room = new BaseRoomContainer(id, MaxCapacity);
         Hashtable<String, Object> pool = room.GetLocalPool();
         Iterator<Entry<String, Object>> it = data.entrySet().iterator();
         while (it.hasNext()) {
