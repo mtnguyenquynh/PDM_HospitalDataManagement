@@ -56,17 +56,26 @@ public class LResourcePool extends BaseRoomContainer {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Updater
-    protected boolean UpdateObject(Resource object, int amount) throws Exception {
+    public boolean UpdateResource(String ID, String name, int amount) throws Exception { 
+        return this.UpdateObject(ID, amount);
+    }
+
+    protected boolean UpdateResource(Resource object, int amount) throws Exception {
         return this.UpdateObject(object.GetID(), amount);
     }
 
-    protected boolean AddNewObject(Resource object, int amount) throws Exception {
+    public boolean AddNewResource(String ID, String name, int amount) throws Exception { 
+        return this.AddNewObject(ID, name, amount);
+    }
+
+    protected boolean AddNewResource(Resource object, int amount) throws Exception {
         return this.AddNewObject(object.GetID(), object.GetName(), amount);
     }
 
-    protected boolean RemoveObject(Resource object) throws Exception {
-        return this.RemoveObject(object.GetID());
-    }
+    public boolean RemoveResource(String ID) throws Exception { return this.RemoveObject(ID); }
+
+    protected boolean RemoveResource(Resource object) throws Exception { return this.RemoveObject(object.GetID()); }
+
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization

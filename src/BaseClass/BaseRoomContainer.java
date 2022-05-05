@@ -42,6 +42,8 @@ public class BaseRoomContainer extends AbstractObject {
 
     public BaseRoomContainer(String ID, int MaxCapacity) throws Exception {
         super(ID);
+        Utils.CheckArgumentCondition(MaxCapacity >= 0, "The maximum capacity must be non-negative.");
+
         this.MaxCapacity = MaxCapacity;
         int capacity = BaseRoomContainer.GetSerializationCapacity();
         float loadFactor = BaseRoomContainer.GetSerializationLoadFactor();
@@ -67,9 +69,9 @@ public class BaseRoomContainer extends AbstractObject {
         return this.GetObject(object.GetID());
     }
 
-    protected boolean IsObjectAvailable(AbstractObject object) { return this.GetObject(object.GetID()) != null; }
-
     public boolean IsObjectAvailable(String ID) { return this.GetObject(ID) != null; }
+
+    protected boolean IsObjectAvailable(AbstractObject object) { return this.GetObject(object.GetID()) != null; }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Object-related functions

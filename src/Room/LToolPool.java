@@ -55,17 +55,25 @@ public class LToolPool extends BaseRoomContainer {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Updater
-    protected boolean UpdateObject(Tool object, int amount) throws Exception {
+    public boolean UpdateTool(String ID, String name, int amount) throws Exception { 
+        return this.UpdateObject(ID, amount);
+    }
+
+    protected boolean UpdateTool(Tool object, int amount) throws Exception {
         return this.UpdateObject(object.GetID(), amount);
     }
 
-    protected boolean AddNewObject(Tool object, int amount) throws Exception {
+    public boolean AddNewTool(String ID, String name, int amount) throws Exception { 
+        return this.AddNewObject(ID, name, amount);
+    }
+
+    protected boolean AddNewTool(Tool object, int amount) throws Exception {
         return this.AddNewObject(object.GetID(), object.GetName(), amount);
     }
 
-    protected boolean RemoveObject(Tool object) throws Exception {
-        return this.RemoveObject(object.GetID());
-    }
+    public boolean RemoveTool(String ID) throws Exception { return this.RemoveObject(ID); }
+
+    protected boolean RemoveTool(Tool object) throws Exception { return this.RemoveObject(object.GetID()); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization

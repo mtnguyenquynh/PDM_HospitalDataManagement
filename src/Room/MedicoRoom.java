@@ -2,11 +2,7 @@ package Room;
 
 
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
-import BaseClass.BaseObject;
-import Utility.DataUtils;
+import BaseClass.BaseRoomContainer;
 import Utility.Utils;
 
 import Staff.Medico;
@@ -52,95 +48,47 @@ import Staff.Medico;
  * 1) 
 **/
 
-public class MedicoRoom extends BaseObject {
-    private final static int NumberOfMedicoInformation = 3;
-    private final static int SERIALIZATION_CAPACTITY = 5;
-    private final static float SERIALIZATION_LOAD_FACTOR = 1.0f;
+public class MedicoRoom extends BaseRoomContainer {
+    public MedicoRoom(String ID, int NumberOfMedicos) throws Exception { super(ID, NumberOfMedicos); }
 
-    private String[] MainMedico;
-    private Hashtable<String, String[]> OtherMedico;
+    public MedicoRoom(String ID) throws Exception {super(ID, 1);}            // A common room may have 2-3 beds ?
 
-    public MedicoRoom(String ID) throws Exception {
-        super(ID);
-        int capacity = MedicoRoom.GetSerializationCapacity();
-        float load_factor = MedicoRoom.GetSerializationLoadFactor();
-        this.OtherMedico = new Hashtable<String, String[]>(capacity, load_factor);
+    public MedicoRoom(MedicoRoom room) throws Exception { super((BaseRoomContainer) room); }
+    
+    public MedicoRoom(BaseRoomContainer room) throws Exception { super((BaseRoomContainer) room); }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Updater
+    public boolean AddNewMedico(String ID, String name) throws Exception { return this.AddNewPerson(ID, name); }
+
+    protected boolean AddNewMedico(Medico object) throws Exception {
+        return this.AddNewPerson(object.GetID(), object.GetName());
     }
 
-    public MedicoRoom(String ID, Medico medico) throws Exception {
-        this(ID);
-        Utils.CheckArgumentCondition(medico != null, "Medico cannot be null");
-        this.SetMainMedico(medico);
-    }
+    public boolean RemoveMedico(String ID) throws Exception { return this.RemovePerson(ID); }
+
+    protected boolean RemoveMedico(Medico object) throws Exception { return this.RemovePerson(object.GetID()); }
 
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // Getter & Setter
-    public static String[] GetAnyMedicoForMedicoRoom(Medico medico) {
-        String[] MedicoInformation = new String[NumberOfMedicoInformation];
-        MedicoInformation[0] = medico.GetID();
-        MedicoInformation[1] = medico.GetName();
-        MedicoInformation[2] = medico.GetPhoneNumber();
-        return MedicoInformation;
-    }
-    
-    public String[] GetMainMedico() { return this.MainMedico; }
-    public Hashtable<String, String[]> GetOtherMedico() { return this.OtherMedico; }
+    // Getter & Setter Function
+    public int GetMaxNumberOfMedicos() { return this.GetMaxCapacity(); }
+    public int GetCurrentNumberOfMedicos()  { return this.GetCurrentCapacity(); }
 
-    public void SetMainMedico(Medico medico) { 
-        Utils.CheckArgumentCondition(medico != null, "Medico cannot be null");
-        this.MainMedico = MedicoRoom.GetAnyMedicoForMedicoRoom(medico);  
+    public void SetNewNumberOfMedicos(int NumberOfMedicos) { 
+        Utils.CheckArgumentCondition(NumberOfMedicos >= 0, "Number of Beds must be a non-negative integer.");
+        this.SetMaxCapacity(NumberOfMedicos); 
     }
 
-    public void SetMainMedico(String[] MedicoInformation) { 
-        // This function is called only during "Serialization-Deserialization"
-        Utils.CheckArgumentCondition(MedicoInformation != null, "MedicoInformation cannot be null");
-        this.MainMedico = MedicoInformation; 
-    }
-
-    public void SetOtherMedico(Medico medico) {
-        Utils.CheckArgumentCondition(medico != null, "Medico cannot be null");
-        String[] MedicoInformation = MedicoRoom.GetAnyMedicoForMedicoRoom(medico);
-        this.OtherMedico.put(medico.GetID(), MedicoInformation);
-    }
-    
-    public void SetOtherMedico(String[] MedicoInformation) {
-        // This function is called only during "Serialization-Deserialization"
-        Utils.CheckArgumentCondition(MedicoInformation != null, "MedicoInformation cannot be null");
-        this.OtherMedico.put(MedicoInformation[0], MedicoInformation);
-    }
-
-    public static int GetSerializationCapacity() { return MedicoRoom.SERIALIZATION_CAPACTITY; }
-    public static float GetSerializationLoadFactor() { return MedicoRoom.SERIALIZATION_LOAD_FACTOR; }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serializaton & Deserialization
-    public Hashtable<String, Object> Serialize() {
-        Hashtable<String, Object> result = DataUtils.ForceGetEmptyHashtable(this.getClass());
-        result.put("id", this.GetID());
-        result.put("MainMedico", this.MainMedico);
-        
-        Iterator<Entry<String, String[]>> iter = this.OtherMedico.entrySet().iterator();
-        while (iter.hasNext()) {
-            Entry<String, String[]> entry = iter.next();
-            result.put(entry.getKey(), entry.getValue());
-        }
-        return result;
-    }
-    
-    public static MedicoRoom Deserialize(Hashtable<String, Object> data) throws Exception {
-        String ID = (String) data.get("id");
-        MedicoRoom result = new MedicoRoom(ID);
+    public Hashtable<String, Object> Serialize() { return super.Serialize(); }
 
-        result.SetMainMedico((String[]) data.get("MainMedico"));
-        for (String key: data.keySet()) {
-            if (!key.equals("id") && !key.equals("MainMedico")) {
-                String[] MedicoInformation = (String[]) data.get(key);
-                result.OtherMedico.put(key, MedicoInformation);
-            }
-        }
-        return result;
+    public static MedicoRoom Deserialize(Hashtable<String, Object> data) throws Exception {
+        return new MedicoRoom(BaseRoomContainer.Deserialize(data));
     }
+
 
     
 
