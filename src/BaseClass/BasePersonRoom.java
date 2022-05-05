@@ -54,4 +54,32 @@ public class BasePersonRoom extends AbstractObject {
         this.LocalPool = new Hashtable<String, Object>(capacity, loadFactor);
     }
 
+    public BasePersonRoom(BasePersonRoom obj) throws Exception {
+        super(obj.GetID());
+        this.LocalPool = obj.LocalPool;
+    }
+
+    //  ---------------------------------------------------------------------------------------------------------------------
+    public static String[] GetObjectInformation(String ID, String name, int number) {
+        BasePersonRoom.ValidateInput(ID, name, number);
+        String[] ObjectInfo = {ID, name, String.valueOf(number)};
+        return ObjectInfo;
+    }
+
+    protected static String[] GetObjectInformation(AbstractObject object, int number) {
+        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        return BasePersonRoom.GetObjectInformation(object.GetID(), object.GetName(), number);
+    }
+
+    protected static Object[] GetObjectInformationAsObjectList(AbstractObject object, int number) {
+        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        return (Object[]) BaseObjectPool.GetObjectInformation(object, number);
+    }
+
+    protected static Object GetObjectInformationAsObject(AbstractObject object, int number) {
+        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        return (Object) BaseObjectPool.GetObjectInformation(object.GetID(), object.GetName(), number);
+    }
+
+
 }

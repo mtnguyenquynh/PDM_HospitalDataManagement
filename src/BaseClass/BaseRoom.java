@@ -45,8 +45,8 @@ public class BaseRoom extends AbstractObject {
 
     public BaseRoom(String ID) throws Exception {
         super(ID);
-        int capacity = BaseObjectPool.GetSerializationCapacity();
-        float loadFactor = BaseObjectPool.GetSerializationLoadFactor();
+        int capacity = BaseRoom.GetSerializationCapacity();
+        float loadFactor = BaseRoom.GetSerializationLoadFactor();
         this.LocalPool = new Hashtable<String, Object>(capacity, loadFactor);
     }
 
@@ -57,27 +57,6 @@ public class BaseRoom extends AbstractObject {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Find object in pool
-    public static String[] GetObjectInformation(String ID, String name, int number) {
-        BaseRoom.ValidateInput(ID, name, number);
-        String[] ObjectInfo = {ID, name, String.valueOf(number)};
-        return ObjectInfo;
-    }
-
-    protected static String[] GetObjectInformation(AbstractObject object, int number) {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
-        return BaseObjectPool.GetObjectInformation(object.GetID(), object.GetName(), number);
-    }
-
-    protected static Object[] GetObjectInformationAsObjectList(AbstractObject object, int number) {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
-        return (Object[]) BaseObjectPool.GetObjectInformation(object, number);
-    }
-
-    protected static Object GetObjectInformationAsObject(AbstractObject object, int number) {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
-        return (Object) BaseObjectPool.GetObjectInformation(object.GetID(), object.GetName(), number);
-    }
-
     public String[] GetObject(String ID) {
         Utils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
         return (String[]) this.GetLocalPool().get(ID); 
@@ -105,19 +84,50 @@ public class BaseRoom extends AbstractObject {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Add-er & Remove-r functions
-    public boolean UpdateObject(String ID, int amount) throws Exception {
-        BaseRoom.ValidateInput(ID, "", amount, false);
-        if (!this.IsObjectAvailable(ID)) {
-            throw new Exception("Object is not available."); 
-        }
+    public int TestObjectMode(String ID, int amount) throws Exception {
+        RoomUtils.ValidateInput(ID, "", amount, false);
 
         String[] PoolObjectInfo = this.GetObject(ID);
+        if (PoolObjectInfo == null) { return 1; }
+
         String PoolAmount = PoolObjectInfo[2];
         int NewAmount = Integer.parseInt(PoolAmount) + amount;
-        if (NewAmount == 0) { return this.RemoveObject(ID); }
-        
-        PoolObjectInfo[2] = String.valueOf(NewAmount);
-        this.GetLocalPool().put(ID, PoolObjectInfo);
+        return NewAmount == 0 ? 0 : 2;
+    }
+    
+    public int AddOrUpdateObject(String ID, String name, int amount) throws Exception {
+        RoomUtils.ValidateInput(ID, "", amount, false);
+
+        String[] PoolObjectInfo = this.GetObject(ID);
+        if (PoolObjectInfo == null) {
+            if (this.IsPoolFull()) { throw new Exception("Pool is full."); }
+            String[] ObjectInfo = {ID, name, String.valueOf(amount)}; 
+            this.GetLocalPool().put(ID, ObjectInfo);
+            return 1;
+        }
+
+        String PoolAmount = PoolObjectInfo[2];
+        int NewAmount = Integer.parseInt(PoolAmount) + amount;
+        if (NewAmount == 0) { 
+            this.GetLocalPool().remove(ID);
+            return 0;
+        } else {
+            PoolObjectInfo[2] = String.valueOf(NewAmount);
+            this.GetLocalPool().put(ID, PoolObjectInfo);
+            return 2;
+        }
+    }
+
+    protected int AddOrUpdateObject(AbstractObject object, int amount) throws Exception {
+        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        return this.AddOrUpdateObject(object.GetID(), object.GetName(), amount);
+    }
+
+    public boolean UpdateObject(String ID, int amount) throws Exception {
+        if (this.TestObjectMode(ID, amount) == 2) {
+            this.AddOrUpdateObject(ID, "", amount);
+            return true;
+        }
         return false;
     }
 
@@ -127,12 +137,11 @@ public class BaseRoom extends AbstractObject {
     }
 
     public boolean AddNewObject(String ID, String name, int amount) throws Exception {
-        BaseRoom.ValidateInput(ID, name, amount);
-        if (this.GetCurrentCapacity() > BaseObjectPool.GetMaxCapacity()) {
-            throw new Exception("The pool inside is full.");
+        if (this.TestObjectMode(ID, amount) == 1) {
+            this.AddOrUpdateObject(ID, "", amount);
+            return true;
         }
-        String[] ObjectInfo = BaseObjectPool.GetObjectInformation(ID, name, amount);
-        return this.GetLocalPool().put(ID, ObjectInfo) == null;
+        return false;
     }
 
     protected boolean AddNewObject(AbstractObject object, int amount) throws Exception {
@@ -140,12 +149,19 @@ public class BaseRoom extends AbstractObject {
         return this.AddNewObject(object.GetID(), object.GetName(), amount);
     }
 
-    public boolean RemoveObject(String ID) {
-        Utils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
-        return this.GetLocalPool().remove(ID) != null;
+    public boolean RemoveObject(String ID) throws Exception {
+        String[] PoolObjectInfo = this.GetObject(ID);
+        if (PoolObjectInfo == null) { return true; }
+
+        int PoolAmount = Integer.parseInt(PoolObjectInfo[2]);
+        if (this.TestObjectMode(ID, 0 - PoolAmount) == 2) {
+            this.AddOrUpdateObject(ID, "", PoolAmount);
+            return true;
+        }
+        return false;
     }
 
-    protected boolean RemoveObject(AbstractObject object) {
+    protected boolean RemoveObject(AbstractObject object) throws Exception {
         Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.RemoveObject(object.GetID());
     }
@@ -161,16 +177,6 @@ public class BaseRoom extends AbstractObject {
     public static int GetMaxCapacity() { return BaseRoom.MAX_CAPACTIY; }
     
     public int GetCurrentCapacity() { return this.GetLocalPool().size(); }
-    
-    private static void ValidateInput(String ID, String name, int amount, boolean NumberValidation) {
-        Utils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
-        Utils.CheckArgumentCondition(name != null, "Object's name cannot be null.");
-        if (NumberValidation) { Utils.CheckArgumentCondition(amount >= 0, "The amount must be zero or positive."); }
-    }
-
-    private static void ValidateInput(String ID, String name, int amount) {
-        BaseRoom.ValidateInput(ID, name, amount, true);
-    }
 
     public boolean IsEmpty() { return this.GetLocalPool().isEmpty(); }
     public boolean IsPoolHasExtraSlot() { return this.GetCurrentCapacity() < BaseRoom.GetMaxCapacity(); }
