@@ -17,24 +17,15 @@ import Utility.JsonUtils;
 
 /**
  * This class is similar as an local tool pool, but it managed all tools available in the 
- * hospital as a manager
- * available in the hospital (i.e manager), included the ones stored in the 
- * storage room. This class connects to the SQL-DB database, but the description 
- * of each instance (in this pool: Tool) is stored in the module 
- * `Object.Tool.json` file.
+ * hospital as a manager, included the ones stored in the storage room. This class connects 
+ * to the SQL-DB database, but the description of each instance (in this pool: Tool) is 
+ * stored in the module `Object.Tool.json` file.
  * 
  * The functionality of this instance is to:
  * 1) Provide a centralized access/place to all tools available in the hospital.
- * 2) Cross-checking them to all distribution smaller centers such as the LToolPool
- * (including the Storage Room) and report all the changes (including the errors, 
- * warnings, and the creation of new tools) to the GLogger.
- * 
- * The functionality of this approach is to provide a centralized place to 
- * store all data/information about the tools, as well as cross-checking them
- * to all distribution places/centers such as LToolPool.class and report them 
- * to GLogger.class.
- * 
- * The architecture of 
+ * 2) Cross-checking them to all subsets (smaller distributed centers) such as the LToolPool
+ * (including the Storage Room) and report all the changes (including the errors, warnings, 
+ * and the creation of new tools) to the GLogger.
  * 
  * @author Ichiru Take
  * @version 0.0.1
@@ -42,6 +33,7 @@ import Utility.JsonUtils;
  * References:
  * 1) 
 **/
+
 
 public class GToolPool extends LToolPool {
     
