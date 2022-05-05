@@ -44,7 +44,6 @@ public class BaseRoom extends AbstractObject {
     private Hashtable<String, Object> LocalPool;
     private int MaxCapacity;
 
-
     public BaseRoom(String ID, int MaxCapacity) throws Exception {
         super(ID);
         this.MaxCapacity = MaxCapacity;
@@ -52,6 +51,8 @@ public class BaseRoom extends AbstractObject {
         float loadFactor = BaseRoom.GetSerializationLoadFactor();
         this.LocalPool = new Hashtable<String, Object>(capacity, loadFactor);
     }
+
+    public BaseRoom(String ID) throws Exception { this(ID, 10000); }
 
     public BaseRoom(BaseRoom obj) throws Exception {
         super(obj.GetID());
@@ -75,7 +76,7 @@ public class BaseRoom extends AbstractObject {
     public boolean IsObjectAvailable(String ID) { return this.GetObject(ID) != null; }
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // Object-related Add-er & Remove-r functions
+    // Object-related functions
     public int TestObjectMode(String ID, int amount) throws Exception {
         RoomUtils.ValidateInput(ID, "", amount, false);
 
@@ -146,7 +147,7 @@ public class BaseRoom extends AbstractObject {
         if (PoolObjectInfo == null) { return true; }
 
         int PoolAmount = Integer.parseInt(PoolObjectInfo[2]);
-        if (this.TestObjectMode(ID, 0 - PoolAmount) == 2) {
+        if (this.TestObjectMode(ID, 0 - PoolAmount) == 0) {
             this.AddOrUpdateObject(ID, "", PoolAmount);
             return true;
         }
@@ -156,6 +157,61 @@ public class BaseRoom extends AbstractObject {
     protected boolean RemoveObject(AbstractObject object) throws Exception {
         Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.RemoveObject(object.GetID());
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Object-related functions
+    public int TestPersonMode(String ID) throws Exception {
+        RoomUtils.ValidateInput(ID, "");
+        String[] PoolObjectInfo = this.GetObject(ID);
+        if (PoolObjectInfo == null) { return 1; }
+        return 0;
+    }
+    
+    public int AddOrUpdatePerson(String ID, String name) throws Exception {
+        RoomUtils.ValidateInput(ID, "");
+
+        String[] PoolObjectInfo = this.GetObject(ID);
+        if (PoolObjectInfo == null) {
+            if (this.IsPoolFull()) { throw new Exception("Pool is full."); }
+            String[] ObjectInfo = RoomUtils.GetObjectInformation(ID, name); 
+            this.GetLocalPool().put(ID, ObjectInfo);
+            return 1;
+        } else {
+            this.GetLocalPool().remove(ID);
+            return 0;
+        }
+    }
+
+    protected int AddOrUpdatePerson(AbstractObject object) throws Exception {
+        Utils.CheckArgumentCondition(object != null, "Person cannot be null.");
+        return this.AddOrUpdatePerson(object.GetID(), object.GetName());
+    }
+
+    public boolean AddNewPerson(String ID, String name) throws Exception {
+        if (this.TestPersonMode(ID) == 1) {
+            this.AddOrUpdatePerson(ID, "");
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean AddNewPerson(AbstractObject object) throws Exception {
+        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        return this.AddNewPerson(object.GetID(), object.GetName());
+    }
+
+    public boolean RemovePerson(String ID) throws Exception {
+        if (this.TestPersonMode(ID) == 0) {
+            this.AddOrUpdatePerson(ID, "");
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean RemovePerson(AbstractObject object) throws Exception {
+        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        return this.RemovePerson(object.GetID());
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -176,6 +232,8 @@ public class BaseRoom extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     public Hashtable<String, Object> Serialize() {
         Hashtable<String, Object> result = super.Serialize();
+        result.put("MaxCapacity", this.GetMaxCapacity());
+
         Hashtable<String, Object> pool = this.GetLocalPool();
         Iterator<Entry<String, Object>> it = pool.entrySet().iterator();
         while (it.hasNext()) {
@@ -187,7 +245,9 @@ public class BaseRoom extends AbstractObject {
 
     public static BaseRoom Deserialize(Hashtable<String, Object> data) throws Exception {
         String id = (String) data.get("id");
-        BaseRoom room = new BaseRoom(id);
+        int MaxCapacity = (int) data.get("MaxCapacity");
+
+        BaseRoom room = new BaseRoom(id, MaxCapacity);
         Hashtable<String, Object> pool = room.GetLocalPool();
         Iterator<Entry<String, Object>> it = data.entrySet().iterator();
         while (it.hasNext()) {

@@ -100,4 +100,8 @@ public abstract class RoomUtils {
     public static void ValidateInput(String ID, String name, int number) {
         RoomUtils.ValidateInput(ID, name, number, true);
     }
+
+    public static void ValidateInput(String ID, String name) {  
+        RoomUtils.ValidateInput(ID, name, 1, false);
+    }
 }
