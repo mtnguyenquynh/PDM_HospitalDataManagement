@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import Utility.Utils;
+import Utility.JsonUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -42,7 +42,7 @@ public class BaseRoomContainer extends AbstractObject {
 
     public BaseRoomContainer(String ID, int MaxCapacity) throws Exception {
         super(ID);
-        Utils.CheckArgumentCondition(MaxCapacity >= 0, "The maximum capacity must be non-negative.");
+        JsonUtils.CheckArgumentCondition(MaxCapacity >= 0, "The maximum capacity must be non-negative.");
 
         this.MaxCapacity = MaxCapacity;
         int capacity = BaseRoomContainer.GetSerializationCapacity();
@@ -60,12 +60,12 @@ public class BaseRoomContainer extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Find object in pool
     public String[] GetObject(String ID) {
-        Utils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
+        JsonUtils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
         return (String[]) this.GetLocalPool().get(ID); 
     }
 
     protected String[] GetObject(AbstractObject object) {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.GetObject(object.GetID());
     }
 
@@ -110,7 +110,7 @@ public class BaseRoomContainer extends AbstractObject {
     }
 
     protected int AddOrUpdateObject(AbstractObject object, int amount) throws Exception {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.AddOrUpdateObject(object.GetID(), object.GetName(), amount);
     }
 
@@ -123,7 +123,7 @@ public class BaseRoomContainer extends AbstractObject {
     }
 
     protected boolean UpdateObject(AbstractObject object, int amount) throws Exception {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.UpdateObject(object.GetID(), amount);
     }
 
@@ -136,7 +136,7 @@ public class BaseRoomContainer extends AbstractObject {
     }
 
     protected boolean AddNewObject(AbstractObject object, int amount) throws Exception {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.AddNewObject(object.GetID(), object.GetName(), amount);
     }
 
@@ -153,7 +153,7 @@ public class BaseRoomContainer extends AbstractObject {
     }
 
     protected boolean RemoveObject(AbstractObject object) throws Exception {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.RemoveObject(object.GetID());
     }
 
@@ -182,7 +182,7 @@ public class BaseRoomContainer extends AbstractObject {
     }
 
     protected int AddOrUpdatePerson(AbstractObject object) throws Exception {
-        Utils.CheckArgumentCondition(object != null, "Person cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Person cannot be null.");
         return this.AddOrUpdatePerson(object.GetID(), object.GetName());
     }
 
@@ -195,7 +195,7 @@ public class BaseRoomContainer extends AbstractObject {
     }
 
     protected boolean AddNewPerson(AbstractObject object) throws Exception {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.AddNewPerson(object.GetID(), object.GetName());
     }
 
@@ -208,7 +208,7 @@ public class BaseRoomContainer extends AbstractObject {
     }
 
     protected boolean RemovePerson(AbstractObject object) throws Exception {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.RemovePerson(object.GetID());
     }
 

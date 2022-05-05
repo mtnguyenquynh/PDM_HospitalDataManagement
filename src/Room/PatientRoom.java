@@ -2,7 +2,7 @@ package Room;
 
 import java.util.Hashtable;
 import BaseClass.BaseRoomContainer;
-import Utility.Utils;
+import Utility.JsonUtils;
 
 import Patient.Patient;
 
@@ -61,23 +61,23 @@ public class PatientRoom extends BaseRoomContainer {
     // Find object in pool
     public String[] GetPatient(String ID) { return this.GetObject(ID); }
 
-    protected String[] GetPatient(Patient object) { return this.GetObject(object.GetID()); }
+    public String[] GetPatient(Patient object) { return this.GetObject(object.GetID()); }
 
     public boolean IsPatientAvailable(String ID) { return this.GetObject(ID) != null; }
 
-    protected boolean IsPatientAvailable(Patient object) { return this.GetObject(object.GetID()) != null; }
+    public boolean IsPatientAvailable(Patient object) { return this.GetObject(object.GetID()) != null; }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Updater
     public boolean AddNewPatient(String ID, String name) throws Exception { return this.AddNewPerson(ID, name); }
 
-    protected boolean AddNewPatient(Patient object) throws Exception {
+    public boolean AddNewPatient(Patient object) throws Exception {
         return this.AddNewPerson(object.GetID(), object.GetName());
     }
 
     public boolean RemovePatient(String ID) throws Exception { return this.RemovePerson(ID); }
 
-    protected boolean RemovePatient(Patient object) throws Exception { return this.RemovePerson(object.GetID()); }
+    public boolean RemovePatient(Patient object) throws Exception { return this.RemovePerson(object.GetID()); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter Function
@@ -85,8 +85,8 @@ public class PatientRoom extends BaseRoomContainer {
     public int GetNumberOfOccupiedBeds()  { return this.GetCurrentCapacity(); }
 
     public void SetNumberOfBeds(int NumberOfBeds) { 
-        Utils.CheckArgumentCondition(NumberOfBeds >= 0, "Number of Beds must be a non-negative integer.");
-        Utils.CheckArgumentCondition(NumberOfBeds >= this.GetCurrentCapacity(), 
+        JsonUtils.CheckArgumentCondition(NumberOfBeds >= 0, "Number of Beds must be a non-negative integer.");
+        JsonUtils.CheckArgumentCondition(NumberOfBeds >= this.GetCurrentCapacity(), 
                              "The (updated) number of beds are pre-occupied. We cannot move it.");
         this.SetMaxCapacity(NumberOfBeds); 
     }
@@ -98,6 +98,4 @@ public class PatientRoom extends BaseRoomContainer {
     public static PatientRoom Deserialize(Hashtable<String, Object> data) throws Exception {
         return new PatientRoom(BaseRoomContainer.Deserialize(data));
     }
-
-
 }

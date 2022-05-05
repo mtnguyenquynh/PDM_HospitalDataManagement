@@ -8,7 +8,6 @@ import PrefixState.Prefix;
 import Staff.Medico;
 import Utility.DataUtils;
 import Utility.JsonUtils;
-import Utility.Utils;
 import Person.PersonUtils;
 
 
@@ -217,7 +216,7 @@ public class Treatment extends BaseRecord {
 		TreatmentInformation.put("folder", folder);
 		try {
 			directory = folder + "MedicoInfo.json";
-			Utils.SaveHashTableIntoJsonFile(folder + "MedicoInfo.json", this.GetMedicoInfo(), null);
+			JsonUtils.SaveHashTableIntoJsonFile(folder + "MedicoInfo.json", this.GetMedicoInfo(), null);
 			TreatmentInformation.put("MedicoInfo", directory);
 
 			ArrayList<Object> CastedSupplementary = DataUtils.CastToObjectArrayFromStringArray(this.GetSupplementary());
@@ -226,11 +225,11 @@ public class Treatment extends BaseRecord {
 			TreatmentInformation.put("Supplementary", directory);
 
 			directory = folder + "Resources.json";
-			Utils.SaveHashTableIntoJsonFile(folder + "Resources.json", this.GetResources(), null);
+			JsonUtils.SaveHashTableIntoJsonFile(folder + "Resources.json", this.GetResources(), null);
 			TreatmentInformation.put("Resources", directory);
 
 			directory = folder + "Descriptions.json";
-			Utils.SaveHashTableIntoJsonFile(folder + "Descriptions.json", this.GetDescriptions(), null);
+			JsonUtils.SaveHashTableIntoJsonFile(folder + "Descriptions.json", this.GetDescriptions(), null);
 			TreatmentInformation.put("Descriptions", directory);
 
 		} catch (Exception e) {
@@ -264,13 +263,13 @@ public class Treatment extends BaseRecord {
 		String Descriptions_File = (String) data.get("Descriptions");
 
 		try {
-			record.GetMedicoInfo().putAll(Utils.LoadJSONFileToHashtable(MedicoInfo_File, null));
+			record.GetMedicoInfo().putAll(JsonUtils.LoadJsonFileToHashtable(MedicoInfo_File, null));
 
-			ArrayList<Object> Supplementary = Utils.LoadJSONFileToArrayList(Supplementary_File, null);
+			ArrayList<Object> Supplementary = JsonUtils.LoadJsonFileToArrayList(Supplementary_File, null);
 			record.GetSupplementary().addAll(DataUtils.CastToStringArrayFromObjectArray(Supplementary));
 
-			record.GetResources().putAll(Utils.LoadJSONFileToHashtable(Resources_File, null));
-			record.GetDescriptions().putAll(Utils.LoadJSONFileToHashtable(Descriptions_File, null));
+			record.GetResources().putAll(JsonUtils.LoadJsonFileToHashtable(Resources_File, null));
+			record.GetDescriptions().putAll(JsonUtils.LoadJsonFileToHashtable(Descriptions_File, null));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

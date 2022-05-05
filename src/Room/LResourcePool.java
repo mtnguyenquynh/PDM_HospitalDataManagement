@@ -58,11 +58,11 @@ public class LResourcePool extends BaseRoomContainer {
     // Find object in pool
     public String[] GetResource(String ID) { return this.GetObject(ID); }
 
-    protected String[] GetResource(Resource object) { return this.GetObject(object.GetID()); }
+    public String[] GetResource(Resource object) { return this.GetObject(object.GetID()); }
 
     public boolean IsResourceAvailable(String ID) { return this.GetObject(ID) != null; }
 
-    protected boolean IsResourceAvailable(Resource object) { return this.GetObject(object.GetID()) != null; }
+    public boolean IsResourceAvailable(Resource object) { return this.GetObject(object.GetID()) != null; }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Updater
@@ -70,7 +70,7 @@ public class LResourcePool extends BaseRoomContainer {
         return this.UpdateObject(ID, amount);
     }
 
-    protected boolean UpdateResource(Resource object, int amount) throws Exception {
+    public boolean UpdateResource(Resource object, int amount) throws Exception {
         return this.UpdateObject(object.GetID(), amount);
     }
 
@@ -78,13 +78,13 @@ public class LResourcePool extends BaseRoomContainer {
         return this.AddNewObject(ID, name, amount);
     }
 
-    protected boolean AddNewResource(Resource object, int amount) throws Exception {
+    public boolean AddNewResource(Resource object, int amount) throws Exception {
         return this.AddNewObject(object.GetID(), object.GetName(), amount);
     }
 
     public boolean RemoveResource(String ID) throws Exception { return this.RemoveObject(ID); }
 
-    protected boolean RemoveResource(Resource object) throws Exception { return this.RemoveObject(object.GetID()); }
+    public boolean RemoveResource(Resource object) throws Exception { return this.RemoveObject(object.GetID()); }
 
 
     // ---------------------------------------------------------------------------------------------------------------------

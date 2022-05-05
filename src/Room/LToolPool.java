@@ -57,11 +57,11 @@ public class LToolPool extends BaseRoomContainer {
     // Find object in pool
     public String[] GetTool(String ID) { return this.GetObject(ID); }
 
-    protected String[] GetTool(Tool object) { return this.GetObject(object.GetID()); }
+    public String[] GetTool(Tool object) { return this.GetObject(object.GetID()); }
 
     public boolean IsToolAvailable(String ID) { return this.GetObject(ID) != null; }
 
-    protected boolean IsToolAvailable(Tool object) { return this.GetObject(object.GetID()) != null; }
+    public boolean IsToolAvailable(Tool object) { return this.GetObject(object.GetID()) != null; }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Updater
@@ -69,7 +69,7 @@ public class LToolPool extends BaseRoomContainer {
         return this.UpdateObject(ID, amount);
     }
 
-    protected boolean UpdateTool(Tool object, int amount) throws Exception {
+    public boolean UpdateTool(Tool object, int amount) throws Exception {
         return this.UpdateObject(object.GetID(), amount);
     }
 
@@ -77,13 +77,13 @@ public class LToolPool extends BaseRoomContainer {
         return this.AddNewObject(ID, name, amount);
     }
 
-    protected boolean AddNewTool(Tool object, int amount) throws Exception {
+    public boolean AddNewTool(Tool object, int amount) throws Exception {
         return this.AddNewObject(object.GetID(), object.GetName(), amount);
     }
 
     public boolean RemoveTool(String ID) throws Exception { return this.RemoveObject(ID); }
 
-    protected boolean RemoveTool(Tool object) throws Exception { return this.RemoveObject(object.GetID()); }
+    public boolean RemoveTool(Tool object) throws Exception { return this.RemoveObject(object.GetID()); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization

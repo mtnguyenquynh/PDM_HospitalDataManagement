@@ -3,7 +3,7 @@ package Room;
 
 import java.util.Hashtable;
 import BaseClass.BaseRoomContainer;
-import Utility.Utils;
+import Utility.JsonUtils;
 
 import Staff.Medico;
 
@@ -61,24 +61,23 @@ public class MedicoRoom extends BaseRoomContainer {
     // Find object in pool
     public String[] GetMedico(String ID) { return this.GetObject(ID); }
 
-    protected String[] GetMedico(Medico object) { return this.GetObject(object.GetID()); }
+    public String[] GetMedico(Medico object) { return this.GetObject(object.GetID()); }
 
     public boolean IsMedicoAvailable(String ID) { return this.GetObject(ID) != null; }
 
-    protected boolean IsMedicoAvailable(Medico object) { return this.GetObject(object.GetID()) != null; }
+    public boolean IsMedicoAvailable(Medico object) { return this.GetObject(object.GetID()) != null; }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Updater
     public boolean AddNewMedico(String ID, String name) throws Exception { return this.AddNewPerson(ID, name); }
 
-    protected boolean AddNewMedico(Medico object) throws Exception {
+    public boolean AddNewMedico(Medico object) throws Exception {
         return this.AddNewPerson(object.GetID(), object.GetName());
     }
 
     public boolean RemoveMedico(String ID) throws Exception { return this.RemovePerson(ID); }
 
-    protected boolean RemoveMedico(Medico object) throws Exception { return this.RemovePerson(object.GetID()); }
-
+    public boolean RemoveMedico(Medico object) throws Exception { return this.RemovePerson(object.GetID()); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter Function
@@ -86,7 +85,7 @@ public class MedicoRoom extends BaseRoomContainer {
     public int GetCurrentNumberOfMedicos()  { return this.GetCurrentCapacity(); }
 
     public void SetNewNumberOfMedicos(int NumberOfMedicos) { 
-        Utils.CheckArgumentCondition(NumberOfMedicos >= 0, "Number of Beds must be a non-negative integer.");
+        JsonUtils.CheckArgumentCondition(NumberOfMedicos >= 0, "Number of Beds must be a non-negative integer.");
         this.SetMaxCapacity(NumberOfMedicos); 
     }
 

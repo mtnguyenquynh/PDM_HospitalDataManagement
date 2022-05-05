@@ -1,9 +1,9 @@
 package GlobalPool;
 
-import java.util.ArrayList;
+import java.util.Hashtable;
 
-import Object.Tool;
 import Room.LToolPool;
+import Utility.JsonUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -44,122 +44,40 @@ import Room.LToolPool;
 **/
 
 public class GToolPool extends LToolPool {
-    // ---------------------------------------------------------------------------------------------------------------------
-    // Connection to Directory
-    private final static String FOLDER_DIRECTORY = "database/GlobalPool/"; 
-    private final static String DEFINITION_FILENAME = "Tool.json";
+    
+    private final static String FOLDER_DIRECTORY = "database/GlobalPool/";
+    private final static String JSON_FILENAME = "GToolPool.json";
 
-    // Worked on later
-    private final static String DB_FILENAME = "tool_pool.json"; // Later definition
-    private final static String ROOM_CODE_DIRECTORY = "database/GlobalPool/";
+    public GToolPool(String ID) throws Exception { super(ID); }
+    
+    public GToolPool(LToolPool object_pool) throws Exception { super(object_pool); }
 
-
-    // This is used to store a view for modification. This laid a foundation for GResourcePool,
-    // which is much more complicated to program.
-    private final static int CAPACITY = 10;
-    private ArrayList<Tool> LocalPool = new ArrayList<Tool>(CAPACITY); 
-
-    public GToolPool() {
-        this._InitPool_();
-    }
+    public GToolPool(GToolPool object_pool) throws Exception { super((LToolPool) object_pool); }
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // Getter & Setter to all Tools    
-    public boolean CheckIsToolAtIndexANull(int index) { 
-        this.CheckIndexInRange(index);
-        return this.LocalPool.get(index) == null; 
-    }
-
-    /**
-     * This function is to safely add a tool inside the (local) array here
-     * @param tool (Tool): The considered `Tool` to insert in array
-     * @param index (int): The index to insert the tool
-     * @param force (boolean): If true, the tool will be inserted even if the index is occupied.
-     *                         Otherwise, the insertion is abandoned and IllegalArgumentException \
-     *                         is raised.
-     * @return Tool
-     */
-    public Tool AddToolToLocalPool(Tool tool, int index, boolean force) {
-        if (tool == null) { this.EmptyToolByIndex(index); return null;}
-
-        this.CheckIndexInRange(index);
-        if (this.GetToolByIndex(index) == null) {
-            this.LocalPool.add(index, tool);
-            return null;
-        } else {
-            if (force) { return this.LocalPool.set(index, tool); } 
-            else { throw new IllegalArgumentException("This index is already occupied."); }
-        }
-    }
-
-    /**
-     * This function is to get a tool inside the (local) array here
-     * @param ToolID (String): If ToolID is null or not found, then the method will raise an 
-     *                         IllegalArgumentException.
-     * @return Tool
-     */
-    public Tool GetTool(String ToolID) {
-        for (Tool tool: this.LocalPool) {
-            if (tool != null) {
-                 if (tool.CheckToolID(ToolID)) { return tool; }
-            }
-        }
-        throw new IllegalArgumentException("The tool with ID: " + ToolID + " is not found.");
-    }
-
-    /**
-     * This function is to get a tool inside the (local) array here but accept null output. 
-     * @param index (int): The index to get the tool
-     * @return Tool (Note that a null output is acceptable)
-     */
-    public Tool GetToolByIndex(int index) {
-        this.CheckIndexInRange(index);
-        return this.LocalPool.get(index);
-    }
-
-
-    /**
-     * This function is to replace a tool inside the (local) array here
-     * @param tool (Tool): The considered `Tool` to insert in array
-     * @param index (int): The index to remove the tool
-     * @return Tool (the previous tool stored at `index`)
-     */
-    public Tool ReplaceTool(Tool tool, int index) {
-        this.CheckIndexInRange(index);
-        return this.LocalPool.set(index, tool);
-    }
-
-    /**
-     * This function is to remove a tool inside the (local) array here
-     * @param index (int): The index to remove the tool
-     * @return Tool (the previous tool stored at `index`)
-     */
-    public Tool EmptyToolByIndex(int index) { return this.ReplaceTool(null, index); }
-
-    // ---------------------------------------------------------------------------------------------------------------------
-    // Getter & Setter Functions for Local Attributes
+    // Getter
     public static String GetFolderDirectory() { return GToolPool.FOLDER_DIRECTORY; }
-    public static String GetDefinitionFilename() { return GToolPool.DEFINITION_FILENAME; } 
-    public static String GetDBFilename() { return GToolPool.DB_FILENAME; }
-    public static int GetCapacity() { return GToolPool.CAPACITY; }
+    public static String GetJsonFilename() { return GToolPool.JSON_FILENAME; }
 
-    public ArrayList<Tool> GetPool() { return this.LocalPool; }
+
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // Initialize the pool & Several Ultility Functions
-    private void CleanPool() { this.LocalPool.clear(); }
+    // Serialization & Deserialization
+    public Hashtable<String, Object> Serialize() { return super.Serialize(); }
 
-    private void _InitPool_() { 
-        if (this.LocalPool.size() != 0) { this.CleanPool(); }
-        for (int i = 0; i < GToolPool.GetCapacity(); i++) {
-            this.LocalPool.add(null);
-        }
+    public void SerializeToFile() throws Exception {
+        Hashtable<String, Object> data = this.Serialize();
+        String dir = GToolPool.GetFolderDirectory() + "/" + GToolPool.GetJsonFilename();
+        JsonUtils.SaveHashTableIntoJsonFile(dir, data, null);
     }
 
-    private void CheckIndexInRange(int index) {
-        if (index < 0 || index > GToolPool.GetCapacity()) { 
-            throw new IndexOutOfBoundsException("The index must be between 0 and " + (GToolPool.GetCapacity() - 1));
-        }
+    public static GToolPool Deserialize(Hashtable<String, Object> data) throws Exception {
+        return new GToolPool(LToolPool.Deserialize(data));
     }
 
+    public static GToolPool DeserializeFromFile() throws Exception {
+        String dir = GToolPool.GetFolderDirectory() + "/" + GToolPool.GetJsonFilename();
+        Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(dir, null);
+        return GToolPool.Deserialize(data);
+    }
 }

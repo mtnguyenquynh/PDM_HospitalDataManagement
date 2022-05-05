@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Hashtable;
 
-import Utility.Utils;
+import Utility.JsonUtils;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -65,8 +65,8 @@ public class MergedRoom {
             try {
                 Path path = Files.createTempFile(working_directory + "/" + COMPONENT_FILENAME[i], ".json");
                 if (Files.exists(path)) {
-                    JSONObject obj = Utils.ReadJsonFileAsObject(path.toString());
-                    Hashtable<String, Object> data = Utils.CastJsonToHashtable(obj, null);
+                    JSONObject obj = JsonUtils.ReadJsonFileAsObject(path.toString());
+                    Hashtable<String, Object> data = JsonUtils.CastJsonToHashtable(obj, null);
                     this.MakeComponentRoom(i, data);
                 } else { this.MakeComponentRoom(i, ID); }
             } catch (Exception e) { e.printStackTrace(); }
@@ -137,7 +137,7 @@ public class MergedRoom {
     }
 
     public String GetWorkingDirectory() { 
-        Utils.CheckArgumentCondition(this.GetRoom().GetID() != null, "The room cannot be loaded.");
+        JsonUtils.CheckArgumentCondition(this.GetRoom().GetID() != null, "The room cannot be loaded.");
         return MergedRoom.GetRoomDirectory() + "/" + this.GetRoom().GetID(); 
     }
 
@@ -191,13 +191,13 @@ public class MergedRoom {
     // ---------------------------------------------------------------------------------------------------------------------
     public void Reset() throws Exception {
         // Serialize all component room -> Set null -> Run garbage collector
-        Utils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(0), 
+        JsonUtils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(0), 
                                         this.GetPtRoom().Serialize(), null);
-        Utils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(1), 
+        JsonUtils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(1), 
                                         this.GetMedRoom().Serialize(), null);
-        Utils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(2), 
+        JsonUtils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(2), 
                                         this.GetLTPoolRoom().Serialize(), null);
-        Utils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(3), 
+        JsonUtils.SaveHashTableIntoJsonFile(this.GetComponentDirectory(3), 
                                         this.GetLRPoolRoom().Serialize(), null);
         
         this.Room = null;

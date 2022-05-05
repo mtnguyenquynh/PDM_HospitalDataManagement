@@ -1,6 +1,6 @@
 package BaseClass;
 
-import Utility.Utils;
+import Utility.JsonUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -40,7 +40,7 @@ public abstract class RoomUtils {
     }
 
     public static String[] GetObjectInformation(AbstractObject object) {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return RoomUtils.GetObjectInformation(object.GetID(), object.GetName());
     }
 
@@ -53,7 +53,7 @@ public abstract class RoomUtils {
     }
 
     public static String[] GetPersonInformation(AbstractObject object) {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return RoomUtils.GetPersonInformation(object.GetID(), object.GetName());
     }
 
@@ -74,7 +74,7 @@ public abstract class RoomUtils {
     }
 
     public static String[] GetObjectInformation(AbstractObject object, int number) {
-        Utils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return RoomUtils.GetObjectInformation(object.GetID(), object.GetName(), number);
     }
 
@@ -88,9 +88,9 @@ public abstract class RoomUtils {
 
     // ---------------------------------------------------------------------------------------------------------------------
     public static void ValidateInput(String ID, String name, int number, boolean NumberValidation) {
-        Utils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
-        Utils.CheckArgumentCondition(name != null, "Object's name cannot be null.");
-        if (NumberValidation) { Utils.CheckArgumentCondition(number >= 0, "The amount must be zero or positive."); }
+        JsonUtils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
+        JsonUtils.CheckArgumentCondition(name != null, "Object's name cannot be null.");
+        if (NumberValidation) { JsonUtils.CheckArgumentCondition(number >= 0, "The amount must be zero or positive."); }
     }
 
     public static void ValidateInput(String ID, String name, int number) {
