@@ -32,14 +32,16 @@ public class Person extends IntermediateObject {
     private String email, phone_number, gender, nationality;        
 
     public Person(String ID, String name, String description) throws Exception {
-        super(ID, name, description);
+        super(ID, PersonUtils.StandardizeName(name), description);
         this.email = null;
         this.phone_number = null;
         this.gender = null;
         this.nationality = null;
     }
 
-    public Person(String ID, String name) throws Exception { this(ID, name, null); }
+    public Person(String ID, String name) throws Exception { 
+        super(ID, PersonUtils.StandardizeName(name)); 
+    }
 
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -54,7 +56,11 @@ public class Person extends IntermediateObject {
     public void SetName(String name) throws Exception { 
         throw new RuntimeException("This method is not allowed to be called.");
     }
-    public void SetEmail(String email) throws Exception { this.email = PersonUtils.StandardizeEmail(email); }
+    
+    public void SetEmail(String email) throws Exception { 
+        this.email = PersonUtils.StandardizeEmail(email); 
+    }
+
     public void SetPhoneNumber(String phone_number) throws Exception { 
         this.phone_number = PersonUtils.StandardizePhoneNumber(phone_number); 
     }
