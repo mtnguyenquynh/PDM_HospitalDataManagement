@@ -58,6 +58,16 @@ public class PatientRoom extends BaseRoomContainer {
     public PatientRoom(BaseRoomContainer room) throws Exception { super((BaseRoomContainer) room); }
 
     // ---------------------------------------------------------------------------------------------------------------------
+    // Find object in pool
+    public String[] GetPatient(String ID) { return this.GetObject(ID); }
+
+    protected String[] GetPatient(Patient object) { return this.GetObject(object.GetID()); }
+
+    public boolean IsPatientAvailable(String ID) { return this.GetObject(ID) != null; }
+
+    protected boolean IsPatientAvailable(Patient object) { return this.GetObject(object.GetID()) != null; }
+
+    // ---------------------------------------------------------------------------------------------------------------------
     // Updater
     public boolean AddNewPatient(String ID, String name) throws Exception { return this.AddNewPerson(ID, name); }
 

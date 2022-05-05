@@ -54,6 +54,16 @@ public class LToolPool extends BaseRoomContainer {
     public LToolPool(LToolPool object_pool) throws Exception { super((BaseRoomContainer) object_pool); }
 
     // ---------------------------------------------------------------------------------------------------------------------
+    // Find object in pool
+    public String[] GetTool(String ID) { return this.GetObject(ID); }
+
+    protected String[] GetTool(Tool object) { return this.GetObject(object.GetID()); }
+
+    public boolean IsToolAvailable(String ID) { return this.GetObject(ID) != null; }
+
+    protected boolean IsToolAvailable(Tool object) { return this.GetObject(object.GetID()) != null; }
+
+    // ---------------------------------------------------------------------------------------------------------------------
     // Updater
     public boolean UpdateTool(String ID, String name, int amount) throws Exception { 
         return this.UpdateObject(ID, amount);

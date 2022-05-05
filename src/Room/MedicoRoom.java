@@ -58,6 +58,16 @@ public class MedicoRoom extends BaseRoomContainer {
     public MedicoRoom(BaseRoomContainer room) throws Exception { super((BaseRoomContainer) room); }
 
     // ---------------------------------------------------------------------------------------------------------------------
+    // Find object in pool
+    public String[] GetMedico(String ID) { return this.GetObject(ID); }
+
+    protected String[] GetMedico(Medico object) { return this.GetObject(object.GetID()); }
+
+    public boolean IsMedicoAvailable(String ID) { return this.GetObject(ID) != null; }
+
+    protected boolean IsMedicoAvailable(Medico object) { return this.GetObject(object.GetID()) != null; }
+
+    // ---------------------------------------------------------------------------------------------------------------------
     // Updater
     public boolean AddNewMedico(String ID, String name) throws Exception { return this.AddNewPerson(ID, name); }
 

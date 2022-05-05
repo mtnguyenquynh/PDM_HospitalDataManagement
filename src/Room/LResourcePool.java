@@ -55,6 +55,16 @@ public class LResourcePool extends BaseRoomContainer {
     public LResourcePool(LResourcePool object_pool) throws Exception { super((BaseRoomContainer) object_pool); }
 
     // ---------------------------------------------------------------------------------------------------------------------
+    // Find object in pool
+    public String[] GetResource(String ID) { return this.GetObject(ID); }
+
+    protected String[] GetResource(Resource object) { return this.GetObject(object.GetID()); }
+
+    public boolean IsResourceAvailable(String ID) { return this.GetObject(ID) != null; }
+
+    protected boolean IsResourceAvailable(Resource object) { return this.GetObject(object.GetID()) != null; }
+
+    // ---------------------------------------------------------------------------------------------------------------------
     // Updater
     public boolean UpdateResource(String ID, String name, int amount) throws Exception { 
         return this.UpdateObject(ID, amount);

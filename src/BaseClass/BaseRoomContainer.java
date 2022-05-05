@@ -56,7 +56,7 @@ public class BaseRoomContainer extends AbstractObject {
         super(obj.GetID());
         this.LocalPool = obj.LocalPool;
     }
-
+    
     // ---------------------------------------------------------------------------------------------------------------------
     // Find object in pool
     public String[] GetObject(String ID) {
