@@ -38,13 +38,16 @@ import Utility.Utils;
 public class BaseRoom extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Plus one here is to store the ID of this class.
-    private final static int MAX_CAPACTIY = 10000;
-    private final static int SERIALIZATION_CAPACTITY = MAX_CAPACTIY + 1;
+    private final static int SERIALIZATION_CAPACTITY = 10000 + 1;
     private final static float SERIALIZATION_LOAD_FACTOR = 0.75f;
+    
     private Hashtable<String, Object> LocalPool;
+    private int MaxCapacity;
 
-    public BaseRoom(String ID) throws Exception {
+
+    public BaseRoom(String ID, int MaxCapacity) throws Exception {
         super(ID);
+        this.MaxCapacity = MaxCapacity;
         int capacity = BaseRoom.GetSerializationCapacity();
         float loadFactor = BaseRoom.GetSerializationLoadFactor();
         this.LocalPool = new Hashtable<String, Object>(capacity, loadFactor);
@@ -67,23 +70,12 @@ public class BaseRoom extends AbstractObject {
         return this.GetObject(object.GetID());
     }
 
-    public String[] GetFirstObjectByName(String name) {
-        Utils.CheckArgumentCondition(name != null, "Object's Name cannot be null.");
-        for (Object Tool : this.GetLocalPool().values()) {
-            String[] ToolInformation = (String[]) Tool;
-            if (ToolInformation[1].equals(name) || ToolInformation[1].contains(name)) {
-                return ToolInformation;
-            }
-        }
-        return null;
-    }
-
     protected boolean IsObjectAvailable(AbstractObject object) { return this.GetObject(object.GetID()) != null; }
 
     public boolean IsObjectAvailable(String ID) { return this.GetObject(ID) != null; }
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // Add-er & Remove-r functions
+    // Object-related Add-er & Remove-r functions
     public int TestObjectMode(String ID, int amount) throws Exception {
         RoomUtils.ValidateInput(ID, "", amount, false);
 
@@ -101,7 +93,7 @@ public class BaseRoom extends AbstractObject {
         String[] PoolObjectInfo = this.GetObject(ID);
         if (PoolObjectInfo == null) {
             if (this.IsPoolFull()) { throw new Exception("Pool is full."); }
-            String[] ObjectInfo = {ID, name, String.valueOf(amount)}; 
+            String[] ObjectInfo = RoomUtils.GetObjectInformation(ID, name, amount); 
             this.GetLocalPool().put(ID, ObjectInfo);
             return 1;
         }
@@ -169,17 +161,16 @@ public class BaseRoom extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter Function
     public Hashtable<String, Object> GetLocalPool() { return this.LocalPool; }   
-    private void SetLocalPool(Hashtable<String, Object> LocalPool) { this.LocalPool = LocalPool; }
-    public void copyTo(BaseRoom other) { other.SetLocalPool(this.GetLocalPool()); }
 
     public static int GetSerializationCapacity() { return BaseRoom.SERIALIZATION_CAPACTITY; }
     public static float GetSerializationLoadFactor() { return BaseRoom.SERIALIZATION_LOAD_FACTOR; }
-    public static int GetMaxCapacity() { return BaseRoom.MAX_CAPACTIY; }
+    public int GetMaxCapacity() { return this.MaxCapacity; }
+    public void SetMaxCapacity(int capacity) { this.MaxCapacity = capacity; }
     
     public int GetCurrentCapacity() { return this.GetLocalPool().size(); }
 
     public boolean IsEmpty() { return this.GetLocalPool().isEmpty(); }
-    public boolean IsPoolHasExtraSlot() { return this.GetCurrentCapacity() < BaseRoom.GetMaxCapacity(); }
+    public boolean IsPoolHasExtraSlot() { return this.GetCurrentCapacity() < this.GetMaxCapacity(); }
     public boolean IsPoolFull() { return !this.IsPoolHasExtraSlot(); }
 
     // ---------------------------------------------------------------------------------------------------------------------
