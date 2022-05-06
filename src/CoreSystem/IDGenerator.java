@@ -38,7 +38,6 @@ public class IDGenerator {
         this.ID_Store = new Hashtable<Prefix, String[]>(100, 0.75f);
         this.ID_Store.put(Prefix.Tool, new String[] {"database/GlobalPool/Tool.json"});
         this.ID_Store.put(Prefix.Resource, new String[] {"database/GlobalPool/Resource.json"});
-        this.ID_Store.put(Prefix.BaseObject, new String[] {"database/GlobalPool/BaseObject.json"});
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
