@@ -78,12 +78,6 @@ public class IDGenerator {
     public void DecreaseCounter(String class_name) {
         try { this.ChangeCounter(class_name, -1); } 
         catch (Exception e) { e.printStackTrace(); }
-    }
-
-
-    // ---------------------------------------------------------------------------------------------------------------------
-    // Getter & Setter 
-
-    
+    }   
 
 }
