@@ -35,9 +35,10 @@ import Utility.JsonUtils;
 **/
 
 public class GResourcePool extends LResourcePool {
-    
+
     private final static String FOLDER_DIRECTORY = "database/GlobalPool/";
-    private final static String JSON_FILENAME = "GResourcePool.json";
+    private final static String JSON_MAIN_FILENAME = "GResourcePool.json";
+    private final static String JSON_CHECKPOINT_FILENAME = "GResourcePool-Checkpoint.json";
 
     public GResourcePool(String ID) throws Exception { super(ID); }
     
@@ -48,27 +49,44 @@ public class GResourcePool extends LResourcePool {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter
     public static String GetFolderDirectory() { return GResourcePool.FOLDER_DIRECTORY; }
-    public static String GetJsonFilename() { return GResourcePool.JSON_FILENAME; }
-
-
+    public static String GetJsonMainFilename() { return GResourcePool.JSON_MAIN_FILENAME; }
+    public static String GetJsonCheckpointFilename() { return GResourcePool.JSON_CHECKPOINT_FILENAME; }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
     public Hashtable<String, Object> Serialize() { return super.Serialize(); }
 
-    public void SerializeToFile() throws Exception {
+    public void SerializeToFile(String filename) throws Exception {
         Hashtable<String, Object> data = this.Serialize();
-        String dir = GResourcePool.GetFolderDirectory() + "/" + GResourcePool.GetJsonFilename();
+        String dir = GResourcePool.GetFolderDirectory() + "/" + filename;
         JsonUtils.SaveHashTableIntoJsonFile(dir, data, null);
+    }
+
+    public void SerializeToMainFile() throws Exception {
+        this.SerializeToFile(GResourcePool.GetJsonMainFilename());
+    }
+
+    public void SerializeToCheckpointFile() throws Exception {
+        this.SerializeToFile(GResourcePool.GetJsonCheckpointFilename());
     }
 
     public static GResourcePool Deserialize(Hashtable<String, Object> data) throws Exception {
         return new GResourcePool(GResourcePool.Deserialize(data));
     }
 
-    public static GResourcePool DeserializeFromFile() throws Exception {
-        String dir = GResourcePool.GetFolderDirectory() + "/" + GResourcePool.GetJsonFilename();
+    public static GResourcePool DeserializeFromFile(String filename) throws Exception {
+        String dir = GResourcePool.GetFolderDirectory() + "/" + filename;
         Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(dir, null);
         return GResourcePool.Deserialize(data);
     }
+
+
+    public static GResourcePool DeserializeFromMainFile() throws Exception {
+        return GResourcePool.DeserializeFromFile(GResourcePool.GetJsonMainFilename());
+    }
+
+    public static GResourcePool DeserializeFromCheckpointFile() throws Exception {
+        return GResourcePool.DeserializeFromFile(GResourcePool.GetJsonCheckpointFilename());
+    }
+    
 }

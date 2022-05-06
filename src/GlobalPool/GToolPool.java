@@ -38,7 +38,8 @@ import Utility.JsonUtils;
 public class GToolPool extends LToolPool {
     
     private final static String FOLDER_DIRECTORY = "database/GlobalPool/";
-    private final static String JSON_FILENAME = "GToolPool.json";
+    private final static String JSON_MAIN_FILENAME = "GToolPool.json";
+    private final static String JSON_CHECKPOINT_FILENAME = "GToolPool-Checkpoint.json";
 
     public GToolPool(String ID) throws Exception { super(ID); }
     
@@ -49,27 +50,43 @@ public class GToolPool extends LToolPool {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter
     public static String GetFolderDirectory() { return GToolPool.FOLDER_DIRECTORY; }
-    public static String GetJsonFilename() { return GToolPool.JSON_FILENAME; }
-
-
+    public static String GetJsonMainFilename() { return GToolPool.JSON_MAIN_FILENAME; }
+    public static String GetJsonCheckpointFilename() { return GToolPool.JSON_CHECKPOINT_FILENAME; }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
     public Hashtable<String, Object> Serialize() { return super.Serialize(); }
 
-    public void SerializeToFile() throws Exception {
+    public void SerializeToFile(String filename) throws Exception {
         Hashtable<String, Object> data = this.Serialize();
-        String dir = GToolPool.GetFolderDirectory() + "/" + GToolPool.GetJsonFilename();
+        String dir = GToolPool.GetFolderDirectory() + "/" + filename;
         JsonUtils.SaveHashTableIntoJsonFile(dir, data, null);
+    }
+
+    public void SerializeToMainFile() throws Exception {
+        this.SerializeToFile(GToolPool.GetJsonMainFilename());
+    }
+
+    public void SerializeToCheckpointFile() throws Exception {
+        this.SerializeToFile(GToolPool.GetJsonCheckpointFilename());
     }
 
     public static GToolPool Deserialize(Hashtable<String, Object> data) throws Exception {
         return new GToolPool(LToolPool.Deserialize(data));
     }
 
-    public static GToolPool DeserializeFromFile() throws Exception {
-        String dir = GToolPool.GetFolderDirectory() + "/" + GToolPool.GetJsonFilename();
+    public static GToolPool DeserializeFromFile(String filename) throws Exception {
+        String dir = GToolPool.GetFolderDirectory() + "/" + filename;
         Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(dir, null);
         return GToolPool.Deserialize(data);
     }
+
+    public static GToolPool DeserializeFromMainFile() throws Exception {
+        return GToolPool.DeserializeFromFile(GToolPool.GetJsonMainFilename());
+    }
+
+    public static GToolPool DeserializeFromCheckpointFile() throws Exception {
+        return GToolPool.DeserializeFromFile(GToolPool.GetJsonCheckpointFilename());
+    }
+    
 }
