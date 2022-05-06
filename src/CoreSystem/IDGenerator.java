@@ -60,7 +60,7 @@ public class IDGenerator {
             data.put(IDGenerator.counter, count + 1);
             JsonUtils.SaveHashTableIntoJsonFile(directory, data, null);
         }
-        return ID;
+        return ID; 
     }
 
     public String GenerateObjectID(BaseObject object) throws Exception {
