@@ -28,12 +28,17 @@ import PrefixState.Prefix;
 **/
 
 public class IDGenerator {
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Although it is not 100% correct to load as String[], but we left there to ensure the progress
+    // of the project and future software development.
+
     private final Hashtable<Prefix, String[]> ID_Store;
     private final static String counter = "count";
     public IDGenerator() {
         this.ID_Store = new Hashtable<Prefix, String[]>(100, 0.75f);
         this.ID_Store.put(Prefix.Tool, new String[] {"database/GlobalPool/Tool.json"});
         this.ID_Store.put(Prefix.Resource, new String[] {"database/GlobalPool/Resource.json"});
+        this.ID_Store.put(Prefix.BaseObject, new String[] {"database/GlobalPool/BaseObject.json"});
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -43,16 +48,23 @@ public class IDGenerator {
         String[] ID_Pool = this.ID_Store.get(prefix);
         JsonUtils.CheckArgumentCondition(ID_Pool != null, "The ID Generator is not prepared for this object.");
         
+        // Step 2: Loading the directory of the ID pool
         String directory = ID_Pool[0];
         Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(directory, null);
         int count = (int) data.get(IDGenerator.counter);
 
         String ID = prefix.GetPrefixCodeNotation() + String.format("%06d", count);
+
+        // Step 3: Update the counter
         if (forceUpdate) {
             data.put(IDGenerator.counter, count + 1);
             JsonUtils.SaveHashTableIntoJsonFile(directory, data, null);
         }
         return ID;
+    }
+
+    public String GenerateObjectID(BaseObject object) throws Exception {
+        return this.GenerateObjectID(object, true);
     }
 
     private void ChangeCounter(String class_name, int amount) throws Exception {
