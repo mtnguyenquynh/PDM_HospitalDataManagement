@@ -40,19 +40,22 @@ public class ID_Generator {
 
     private final static String[] RuleSet = {"%06d", "%03d-%05d"};
 
-    private static String[] MergeString(String dir, String filename) {
-        return new String[] {"database" + "/" + dir + "/" + filename};
-    }
+    private void InsertToIDStore(Prefix prefix, String directory, String filename) {
+        String[] path = {"database" + "/" + directory + "/" + filename};
+        this.ID_Store.put(prefix, path);
+    } 
 
     public ID_Generator() {
         this.ID_Store = new Hashtable<Prefix, String[]>(100, 0.75f);
 
-        this.ID_Store.put(Prefix.Tool, ID_Generator.MergeString("GlobalPool", "Tool.json"));
-        this.ID_Store.put(Prefix.Resource, ID_Generator.MergeString("GlobalPool", "Resource.json"));
+        this.InsertToIDStore(Prefix.Tool, "GlobalPool", "Tool.json");
+        this.InsertToIDStore(Prefix.Resource, "GlobalPool", "Resource.json");
 
-        this.ID_Store.put(Prefix.Patient, ID_Generator.MergeString("PatientData", "Patient.json"));
-        this.ID_Store.put(Prefix.Doctor, ID_Generator.MergeString("MedicoData", "Doctor.json"));
-        this.ID_Store.put(Prefix.Nurse, ID_Generator.MergeString("MedicoData", "Nurse.json"));
+        this.InsertToIDStore(Prefix.Patient, "PatientData", "Patient.json");
+        this.InsertToIDStore(Prefix.MedicalRecord, "PatientRecord", "MedicalRecord.json");
+
+        this.InsertToIDStore(Prefix.Doctor, "MedicoData", "Doctor.json");
+        this.InsertToIDStore(Prefix.Nurse, "MedicoData", "Nurse.json");
     }
 
     // ---------------------------------------------------------------------------------------------------------------------

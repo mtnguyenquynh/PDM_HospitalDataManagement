@@ -141,7 +141,7 @@ public abstract class PersonUtils {
     }
 
     // ----------------------------------------------------------------------------------------------------------------------
-    // Email
+    // Other
 
     /**
      * This method is called to verify to be at least an email address is considered to be valid. 
@@ -162,7 +162,6 @@ public abstract class PersonUtils {
      * @return
      * @throws Exception
      */
-
     public static String StandardizeEmail(String email) throws Exception {
         JsonUtils.CheckArgumentCondition(email != null, "The input email is null");
         String NewEmail = email.trim();
@@ -204,8 +203,6 @@ public abstract class PersonUtils {
         // Step 05) Construct the standardized email
         return EmailName + "@" + EmailSupplier;
     }
-    
-
 
     public static String StandardizePhoneNumber(String phone) throws Exception {
         // The phone number can have multiple representation formats depending on the region.
@@ -227,6 +224,14 @@ public abstract class PersonUtils {
                                      "The phone number must be between 8 and 16 digits.");
 
         return NewPhone;
+    }
+
+    public static String StandardizeGender(boolean IsFemale) { return IsFemale ? "FEMALE": "MALE"; }
+
+    public static boolean StandardizeGender(String IsFemale) throws Exception {
+        if (IsFemale == "FEMALE" || IsFemale.equals("FEMALE")) { return true; }
+        if (IsFemale == "MALE" || IsFemale.equals("MALE")) { return false; }
+        throw new Exception("The gender is not standardized.");
     }
 
     // ----------------------------------------------------------------------------------------------------------------------

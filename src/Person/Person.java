@@ -67,7 +67,8 @@ public class Person extends IntermediateObject {
         this.phone_number = PersonUtils.StandardizePhoneNumber(phone_number); 
     }
 
-    public void SetGender(boolean IsFemale) { this.gender = IsFemale? "FEMALE": "MALE"; }
+    public void SetGender(boolean IsFemale) { this.gender = PersonUtils.StandardizeGender(IsFemale); }
+    
     public void SetNationality(String nationality) throws Exception {
         String nationality_ = PersonUtils.StandardizeName(nationality);
         String[] InvalidTerm = {"Us", "Usa", "Uk"};
@@ -105,9 +106,7 @@ public class Person extends IntermediateObject {
         result.SetPhoneNumber((String) data.get("phone_number"));
 
         String gender = (String) data.get("gender");
-        boolean IsFemale = false;
-        if (gender == "FEMALE" || gender.equals("FEMALE")) { IsFemale = true; }
-        result.SetGender(IsFemale);
+        result.SetGender(PersonUtils.StandardizeGender(gender));
 
         result.SetNationality((String) data.get("nationality"));
         return result;

@@ -37,6 +37,7 @@ public class Patient extends Person {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
+    
 
     // ----------------------------------------------------------
     public static Prefix GetPrefix() { return Prefix.Patient; }
