@@ -4,7 +4,7 @@ import BaseClass.IntermediateObject;
 import java.util.Hashtable;
 
 import PrefixState.Prefix;
-import Utility.Utils;
+import Utility.JsonUtils;
 
 
 /**
@@ -71,7 +71,7 @@ import Utility.Utils;
 public class RoomUnit extends IntermediateObject {
     public RoomUnit(String ID, String name, String description) throws Exception { 
         super(ID, name, description);
-        Utils.CheckArgumentCondition(RoomUnitUtils.VerifyRoomCodeID(ID), "Invalid Room Code ID: " + ID);
+        JsonUtils.CheckArgumentCondition(RoomUnitUtils.VerifyRoomCodeID(ID), "Invalid Room Code ID: " + ID);
     }
 
     public RoomUnit(String ID, String name) throws Exception { this(ID, name, ""); }

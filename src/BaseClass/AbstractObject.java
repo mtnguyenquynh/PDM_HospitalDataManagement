@@ -3,7 +3,7 @@ package BaseClass;
 import java.util.Hashtable;
 
 import Utility.DataUtils;
-import Utility.Utils;
+import Utility.JsonUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -34,8 +34,9 @@ public class AbstractObject {
 
     private String ID, name;                    
     public AbstractObject(String ID, String name) throws Exception {
-        Utils.CheckArgumentCondition(ID != null, "ID cannot be null.");
-        Utils.CheckArgumentCondition(ID.length() > 0, "ID cannot be empty.");
+        JsonUtils.CheckArgumentCondition(ID != null, "ID cannot be null.");
+        JsonUtils.CheckArgumentCondition(ID.length() > 0, "ID cannot be empty.");
+        if (name == null) { name = ""; }
         this.ID = ID;
         this.name = name;
     }
@@ -46,7 +47,10 @@ public class AbstractObject {
     // Getter and Setter
     public String GetID() { return this.ID; }
     public String GetName() { return this.name; }
-    public void SetName(String name) throws Exception { this.name = name; }
+    public void SetName(String name) throws Exception { 
+        JsonUtils.CheckArgumentCondition(name != null, "Object's name cannot be null.");
+        this.name = name; 
+    }
 
     public static int GetSerializationCapacity() { return AbstractObject.SERIALIZATION_CAPACITY; }
     public static float GetSerializationLoadFactor() { return AbstractObject.SERIALIZATION_LOAD_FACTOR; }

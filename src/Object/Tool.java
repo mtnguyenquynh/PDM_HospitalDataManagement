@@ -34,12 +34,13 @@ import PrefixState.Prefix;
 public class Tool extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     private final ToolUnit unit;
-    private static final Prefix prefix = Prefix.Tool;
+    private final Prefix prefix;
 
     public Tool(String ID, String name, String description, int amount, ToolUnit unit) throws Exception {
         // You may want to add more fields or attributes here.
         super(ID, name, description, amount);
         this.unit = unit;
+        this.prefix = Prefix.Tool;
     }
 
     public Tool(String ID, String name, String description, int amount) throws Exception {
@@ -49,7 +50,8 @@ public class Tool extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter Function
     public ToolUnit GetUnit() { return this.unit; }
-    public static Prefix GetPrefix() { return Tool.prefix; }
+
+    public static Prefix GetPrefix() { return Prefix.Tool; }
     public static String GetPrefixCode() { return Tool.GetPrefix().GetPrefixCode(); }
 
     // ---------------------------------------------------------------------------------------------------------------------

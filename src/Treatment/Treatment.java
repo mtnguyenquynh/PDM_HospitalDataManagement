@@ -2,14 +2,14 @@ package Treatment;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-
 import BaseClass.BaseRecord;
 import Object.Resource;
 import PrefixState.Prefix;
 import Staff.Medico;
+import Utility.DataUtils;
+import Utility.JsonUtils;
+import Person.PersonUtils;
+
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -72,9 +72,10 @@ public class Treatment extends BaseRecord {
 	private Hashtable<String, Object> Resources;		// The drug/medicine information
 	private Hashtable<String, Object> Descriptions;		// The desciption of the treatment
 
-	public Treatment(String Patient_ID, String MedicalRecord_ID, String P_Name, String P_Age, 
-		String P_Gender, int index, String code, boolean writable) {
-		super(Patient_ID, P_Name, P_Age, P_Gender, writable);
+	public Treatment(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName, 
+		String Pt_Age, String Pt_Gender, int index, String code, boolean writable) {
+		super(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, 
+		      Pt_Gender, writable);
 
 		this.MedicalRecord_ID = MedicalRecord_ID;
 		this.index = index;
@@ -87,9 +88,10 @@ public class Treatment extends BaseRecord {
 		this.Descriptions = new Hashtable<String, Object>(Treatment.MAX_NUM_DESCRIPTIONS, 0.75f);
 	}
 
-	public Treatment(String Patient_ID, String MedicalRecord_ID, String P_Name, String P_Age, 
-		String P_Gender, int index, String code) {
-		this(Patient_ID, MedicalRecord_ID, P_Name, P_Age, P_Gender, index, code, true);
+	public Treatment(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName,
+		String Pt_Age, String Pt_Gender, int index, String code) {
+		this(Patient_ID, MedicalRecord_ID, Pt_FirstName, Pt_LastName, Pt_Age, 
+		     Pt_Gender, index, code, true);
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------
@@ -201,44 +203,46 @@ public class Treatment extends BaseRecord {
 		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
 		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndexAsInt());
 		TreatmentInformation.put("ClassificationCode", this.GetClassificationCode());
-
-		Iterator<Entry<String, Object>> iter;
-
-		Hashtable<String, Object> MedicoInfo = this.GetMedicoInfo();
-		List<String[]> MedicoInfoList = new ArrayList<String[]>(MedicoInfo.size());
-		iter = MedicoInfo.entrySet().iterator();
-		while (iter.hasNext()) {
-			Entry<String, Object> entry = iter.next();
-			MedicoInfoList.add((String[]) entry.getValue());
+		
+		String directory, folder;
+		try { 
+			folder = PersonUtils.GetPatientRecordDirectory(this.GetPtFirstName(), false); 
+			TreatmentInformation.put("folder", folder);
+		} catch (Exception e) { // This is never called as standardization is done in the Patient class.
+			e.printStackTrace();
 		}
+		
+		folder = (String) TreatmentInformation.get("folder") + Integer.toString(index) + "-";
+		TreatmentInformation.put("folder", folder);
+		try {
+			directory = folder + "MedicoInfo.json";
+			JsonUtils.SaveHashTableIntoJsonFile(folder + "MedicoInfo.json", this.GetMedicoInfo(), null);
+			TreatmentInformation.put("MedicoInfo", directory);
 
-		TreatmentInformation.put("MedicoInfo", MedicoInfoList.toArray());
-		TreatmentInformation.put("Supplementary", this.GetSupplementary().toArray());
+			ArrayList<Object> CastedSupplementary = DataUtils.CastToObjectArrayFromStringArray(this.GetSupplementary());
+			directory = folder + "Supplementary.json";
+			JsonUtils.SaveArrayListIntoJsonFile(folder + "Supplementary.json", CastedSupplementary, null);
+			TreatmentInformation.put("Supplementary", directory);
 
-		Hashtable<String, Object> Resources = this.GetResources();
-		List<String[]> ResourcesList = new ArrayList<String[]>(Resources.size());
-		iter = Resources.entrySet().iterator();
-		while (iter.hasNext()) {
-			Entry<String, Object> entry = iter.next();
-			ResourcesList.add((String[]) entry.getValue());
+			directory = folder + "Resources.json";
+			JsonUtils.SaveHashTableIntoJsonFile(folder + "Resources.json", this.GetResources(), null);
+			TreatmentInformation.put("Resources", directory);
+
+			directory = folder + "Descriptions.json";
+			JsonUtils.SaveHashTableIntoJsonFile(folder + "Descriptions.json", this.GetDescriptions(), null);
+			TreatmentInformation.put("Descriptions", directory);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		TreatmentInformation.put("Resources", ResourcesList.toArray());
-
-		Hashtable<String, Object> Descriptions = this.GetDescriptions();
-		List<String[]> DescriptionsList = new ArrayList<String[]>(Descriptions.size());
-		iter = Descriptions.entrySet().iterator();
-		while (iter.hasNext()) {
-			Entry<String, Object> entry = iter.next();
-			DescriptionsList.add((String[]) entry.getValue());
-		}
-		TreatmentInformation.put("Descriptions", DescriptionsList.toArray());
 
 		return TreatmentInformation;
 	}
 
 	public static Treatment Deserialize(Hashtable<String, Object> data) {
 		String Pt_ID = (String) data.get("Pt_ID");
-        String Pt_Name = (String) data.get("Pt_Name");
+        String Pt_FirstName = (String) data.get("Pt_FirstName");
+        String Pt_LastName = (String) data.get("Pt_LastName");
         String Pt_Age = (String) data.get("Pt_Age");
         String Pt_Gender = (String) data.get("Pt_Gender");
 
@@ -246,38 +250,31 @@ public class Treatment extends BaseRecord {
 		int TreatmentIndex = Integer.parseInt((String) data.get("TreatmentIndex"));
 		String ClassificationCode = (String) data.get("ClassificationCode");
 
-        Treatment record = new Treatment(Pt_ID, MedicalRecordID, Pt_Name, Pt_Age, 
+        Treatment record = new Treatment(Pt_ID, MedicalRecordID, Pt_FirstName, Pt_LastName, Pt_Age, 
 										 Pt_Gender, TreatmentIndex, ClassificationCode, true);
         record.SetDate((String) data.get("date"));
         record.SetTime((String) data.get("time"));
 
-		// Deserialize Medico, Supplementary, Resources, and Descriptions
-		Object[] MedicoInfoList = (Object[]) data.get("MedicoInfo");
-		for (int i = 0; i < MedicoInfoList.length; i++) {
-			String[] MedicoInfoDetail = (String[]) MedicoInfoList[i];
-			record.GetMedicoInfo().put(MedicoInfoDetail[0], MedicoInfoDetail);
-		}
+		// Deserialize Medico, Supplementary, Resources, and Descriptions. These are stored in JSON files.
+		// So we need to call them
+		String MedicoInfo_File = (String) data.get("MedicoInfo");
+		String Supplementary_File = (String) data.get("Supplementary");
+		String Resources_File = (String) data.get("Resources");
+		String Descriptions_File = (String) data.get("Descriptions");
 
-		Object[] SupplementaryList = (Object[]) data.get("Supplementary");
-		for (int i = 0; i < SupplementaryList.length; i++) {
-			String SupplementaryDetail = (String) SupplementaryList[i];
-			record.GetSupplementary().add(SupplementaryDetail);
-		}
+		try {
+			record.GetMedicoInfo().putAll(JsonUtils.LoadJsonFileToHashtable(MedicoInfo_File, null));
 
-		Object[] ResourcesList = (Object[]) data.get("Resources");
-		for (int i = 0; i < ResourcesList.length; i++) {
-			String[] ResourcesDetail = (String[]) ResourcesList[i];
-			record.GetResources().put(ResourcesDetail[0], ResourcesDetail);
-		}
+			ArrayList<Object> Supplementary = JsonUtils.LoadJsonFileToArrayList(Supplementary_File, null);
+			record.GetSupplementary().addAll(DataUtils.CastToStringArrayFromObjectArray(Supplementary));
 
-		Object[] DescriptionsList = (Object[]) data.get("Descriptions");
-		for (int i = 0; i < DescriptionsList.length; i++) {
-			String[] DescriptionsDetail = (String[]) DescriptionsList[i];
-			record.GetDescriptions().put(Integer.toString(i), DescriptionsDetail);
+			record.GetResources().putAll(JsonUtils.LoadJsonFileToHashtable(Resources_File, null));
+			record.GetDescriptions().putAll(JsonUtils.LoadJsonFileToHashtable(Descriptions_File, null));
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		if (!(boolean) data.get("writable")) { record.CloseRecord(); }
-
 		return record;
 	}
 

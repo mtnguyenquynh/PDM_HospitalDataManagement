@@ -2,7 +2,8 @@ package BaseClass;
 
 import java.util.Hashtable;
 
-import Utility.Utils;
+import PrefixState.Prefix;
+import Utility.JsonUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -34,13 +35,15 @@ public class BaseObject extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     private String description;           // This is the description of the object
     private int number;                   // This is the amount or number of the object
-    
+    protected Prefix prefix;
+
     public BaseObject(String ID, String name, String description, int number) throws Exception {
         super(ID, name);
 
-        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        JsonUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         this.description = (description == null) ? "": description;
         this.number = number;
+        this.prefix = Prefix.BaseObject;
     }
     public BaseObject(String ID) throws Exception { this(ID, "", null, 0); }
     public BaseObject(String ID, String name) throws Exception { this(ID, name, null, 0); }
@@ -54,21 +57,29 @@ public class BaseObject extends AbstractObject {
 
     public int GetNumber() { return this.number; }
     public void SetNumber(int number) { 
-        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        JsonUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         this.number = number; 
     }
 
     public void IncrementNumber(int number) {
-        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        JsonUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         if (number != 0) { this.number += number; }
     }
     public void DecrementNumber(int number) {
-        Utils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        JsonUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         if (number != 0) {
-            Utils.CheckArgumentCondition(this.number >= number, "Number cannot be negative.");
+            JsonUtils.CheckArgumentCondition(this.number >= number, "Number cannot be negative.");
             this.number -= number;
         }
     }
+
+    // ----------------------------------------------------------
+    public static Prefix GetPrefix() { return Prefix.BaseObject; }
+    public Prefix GetThisPrefix() { return this.prefix; }
+
+    public static String GetPrefixCode() { return BaseObject.GetPrefix().GetPrefixCode(); }
+    public String GetThisPrefixCode() { return this.GetThisPrefix().GetPrefixCode(); }
+
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization

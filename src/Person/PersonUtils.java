@@ -1,6 +1,6 @@
 package Person;
 
-import Utility.Utils;
+import Utility.JsonUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -22,10 +22,9 @@ import Utility.Utils;
  * 
  * References:
  * 1) https://stackoverflow.com/questions/18057962/regex-pattern-including-all-special-characters
- * 
  * 2) https://bobbyhadz.com/blog/javascript-check-if-string-contains-special-characters
- * 
  * 3) https://metapx.org/slash-s-plus-java/
+ * 4) https://stringr.tidyverse.org/articles/regular-expressions.html
 **/
 
 public abstract class PersonUtils {
@@ -40,7 +39,7 @@ public abstract class PersonUtils {
     // This attribute is used to construct a relative name tree to support fast search, query and retrieval
     private final static int FIRST_NAME_DEPTH = 3;
     private final static int MAX_NAME_OF_WORD = 16;                         // This may not be used
-    private final static int MAX_CHAR_OF_WORD = 16;                         // This may not be used
+    private final static int MAX_CHAR_OF_WORD = 32;                         // This may not be used
 
     private final static String NUMERIC_CHARS = "[0-9]+";
     private final static String LETTER_CHARS = "[a-zA-Z]+";
@@ -62,24 +61,23 @@ public abstract class PersonUtils {
 
         // Step 01) Remove all unnecessary spaces at the first and the last of the string 
         //          and lower-case all characters 
-        Utils.CheckArgumentCondition(name != null, "The input name is null");
+        JsonUtils.CheckArgumentCondition(name != null, "The input name is null");
 
         String NewName = name.trim().replaceAll("\\s+", " ").toLowerCase();
 
         // Step 02) Do validation: Check if there are any digit-like or special characters
-        if (NewName.matches("[0-9]+")) { throw new Exception("The name cannot be a digit-like string"); }
-        if (NewName.matches(PersonUtils.GetSpecialChars())) { 
-            throw new Exception("The name cannot contain special characters"); 
-        }
+        JsonUtils.CheckArgumentCondition(!NewName.matches("[0-9]+"), 
+                                     "The name cannot be a digit-like string.");
+        JsonUtils.CheckArgumentCondition(!NewName.matches("[^a-zA-Z0-9.\\s]+"),
+                                     "The name cannot contain special characters.");
 
         // Step 02) For each word, captialize the first character. For example: "harry" -> "Harry"
         String[] words = NewName.split(" ");
         for (String word: words) {
-            if (word.length() == 1 && word.equals(".")) { 
-                throw new Exception("The name cannot contain a single dot"); 
-            }
+            JsonUtils.CheckArgumentCondition(word.length() != 1 || !word.equals("."), 
+                                         "The name cannot contain a dot.");
         }
-
+        
         StringBuilder sb = new StringBuilder();
         for (String word: words) {
             int length = word.length();
@@ -102,7 +100,7 @@ public abstract class PersonUtils {
 
     public static int CountNameLength(String name, boolean IsStandardized) throws Exception {
         // This function is used to count the length of the name
-        Utils.CheckArgumentCondition(name != null, "The input name is null");
+        JsonUtils.CheckArgumentCondition(name != null, "The input name is null");
         if (!IsStandardized) { name = PersonUtils.StandardizeName(name); }
         return name.split(" ").length;
     }
@@ -117,10 +115,10 @@ public abstract class PersonUtils {
      * 
      * For example, (given a standardized name "Harry Potter")
      * 1) "Harry Potter" -> Error (More than one word)
-     * 2) "Harry" -> "h/a/r"
-     * 3) "Potter" -> "p/o/t"
+     * 2) "Harry" -> "h/a/r/"
+     * 3) "Potter" -> "p/o/t/"
      * 4) "G." -> Error (Contain invalid character)
-     * 5) "Ga" -> "g/a"
+     * 5) "Ga" -> "g/a/"
      *  
      * 
      * @param FirstName (String) The first name of the person (which has only one word)
@@ -128,8 +126,8 @@ public abstract class PersonUtils {
      * @return (String) The relative path of the person's information
      * @throws Exception If the name is not valid
      */
-    public static String GetDivisionPath(String FirstName, boolean IsStandardized) throws Exception {
-        Utils.CheckArgumentCondition(FirstName != null, "The input name is null");
+    public static String GetPathByFirstName(String FirstName, boolean IsStandardized) throws Exception {
+        JsonUtils.CheckArgumentCondition(FirstName != null, "The input name is null");
         if (!IsStandardized) { FirstName = PersonUtils.StandardizeName(FirstName); }
         if (FirstName.contains(".")) { throw new Exception("The name cannot contain a single dot."); }
         if (FirstName.contains(" ")) { throw new Exception("The name must be a single word."); }
@@ -144,12 +142,92 @@ public abstract class PersonUtils {
 
     // ----------------------------------------------------------------------------------------------------------------------
     // Email
+
+    /**
+     * This method is called to verify to be at least an email address is considered to be valid. 
+     * The email structure is something as this: "email_name@supplier". Where as the "email_name"
+     * contained letter-like, digit-like, "dot" or "underscore" characters. Meanwhile, the 
+     * suppliers only accepted lower-case letter-like and "dot" characters only.
+     * 
+     * The email address is considered to be valid if and only if:
+     * 1) The email address contains only one "@" character between the "email_name" and the "supplier"
+     * 2) The email address contains at least one "." character at the "supplier" part. The dot cannot 
+     *    be located next to the "@" character or at the end of the string.
+     * 
+     * 3) The email address contained special characters (including whitespace " ")
+     * 3) Validate each part 
+     * 
+     * 
+     * @param email
+     * @return
+     * @throws Exception
+     */
+
     public static String StandardizeEmail(String email) throws Exception {
-        Utils.CheckArgumentCondition(email != null, "The input name is null");
-        return email; 
+        JsonUtils.CheckArgumentCondition(email != null, "The input email is null");
+        String NewEmail = email.trim();
+        if (NewEmail.length() == 0) { throw new Exception("The email is empty"); }
+        
+        // Step 01) Validation: Check if there are any "@" or "." characters
+        JsonUtils.CheckArgumentCondition(!NewEmail.contains(" "), "The email contain whitespace character.");
+        JsonUtils.CheckArgumentCondition(NewEmail.contains("@"), "The email does not contain an '@' character.");
+        JsonUtils.CheckArgumentCondition(NewEmail.contains("."), "The email does not contain a '.' character.");
+
+        // Step 02) Validate each-part
+        String[] parts = NewEmail.split("\\@");
+        JsonUtils.CheckArgumentCondition(parts.length == 2, "The email contain more than one '@' characters.");
+
+        String EmailName = parts[0];
+        String EmailSupplier = parts[1];
+
+        // Step 03) Validate the email name
+        JsonUtils.CheckArgumentCondition(EmailName.length() > 0, "The email name is empty.");
+        JsonUtils.CheckArgumentCondition(!EmailName.matches("[a-zA-Z0-9._]+"), 
+                                     "The email name contain invalid special characters.");
+        JsonUtils.CheckArgumentCondition(!EmailName.substring(0).matches("[a-zA-Z0-9]"), 
+                                     "The email name contain invalid special characters at the beginning.");
+        JsonUtils.CheckArgumentCondition(!EmailName.substring(EmailName.length() - 1).matches("[a-zA-Z0-9]"), 
+                                     "The email name contain invalid special characters at the end.");                                                     
+
+        // Step 04) Validate the email supplier
+        JsonUtils.CheckArgumentCondition(EmailSupplier.contains("."), 
+                                     "The email address does not contain a '.' character.");
+
+        JsonUtils.CheckArgumentCondition(EmailSupplier.length() > 0, "The email address is empty.");
+        JsonUtils.CheckArgumentCondition(!EmailSupplier.matches("[a-zA-Z._]+"),
+                                     "The email address contain invalid special characters.");
+        JsonUtils.CheckArgumentCondition(!EmailSupplier.substring(0).matches("[a-zA-Z]"),
+                                     "The email address contain invalid special characters at the beginning.");     
+        JsonUtils.CheckArgumentCondition(!EmailSupplier.substring(EmailSupplier.length() - 1).matches("[a-zA-Z]"),
+                                     "The email address contain invalid special characters at the end.");
+
+        // Step 05) Construct the standardized email
+        return EmailName + "@" + EmailSupplier;
     }
+    
 
 
+    public static String StandardizePhoneNumber(String phone) throws Exception {
+        // The phone number can have multiple representation formats depending on the region.
+        // The phone number can be mistaken as the home number, or the office number.
+        // Thus we only generalize the phone number to the following format
+        // The phone number can have region code (i.e +84, +86, etc)
+        JsonUtils.CheckArgumentCondition(phone != null, "The input phone number is null");
+        String NewPhone = phone.trim();
+
+        JsonUtils.CheckArgumentCondition(NewPhone.length() > 0, "The phone number is empty.");
+        JsonUtils.CheckArgumentCondition(!NewPhone.matches("[+?][0-9]+"),
+                                     "The phone number contain invalid special characters.");
+        int length = NewPhone.length();
+        if (NewPhone.contains("+")) { length -= 1; }
+        
+        // This is to prevent magic phone number such as 113, 115 which are the emergency number
+        // This condition is not created to fully compatible on all region.
+        JsonUtils.CheckArgumentCondition((length >= 8 && length <= 16), 
+                                     "The phone number must be between 8 and 16 digits.");
+
+        return NewPhone;
+    }
 
     // ----------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
@@ -170,7 +248,7 @@ public abstract class PersonUtils {
     // -----------------------------------------------------------
     // Getter in Advance
     private static String GetMergedDirectory(String directory, String name, boolean IsStandardized) throws Exception {
-        try { return directory + "/" + PersonUtils.GetDivisionPath(name, IsStandardized); } 
+        try { return directory + "/" + PersonUtils.GetPathByFirstName(name, IsStandardized); } 
         catch (Exception e) { e.printStackTrace(); return null; }
     }
 
@@ -193,8 +271,5 @@ public abstract class PersonUtils {
         String directory = PersonUtils.GetMedicoTaskDirectory();
         return PersonUtils.GetMergedDirectory(directory, name, IsStandardized);
     }
-
-
-
 
 }
