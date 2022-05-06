@@ -1,5 +1,6 @@
 package Patient;
 import Person.Person;
+import PrefixState.Prefix;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -27,15 +28,19 @@ public class Patient extends Person {
 
     public Patient(String ID, String name, String description) throws Exception {
         super(ID, name, description);
+        this.prefix = Prefix.Patient;  
     }
 
     public Patient(String ID, String name) throws Exception {
-        super(ID, name, null);
+        this(ID, name, null);
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
 
+    // ----------------------------------------------------------
+    public static Prefix GetPrefix() { return Prefix.Patient; }
+    public static String GetPrefixCode() { return Patient.GetPrefix().GetPrefixCode(); }
 
     // -----------------------------------------------------------
     // Setter Function

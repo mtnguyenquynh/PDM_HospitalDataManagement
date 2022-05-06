@@ -1,15 +1,21 @@
 package Staff;
 
-import Person.Person;
+import PrefixState.Prefix;
 
-public class Medico extends Person {
+public class Medico extends Staff {
     
     public Medico(String ID, String name, String description) throws Exception {
         super(ID, name, description);
+        this.prefix = Prefix.Medico;
+
     }
 
     public Medico(String ID, String name) throws Exception {
-        super(ID, name, null);
+        this(ID, name, null);
     }
     
+
+    // ----------------------------------------------------------
+    
+
 }

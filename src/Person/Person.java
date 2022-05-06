@@ -1,6 +1,7 @@
 package Person;
 
 import BaseClass.IntermediateObject;
+import PrefixState.Prefix;
 
 import java.util.Hashtable;
 
@@ -37,10 +38,11 @@ public class Person extends IntermediateObject {
         this.phone_number = null;
         this.gender = null;
         this.nationality = null;
+        this.prefix = Prefix.Person;
     }
 
     public Person(String ID, String name) throws Exception { 
-        super(ID, PersonUtils.StandardizeName(name)); 
+        this(ID, PersonUtils.StandardizeName(name), null); 
     }
 
 
@@ -66,9 +68,21 @@ public class Person extends IntermediateObject {
     }
 
     public void SetGender(boolean IsFemale) { this.gender = IsFemale? "FEMALE": "MALE"; }
-    public void SetNationality(String nationality) throws Exception { 
-        this.nationality = PersonUtils.StandardizeName(nationality);
+    public void SetNationality(String nationality) throws Exception {
+        String nationality_ = PersonUtils.StandardizeName(nationality);
+        String[] InvalidTerm = {"Us", "Usa", "Uk"};
+        String[] ValidTerm = {"US", "USA", "UK"};
+
+        for (int i = 0; i < InvalidTerm.length; i++) {
+            nationality_ = nationality_.replace(InvalidTerm[i], ValidTerm[i]);
+        }
+        this.nationality = nationality_;
     }
+
+    // ----------------------------------------------------------
+    public static Prefix GetPrefix() { return Prefix.Person; }
+    public static String GetPrefixCode() { return Person.GetPrefix().GetPrefixCode(); }
+
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization

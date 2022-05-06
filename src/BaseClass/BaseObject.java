@@ -31,17 +31,15 @@ import Utility.JsonUtils;
  * 1) 
 **/
 
-public class BaseObject extends AbstractObject {
+public class BaseObject extends IntermediateObject {
     // ---------------------------------------------------------------------------------------------------------------------
     private String description;           // This is the description of the object
     private int number;                   // This is the amount or number of the object
     protected Prefix prefix;
 
     public BaseObject(String ID, String name, String description, int number) throws Exception {
-        super(ID, name);
-
+        super(ID, name, description);
         JsonUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
-        this.description = (description == null) ? "": description;
         this.number = number;
         this.prefix = Prefix.BaseObject;
     }
@@ -75,11 +73,7 @@ public class BaseObject extends AbstractObject {
 
     // ----------------------------------------------------------
     public static Prefix GetPrefix() { return Prefix.BaseObject; }
-    public Prefix GetThisPrefix() { return this.prefix; }
-
     public static String GetPrefixCode() { return BaseObject.GetPrefix().GetPrefixCode(); }
-    public String GetThisPrefixCode() { return this.GetThisPrefix().GetPrefixCode(); }
-
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
