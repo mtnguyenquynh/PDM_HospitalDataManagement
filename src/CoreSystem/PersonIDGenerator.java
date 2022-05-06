@@ -1,4 +1,4 @@
-package Person;
+package CoreSystem;
 
 public class PersonIDGenerator {
     

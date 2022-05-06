@@ -27,14 +27,14 @@ import PrefixState.Prefix;
  * 1) 
 **/
 
-public class IDGenerator {
+public class ObjectIDGenerator {
     // ---------------------------------------------------------------------------------------------------------------------
     // Although it is not 100% correct to load as String[], but we left there to ensure the progress
     // of the project and future software development.
 
     private final Hashtable<Prefix, String[]> ID_Store;
     private final static String counter = "count";
-    public IDGenerator() {
+    public ObjectIDGenerator() {
         this.ID_Store = new Hashtable<Prefix, String[]>(100, 0.75f);
         this.ID_Store.put(Prefix.Tool, new String[] {"database/GlobalPool/Tool.json"});
         this.ID_Store.put(Prefix.Resource, new String[] {"database/GlobalPool/Resource.json"});
@@ -50,13 +50,13 @@ public class IDGenerator {
         // Step 2: Loading the directory of the ID pool
         String directory = ID_Pool[0];
         Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(directory, null);
-        int count = (int) data.get(IDGenerator.counter);
+        int count = (int) data.get(ObjectIDGenerator.counter);
 
         String ID = prefix.GetPrefixCodeNotation() + String.format("%06d", count);
 
         // Step 3: Update the counter
         if (forceUpdate) {
-            data.put(IDGenerator.counter, count + 1);
+            data.put(ObjectIDGenerator.counter, count + 1);
             JsonUtils.SaveHashTableIntoJsonFile(directory, data, null);
         }
         return ID; 
@@ -75,8 +75,8 @@ public class IDGenerator {
         String directory = this.ID_Store.get(pr)[0];
         Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(directory, null);
                 
-        int count = (int) data.get(IDGenerator.counter);
-        data.put(IDGenerator.counter, count + amount);
+        int count = (int) data.get(ObjectIDGenerator.counter);
+        data.put(ObjectIDGenerator.counter, count + amount);
         JsonUtils.SaveHashTableIntoJsonFile(directory, data, null);
         return ;
     }
