@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.Class;
 import java.util.Hashtable;
+import java.util.ArrayList;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -42,5 +43,32 @@ public abstract class DataUtils {
         }
         return new Hashtable<String, Object>(capacity, loadFactor);
     }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+
+    public static ArrayList<String> CastToStringArrayFromObjectArray(ArrayList<Object> obj) {
+        ArrayList<String> result = new ArrayList<String>();
+        for (Object o: obj) { result.add((String) o); }
+        return result;
+    }
+
+    public static ArrayList<Integer> CastToIntArrayFromObjectArray(ArrayList<Object> obj) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        for (Object o: obj) { result.add((Integer) o); }
+        return result;
+    }
+
+    public static ArrayList<Object> CastToObjectArrayFromStringArray(ArrayList<String> obj) {
+        ArrayList<Object> result = new ArrayList<Object>();
+        for (String o: obj) { result.add(o); }
+        return result;
+    }
+
+    public static ArrayList<Object> CastToObjectArrayFromIntArray(ArrayList<Integer> obj) {
+        ArrayList<Object> result = new ArrayList<Object>();
+        for (Integer o: obj) { result.add(o); }
+        return result;
+    }
+
 
 }

@@ -34,8 +34,6 @@ public class Resource extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     private final ResourceUnit unit;
     private float price;
-    private static final Prefix prefix = Prefix.Resource;
-   
 
     public Resource(String ID, String name, String description, int number, ResourceUnit unit, 
                     float price) throws Exception {
@@ -43,22 +41,17 @@ public class Resource extends BaseObject {
         super(ID, name, description, number);
         this.price = price;
         this.unit = unit;
+        this.prefix = Prefix.Resource;
     }
 
     public Resource(String ID, String name, String description, int number, ResourceUnit unit, 
                     double price) throws Exception {
-        // You may want to add more fields or attributes here.
-        super(ID, name, description, number);
-        this.price = (float) price;
-        this.unit = unit;
+        this(ID, name, description, number, unit, (float) price);
     }
 
     public Resource(String ID, String name, String description, int number, ResourceUnit unit, 
                     int price) throws Exception {
-        // You may want to add more fields or attributes here.
-        super(ID, name, description, number);
-        this.price = (float) price;
-        this.unit = unit;
+        this(ID, name, description, number, unit, (float) price);
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -78,7 +71,7 @@ public class Resource extends BaseObject {
     public ResourceUnit GetUnit() { return this.unit; }
     public String GetUnitAsString() { return this.unit.toString(); }
 
-    public static Prefix GetPrefix() { return Resource.prefix; }
+    public static Prefix GetPrefix() { return Prefix.Resource; }
     public static String GetPrefixCode() { return Resource.GetPrefix().GetPrefixCode(); }
 
     // ---------------------------------------------------------------------------------------------------------------------

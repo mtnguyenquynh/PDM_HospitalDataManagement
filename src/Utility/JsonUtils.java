@@ -24,13 +24,13 @@ import org.json.simple.parser.ParseException;
 **/
 
 /**
- * This file contained several helper functions
+ * This file contained several helper functions to support reading and writing JSON files
  * 
- * See references:
+ * Rferences:
  * - https://howtodoinjava.com/java/library/json-simple-read-write-json-examples
 **/
 
-public abstract class Utils {
+public abstract class JsonUtils {
     // ---------------------------------------------------------------------------------------------------------------------
     // Condition-checking
     /**
@@ -96,12 +96,12 @@ public abstract class Utils {
      * @return Hashtable<String, Object>
      **/
     public static Hashtable<String, Object> CastJsonToHashtable(JSONObject data, String name) {
-        Hashtable<String, Object> table = new Hashtable<String, Object>(1000, 0.75f);
         // Iterate over keys
         if (name != null && data.size() == 1) {
             Object item = data.get(name);
-            return Utils.CastJsonToHashtable((JSONObject) item, null);
+            return JsonUtils.CastJsonToHashtable((JSONObject) item, null);
         }
+        Hashtable<String, Object> table = new Hashtable<String, Object>(1000, 0.75f);
         for (Object key : data.keySet()) {
             // Get the value
             Object value = data.get(key);
@@ -110,7 +110,6 @@ public abstract class Utils {
         return table;
     }
 
-    
     public static JSONObject CastHashtableToJson(Hashtable<String, Object> data, String name) {
         JSONObject jsonObject = new JSONObject();
         for (String key : data.keySet()) {
@@ -124,6 +123,49 @@ public abstract class Utils {
         return JsonObjectWrapper;
     }
 
+    public static JSONArray CastArrayListToJsonArray(ArrayList<Object> data) {
+        JSONArray jsonArray = new JSONArray();
+        for (Object item : data) {
+            jsonArray.add(item);
+        }
+        return jsonArray;
+    }
+
+    public static JSONObject CastArrayListToJsonObject(ArrayList<Object> data, String name) {
+        JSONObject jsonObject = new JSONObject();
+        for (int i = 0; i < data.size(); i++) {
+            jsonObject.put(String.valueOf(i), data.get(i));
+        }
+        if (name == null) { return jsonObject; }
+
+        JSONObject JsonObjectWrapper = new JSONObject();
+        JsonObjectWrapper.put(name, jsonObject);
+        return JsonObjectWrapper;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Read/load a JSON file by its path/directory
+    public static Hashtable<String, Object> LoadJsonFileToHashtable(String directory, String name) {
+        JSONObject jsonObject = JsonUtils.ReadJsonFileAsObject(directory);
+        return JsonUtils.CastJsonToHashtable(jsonObject, name);
+    }
+
+    public static ArrayList<Object> LoadJsonFileToArrayList(String directory, String name) {
+        ArrayList<Object> arrayList = new ArrayList<Object>(10000);
+        JSONArray jsonArray = JsonUtils.ReadJsonFileAsArray(directory);
+        if (name == null) { for (Object item : jsonArray) { arrayList.add(item); } } 
+        else {
+            for (Object item : jsonArray) {
+                JSONObject jsonObject = (JSONObject) item;
+                Object result = jsonObject.get(name);
+                if (result != null) { arrayList.add(result); }
+            }
+        }
+        return arrayList;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Write a JSON file by its path/directory
     /**
      * This function will convert every data from JSONArray into ArrayList.
      * 
@@ -137,7 +179,7 @@ public abstract class Utils {
         ArrayList<Hashtable<String, Object>> data = new ArrayList<Hashtable<String, Object>>(10000);
         JSONArray jsonArray = ReadJsonFileAsArray(directory);
         if (jsonArray == null) { throw new Exception("This JSON file cannot be loaded."); }
-        for (Object item : jsonArray) { data.add(Utils.CastJsonToHashtable((JSONObject) item, name)); }
+        for (Object item : jsonArray) { data.add(JsonUtils.CastJsonToHashtable((JSONObject) item, name)); }
         return data;
 
     }
@@ -157,16 +199,27 @@ public abstract class Utils {
         
         JSONArray jsonArray = new JSONArray();
         for (Hashtable<String, Object> table : data) {
-            jsonArray.add(Utils.CastHashtableToJson(table, name));
+            jsonArray.add(JsonUtils.CastHashtableToJson(table, name));
         }
     
-        return Utils.WriteJsonFile(directory, jsonArray); // Write JSON file
+        return JsonUtils.WriteJsonFile(directory, jsonArray); // Write JSON file
     }
 
     public static boolean SaveHashTableIntoJsonFile(String directory, Hashtable<String, Object> data, 
                                                     String name) throws Exception {
-        JSONObject jsonObject = Utils.CastHashtableToJson(data, name);
-        return Utils.WriteJsonFile(directory, jsonObject); // Write JSON file
+        JSONObject jsonObject = JsonUtils.CastHashtableToJson(data, name);
+        return JsonUtils.WriteJsonFile(directory, jsonObject); // Write JSON file
+    }
+
+    public static boolean SaveArrayListIntoJsonFile(String directory, ArrayList<Object> data, 
+                                                    String name) throws Exception {
+        if (name == null) {
+            JSONArray jsonArray = JsonUtils.CastArrayListToJsonArray(data);
+            return JsonUtils.WriteJsonFile(directory, jsonArray); // Write JSON file
+        } else {
+            JSONObject jsonObject = JsonUtils.CastArrayListToJsonObject(data, name);
+            return JsonUtils.WriteJsonFile(directory, jsonObject); // Write JSON file
+        }
     }
 
 }

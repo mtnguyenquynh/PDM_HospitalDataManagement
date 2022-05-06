@@ -1,13 +1,10 @@
 package Room;
 
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
-import BaseClass.AbstractObject;
+import BaseClass.BaseRoomContainer;
 import Object.Tool;
-import Utility.DataUtils;
-import Utility.Utils;
+
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -40,19 +37,8 @@ import Utility.Utils;
  *    between the LToolPool and LResourcePool, which are both the collection of <Tool> and 
  *    <Resource>. Thus the primary key of the "ObjectRoom" is the {"RoomUnit.ID", "Object.ID"}.
  * 
- * Designing a LToolPool as well as the LResourcePool is a little bit tricky and not. The hidden
- * reason is that its structure is similar to the "PatientRoom" but the limitation from its amount
- * is unknown, which implied that in theory, the number of "Tool" and "Resource" is unlimited.
- * Thus, one of the greatest option is to set a constraint to prevent memory-overflow and serialize
- * the data.
+ * See the note in "BaseClass.BaseObjectPool" for more details.
  * 
- * Similar to the "PatientRoom" and "MedicoRoom", we stored the ID as an primary key along with 
- * the room-code. Reference attributes are the name of those objects and its number.
- * 
- * In the "design" section, we don't need to set the fixed-value amount in the "LocalPool" as
- * the number of objects are varied across the "RoomUnit".
- * 
- *  
  * @author Ichiru Take
  * @version 0.0.1
  * 
@@ -60,109 +46,51 @@ import Utility.Utils;
  * 1) 
 **/
 
-public class LToolPool extends AbstractObject {
-    private final static int SERIALIZATION_CAPACTITY = 10000;
-    private final static float SERIALIZATION_LOAD_FACTOR = 0.75f;
-    private final static int NumberOfToolInformation = 2;
-    private Hashtable<String, String[]> LocalPool;
+public class LToolPool extends BaseRoomContainer {
+    public LToolPool(String ID) throws Exception { super(ID); }
+    
+    public LToolPool(BaseRoomContainer object_pool) throws Exception { super(object_pool); }
 
-    public LToolPool(String ID) throws Exception {
-        super(ID);
-        int capacity = PatientRoom.GetSerializationCapacity();
-        float loadFactor = PatientRoom.GetSerializationLoadFactor();
-        this.LocalPool = new Hashtable<String, String[]>(capacity, loadFactor);
-    }
+    public LToolPool(LToolPool object_pool) throws Exception { super((BaseRoomContainer) object_pool); }
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // Getter & Setter Function
-    private Hashtable<String, String[]> GetLocalPool() { return this.LocalPool; }
-    public static int GetSerializationCapacity() { return LToolPool.SERIALIZATION_CAPACTITY; }
-    public static float GetSerializationLoadFactor() { return LToolPool.SERIALIZATION_LOAD_FACTOR; }
-    public int GetCurrentCapacity() { return this.GetLocalPool().size(); }
+    // Find object in pool
+    public String[] GetTool(String ID) { return this.GetObject(ID); }
 
-    public static String[] GetToolInformation(Tool tool) {
-        Utils.CheckArgumentCondition(tool != null, "Tool cannot be null.");
-        String[] ToolInformation = new String[LToolPool.NumberOfToolInformation];
-        ToolInformation[0] = tool.GetID();
-        ToolInformation[1] = tool.GetName();
-        ToolInformation[2] = Integer.toString(tool.GetNumber());
-        return ToolInformation;
+    public String[] GetTool(Tool object) { return this.GetObject(object.GetID()); }
+
+    public boolean IsToolAvailable(String ID) { return this.GetObject(ID) != null; }
+
+    public boolean IsToolAvailable(Tool object) { return this.GetObject(object.GetID()) != null; }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Updater
+    public boolean UpdateTool(String ID, String name, int amount) throws Exception { 
+        return this.UpdateObject(ID, amount);
     }
 
-    public String[] GetToolById(String ID) {
-        Utils.CheckArgumentCondition(ID != null, "Tool's ID cannot be null.");
-        return this.GetLocalPool().get(ID);
+    public boolean UpdateTool(Tool object, int amount) throws Exception {
+        return this.UpdateObject(object.GetID(), amount);
     }
 
-    public String[] GetToolByName(String Name) {
-        Utils.CheckArgumentCondition(Name != null, "Tool's Name cannot be null.");
-        String[] ToolInformation = null;
-        for (String[] Tool : this.GetLocalPool().values()) {
-            if (Tool[1].equals(Name)) {
-                ToolInformation = Tool;
-                break;
-            }
-        }
-        return ToolInformation;
+    public boolean AddNewTool(String ID, String name, int amount) throws Exception { 
+        return this.AddNewObject(ID, name, amount);
     }
 
-    public String[] GetTool(Tool tool) { return this.GetToolById(tool.GetID()); }
-
-    public boolean CheckIfToolAvailable(Tool tool) {
-        Utils.CheckArgumentCondition(tool != null, "Tool cannot be null.");
-        return this.GetLocalPool().containsKey(tool.GetID());
+    public boolean AddNewTool(Tool object, int amount) throws Exception {
+        return this.AddNewObject(object.GetID(), object.GetName(), amount);
     }
 
-    public void AddTool(Tool tool) throws RuntimeException {
-        String[] ToolInformation = new String[LToolPool.NumberOfToolInformation];
-        Utils.CheckArgumentCondition(tool != null, "Tool cannot be null.");
-        if (this.GetCurrentCapacity() >= LToolPool.GetSerializationCapacity() - 2) {
-            throw new RuntimeException("The capacity of the LToolPool is full.");
-        }
+    public boolean RemoveTool(String ID) throws Exception { return this.RemoveObject(ID); }
 
-        ToolInformation[0] = tool.GetID();
-        ToolInformation[1] = tool.GetName();
-        int NewToolNumber = tool.GetNumber();
-        if (this.CheckIfToolAvailable(tool)) {
-            String[] OldToolInformation = this.GetTool(tool);
-            ToolInformation[2] = Integer.toString(Integer.parseInt(OldToolInformation[2]) + NewToolNumber);
-        } else {
-            ToolInformation[2] = Integer.toString(NewToolNumber);
-        }
-        this.GetLocalPool().put(tool.GetID(), ToolInformation);
-    }
-
-    public void RemoveTool(Tool tool) {
-        if (tool == null) { return ;}
-        if (this.CheckIfToolAvailable(tool)) { this.GetLocalPool().remove(tool.GetID()); }
-    }
+    public boolean RemoveTool(Tool object) throws Exception { return this.RemoveObject(object.GetID()); }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
-    public Hashtable<String, Object> Serialize() {
-        Hashtable<String, Object> result = DataUtils.ForceGetEmptyHashtable(this.getClass());
-        result.put("id", this.GetID());
-
-        Iterator<Entry<String, String[]>> iter = this.GetLocalPool().entrySet().iterator();
-        while (iter.hasNext()) {
-            Entry<String, String[]> entry = iter.next();
-            result.put(entry.getKey(), entry.getValue());
-        }
-        return result;
-    }
+    public Hashtable<String, Object> Serialize() { return super.Serialize(); }
 
     public static LToolPool Deserialize(Hashtable<String, Object> data) throws Exception {
-        String ID = (String) data.get("id");
-        LToolPool result = new LToolPool(ID);
-        Iterator<Entry<String, Object>> iter = data.entrySet().iterator();
-        while (iter.hasNext()) {
-            Entry<String, Object> entry = iter.next();
-            if (entry.getKey().equals("id")) { continue; }
-
-            String[] ToolInformation = (String[]) entry.getValue();
-            result.GetLocalPool().put(entry.getKey(), ToolInformation);
-        }
-        return result;
+        return new LToolPool(BaseRoomContainer.Deserialize(data));
     }
 
 

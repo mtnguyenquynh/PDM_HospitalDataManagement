@@ -31,23 +31,18 @@ public class Person extends IntermediateObject {
     // These attributes are the personal information of a particular person
     private String email, phone_number, gender, nationality;        
 
-    public Person(String ID, String name, String email, String phone_number, 
-                  String gender, String nationality, String description)  throws Exception {
-        super(ID, name, description);
-        this.email = email;
-        this.phone_number = phone_number;
-        this.gender = gender;
-        this.nationality = nationality;
+    public Person(String ID, String name, String description) throws Exception {
+        super(ID, PersonUtils.StandardizeName(name), description);
+        this.email = null;
+        this.phone_number = null;
+        this.gender = null;
+        this.nationality = null;
     }
 
-    public Person(String ID, String name, String email, String phone_number, 
-                  String gender, String nationality)  throws Exception {
-        super(ID, name);
-        this.email = email;
-        this.phone_number = phone_number;
-        this.gender = gender;
-        this.nationality = nationality;
+    public Person(String ID, String name) throws Exception { 
+        super(ID, PersonUtils.StandardizeName(name)); 
     }
+
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
@@ -58,11 +53,22 @@ public class Person extends IntermediateObject {
 
     // -----------------------------------------------------------
     // Setter Function
-    public void SetName(String name) throws RuntimeException { 
+    public void SetName(String name) throws Exception { 
         throw new RuntimeException("This method is not allowed to be called.");
     }
-    public void SetEmail(String email) { this.email = email; }
-    public void SetPhoneNumber(String phone_number) { this.phone_number = phone_number; }
+    
+    public void SetEmail(String email) throws Exception { 
+        this.email = PersonUtils.StandardizeEmail(email); 
+    }
+
+    public void SetPhoneNumber(String phone_number) throws Exception { 
+        this.phone_number = PersonUtils.StandardizePhoneNumber(phone_number); 
+    }
+
+    public void SetGender(boolean IsFemale) { this.gender = IsFemale? "FEMALE": "MALE"; }
+    public void SetNationality(String nationality) throws Exception { 
+        this.nationality = PersonUtils.StandardizeName(nationality);
+    }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
@@ -78,11 +84,19 @@ public class Person extends IntermediateObject {
     public static Person Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
-        String email = (String) data.get("email");
-        String phone_number = (String) data.get("phone_number");
+        String description = (String) data.get("description");
+        Person result = new Person(ID, name, description);
+        
+        result.SetEmail((String) data.get("email"));
+        result.SetPhoneNumber((String) data.get("phone_number"));
+
         String gender = (String) data.get("gender");
-        String nationality = (String) data.get("nationality");
-        return new Person(ID, name, email, phone_number, gender, nationality);
+        boolean IsFemale = false;
+        if (gender == "FEMALE" || gender.equals("FEMALE")) { IsFemale = true; }
+        result.SetGender(IsFemale);
+
+        result.SetNationality((String) data.get("nationality"));
+        return result;
     }
 
 }
