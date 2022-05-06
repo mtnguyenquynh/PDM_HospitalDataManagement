@@ -31,6 +31,7 @@ public enum Prefix {
     Patient("Pt-"),
     Staff("St-"),
     OtherStaff("OS-"),
+    
     Medico("Md-"),
     Doctor("Dt-"),
     Nurse("Ns-"),
@@ -43,6 +44,7 @@ public enum Prefix {
     // Declare enum constants here: Global Pool to keep track of objects in the hospital.
     IntermediateObject("ImO-"),
     BaseObject("BO-"),
+    
     Tool("Tl-"),
     Resource("Rs-"),
     

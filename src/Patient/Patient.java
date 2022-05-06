@@ -14,8 +14,8 @@ import PrefixState.Prefix;
 
 /**
  * This is a dataclass which describes an instances of a patient.
- * which is also a base/abstract class to have better description on 
- * other classes such as Patient, Doctor, Nurse (medico).
+ * which have the privilege to access the first-layer internal system.
+ * But in this case, the "internal system" is not developed.
  * 
  * @author Ichiru Take
  * @version 0.0.1
@@ -37,7 +37,7 @@ public class Patient extends Person {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
-    
+
 
     // ----------------------------------------------------------
     public static Prefix GetPrefix() { return Prefix.Patient; }

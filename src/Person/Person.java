@@ -20,6 +20,9 @@ import java.util.Hashtable;
  * which is also a base/abstract class to have better description on 
  * other classes such as Patient, Doctor, Nurse (medico).
  * 
+ * Moreover, this object which have the privilege to access the zero-layer internal 
+ * system (Treated to be Guest).
+ * 
  * @author Ichiru Take
  * @version 0.0.1
  * 
