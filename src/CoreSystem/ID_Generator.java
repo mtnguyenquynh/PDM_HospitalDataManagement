@@ -20,7 +20,8 @@ import PrefixState.Prefix;
 
 /**
  * This class described the ID-Generator for dead objects such as the Resource, 
- * and Tool. The ID is casted by the prefix and the six-digit ID itself.
+ * and Tool. The ID is casted by the prefix and the counter itself by linking 
+ * to the JSON Configuration stored in the "database" folder (locked at ID_Store).
  * 
  * @author Ichiru Take
  * @version 0.0.1
@@ -96,11 +97,10 @@ public class ID_Generator {
         return this.GenerateID(TargetObject, forceUpdate, 0);
     }
 
-    public String GenerateObjectID(BaseObject object) throws Exception {
-        return this.GenerateObjectID(object, true);
+    public String GenerateObjectID(BaseObject TargetObject) throws Exception {
+        return this.GenerateObjectID(TargetObject, true);
     }
 
-    // ---------------------------------------------------------------------------------------------------------------------
     public String GeneratePersonID(Person person, boolean forceUpdate) throws Exception {
         return this.GenerateID(person, forceUpdate, 1); 
     }
@@ -109,6 +109,7 @@ public class ID_Generator {
         return this.GeneratePersonID(person, true);
     }
 
+    // ---------------------------------------------------------------------------------------------------------------------
     private void ChangeCounter(String class_name, int amount) throws Exception {
         if (!Prefix.FindEnum(class_name)) {
             return ;
