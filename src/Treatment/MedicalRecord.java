@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import BaseClass.BaseRecord;
 import PrefixState.Prefix;
+import Staff.Medico;
 import Utility.DataUtils;
 import Utility.JsonUtils;
 
@@ -110,12 +111,24 @@ public class MedicalRecord extends BaseRecord {
         DataUtils.CheckArgumentCondition(RDoc_MedicoID != null, "ID cannot be null.");
         this.RDoc_MedicoID = RDoc_MedicoID;
     }
+    public void SetRDoc_MedicoID(Medico medico) throws Exception {
+        DataUtils.CheckArgumentCondition(medico.GetResponsibility() == Prefix.Doctor, "The medico must be a doctor.");
+        this.SetRDoc_MedicoID(medico.GetID());
+    }
+    public void ClearResponsibleDoctor() { this.RDoc_MedicoID = ""; }
+
 
     public String GetRNurse_MedicoID() { return this.RNurse_MedicoID; }
     public void SetRNurse_MedicoID(String RNurse_MedicoID) throws Exception {
         DataUtils.CheckArgumentCondition(RNurse_MedicoID != null, "ID cannot be null.");
         this.RNurse_MedicoID = RNurse_MedicoID;
     }
+    public void SetRNurse_MedicoID(Medico medico) throws Exception {
+        DataUtils.CheckArgumentCondition(medico.GetResponsibility() == Prefix.Nurse, "The medico must be a nurse.");
+        this.SetRDoc_MedicoID(medico.GetID());
+    }
+    public void ClearResponsibleNurse() { this.RNurse_MedicoID = ""; }
+
 
     // --------------------------------------------------------------------------------------------------------------------
     // Treatment-related methods
