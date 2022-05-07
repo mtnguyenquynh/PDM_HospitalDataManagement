@@ -173,7 +173,7 @@ public class MedicalRecord extends BaseRecord {
 		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
 		
         for (Treatment TM: this.GetLocalPool()) {
-            TreatmentInformation.put(TM.GetTreatmentID(), TM.Serialize());
+            TreatmentInformation.put(TM.GetStandardizedIndex(), TM.Serialize());
         }
 		
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import BaseClass.BaseRecord;
 import Object.Resource;
-import PrefixState.Prefix;
 import Staff.Medico;
 import Utility.DataUtils;
 import Utility.JsonUtils;
@@ -38,7 +37,7 @@ import Person.PersonUtils;
  * 4) Descriptions: The desciption of the treatment: Mapping the {Index} - { Date, Time, Description, Medico_Name }.
  * 	  The {Date, Time} here is its creation time. Not the recording time by patient.
  * 
- * Note that the "index" (integer) attribute started from zero, NOT from 1.
+ * Note that the "index" (integer) attribute started from ZERO (0), NOT from one (1).
  * 
  * @author Ichiru Take
  * @version 0.0.1
