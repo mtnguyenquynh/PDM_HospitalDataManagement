@@ -173,6 +173,15 @@ public class MedicalRecord extends BaseRecord {
     // Serialization & Deserialization
     public String GetToMedicalRecordFolder() { return TreatmentUtils.GetToMedicalRecordFolder(this); }
     
+    /**
+	 * This function not serializes the "MedicalRecord" into the JSONOBject-like object but actually
+	 * serialize the "treatment" into a JSON file.
+	 * 
+	 * The "folder" key is the core following path: "database/PatientRecord/[FirstName-Tree]/[Patient.ID]/[MedicalRecord.ID]/"
+	 * The "MedicalRecord" is stored at the following path: "[folder]/<MedicalRecord.ID>.json"
+	 * 
+	 */
+
 
     public Hashtable<String, Object> Serialize() {
 		Hashtable<String, Object> RecordInfo = super.Serialize();
@@ -232,4 +241,10 @@ public class MedicalRecord extends BaseRecord {
         return record;
 	}
 
+    public static MedicalRecord DeserializeFromFile(String directory) {
+        Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashTable(directory, null);
+        String VerifyKey = (String) data.get("MedicalRecord");
+		DataUtils.CheckCondition(VerifyKey != null, "The loaded file is not a valid medical record.");
+        return MedicalRecord.Deserialize(data);
+    }
 }

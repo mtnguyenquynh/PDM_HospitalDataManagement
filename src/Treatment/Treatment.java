@@ -328,7 +328,7 @@ public class Treatment extends BaseRecord {
 	public static Treatment DeserializeFromFile(String directory) throws Exception {
 		Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(directory, null);
 		String VerifyKey = (String) data.get("Treatment");
-		DataUtils.CheckCondition(VerifyKey != null, "The loaded file is not a valid treatment record.");
+		DataUtils.CheckCondition(VerifyKey != null, "The loaded file is not a valid medical-treatment record.");
 		return Treatment.Deserialize(data);
 	}
 
