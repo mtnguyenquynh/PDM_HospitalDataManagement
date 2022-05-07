@@ -109,4 +109,6 @@ public enum DepartmentEnum {
         return null;
     }
 
+    public static boolean FindEnum(String dept) { return DepartmentEnum.GetEnum(dept) != null; }
+
 }
