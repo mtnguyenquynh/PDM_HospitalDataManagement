@@ -3,10 +3,13 @@ package Staff;
 import Person.Person;
 
 public class Medico extends Person {
-    public Medico(String id, String name, String email, String phone_number, 
-                  String gender, String nationality) {
-        super(id, name, email, phone_number, gender, nationality);
+    
+    public Medico(String ID, String name, String description) throws Exception {
+        super(ID, name, description);
+    }
 
+    public Medico(String ID, String name) throws Exception {
+        super(ID, name, null);
     }
     
 }

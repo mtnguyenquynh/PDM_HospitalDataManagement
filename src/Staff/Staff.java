@@ -3,10 +3,11 @@ package Staff;
 import Person.Person;
 
 public class Staff extends Person {
-    public Staff(String id, String name, String email, String phone_number, 
-                  String gender, String nationality) {
-        super(id, name, email, phone_number, gender, nationality);
-
+    
+    public Staff(String ID, String name, String description) throws Exception {
+        super(ID, name, description);
     }
+
+    public Staff(String ID, String name) throws Exception { super(ID, name); }
     
 }

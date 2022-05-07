@@ -1,6 +1,281 @@
-public class Treatment {
-	private String code;
-	public Treatment(String code){
-		this.code = code;
+package Treatment;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import BaseClass.BaseRecord;
+import Object.Resource;
+import PrefixState.Prefix;
+import Staff.Medico;
+import Utility.DataUtils;
+import Utility.JsonUtils;
+import Person.PersonUtils;
+
+
+/**
+ * Copyright (C) 2022-2022, HDM-Dev Team
+ * All Rights Reserved
+
+ * This file is part of HDM-Dev Team's project. The contents are
+ * fully covered, controlled, and acknowledged by the terms of the
+ * BSD-3 license, which is included in the file LICENSE.md, found
+ * at the root of the project's source code/tree repository.
+**/
+
+/**
+ * This class described a single entity of how we directly manage the medical condition
+ * of the patient. Note that we don't directly simulate all properties found in a 
+ * real-world treatment record, but we setup the basic foundation. For example, the 
+ * heart beat rate is a number that appeared in some particular records but not all. 
+ * 
+ * In the treatment record, we store the patient's ID, the medico record's ID,
+ * all the involved medicos (ID), some syncronized information such as name, age 
+ * and gender, and the optional description if we want to add some fields on it.
+ * 
+ * What inside the treatments? 
+ * 1) Medico_Information: Mapping the Medico_ID & {ID, name, phone_number}
+ * 2) Supplementary: The patient's scanning image (X-ray). Stored by directory.
+ * 3) Resources: The drug/medicine information: Mapping the {ID}-{ID, name, amount}
+ * 4) Descriptions: The desciption of the treatment: Mapping the {Index} - { Date, Time, Description, Medico_Name }.
+ * 	  The {Date, Time} here is its creation time. Not the recording time by patient.
+ * 
+ * 
+ * @author Ichiru Take
+ * @version 0.0.1
+ * 
+ * References:
+ * 1) https://www.geeksforgeeks.org/new-date-time-api-java8/
+ * 2) https://stackoverflow.com/questions/6516320/datetime-datatype-in-java
+ * 3) https://www.baeldung.com/java-8-date-time-intro
+**/
+
+
+public class Treatment extends BaseRecord {
+	// ---------------------------------------------------------------------------------------------------------------------
+	// These attribute fields where we want to pre-allocate memory for our ArrayList (Medico && Descriptions).
+	// The number of elements can be more than pre-allocation, but this number should be enough.
+	// Note that we are not deploying these data into the design as the logging to UI must be demo.
+	private static final int MAX_NUM_MEDICO = 50;				// 50 medicos are pre-allocated
+	private static final int MAX_NUM_SUPPLEMENTARY = 50;		// 50 supplementary materials are pre-allocated
+	private static final int MAX_NUM_DESCRIPTIONS = 100;		// 100 descriptions are pre-allocated
+	private static final int MAX_NUM_RESOURCES = 100;			// 100 resources are pre-allocated
+	private static final Prefix prefix = Prefix.Treatment;		// Prefix for the treatment
+
+	// ---------------------------------------------------------------------------------------------------------------------
+	private String MedicalRecord_ID; 					// Patient's Data
+	private int index; 								    // This represented the index placed in the medical-record		
+	private String ClassificationCode;					// This told us the type of the treatment
+
+	// ----------------------------------------------------------
+	// Mapping data
+	private Hashtable<String, Object> MedicoInfo;		// {Medico_ID} & {ID, name, phone_number}
+	private ArrayList<String> Supplementary;			// The directory of supplementary materials
+	private Hashtable<String, Object> Resources;		// The drug/medicine information
+	private Hashtable<String, Object> Descriptions;		// The desciption of the treatment
+
+	public Treatment(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName, 
+		String Pt_Age, String Pt_Gender, int index, String code, boolean writable) {
+		super(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, 
+		      Pt_Gender, writable);
+
+		this.MedicalRecord_ID = MedicalRecord_ID;
+		this.index = index;
+		this.ClassificationCode = code;
+
+		// ----------------------------------------------------------
+		this.MedicoInfo = new Hashtable<String, Object>(Treatment.MAX_NUM_MEDICO, 0.75f);
+		this.Supplementary = new ArrayList<String>(Treatment.MAX_NUM_SUPPLEMENTARY);
+		this.Resources = new Hashtable<String, Object>(Treatment.MAX_NUM_RESOURCES, 0.75f);
+		this.Descriptions = new Hashtable<String, Object>(Treatment.MAX_NUM_DESCRIPTIONS, 0.75f);
 	}
+
+	public Treatment(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName,
+		String Pt_Age, String Pt_Gender, int index, String code) {
+		this(Patient_ID, MedicalRecord_ID, Pt_FirstName, Pt_LastName, Pt_Age, 
+		     Pt_Gender, index, code, true);
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------------
+	// Setters
+	public void AddMedico(Medico medico) {
+		if (!this.IsWritable()) { return; }
+		if (!this.GetMedicoInfo().containsKey(medico.GetID())) {
+			String[] MedicoInformation = {medico.GetID(), medico.GetName(), medico.GetPhoneNumber()};
+			this.GetMedicoInfo().put(medico.GetID(), MedicoInformation);
+		}
+	}
+
+	public void AddSupplementary(String path) {
+		if (!this.IsWritable()) { return; }
+		if (!this.GetSupplementary().contains(path)) { this.GetSupplementary().add(path); return ;}
+		for (String s : this.GetSupplementary()) { if (s.contains(path)) { return; } }
+		this.GetSupplementary().add(path);
+	}
+
+	public void AddResource(String ID, String name, int amount) {
+		if (!this.IsWritable()) { return; }
+		if (!this.GetResources().containsKey(ID)) {
+			String[] ResourceInformation = {ID, name, Integer.toString(amount)};
+			this.GetResources().put(ID, ResourceInformation);
+		}
+	}
+
+	public void AddResource(Resource resource, int amount) {
+		this.AddResource(resource.GetID(), resource.GetName(), amount);
+	}
+
+	public void AddDescription(String description, String writer_name) {
+		if (!this.IsWritable()) { return; }
+		Description desc = new Description(description, writer_name);
+		String[] DescriptionInformation = {desc.GetDateAsString(), desc.GetTimeAsString(), 
+										   desc.GetDescription(), desc.GetMedicoName()};
+		int index = this.GetDescriptions().size();
+		this.GetDescriptions().put(Integer.toString(index), DescriptionInformation);
+	}
+
+	// -----------------------------------------------------------
+	// Remover
+	public void RemoveMedico(String medico_ID) {
+		if (!this.IsWritable()) { return; }
+		if (this.GetMedicoInfo().containsKey(medico_ID)) { this.GetMedicoInfo().remove(medico_ID); }
+	}
+	public void RemoveMedico(Medico medico) { this.RemoveMedico(medico.GetID()); }
+
+	public void RemoveSupplementary(String path, boolean force) {
+		if (!this.IsWritable()) { return; }
+		for (String s : this.GetSupplementary()) {
+			if (s.equals(path)) { this.GetSupplementary().remove(s); break; }
+			if (force && s.contains(path)) { this.GetSupplementary().remove(s); break; }
+		}
+	}
+
+	public void RemoveResource(String ID) {
+		if (!this.IsWritable()) { return; }
+		if (this.GetResources().containsKey(ID)) { this.GetResources().remove(ID); }
+	}
+	public void RemoveResource(Resource resource) { this.RemoveResource(resource.GetID()); }
+
+	public void UpdateResource(String ID, int amount) {
+		if (!this.IsWritable()) { return; }
+		if (amount == 0) { this.RemoveResource(ID); return; }
+		if (this.GetResources().containsKey(ID)) {
+			String[] ResourceInformation = (String[]) this.GetResources().get(ID);
+			ResourceInformation[2] = Integer.toString(amount);
+			this.GetResources().put(ID, ResourceInformation);
+		}
+	}
+	public void UpdateResource(Resource resource, int amount) { this.UpdateResource(resource.GetID(), amount); }
+
+	public void RemoveDescription(String index) {
+		// This operation is a little bit tricky since old description can be traversed back for legacy purpose.
+		// Thus we can added a new prefix "[Deleted]" to the description.
+		if (!this.IsWritable()) { return; }
+		if (this.GetDescriptions().containsKey(index)) { 
+			String[] DescriptionInformation = (String[]) this.GetDescriptions().get(index);
+			DescriptionInformation[2] = "[Deleted] " + DescriptionInformation[2];
+			this.GetDescriptions().put(index, DescriptionInformation);
+		}
+	}
+	public void IgnoreDescription(String index) { this.RemoveDescription(index); }
+	public void RemoveDescription(int index) { this.RemoveDescription(Integer.toString(index)); }
+	public void IgnoreDescription(int index) { this.RemoveDescription(Integer.toString(index)); }
+
+	// ---------------------------------------------------------------------------------------------------------------------
+	// Getter & Setter 
+	public String GetMedicalRecordID() { return this.MedicalRecord_ID; }
+
+	public int GetTreatmentIndexAsInt() { return this.index; }
+	public String GetTreatmentIndexAsString() { 
+		return Treatment.prefix.GetPrefixCode() + String.format("%02d", this.GetTreatmentIndexAsInt());
+	}
+
+	public String GetClassificationCode() { return this.ClassificationCode; }
+
+	// ----------------------------------------------------------
+	public Hashtable<String, Object> GetMedicoInfo() { return this.MedicoInfo; }
+	public ArrayList<String> GetSupplementary() { return this.Supplementary; }
+	public Hashtable<String, Object> GetResources() { return this.Resources; }
+	public Hashtable<String, Object> GetDescriptions() { return this.Descriptions; }
+
+	// ---------------------------------------------------------------------------------------------------------------------
+	// Serialization & Deserialization
+	public Hashtable<String, Object> Serialize() {
+		Hashtable<String, Object> TreatmentInformation = super.Serialize();
+		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
+		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndexAsInt());
+		TreatmentInformation.put("ClassificationCode", this.GetClassificationCode());
+		
+		String directory, folder;
+		try { 
+			folder = PersonUtils.GetPatientRecordDirectory(this.GetPtFirstName(), false); 
+			TreatmentInformation.put("folder", folder);
+		} catch (Exception e) { // This is never called as standardization is done in the Patient class.
+			e.printStackTrace();
+		}
+		
+		folder = (String) TreatmentInformation.get("folder") + Integer.toString(index) + "-";
+		TreatmentInformation.put("folder", folder);
+		try {
+			directory = folder + "MedicoInfo.json";
+			JsonUtils.SaveHashTableIntoJsonFile(folder + "MedicoInfo.json", this.GetMedicoInfo(), null);
+			TreatmentInformation.put("MedicoInfo", directory);
+
+			ArrayList<Object> CastedSupplementary = DataUtils.CastToObjectArrayFromStringArray(this.GetSupplementary());
+			directory = folder + "Supplementary.json";
+			JsonUtils.SaveArrayListIntoJsonFile(folder + "Supplementary.json", CastedSupplementary, null);
+			TreatmentInformation.put("Supplementary", directory);
+
+			directory = folder + "Resources.json";
+			JsonUtils.SaveHashTableIntoJsonFile(folder + "Resources.json", this.GetResources(), null);
+			TreatmentInformation.put("Resources", directory);
+
+			directory = folder + "Descriptions.json";
+			JsonUtils.SaveHashTableIntoJsonFile(folder + "Descriptions.json", this.GetDescriptions(), null);
+			TreatmentInformation.put("Descriptions", directory);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return TreatmentInformation;
+	}
+
+	public static Treatment Deserialize(Hashtable<String, Object> data) {
+		String Pt_ID = (String) data.get("Pt_ID");
+        String Pt_FirstName = (String) data.get("Pt_FirstName");
+        String Pt_LastName = (String) data.get("Pt_LastName");
+        String Pt_Age = (String) data.get("Pt_Age");
+        String Pt_Gender = (String) data.get("Pt_Gender");
+
+		String MedicalRecordID = (String) data.get("MedicalRecordID");
+		int TreatmentIndex = Integer.parseInt((String) data.get("TreatmentIndex"));
+		String ClassificationCode = (String) data.get("ClassificationCode");
+
+        Treatment record = new Treatment(Pt_ID, MedicalRecordID, Pt_FirstName, Pt_LastName, Pt_Age, 
+										 Pt_Gender, TreatmentIndex, ClassificationCode, true);
+        record.SetDate((String) data.get("date"));
+        record.SetTime((String) data.get("time"));
+
+		// Deserialize Medico, Supplementary, Resources, and Descriptions. These are stored in JSON files.
+		// So we need to call them
+		String MedicoInfo_File = (String) data.get("MedicoInfo");
+		String Supplementary_File = (String) data.get("Supplementary");
+		String Resources_File = (String) data.get("Resources");
+		String Descriptions_File = (String) data.get("Descriptions");
+
+		try {
+			record.GetMedicoInfo().putAll(JsonUtils.LoadJsonFileToHashtable(MedicoInfo_File, null));
+
+			ArrayList<Object> Supplementary = JsonUtils.LoadJsonFileToArrayList(Supplementary_File, null);
+			record.GetSupplementary().addAll(DataUtils.CastToStringArrayFromObjectArray(Supplementary));
+
+			record.GetResources().putAll(JsonUtils.LoadJsonFileToHashtable(Resources_File, null));
+			record.GetDescriptions().putAll(JsonUtils.LoadJsonFileToHashtable(Descriptions_File, null));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (!(boolean) data.get("writable")) { record.CloseRecord(); }
+		return record;
+	}
+
 }

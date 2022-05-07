@@ -30,4 +30,8 @@ References:
 1) https://www.w3schools.com/java/
 2) https://howtodoinjava.com/java/library/json-simple-read-write-json-examples/
 
+Resolve Conflict in VS Code:
+1) https://stackoverflow.com/questions/64273185/vscode-how-to-import-a-jar-file-into-your-java-project
+2) https://stackoverflow.com/questions/57243635/vscode-can-not-import-external-libraries
+3) https://code.visualstudio.com/docs/java/java-project
  
