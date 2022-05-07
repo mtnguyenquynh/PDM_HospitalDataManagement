@@ -187,11 +187,8 @@ public class Treatment extends BaseRecord {
 	// ---------------------------------------------------------------------------------------------------------------------
 	// Getter & Setter 
 	public String GetMedicalRecordID() { return this.MedicalRecord_ID; }
-	public String GetDerivedTreatmentID() throws Exception { 
-		// This is a derived function and would not be used any thing practical.
-		// Don't use this function in your code. This is just an extension for the future.
-		// For example, if MedicalRecord_ID is "MR-00-001-00012" and index = 3 
-		// --> DerivedTreatmentID = "MR-00-001-00012-003".
+	
+	public String StandardizeIndex() throws Exception {
 		int caster = 3;
 		int index = this.GetTreatmentIndex();
 		int MAX_INDEX = (int) Math.pow(10, caster);
@@ -199,7 +196,15 @@ public class Treatment extends BaseRecord {
 			String[] idxStr = {String.valueOf(index), String.valueOf(MAX_INDEX)};
 			throw new Exception("The treatment index is too large (index = ." + idxStr[0] + "> " + idxStr[1] + ")");
 		}
-		return this.GetMedicalRecordID() + String.format("-%" + String.valueOf(caster) + "d", index); 
+		return String.format("%" + String.valueOf(caster) + "d", index);
+	}
+
+	public String GetDerivedTreatmentID() throws Exception { 
+		// This is a derived function and would not be used any thing practical.
+		// Don't use this function in your code. This is just an extension for the future.
+		// For example, if MedicalRecord_ID is "MR-00-001-00012" and index = 3 
+		// --> DerivedTreatmentID = "MR-00-001-00012-003".
+		return this.GetMedicalRecordID() + "-" + this.StandardizeIndex(); 
 	}
 
 	public int GetTreatmentIndex() { return this.index; }

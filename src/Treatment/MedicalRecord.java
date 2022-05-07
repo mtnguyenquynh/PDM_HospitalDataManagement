@@ -56,11 +56,8 @@ public class MedicalRecord extends BaseRecord {
         this.prefix = MedicalRecord.GetPrefix();
         this.LocalPool = new ArrayList<Treatment>(MedicalRecord.NUMBER_OF_MAX_TREATMENTS);
         
-        this.RDoc_Medico_ID = null;                           // Default is empty field
-        this.RNurse_MedicoID = null;                          // Default is empty field
-
-        
-
+        this.RDoc_Medico_ID = "";                           // Default is empty field
+        this.RNurse_MedicoID = "";                          // Default is empty field
     }
 
     public MedicalRecord(String Patient_ID, String Pt_FirstName, String Pt_LastName, String Pt_Age, String Pt_Gender, 
@@ -105,24 +102,20 @@ public class MedicalRecord extends BaseRecord {
     public String GetRDoc_Medico_ID() { return this.RDoc_Medico_ID; }
     public void SetRDoc_Medico_ID(String RDoc_Medico_ID) throws Exception {
         DataUtils.CheckArgumentCondition(RDoc_Medico_ID != null, "ID cannot be null.");
-        DataUtils.CheckArgumentCondition(RDoc_Medico_ID.length() > 0, "ID cannot be empty.");
         this.RDoc_Medico_ID = RDoc_Medico_ID;
     }
 
     public String GetRNurse_MedicoID() { return this.RNurse_MedicoID; }
     public void SetRNurse_MedicoID(String RNurse_MedicoID) throws Exception {
         DataUtils.CheckArgumentCondition(RNurse_MedicoID != null, "ID cannot be null.");
-        DataUtils.CheckArgumentCondition(RNurse_MedicoID.length() > 0, "ID cannot be empty.");
         this.RNurse_MedicoID = RNurse_MedicoID;
     }
 
     // --------------------------------------------------------------------------------------------------------------------
     // Treatment-related methods
-
     private void AttemptToSetTreatmentIndex(Treatment treatment) {
         if (treatment.GetTreatmentIndex() == -1) { treatment.SetTreatmentIndex(this.GetLocalPool().size()); }
     }
-
 
     public void AddTreatment(Treatment treatment) throws Exception {
         DataUtils.CheckArgumentCondition(this.IsWritable(), "This record is not writable.");
@@ -168,5 +161,9 @@ public class MedicalRecord extends BaseRecord {
         DataUtils.CheckArgumentCondition(index < this.GetLocalPool().size(), "The index is out of range.");
         return this.GetLocalPool().get(index);
     }
+
+    // --------------------------------------------------------------------------------------------------------------------
+    // Serialization & Deserialization
+    
 
 }
