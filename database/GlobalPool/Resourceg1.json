@@ -1,0 +1,1402 @@
+[
+ {
+  "Resource name": "Ampicillin",
+  "Generic name": " ampicillin",
+  "Dosage form": " oral capsule (250 mg; 500 mg); oral powder for reconstitution (125 mg\/5 mL; 250 mg\/5 mL)",
+  "Brand names": " Ampi, Omnipen, Penglobe, Principen",
+  "Drug class": " Aminopenicillins"
+ },
+ {
+  "Resource name": "Anastrozole",
+  "Generic name": " anastrozole",
+  "Dosage form": " oral tablet (1 mg)",
+  "Brand names": " Arimidex",
+  "Drug class": " Aromatase inhibitors, Hormones \/ antineoplastics"
+ },
+ {
+  "Resource name": "AndroGel",
+  "Generic name": " testosterone ",
+  "Dosage form": " gel",
+  "Brand names": " AndroGel",
+  "Drug class": " Androgens and anabolic steroids"
+ },
+ {
+  "Resource name": "Annovera",
+  "Generic name": " ethinyl estradiol and segesterone",
+  "Dosage form": " vaginal ring",
+  "Brand names": " Annovera",
+  "Drug class": " Contraceptives"
+ },
+ {
+  "Resource name": "Apalutamide",
+  "Generic name": " apalutamide",
+  "Dosage form": " oral tablet (60 mg)",
+  "Brand names": " Erleada",
+  "Drug class": null
+ },
+ {
+  "Resource name": "Apixaban",
+  "Generic name": " apixaban",
+  "Dosage form": " oral tablet (2.5 mg; 5 mg)",
+  "Brand names": "Brand names",
+  "Drug class": " Factor Xa inhibitors"
+ },
+ {
+  "Resource name": "Apokyn",
+  "Generic name": " apomorphine injection",
+  "Dosage form": " injection",
+  "Brand names": " Apokyn",
+  "Drug class": " Dopaminergic antiparkinsonism agents"
+ },
+ {
+  "Resource name": "Bacitracin",
+  "Generic name": " Bacitracin (or bacitracin zinc)",
+  "Dosage form": " ophthalmic ointment",
+  "Brand names": " Baciguent",
+  "Drug class": " Ophthalmic anti-infectives"
+ },
+ {
+  "Resource name": "Baclofen",
+  "Generic name": " baclofen",
+  "Dosage form": " tablets",
+  "Brand names": " FIRST Baclofen, Ozobax, Lioresal",
+  "Drug class": " Skeletal muscle relaxants"
+ },
+ {
+  "Resource name": "Bactrim",
+  "Generic name": " sulfamethoxazole and trimethoprim",
+  "Dosage form": " tablet",
+  "Brand names": " Bactrim",
+  "Drug class": " Sulfonamides"
+ },
+ {
+  "Resource name": "Bactrim DS",
+  "Generic name": " sulfamethoxazole and trimethoprim",
+  "Dosage form": " tablet",
+  "Brand names": " Bactrim DS",
+  "Drug class": " Sulfonamides"
+ },
+ {
+  "Resource name": "Bactroban",
+  "Generic name": " mupirocin ",
+  "Dosage form": "tablet",
+  "Brand names": " Bactroban",
+  "Drug class": "  antibiotics"
+ },
+ {
+  "Resource name": "Balsalazide",
+  "Generic name": " balsalazide",
+  "Dosage form": " oral capsule (750 mg); oral tablet (1.1 g)",
+  "Brand names": " Colazal, Giazo",
+  "Drug class": " 5-aminosalicylates"
+ },
+ {
+  "Resource name": "Banzel",
+  "Generic name": " rufinamide",
+  "Dosage form": " tablet\/oral suspension",
+  "Brand names": " Banzel",
+  "Drug class": " Dibenzazepine anticonvulsants"
+ },
+ {
+  "Resource name": "Cipro",
+  "Generic name": " ciprofloxacin",
+  "Dosage form": " tablet",
+  "Brand names": " Cipro",
+  "Drug class": " Quinolones"
+ },
+ {
+  "Resource name": "Ciprofloxacin",
+  "Generic name": " ciprofloxacin",
+  "Dosage form": " tablet",
+  "Brand names": " Cipro, Proquin XR",
+  "Drug class": " Quinolones"
+ },
+ {
+  "Resource name": "Citalopram",
+  "Generic name": " citalopram",
+  "Dosage form": " oral solution (10 mg\/5 mL); oral tablet (10 mg; 20 mg; 40 mg)",
+  "Brand names": " Celexa",
+  "Drug class": " Selective serotonin reuptake inhibitors"
+ },
+ {
+  "Resource name": "Clarithromycin",
+  "Generic name": " clarithromycin",
+  "Dosage form": " tablet",
+  "Brand names": " Biaxin, Biaxin XL",
+  "Drug class": " Macrolides"
+ },
+ {
+  "Resource name": "Claritin",
+  "Generic name": " loratadine",
+  "Dosage form": " oral capsule; oral syrup; oral tablet; oral tablet, chewable (5 mg; 10 mg); disintegrating (5mg; 10 mg)",
+  "Brand names": " Claritin, Claritin Reditab",
+  "Drug class": " Antihistamines"
+ },
+ {
+  "Resource name": "Clindamycin",
+  "Generic name": " clindamycin",
+  "Dosage form": " tablet\/oral suspension",
+  "Brand names": " Cleocin HCl, Cleocin Pediatric, Cleocin Phosphate",
+  "Drug class": " Lincomycin derivatives"
+ },
+ {
+  "Resource name": "Clobetasol",
+  "Generic name": " clobetasol topica",
+  "Dosage form": " cream, ",
+  "Brand names": " Clobex, Clodan, Impoyz, Olux, Olux-E",
+  "Drug class": "  steroids"
+ },
+ {
+  "Resource name": "Demerol",
+  "Generic name": " meperidine",
+  "Dosage form": "tablet",
+  "Brand names": "Demerol",
+  "Drug class": " Narcotic analgesics"
+ },
+ {
+  "Resource name": "Denosumab",
+  "Generic name": " denosumab",
+  "Dosage form": " subcutaneous solution (60 mg\/mL)",
+  "Brand names": " Prolia",
+  "Drug class": " Miscellaneous bone resorption inhibitors"
+ },
+ {
+  "Resource name": "Depakote",
+  "Generic name": " divalproex sodium",
+  "Dosage form": " tablet",
+  "Brand names": " Depakote ER, Depakote",
+  "Drug class": " Fatty acid derivative anticonvulsants"
+ },
+ {
+  "Resource name": "Descovy",
+  "Generic name": " emtricitabine and tenofovir alafenamide",
+  "Dosage form": " tablet",
+  "Brand names": " Descovy",
+  "Drug class": " Antiviral combinations"
+ },
+ {
+  "Resource name": "Desloratadine",
+  "Generic name": " desloratadine",
+  "Dosage form": " oral solution (2.5 mg\/5 mL); oral tablet (5 mg); oral tablet, disintegrating (2.5 mg; 5 mg)",
+  "Brand names": " Clarinex, Clarinex Reditabs, Aerius",
+  "Drug class": " Antihistamines"
+ },
+ {
+  "Resource name": "Desmopressin",
+  "Generic name": " desmopressin (oral\/sublingual)",
+  "Dosage form": " oral tablet (0.1 mg; 0.2 mg); sublingual tablet (27.7 mcg; 55.3 mcg)",
+  "Brand names": " DDAVP, Nocdurna",
+  "Drug class": " Antidiuretic hormones"
+ },
+ {
+  "Resource name": "Desvenlafaxine",
+  "Generic name": " desvenlafaxine",
+  "Dosage form": " oral tablet, extended release ((as base) 100 mg; (as base) 50 mg; 100 mg; 25 mg; 50 mg)",
+  "Brand names": " Khedezla, Pristiq",
+  "Drug class": " Serotonin-norepinephrine reuptake inhibitors"
+ },
+ {
+  "Resource name": "Erleada",
+  "Generic name": " apalutamide",
+  "Dosage form": " tablets",
+  "Brand names": " Erleada",
+  "Drug class": " Antiandrogens, Hormones \/ antineoplastics"
+ },
+ {
+  "Resource name": "Ertapenem",
+  "Generic name": " ertapenem",
+  "Dosage form": " injectable powder for injection (1 g)",
+  "Brand names": " INVanz, INVanz ADD-Vantage",
+  "Drug class": " Carbapenems"
+ },
+ {
+  "Resource name": "Erythromycin",
+  "Generic name": " erythromycin",
+  "Dosage form": " tablets",
+  "Brand names": " E.E.S. Granules, E.E.S.-200, E.E.S.-400 Filmtab, EryPed 200...",
+  "Drug class": " Macrolides"
+ },
+ {
+  "Resource name": "Erythromycin ophthalmic",
+  "Generic name": " erythromycin ophthalmic",
+  "Dosage form": " ophthalmic ointment (0.5%)",
+  "Brand names": " Eyemycin, Ilotycin, Roymicin",
+  "Drug class": " Ophthalmic anti-infectives"
+ },
+ {
+  "Resource name": "Escitalopram",
+  "Generic name": " escitalopram",
+  "Dosage form": " tablets",
+  "Brand names": " Lexapro",
+  "Drug class": " Selective serotonin reuptake inhibitors"
+ },
+ {
+  "Resource name": "Esomeprazole",
+  "Generic name": " esomeprazole",
+  "Dosage form": " oral delayed release capsule; oral powder, delayed release ",
+  "Brand names": " Esomeprazole Strontium, NexIUM",
+  "Drug class": " Proton pump inhibitors"
+ },
+ {
+  "Resource name": "Estrace",
+  "Generic name": " estradiol oral",
+  "Dosage form": " cream, ",
+  "Brand names": " Estrace",
+  "Drug class": " Estrogens"
+ },
+ {
+  "Resource name": "Finasteride",
+  "Generic name": " finasteride",
+  "Dosage form": " oral tablet (1 mg; 5 mg)",
+  "Brand names": " Propecia, Proscar",
+  "Drug class": " 5-alpha-reductase inhibitors"
+ },
+ {
+  "Resource name": "Fintepla",
+  "Generic name": " fenfluramineoral solution",
+  "Dosage form": " oral solution",
+  "Brand names": " Fintepla",
+  "Drug class": " Anticonvulsants"
+ },
+ {
+  "Resource name": "Fioricet",
+  "Generic name": " acetaminophen, butalbital, and caffeine",
+  "Dosage form": " tablet",
+  "Brand names": " Fioricet",
+  "Drug class": " Analgesic combinations"
+ },
+ {
+  "Resource name": "Firazyr",
+  "Generic name": " icatibant",
+  "Dosage form": " injection, solution",
+  "Brand names": " Firazyr",
+  "Drug class": " Hereditary angioedema agents"
+ },
+ {
+  "Resource name": "Firmagon",
+  "Generic name": " degarelix",
+  "Dosage form": " injection, solution",
+  "Brand names": " Firmagon",
+  "Drug class": " Gonadotropin-releasing hormone antagonists, Hormones \/ antineoplastics"
+ },
+ {
+  "Resource name": "Fish Oil",
+  "Generic name": " omega-3 polyunsaturated fatty acids",
+  "Dosage form": " solution",
+  "Brand names": " Animi-3, Cardio Omega Benefits, Divista, Dry Eye Omega Benefits",
+  "Drug class": null
+ },
+ {
+  "Resource name": "Flagyl",
+  "Generic name": " metronidazole",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " FIRST Metronidazole, Flagyl",
+  "Drug class": " Amebicides, Miscellaneous antibiotics"
+ },
+ {
+  "Resource name": "Glyxambi",
+  "Generic name": " empagliflozin and linagliptin",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Glyxambi",
+  "Drug class": " Antidiabetic combinations"
+ },
+ {
+  "Resource name": "Gocovri",
+  "Generic name": " amantadine",
+  "Dosage form": " capsule, coated pellets",
+  "Brand names": " Gocovri",
+  "Drug class": " Dopaminergic antiparkinsonism agents"
+ },
+ {
+  "Resource name": "GoLYTELY",
+  "Generic name": " polyethylene glycol electrolyte solution",
+  "Dosage form": " oral powder",
+  "Brand names": " Colyte with Flavor Packs, GaviLyte-C, GoLYTELY, MoviPrep, NuLYTELY Orange, ...",
+  "Drug class": " Laxatives"
+ },
+ {
+  "Resource name": "Gralise",
+  "Generic name": " gabapentin",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Gralise",
+  "Drug class": " Gamma-aminobutyric acid analogs"
+ },
+ {
+  "Resource name": "Griseofulvin",
+  "Generic name": " griseofulvin",
+  "Dosage form": "microcrystalline, microcrystalline, ultramicrocrystalline, ultramicrocrystalline ",
+  "Brand names": " Grifulvin V, Fulvicin P\/G, Fulvicin U\/F, Gris-PEG, Grisactin Ultra, ...",
+  "Drug class": " Miscellaneous antifungals"
+ },
+ {
+  "Resource name": "Hydralazine",
+  "Generic name": " hydralazine",
+  "Dosage form": " oral tablet (10 mg; 100 mg; 25 mg; 50 mg)",
+  "Brand names": " Apresoline",
+  "Drug class": " Vasodilators"
+ },
+ {
+  "Resource name": "Hydrea",
+  "Generic name": " hydroxyurea",
+  "Dosage form": " capsule",
+  "Brand names": " Droxia, Hydrea, Mylocel, Siklos",
+  "Drug class": " Antimetabolites"
+ },
+ {
+  "Resource name": "Hydrochlorothiazide",
+  "Generic name": " hydrochlorothiazide",
+  "Dosage form": " oral capsule (12.5 mg); oral tablet (12.5 mg; 25 mg; 50 mg)",
+  "Brand names": " HydroDIURIL, Esidrix, Microzide",
+  "Drug class": " Thiazide diuretics"
+ },
+ {
+  "Resource name": "Hydrochlorothiazide and lisinopril",
+  "Generic name": " hydrochlorothiazide and lisinopril ",
+  "Dosage form": " oral tablet (12.5 mg-10 mg; 12.5 mg-20 mg; 25 mg-20 mg)",
+  "Brand names": " Zestoretic, Prinzide",
+  "Drug class": " ACE inhibitors with thiazides"
+ },
+ {
+  "Resource name": "Hydrochlorothiazide and losartan",
+  "Generic name": " hydrochlorothiazide and losartan",
+  "Dosage form": " oral tablet (12.5 mg-100 mg; 12.5 mg-50 mg; 25 mg-100 mg)",
+  "Brand names": " Hyzaar",
+  "Drug class": " Angiotensin II inhibitors with thiazides"
+ },
+ {
+  "Resource name": "Hydrochlorothiazide and triamterene",
+  "Generic name": " hydrochlorothiazide and triamterene",
+  "Dosage form": " oral capsule (25 mg-37.5 mg; 25 mg-50 mg); oral tablet (25 mg-37.5 mg; 50 mg-75 mg)",
+  "Brand names": " Dyazide, Maxzide, Maxzide-25",
+  "Drug class": " Potassium sparing diuretics with thiazides"
+ },
+ {
+  "Resource name": "Hydrochlorothiazide and valsartan",
+  "Generic name": " hydrochlorothiazide and valsartan",
+  "Dosage form": " oral tablet (12.5 mg-160 mg; 12.5 mg-320 mg; 12.5 mg-80 mg; 25 mg-160 mg; 25 mg-320 mg)",
+  "Brand names": " Diovan HCT",
+  "Drug class": " Angiotensin II inhibitors with thiazides"
+ },
+ {
+  "Resource name": "Ibuprofen",
+  "Generic name": " ibuprofen",
+  "Dosage form": " oral capsule; oral suspension; oral tablet, chewable (100 mg; 50 mg)",
+  "Brand names": " Advil, Genpril, IBU, Midol IB, Motrin IB, Proprinal, Smart Sense Children's Ibuprofen",
+  "Drug class": " Nonsteroidal anti-inflammatory drugs"
+ },
+ {
+  "Resource name": "Iclusig",
+  "Generic name": " ponatinib",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " iclusig",
+  "Drug class": " BCR-ABL tyrosine kinase inhibitors, Multikinase inhibitors, VEGF\/VEGFR inhibitors"
+ },
+ {
+  "Resource name": "Icosapent",
+  "Generic name": " icosapent",
+  "Dosage form": " oral capsule (0.5 g; 1 g)",
+  "Brand names": " Vascepa, Icosapent Ethyl",
+  "Drug class": " Miscellaneous antihyperlipidemic agents"
+ },
+ {
+  "Resource name": "Idhifa",
+  "Generic name": " enasidenib",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Idhifa",
+  "Drug class": " Miscellaneous antineoplastics"
+ },
+ {
+  "Resource name": "Ilumya",
+  "Generic name": " tildrakizumab",
+  "Dosage form": " injection, solution",
+  "Brand names": " ilumya",
+  "Drug class": " Interleukin inhibitors"
+ },
+ {
+  "Resource name": "Imatinib",
+  "Generic name": " imatinib",
+  "Dosage form": " oral tablet (100 mg; 400 mg)",
+  "Brand names": " Gleevec",
+  "Drug class": " BCR-ABL tyrosine kinase inhibitors"
+ },
+ {
+  "Resource name": "Imbruvica",
+  "Generic name": " ibrutinib",
+  "Dosage form": " capsule",
+  "Brand names": " Imbruvica",
+  "Drug class": " BTK inhibitors"
+ },
+ {
+  "Resource name": "Jevtana",
+  "Generic name": " cabazitaxel",
+  "Dosage form": " injection, solution",
+  "Brand names": " Jevtana",
+  "Drug class": " Mitotic inhibitors"
+ },
+ {
+  "Resource name": "Jinteli",
+  "Generic name": " ethinyl estradiol and norethindrone",
+  "Dosage form": " tablet",
+  "Brand names": " Jinteli",
+  "Drug class": " Contraceptives, Sex hormone combinations"
+ },
+ {
+  "Resource name": "Jivi",
+  "Generic name": " antihemophilic factor",
+  "Dosage form": " injection",
+  "Brand names": " Jivi",
+  "Drug class": " Miscellaneous coagulation modifiers"
+ },
+ {
+  "Resource name": "Jolessa",
+  "Generic name": " levonorgestrel and ethinyl estradiol",
+  "Dosage form": " tablets",
+  "Brand names": " Jolessa",
+  "Drug class": " Contraceptives"
+ },
+ {
+  "Resource name": "Jolivette",
+  "Generic name": " norethindrone",
+  "Dosage form": " tablet",
+  "Brand names": " Aygestin, Camila, Errin, Jolivette, Nora-Be, Ortho Micronor",
+  "Drug class": " Contraceptives, Progestins"
+ },
+ {
+  "Resource name": "Kenalog-40",
+  "Generic name": " triamcinolone",
+  "Dosage form": " injection, suspension",
+  "Brand names": " Kenalog-40",
+  "Drug class": " Glucocorticoids"
+ },
+ {
+  "Resource name": "Keppra",
+  "Generic name": " levetiracetam",
+  "Dosage form": " tablets and oral solution",
+  "Brand names": " Keppra, Keppra XR",
+  "Drug class": " Pyrrolidine anticonvulsants"
+ },
+ {
+  "Resource name": "Keppra XR",
+  "Generic name": " levetiracetam",
+  "Dosage form": " tablet, film coated, extended release",
+  "Brand names": " Keppra XR",
+  "Drug class": " Pyrrolidine anticonvulsants"
+ },
+ {
+  "Resource name": "Kerendia",
+  "Generic name": " finerenone",
+  "Dosage form": " tablets",
+  "Brand names": " Kerendia",
+  "Drug class": " nonsteroidal mineralocorticoid receptor antagonists (MRAs"
+ },
+ {
+  "Resource name": "Kesimpta",
+  "Generic name": " ofatumumab",
+  "Dosage form": " injection, for subcutaneous use",
+  "Brand names": " Kesimpta",
+  "Drug class": " Neurologic AntiCD20 Monoclonal Antibodies"
+ },
+ {
+  "Resource name": "Ketalar",
+  "Generic name": " ketamine",
+  "Dosage form": " injection",
+  "Brand names": " Ketalar",
+  "Drug class": " General anesthetics"
+ },
+ {
+  "Resource name": "Labetalol",
+  "Generic name": " labetalol",
+  "Dosage form": " intravenous solution( mainly NaCl); oral tablet (100 mg; 200 mg; 300 mg)",
+  "Brand names": " Trandate, Normodyne",
+  "Drug class": " Non-cardioselective beta blockers"
+ },
+ {
+  "Resource name": "Lactulose",
+  "Generic name": " lactulose ",
+  "Dosage form": " oral powder(10 g; 20 g); oral syrup (10 g\/15 mL); oral and rectal liquid (10 g\/15 mL)",
+  "Brand names": " Constulose, Generlac, Kristalose, Chronulac, Cephulac, ...",
+  "Drug class": " Laxatives"
+ },
+ {
+  "Resource name": "Lamictal",
+  "Generic name": " lamotrigine ",
+  "Dosage form": " Lamictal, Lamictal ODT, Lamictal XR",
+  "Brand names": " Lamictal",
+  "Drug class": " Triazine anticonvulsants"
+ },
+ {
+  "Resource name": "Lamotrigine",
+  "Generic name": " lamotrigine",
+  "Dosage form": "disintegrating (100 mg; 200 mg; 25 mg; 50 mg; blue; green; orange); oral tablet, dispersible (2 mg; 25 mg; 5 mg); extended release (100 mg; 200 mg; 25 mg; 250 mg; 300 mg; 50 mg; blue; green; orange)",
+  "Brand names": " LaMICtal, LaMICtal ODT, LaMICtal XR, Subvenite, LaMICtal CD, ...",
+  "Drug class": " Triazine anticonvulsants"
+ },
+ {
+  "Resource name": "Lansoprazole",
+  "Generic name": " lansoprazole",
+  "Dosage form": " powder",
+  "Brand names": " FIRST Lansoprazole, Prevacid",
+  "Drug class": " Proton pump inhibitors"
+ },
+ {
+  "Resource name": "Lantus",
+  "Generic name": " insulin glargine",
+  "Dosage form": " injection, solution",
+  "Brand names": " Lantus, Lantus SoloStar",
+  "Drug class": " Insulin"
+ },
+ {
+  "Resource name": "Lasix",
+  "Generic name": " furosemide",
+  "Dosage form": " tablet",
+  "Brand names": " Lasix, Diaqua-2, Lo-Aqua",
+  "Drug class": " Loop diuretics"
+ },
+ {
+  "Resource name": "Magnesium oxide",
+  "Generic name": " magnesium oxide",
+  "Dosage form": " oral capsule (140 mg; 600 mg); oral tablet (250 mg; 400 mg; 420 mg; 500 mg; base 500 mg)",
+  "Brand names": " MagGel, Phillips' Cramp-free, Uro-Mag, Mag-200, Mag-Ox 400, UroMag",
+  "Drug class": " Minerals and electrolytes"
+ },
+ {
+  "Resource name": "Magnesium sulfate",
+  "Generic name": " magnesium sulfate",
+  "Dosage form": " oral and  powder for reconstitution",
+  "Brand names": " Epsom Salt",
+  "Drug class": " Laxatives, Minerals and electrolytes, Miscellaneous anticonvulsants"
+ },
+ {
+  "Resource name": "Mavenclad",
+  "Generic name": " cladribine",
+  "Dosage form": " tablet",
+  "Brand names": " Mavenclad",
+  "Drug class": " Antimetabolites"
+ },
+ {
+  "Resource name": "Mavyret",
+  "Generic name": " glecaprevir and pibrentasvir ",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Mavyret",
+  "Drug class": " Antiviral combinations"
+ },
+ {
+  "Resource name": "Mayzent",
+  "Generic name": " siponimod ",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Mayzent",
+  "Drug class": " Selective immunosuppressants"
+ },
+ {
+  "Resource name": "Meclizine",
+  "Generic name": " meclizine ",
+  "Dosage form": " tablet",
+  "Brand names": " Antivert, Bonine, D-Vert, Dramamine Less Drowsy, Driminate II, ...",
+  "Drug class": " Anticholinergic antiemetics"
+ },
+ {
+  "Resource name": "Medrol",
+  "Generic name": " methylprednisolone",
+  "Dosage form": " tablet",
+  "Brand names": " Medrol, Medrol Dosepak, MethylPREDNISolone Dose Pack",
+  "Drug class": " Glucocorticoids"
+ },
+ {
+  "Resource name": "NAC",
+  "Generic name": " acetylcysteine",
+  "Dosage form": " tablet, oral solution",
+  "Brand names": " NAC, N-A-C Sustain",
+  "Drug class": " mucolytic agents"
+ },
+ {
+  "Resource name": "Nadolol",
+  "Generic name": " nadolol",
+  "Dosage form": " oral tablet (20 mg; 40 mg; 80 mg)",
+  "Brand names": " Corgard",
+  "Drug class": " Non-cardioselective beta blockers"
+ },
+ {
+  "Resource name": "Naloxone",
+  "Generic name": " naloxone",
+  "Dosage form": " injectable solution (0.4 mg\/mL; 1 mg\/mL; 2 mg\/0.4 mL)",
+  "Brand names": " Naloxone",
+  "Drug class": " Antidotes"
+ },
+ {
+  "Resource name": "Naltrexone",
+  "Generic name": " naltrexone",
+  "Dosage form": "intramuscular powder for injection, extended release (380 mg)",
+  "Brand names": " Vivitrol",
+  "Drug class": " Antidotes, Drugs used in alcohol dependence"
+ },
+ {
+  "Resource name": "Namenda",
+  "Generic name": " memantine",
+  "Dosage form": " tablet, oral solution",
+  "Brand names": " Namenda, Namenda XR",
+  "Drug class": " Miscellaneous central nervous system agents"
+ },
+ {
+  "Resource name": "Naprosyn",
+  "Generic name": " naproxen",
+  "Dosage form": " tablet",
+  "Brand names": " Aleve, EC-Naprosyn, Flanax Pain Reliever, Midol Extended Relief",
+  "Drug class": " Nonsteroidal anti-inflammatory drugs"
+ },
+ {
+  "Resource name": "Naproxen",
+  "Generic name": " naproxen",
+  "Dosage form": " tablet",
+  "Brand names": " Aleve, EC-Naprosyn, Flanax Pain Reliever, Midol Extended Relief, Naprelan, ...",
+  "Drug class": " Nonsteroidal anti-inflammatory drugs"
+ },
+ {
+  "Resource name": "Ocrevus",
+  "Generic name": " ocrelizumab",
+  "Dosage form": " injection",
+  "Brand names": " Ocrevus",
+  "Drug class": " CD20 monoclonal antibodies"
+ },
+ {
+  "Resource name": "Ofev",
+  "Generic name": " nintedanib",
+  "Dosage form": " capsule",
+  "Brand names": " Ofev",
+  "Drug class": " Multikinase inhibitors"
+ },
+ {
+  "Resource name": "Ofloxacin",
+  "Generic name": " ofloxacin",
+  "Dosage form": " oral tablet (200 mg; 300 mg; 400 mg)",
+  "Brand names": " Floxin, Floxin I.V.",
+  "Drug class": " Quinolones"
+ },
+ {
+  "Resource name": "Ofloxacin ophthalmic",
+  "Generic name": " ofloxacin ophthalmic",
+  "Dosage form": " ophthalmic solution (0.3%)",
+  "Brand names": " Ocuflox",
+  "Drug class": " Ophthalmic anti-infectives"
+ },
+ {
+  "Resource name": "Olanzapine",
+  "Generic name": " olanzapine",
+  "Dosage form": "oral tablet, disintegrating (10 mg; 15 mg; 20 mg; 5 mg)",
+  "Brand names": " ZyPREXA, ZyPREXA Zydis",
+  "Drug class": " Atypical antipsychotics"
+ },
+ {
+  "Resource name": "Olaparib",
+  "Generic name": " olaparib",
+  "Dosage form": " oral tablet (100 mg; 150 mg)",
+  "Brand names": " Lynparza",
+  "Drug class": " PARP inhibitors"
+ },
+ {
+  "Resource name": "Pramipexole",
+  "Generic name": " pramipexole",
+  "Dosage form": " oral tablet (0.125 mg; 0.25 mg; 0.5 mg; 0.75 mg; 1 mg; 1.5 mg); oral tablet, extended release (0.375 mg; 0.75 mg; 1.5 mg; 2.25 mg; 3 mg; 3.75 mg; 4.5 mg)",
+  "Brand names": " Mirapex, Mirapex ER",
+  "Drug class": " Dopaminergic antiparkinsonism agents"
+ },
+ {
+  "Resource name": "Pravastatin",
+  "Generic name": " pravastatin",
+  "Dosage form": " tablet",
+  "Brand names": " Pravachol",
+  "Drug class": " Statins"
+ },
+ {
+  "Resource name": "Prazosin",
+  "Generic name": " prazosin",
+  "Dosage form": " oral capsule (1 mg; 2 mg; 5 mg)",
+  "Brand names": " Minipress",
+  "Drug class": " Antiadrenergic agents, peripherally acting"
+ },
+ {
+  "Resource name": "Prednisolone",
+  "Generic name": " prednisolone",
+  "Dosage form": " oral liquid (sodium phosphate); oral suspension ((as acetate) 15 mg\/5 mL); oral syrup (15 mg\/5 mL); oral tablet, disintegrating (10 mg; 15 mg; 30 mg)",
+  "Brand names": "Flo-Pred, Millipred, Millipred DP, Orapred, Orapred ODT, ...",
+  "Drug class": " Glucocorticoids"
+ },
+ {
+  "Resource name": "Prednisone",
+  "Generic name": " prednisone",
+  "Dosage form": " tablet",
+  "Brand names": " Rayos, Sterapred, Deltasone",
+  "Drug class": " Glucocorticoids"
+ },
+ {
+  "Resource name": "Pregabalin",
+  "Generic name": " pregabalin",
+  "Dosage form": "oral solution (20 mg\/mL); oral tablet, extended release (165 mg; 330 mg; 82.5 mg)",
+  "Brand names": " Lyrica, Lyrica CR",
+  "Drug class": " Gamma-aminobutyric acid analogs"
+ },
+ {
+  "Resource name": "Premarin",
+  "Generic name": " conjugated estrogens",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Premarin",
+  "Drug class": " Estrogens"
+ },
+ {
+  "Resource name": "Questran Light",
+  "Generic name": " cholestyramine ",
+  "Dosage form": " powder for oral suspension",
+  "Brand names": " Questran",
+  "Drug class": " Bile acid sequestrants"
+ },
+ {
+  "Resource name": "Quetiapine",
+  "Generic name": " quetiapine",
+  "Dosage form": "oral tablet, extended release (150 mg; 200 mg; 300 mg; 400 mg; 50 mg)",
+  "Brand names": " SEROquel, SEROquel XR",
+  "Drug class": " Atypical antipsychotics"
+ },
+ {
+  "Resource name": "QuilliChew ER",
+  "Generic name": " methylphenidate",
+  "Dosage form": " tablet, chewable, extended release",
+  "Brand names": " Adhansia XR, Aptensio XR, Concerta, Cotempla XR-ODT, Jornay PM, ...",
+  "Drug class": " CNS stimulants"
+ },
+ {
+  "Resource name": "Quillivant XR",
+  "Generic name": " methylphenidate",
+  "Dosage form": " powder, for oral suspension, extended release",
+  "Brand names": " Quillivant XR",
+  "Drug class": " CNS stimulants"
+ },
+ {
+  "Resource name": "Quinamm",
+  "Generic name": " quinine",
+  "Dosage form": null,
+  "Brand names": null,
+  "Drug class": " Antimalarial quinolines"
+ },
+ {
+  "Resource name": "Quinapril",
+  "Generic name": " quinapril ",
+  "Dosage form": " oral tablet (10 mg; 20 mg; 40 mg; 5 mg)",
+  "Brand names": " Accupril",
+  "Drug class": " Angiotensin Converting Enzyme Inhibitors"
+ },
+ {
+  "Resource name": "Quinidex Extentabs",
+  "Generic name": " quinidine",
+  "Dosage form": " solution",
+  "Brand names": null,
+  "Drug class": " Group I antiarrhythmics"
+ },
+ {
+  "Resource name": "Raloxifene",
+  "Generic name": " raloxifene",
+  "Dosage form": " oral tablet (60 mg)",
+  "Brand names": " Evista",
+  "Drug class": " Hormones \/ antineoplastics, Selective estrogen receptor modulators"
+ },
+ {
+  "Resource name": "Ramelteon",
+  "Generic name": " ramelteon",
+  "Dosage form": " oral tablet (8 mg)",
+  "Brand names": " Rozerem",
+  "Drug class": " Miscellaneous anxiolytics, sedatives and hypnotics"
+ },
+ {
+  "Resource name": "Ramipril",
+  "Generic name": " ramipril",
+  "Dosage form": " tablet",
+  "Brand names": " Altace",
+  "Drug class": " Angiotensin Converting Enzyme Inhibitors"
+ },
+ {
+  "Resource name": "Ranexa",
+  "Generic name": " ranolazine",
+  "Dosage form": " tablet, film coated, extended release",
+  "Brand names": " Ranexa",
+  "Drug class": " Antianginal agents"
+ },
+ {
+  "Resource name": "Ranitidine",
+  "Generic name": " ranitidine",
+  "Dosage form": " injection solution\/syrup\/tablet",
+  "Brand names": " Zantac",
+  "Drug class": " H2 antagonists"
+ },
+ {
+  "Resource name": "Ranolazine",
+  "Generic name": " ranolazine",
+  "Dosage form": " oral tablet, extended release (1000 mg; 500 mg)",
+  "Brand names": " Ranexa",
+  "Drug class": " Antianginal agents"
+ },
+ {
+  "Resource name": "Rapamune",
+  "Generic name": " sirolimus",
+  "Dosage form": " oral solution, tablets",
+  "Brand names": " Rapamune",
+  "Drug class": " MTOR inhibitors, Selective immunosuppressants"
+ },
+ {
+  "Resource name": "Salbutamol",
+  "Generic name": " albuterol",
+  "Dosage form": " gas liquid",
+  "Brand names": " Salbutamol",
+  "Drug class": " Adrenergic bronchodilators"
+ },
+ {
+  "Resource name": "Sandostatin",
+  "Generic name": " octreotide injection",
+  "Dosage form": " injection, solution",
+  "Brand names": " Sandostatin, Sandostatin LAR Depot",
+  "Drug class": " Somatostatin and somatostatin analogs"
+ },
+ {
+  "Resource name": "Saxenda",
+  "Generic name": " liraglutide",
+  "Dosage form": " injection, solution",
+  "Brand names": " Saxenda, Victoza",
+  "Drug class": " Incretin mimetics"
+ },
+ {
+  "Resource name": "secukinumab",
+  "Generic name": " secukinumab",
+  "Dosage form": "subcutaneous solution ",
+  "Brand names": "Cosentyx, Cosentyx Sensoready Pen, Cosentyx Sensoready Pen 2-pack, Cosentyx 2-pack",
+  "Drug class": " Interleukin inhibitors"
+ },
+ {
+  "Resource name": "Selegiline",
+  "Generic name": " selegiline",
+  "Dosage form": " oral capsule (5 mg); oral tablet (5 mg); oral tablet, disintegrating (1.25 mg)",
+  "Brand names": " Eldepryl, Zelapar",
+  "Drug class": " Dopaminergic antiparkinsonism agents, Monoamine oxidase inhibitors"
+ },
+ {
+  "Resource name": "Tacrolimus",
+  "Generic name": null,
+  "Dosage form": " capsule",
+  "Brand names": "Tacrolimus",
+  "Drug class": " Calcineurin inhibitors"
+ },
+ {
+  "Resource name": "Tadalafil",
+  "Generic name": " tadalafil",
+  "Dosage form": " tablet",
+  "Brand names": " Adcirca, Cialis",
+  "Drug class": " Agents for pulmonary hypertension, Impotence agents"
+ },
+ {
+  "Resource name": "Takhzyro",
+  "Generic name": " lanadelumab-flyo",
+  "Dosage form": " injection, solution",
+  "Brand names": " Takhzyro",
+  "Drug class": " Hereditary angioedema agents"
+ },
+ {
+  "Resource name": "Taltz",
+  "Generic name": " ixekizumab",
+  "Dosage form": " injection, solution",
+  "Brand names": " Taltz Autoinjector, Taltz Prefilled Syringe",
+  "Drug class": " Interleukin inhibitors"
+ },
+ {
+  "Resource name": "Tamiflu",
+  "Generic name": " oseltamivir",
+  "Dosage form": " capsule; powder for suspension",
+  "Brand names": " Tamiflu",
+  "Drug class": " Neuraminidase inhibitors"
+ },
+ {
+  "Resource name": "Tamoxifen",
+  "Generic name": " tamoxifen",
+  "Dosage form": " oral solution (10 mg\/5 mL); oral tablet (10 mg; 20 mg)",
+  "Brand names": " Soltamox",
+  "Drug class": " Hormones, estrogen receptor modulators"
+ },
+ {
+  "Resource name": "Tamsulosin",
+  "Generic name": " tamsulosin",
+  "Dosage form": " capsule",
+  "Brand names": " Flomax",
+  "Drug class": " Antiadrenergic agents, peripherally acting"
+ },
+ {
+  "Resource name": "Tazarotene",
+  "Generic name": " tazarotene ",
+  "Dosage form": " cream, gel, lotion, foam",
+  "Brand names": " Arazlo, Avage, Fabior, Tazorac",
+  "Drug class": "  acne agents,  antipsoriatics"
+ },
+ {
+  "Resource name": "Unithroid",
+  "Generic name": " levothyroxine",
+  "Dosage form": " tablet",
+  "Brand names": " Unithroid",
+  "Drug class": " Thyroid drugs"
+ },
+ {
+  "Resource name": "Upadacitinib",
+  "Generic name": " upadacitinib",
+  "Dosage form": " tablet",
+  "Brand names": " Rinvoq",
+  "Drug class": " Antirheumatics"
+ },
+ {
+  "Resource name": "Upneeq",
+  "Generic name": " oxymetazoline ophthalmic",
+  "Dosage form": " ophthalmic solution",
+  "Brand names": " Upneeq, Visine Long Lasting",
+  "Drug class": " alpha agonists"
+ },
+ {
+  "Resource name": "Uptravi",
+  "Generic name": " selexipag",
+  "Dosage form": " tablet, coated",
+  "Brand names": " Uptravi",
+  "Drug class": " Agents for pulmonary hypertension"
+ },
+ {
+  "Resource name": "Urea ",
+  "Generic name": " urea ",
+  "Dosage form": " cream ; emulsion ; foam ; kit ; lotion ; ointment ; paste; shampoo ; solution ; stick ; suspension ",
+  "Brand names": " Aluvea, Aqua Care, Aquaphilic with Urea, Atrac-Tain, ...",
+  "Drug class": "  emollients"
+ },
+ {
+  "Resource name": "Vistaril",
+  "Generic name": " hydroxyzine",
+  "Dosage form": " capsules and oral suspension",
+  "Brand names": " Vistaril",
+  "Drug class": " Antihistamines, Miscellaneous anxiolytics, sedatives and hypnotics"
+ },
+ {
+  "Resource name": "Vitamin B6",
+  "Generic name": " pyridoxine (vitamin B6)",
+  "Dosage form": " tablet",
+  "Brand names": " vitamin B6, and Nestrex",
+  "Drug class": " Vitamins"
+ },
+ {
+  "Resource name": "Vitamin C",
+  "Generic name": " ascorbic acid",
+  "Dosage form": " tablet",
+  "Brand names": " Acerola, Ascorbic Acid Quick Melts, C\/Rose Hips, ...",
+  "Drug class": " Vitamins"
+ },
+ {
+  "Resource name": "Vitamin D",
+  "Generic name": " Vitamin D",
+  "Dosage form": " capsule",
+  "Brand names": " Calciferol, Drisdol",
+  "Drug class": " Vitamins"
+ },
+ {
+  "Resource name": "Vitamin D3",
+  "Generic name": " cholecalciferol",
+  "Dosage form": " Tablets",
+  "Brand names": " Carlson D, Ddrops, Decara, Enfamil D-Vi-Sol, Replesta, ...",
+  "Drug class": " Vitamins"
+ },
+ {
+  "Resource name": "Vitamin E",
+  "Generic name": " vitamin E (VYE ta min E), tocopherol alpha",
+  "Dosage form": " capsule",
+  "Brand names": " Aqua-E, Aquasol E, Aquavite-E, Aqueous Vitamin E, E-400 Clear",
+  "Drug class": " Vitamins"
+ },
+ {
+  "Resource name": "Westcort",
+  "Generic name": " hydrocortisone valerate",
+  "Dosage form": " cream",
+  "Brand names": " Westcort",
+  "Drug class": "  steroids"
+ },
+ {
+  "Resource name": "Wilate",
+  "Generic name": " antihemophilic and von Willebrand factor complex",
+  "Dosage form": " powder, solvent",
+  "Brand names": " Alphanate, Humate-P, Wilate",
+  "Drug class": " Miscellaneous coagulation modifiers"
+ },
+ {
+  "Resource name": "Wild yam",
+  "Generic name": " wild yam",
+  "Dosage form": " capsule",
+  "Brand names": " Wild yam",
+  "Drug class": " Herbal products"
+ },
+ {
+  "Resource name": "Winlevi",
+  "Generic name": " clascoterone",
+  "Dosage form": "  Cream",
+  "Brand names": " Winlevi",
+  "Drug class": "  androgen receptor inhibitor"
+ },
+ {
+  "Resource name": "WinRho",
+  "Generic name": " rho (d) immune globulin",
+  "Dosage form": " injection",
+  "Brand names": " WinRho",
+  "Drug class": " Immune globulins"
+ },
+ {
+  "Resource name": "WinRho SDF",
+  "Generic name": " RHo (D) immune globulin",
+  "Dosage form": " liquid",
+  "Brand names": " HyperRHO S\/D Full Dose, HyperRHO S\/D Mini Dose, ...",
+  "Drug class": " Immune globulins"
+ },
+ {
+  "Resource name": "Witch hazel ",
+  "Generic name": " witch hazel ",
+  "Dosage form": "  gel;  liquid;  pad (20%; 50%);  soap",
+  "Brand names": " Hygenic Cleansing Pad, Medi-Pad, Neutrogena Acne Drying Gel, ...",
+  "Drug class": "rug class:  astringents"
+ },
+ {
+  "Resource name": "Xalatan",
+  "Generic name": " latanoprost ophthalmic",
+  "Dosage form": " ophthalmic solution",
+  "Brand names": " Xalatan",
+  "Drug class": " Ophthalmic glaucoma agents"
+ },
+ {
+  "Resource name": "Xalkori",
+  "Generic name": " crizotinib",
+  "Dosage form": " capsule",
+  "Brand names": " Xalkori",
+  "Drug class": " Multikinase inhibitors"
+ },
+ {
+  "Resource name": "Xanax",
+  "Generic name": " alprazolam",
+  "Dosage form": " tablet",
+  "Brand names": " Xanax, Xanax XR",
+  "Drug class": " Benzodiazepines"
+ },
+ {
+  "Resource name": "Xanax XR",
+  "Generic name": " alprazolam",
+  "Dosage form": " tablet, extended release",
+  "Brand names": " Niravam, Xanax, Xanax XR",
+  "Drug class": " benzodiazepines"
+ },
+ {
+  "Resource name": "Xarelto",
+  "Generic name": " rivaroxaban",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Xarelto",
+  "Drug class": " Factor Xa inhibitors"
+ },
+ {
+  "Resource name": "Xatmep",
+  "Generic name": " methotrexate",
+  "Dosage form": "osage form: oral solution",
+  "Brand names": " Trexall, Xatmep",
+  "Drug class": " Antimetabolites, Antirheumatics, Other immunosuppressants"
+ },
+ {
+  "Resource name": "Xcopri",
+  "Generic name": " cenobamate",
+  "Dosage form": " Tablets",
+  "Brand names": " Xcopri",
+  "Drug class": " antiepileptic drugs (AEDs)"
+ },
+ {
+  "Resource name": "Yondelis",
+  "Generic name": " trabectedin",
+  "Dosage form": " injection, powder, lyophilized, for solution",
+  "Brand names": " Yondeils",
+  "Drug class": " Alkylating agents"
+ },
+ {
+  "Resource name": "Yonsa",
+  "Generic name": " abiraterone",
+  "Dosage form": " tablet",
+  "Brand names": " Yonsa, Zytiga",
+  "Drug class": " Miscellaneous antineoplastics"
+ },
+ {
+  "Resource name": "Yosprala",
+  "Generic name": " aspirin and omeprazole",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Yosprala",
+  "Drug class": " Platelet aggregation inhibitors"
+ },
+ {
+  "Resource name": "Yupelri",
+  "Generic name": " revefenacin (inhalation)",
+  "Dosage form": " inhalation solution",
+  "Brand names": " Yutiq",
+  "Drug class": " Anticholinergic bronchodilators"
+ },
+ {
+  "Resource name": "Yutiq",
+  "Generic name": " fluocinolone ophthalmic implant",
+  "Dosage form": " implant",
+  "Brand names": " Iluvien, Retisert, Yutiq",
+  "Drug class": " Ophthalmic steroids"
+ },
+ {
+  "Resource name": "Zaditor",
+  "Generic name": " ketotifen ophthalmic",
+  "Dosage form": " Ophthalmic Solution, 0.025%",
+  "Brand names": " Alaway, Claritin Eye, Refresh Eye Itch Relief, Zaditor",
+  "Drug class": " Ophthalmic antihistamines and decongestants"
+ },
+ {
+  "Resource name": "Zafirlukast",
+  "Generic name": " zafirlukast",
+  "Dosage form": " oral tablet (10 mg; 20 mg)",
+  "Brand names": " Accolate",
+  "Drug class": " Leukotriene modifiers"
+ },
+ {
+  "Resource name": "Zaleplon",
+  "Generic name": " zaleplon",
+  "Dosage form": " oral capsule (10 mg; 5 mg)",
+  "Brand names": " Sonata",
+  "Drug class": " Miscellaneous anxiolytics, sedatives and hypnotics"
+ },
+ {
+  "Resource name": "Zanaflex",
+  "Generic name": " tizanidine",
+  "Dosage form": " capsule",
+  "Brand names": " Zanaflex",
+  "Drug class": " Skeletal muscle relaxants"
+ },
+ {
+  "Resource name": "Zantac",
+  "Generic name": " ranitidine",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Zantac",
+  "Drug class": " H2 antagonists"
+ },
+ {
+  "Resource name": "Zarxio",
+  "Generic name": " filgrastim-sndz",
+  "Dosage form": " Injection",
+  "Brand names": " Zarxio",
+  "Drug class": " Hematopoietic Growth Factors"
+ },
+ {
+  "Resource name": "Zebeta",
+  "Generic name": " bisoprolol",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Zebeta",
+  "Drug class": " Cardioselective beta blockers"
+ },
+ {
+  "Resource name": "Zofran ODT",
+  "Generic name": " ondansetron",
+  "Dosage form": " tablet, orally disintegrating",
+  "Brand names": " Zofran, Zofran ODT, Zuplenz",
+  "Drug class": " 5HT3 receptor antagonists"
+ },
+ {
+  "Resource name": "Zoladex",
+  "Generic name": " goserelin",
+  "Dosage form": " implant",
+  "Brand names": " Zoladex",
+  "Drug class": " Gonadotropin releasing hormones, Hormones \/ antineoplastics"
+ },
+ {
+  "Resource name": "Zoledronic acid",
+  "Generic name": " zoledronic acid",
+  "Dosage form": " intravenous solution (4 mg\/100 mL; 4 mg\/5 mL; 5 mg\/100 mL)",
+  "Brand names": " Reclast, Zometa, Zometa Concentrate, Aclasta",
+  "Drug class": " Bisphosphonates"
+ },
+ {
+  "Resource name": "Zolmitriptan",
+  "Generic name": " zolmitriptan",
+  "Dosage form": " oral tablet (2.5 mg; 5 mg); oral tablet, disintegrating (2.5 mg; 5 mg)",
+  "Brand names": " Zomig, Zomig-ZMT",
+  "Drug class": " Antimigraine agents"
+ },
+ {
+  "Resource name": "Zoloft",
+  "Generic name": " sertraline",
+  "Dosage form": " tablet, film coated; oral concentrate",
+  "Brand names": " Zoloft",
+  "Drug class": " Selective serotonin reuptake inhibitors"
+ },
+ {
+  "Resource name": "Zolpidem",
+  "Generic name": " zolpidem",
+  "Dosage form": " tablet",
+  "Brand names": " Ambien, Ambien CR, Edluar, Intermezzo, Zolpimist",
+  "Drug class": " Miscellaneous anxiolytics, sedatives and hypnotics"
+ },
+ {
+  "Resource name": "Zometa",
+  "Generic name": " zoledronic acid",
+  "Dosage form": " injection, solution, concentrate",
+  "Brand names": " Zometa",
+  "Drug class": " Bisphosphonates"
+ },
+ {
+  "Resource name": "Zomig",
+  "Generic name": " zolmitriptan",
+  "Dosage form": " tablet, tablet orally-disintegrating",
+  "Brand names": " Zomig, Zomig-ZMT",
+  "Drug class": " Antimigraine agents"
+ },
+ {
+  "Resource name": "Zonegran",
+  "Generic name": " zonisamide",
+  "Dosage form": " capsule",
+  "Brand names": " Zonegran",
+  "Drug class": " Carbonic anhydrase inhibitor anticonvulsants"
+ },
+ {
+  "Resource name": "Zonisamide",
+  "Generic name": " zonisamide",
+  "Dosage form": " oral capsule (100 mg; 25 mg; 50 mg)",
+  "Brand names": " Zonegran",
+  "Drug class": " Carbonic anhydrase inhibitor anticonvulsants"
+ },
+ {
+  "Resource name": "Zostavax",
+  "Generic name": " zoster vaccine live",
+  "Dosage form": " subcutaneous injection, powder, lyophilized, for suspension subcutaneous injection",
+  "Brand names": " Zostavax",
+  "Drug class": " Viral vaccines"
+ },
+ {
+  "Resource name": "Zosyn",
+  "Generic name": " piperacillin and tazobactam",
+  "Dosage form": " injection, solution",
+  "Brand names": " Zosyn",
+  "Drug class": " Beta-lactamase inhibitors"
+ },
+ {
+  "Resource name": "Zyrtec",
+  "Generic name": " cetirizine",
+  "Dosage form": " tablet, film coated",
+  "Brand names": " Zyrtec",
+  "Drug class": " Antihistamines"
+ },
+ {
+  "Resource name": "Zytiga",
+  "Generic name": " abiraterone",
+  "Dosage form": " tablet",
+  "Brand names": " Zytiga",
+  "Drug class": " Miscellaneous antineoplastics"
+ },
+ {
+  "Resource name": "Zykadia",
+  "Generic name": " ceritinib",
+  "Dosage form": " capsule",
+  "Brand names": " Zykadia",
+  "Drug class": " Multikinase inhibitors"
+ },
+ {
+  "Resource name": "Zyloprim",
+  "Generic name": " allopurinol",
+  "Dosage form": " tablet",
+  "Brand names": " Zyloprim",
+  "Drug class": " Antigout agents, Antihyperuricemic agents"
+ },
+ {
+  "Resource name": "Zyprexa",
+  "Generic name": " olanzapine",
+  "Dosage form": " tablets, orally disintegrating tablets, injection",
+  "Brand names": " ZyPREXA, ZyPREXA Zydis",
+  "Drug class": " Atypical antipsychotics"
+ },
+ {
+  "Resource name": "Zylet",
+  "Generic name": " loteprednol and tobramycin ophthalmic",
+  "Dosage form": " ophthalmic suspension",
+  "Brand names": " Zylet",
+  "Drug class": " Ophthalmic steroids with anti-infectives"
+ },
+ {
+  "Resource name": "Zylet ophthalmic",
+  "Generic name": " loteprednol and tobramycin",
+  "Dosage form": " ophthalmic suspension",
+  "Brand names": " Zylet",
+  "Drug class": " Ophthalmic steroids with anti-infectives"
+ },
+ {
+  "Resource name": "Zyloprim",
+  "Generic name": " allopurinol ",
+  "Dosage form": " tablet",
+  "Brand names": " Zyloprim",
+  "Drug class": " Antigout agents, Antihyperuricemic agents"
+ },
+ {
+  "Resource name": "Zym-clonazePAM",
+  "Generic name": " clonazepam",
+  "Dosage form": " tablet",
+  "Brand names": " Zym",
+  "Drug class": " Benzodiazepine anticonvulsants, Benzodiazepines"
+ },
+ {
+  "Resource name": "Zymar",
+  "Generic name": " gatifloxacin",
+  "Dosage form": " ophthalmic solution",
+  "Brand names": " Zymar",
+  "Drug class": " Ophthalmic anti-infectives"
+ },
+ {
+  "Resource name": "Zymaxid",
+  "Generic name": " gatifloxacin ophthalmic",
+  "Dosage form": " ophthalmic solution",
+  "Brand names": " Zymaxid",
+  "Drug class": " Ophthalmic anti-infectives"
+ },
+ {
+  "Resource name": "Zymine",
+  "Generic name": " Triprolidine",
+  "Dosage form": " ophthalmic solution",
+  "Brand names": " Zymine",
+  "Drug class": " antihistamine"
+ },
+ {
+  "Resource name": "Zymine HC",
+  "Generic name": " Triprolidine",
+  "Dosage form": " ophthalmic solution",
+  "Brand names": " Zymine",
+  "Drug class": " antihistamine Hydrocortisone"
+ },
+ {
+  "Resource name": "Zyncof",
+  "Generic name": " dextromethorphan and guaifenesin",
+  "Dosage form": " Injection",
+  "Brand names": " Aquatab DM, Broncotron, Coricidin HBP Chest Congestion & Cough,...",
+  "Drug class": " Upper respiratory combinations"
+ },
+ {
+  "Resource name": "Zynlonta",
+  "Generic name": " loncastuximab tesirine-lpyl",
+  "Dosage form": "  lyophilized powder",
+  "Brand names": " Zynlonta",
+  "Drug class": " chemotherapy"
+ },
+ {
+  "Resource name": "Zynlonta Injection",
+  "Generic name": " loncastuximab tesirine",
+  "Dosage form": " injection, powder, lyophilized",
+  "Brand names": " Zynlonta",
+  "Drug class": " Miscellaneous antineoplastics"
+ },
+ {
+  "Resource name": "Zynrelef",
+  "Generic name": " bupivacaine and meloxicam",
+  "Dosage form": " solution",
+  "Brand names": " Zynrelef",
+  "Drug class": " Analgesic combinations"
+ },
+ {
+  "Resource name": "Zypitamag",
+  "Generic name": " pitavastatin",
+  "Dosage form": " tablet",
+  "Brand names": " Livalo, Zypitamag",
+  "Drug class": " Statins"
+ }
+]
