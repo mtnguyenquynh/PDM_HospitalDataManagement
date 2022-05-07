@@ -77,7 +77,8 @@ public class Treatment extends BaseRecord {
 		super(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, 
 		      Pt_Gender, writable);
 
-		JsonUtils.CheckArgumentCondition(condition, message);
+		DataUtils.CheckArgumentCondition(index >= -1, "The treatment index must started from -1. If -1, " + 
+										 "this treatment may not be available in the medical record.");
 
 
 		this.MedicalRecord_ID = MedicalRecord_ID;
@@ -200,6 +201,7 @@ public class Treatment extends BaseRecord {
 	}
 
 	public String GetClassificationCode() { return this.ClassificationCode; }
+	
 
 	// ----------------------------------------------------------
 	public Hashtable<String, Object> GetMedicoInfo() { return this.MedicoInfo; }

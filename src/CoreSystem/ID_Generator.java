@@ -28,7 +28,7 @@ import PrefixState.Prefix;
  * @version 0.0.1
  * 
  * References:
- * 1) 
+ * 1) https://www.w3schools.com/java/java_switch.asp
 **/
 
 public class ID_Generator {
@@ -38,8 +38,6 @@ public class ID_Generator {
 
     private final Hashtable<Prefix, String[]> ID_Store;
     private final static String counter = "count";
-
-    private final static String[] RuleSet = {"%06d", "%03d-%05d"};
 
     private void InsertToIDStore(Prefix prefix, String directory, String filename) {
         String[] path = {"database" + "/" + directory + "/" + filename};
@@ -68,16 +66,34 @@ public class ID_Generator {
         return ID_Pool[0];
     }
     
-    private String ConstructID(Prefix prefix, int counter, int RuleValue) {
-        String Rule = ID_Generator.RuleSet[RuleValue];
+    private String ConstructID(Prefix prefix, int counter, int RuleValue) throws Exception {
         String notation = prefix.GetPrefixCodeNotation();
-        long count = Rule.chars().filter(ch -> ch == 'd').count();
-        if (count == 1) { return notation + String.format(Rule, counter); }
-        
-        return notation + String.format(Rule, counter, counter);
+        switch (RuleValue) {
+            case 1: { return notation + String.format("%6d", counter); }
+            case 2: {
+                String temp = String.format("%8d", counter);
+                return notation + temp.substring(0, 3) + "-" + temp.substring(3);
+            } 
+            case 3: {
+                String temp = String.format("%10d", counter);
+                return notation + temp.substring(0, 5) + "-" + temp.substring(5);
+            }
+            default: { throw new Exception("The rule is not supported."); }
+        }
     } 
 
-    private String GenerateID(IntermediateObject object, boolean forceUpdate, int RuleValue) throws Exception {
+    /**
+     * This function is an internal core-function used to generate the ID for the object.
+     * The rule is specified by the datatype of the object and the rule-value.
+     * See method `void ConstructID()` for more detailed information.
+     * @param object (Object): The ID of the object we want to set.
+     * @param forceUpdate (bool): If true, this will increment the counter stored in the JSON file.
+     * @param RuleValue (int): The current supported rule are ranging from 1 to 3 (1 <= RuleValue <= 3).
+     * @return
+     * @throws Exception: if the rule is not supported.
+     */
+
+    public String _GenerateID_(IntermediateObject object, boolean forceUpdate, int RuleValue) throws Exception {
         // Step 1: Get the prefix and validate whether it is available to create the ID
         String directory = this.ValidatePrefixAndGetDirectory(object);
         Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(directory, null);
@@ -98,7 +114,7 @@ public class ID_Generator {
     // ---------------------------------------------------------------------------------------------------------------------
     // Public functions to generate the ID
     public String GenerateObjectID(BaseObject TargetObject, boolean forceUpdate) throws Exception {
-        return this.GenerateID(TargetObject, forceUpdate, 0);
+        return this._GenerateID_(TargetObject, forceUpdate, 0);
     }
 
     public String GenerateObjectID(BaseObject TargetObject) throws Exception {
@@ -106,7 +122,7 @@ public class ID_Generator {
     }
 
     public String GeneratePersonID(Person person, boolean forceUpdate) throws Exception {
-        return this.GenerateID(person, forceUpdate, 1); 
+        return this._GenerateID_(person, forceUpdate, 1); 
     }
 
     public String GeneratePersonID(Person person) throws Exception {

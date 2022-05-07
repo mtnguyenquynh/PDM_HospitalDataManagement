@@ -45,6 +45,7 @@ public class MedicalRecord extends BaseRecord {
     public MedicalRecord(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName, 
                          String Pt_Age, String Pt_Gender, boolean writable) {
         super(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, writable);
+        DataUtils.CheckArgumentCondition(MedicalRecord_ID != null, "The MedicalRecord_ID cannot be null.");
         this.MedicalRecordID = MedicalRecord_ID;
     }
 
