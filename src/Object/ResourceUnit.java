@@ -120,7 +120,6 @@ public enum ResourceUnit {
             String pStr = p.toString();
             if (name == pStr || pStr.equals(name)) { return p; }
             if (type == pStr || pStr.equals(type)) { return p; }
-            
 
             String p_name = p.GetName();
             String p_type = p.GetType();

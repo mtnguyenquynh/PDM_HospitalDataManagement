@@ -70,10 +70,12 @@ public enum RoomUnitEnum {
     // Magic here: Declare the enum constant as a static final field using the prefix.
     public static RoomUnitEnum GetEnum(String RoomUnitCode) {
         for (RoomUnitEnum RoomUnit : RoomUnitEnum.values()) {
-            if (RoomUnit.name().equals(RoomUnitCode)) { return RoomUnit; }
-            if (RoomUnitCode == RoomUnit.toString() || RoomUnit.toString().equals(RoomUnitCode)) { return RoomUnit; }
+            String RU_Str = RoomUnit.toString();
+            if (RU_Str.equals(RoomUnitCode) || RU_Str == RoomUnitCode) { return RoomUnit; }
+            if (RU_Str.equalsIgnoreCase(RoomUnitCode)) { return RoomUnit; }
         }
-        return null;
+        try { return RoomUnitEnum.valueOf(RoomUnitCode); } 
+        catch (Exception e) { return null; }
     }
 
     public static boolean FindEnum(String RoomUnitCode) { return RoomUnitEnum.GetEnum(RoomUnitCode) != null; }
