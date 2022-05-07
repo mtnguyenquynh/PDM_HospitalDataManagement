@@ -60,7 +60,7 @@ public class MedicalRecord extends BaseRecord {
         this.prefix = MedicalRecord.GetPrefix();
         this.LocalPool = new ArrayList<Treatment>(MedicalRecord.NUMBER_OF_MAX_TREATMENTS);
         
-        this.RDoc_MedicoID = "";                           // Default is empty field
+        this.RDoc_MedicoID = "";                            // Default is empty field
         this.RNurse_MedicoID = "";                          // Default is empty field
     }
 
@@ -171,49 +171,11 @@ public class MedicalRecord extends BaseRecord {
     public Hashtable<String, Object> Serialize() {
 		Hashtable<String, Object> TreatmentInformation = super.Serialize();
 		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
-		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndex());
-		TreatmentInformation.put("ClassificationCode", this.GetClassificationCode());
 		
-		String directory, folder;
-		try { 
-			folder = PersonUtils.GetPatientRecordDirectory(this.GetPtFirstName(), false); 
-			TreatmentInformation.put("folder", folder); 		// Saved here to prevent failed compilation
-		} catch (Exception e) { // This is never called as standardization is done in the Patient class.
-			e.printStackTrace();
-		}
+        for (Treatment TM: this.GetLocalPool()) {
+            TreatmentInformation.put(TM.GetTreatmentID(), TM.Serialize());
+        }
 		
-		// Note that at here the directory is: "database/PatientRecord/[FirstName-Tree]/".
-		// To reach the true directory, we need to add the "Patient.ID" and "MedicalRecord.ID into it"
-		// The result is: "database/PatientRecord/[FirstName-Tree]/[Patient.ID]/[MedicalRecord.ID]/".
-		folder = TreatmentInformation.get("folder") + this.GetPtID() + "/" + this.GetMedicalRecordID() + "/";
-		TreatmentInformation.put("folder", folder);
-
-		// After that, we needed to deepen down to the "TreatmentIndex"
-		// The result is: "database/PatientRecord/[FirstName-Tree]/[Patient.ID]/[MedicalRecord.ID]/[TreatmentIndex]/".
-		String Subfolder = folder + this.GetTreatmentIndexAsString() + "/";
-		TreatmentInformation.put("Subfolder", Subfolder); 	// Saved here as cache	
-
-		try {
-			directory = Subfolder + "MedicoInfo.json";
-			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetMedicoInfo(), null);
-			TreatmentInformation.put("MedicoInfo", directory);
-
-			ArrayList<Object> CastedSupplementary = DataUtils.CastToObjectArrayFromStringArray(this.GetSupplementary());
-			directory = Subfolder + "Supplementary.json";
-			JsonUtils.SaveArrayListIntoJsonFile(directory, CastedSupplementary, null);
-			TreatmentInformation.put("Supplementary", directory);
-
-			directory = Subfolder + "Resources.json";
-			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetResources(), null);
-			TreatmentInformation.put("Resources", directory);
-
-			directory = Subfolder + "Descriptions.json";
-			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetDescriptions(), null);
-			TreatmentInformation.put("Descriptions", directory);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		return TreatmentInformation;
 	}

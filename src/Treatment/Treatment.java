@@ -230,6 +230,18 @@ public class Treatment extends BaseRecord {
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// Serialization & Deserialization
+	
+	/**
+	 * This function not serializes the "treatment" into the JSONOBject-like object but actually
+	 * serialize the "treatment" into a JSON file.
+	 * 
+	 * The "folder" key is the core following path: "database/PatientRecord/[FirstName-Tree]/[Patient.ID]/[MedicalRecord.ID]/"
+	 * The "subfolder" key is the following path = "[folder]/[Standardized-TreatmentIndex]/"
+	 * The "Treatment" is stored at the following path: "[folder]/<Standardized-TreatmentIndex>.json"
+	 * All four supplementary files are stored at the following path: "[subfolder]/<SupplementaryFile>.json",
+	 * whose SupplementaryFile is "MedicoInfo", "Resources", "Descriptions", "Supplementary" (FileName ~~ key).
+	 * 
+	 */
 	public Hashtable<String, Object> Serialize() {
 		Hashtable<String, Object> TreatmentInformation = super.Serialize();
 		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
@@ -252,27 +264,27 @@ public class Treatment extends BaseRecord {
 
 		// After that, we needed to deepen down to the "TreatmentIndex"
 		// The result is: "database/.../[MedicalRecord.ID]/[Standardized-TreatmentIndex]/".
-		String Subfolder = folder + this.GetStandardizedIndex() + "/";
-		TreatmentInformation.put("Subfolder", Subfolder); 	// Saved here as cache	
+		String subfolder = folder + this.GetStandardizedIndex() + "/";
+		TreatmentInformation.put("subfolder", subfolder); 	// Saved here as cache	
 
 		try {
-			directory = Subfolder + "MedicoInfo.json";
+			directory = subfolder + "MedicoInfo.json";
 			TreatmentInformation.put("MedicoInfo", directory);
 			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetMedicoInfo(), null);
 
 
 			ArrayList<Object> CastedSupplementary = DataUtils.CastToObjectArrayFromStringArray(this.GetSupplementary());
-			directory = Subfolder + "Supplementary.json";
+			directory = subfolder + "Supplementary.json";
 			TreatmentInformation.put("Supplementary", directory);
 			JsonUtils.SaveArrayListIntoJsonFile(directory, CastedSupplementary, null);
 
 
-			directory = Subfolder + "Resources.json";
+			directory = subfolder + "Resources.json";
 			TreatmentInformation.put("Resources", directory);
 			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetResources(), null);
 
 
-			directory = Subfolder + "Descriptions.json";
+			directory = subfolder + "Descriptions.json";
 			TreatmentInformation.put("Descriptions", directory);
 			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetDescriptions(), null);
 			
