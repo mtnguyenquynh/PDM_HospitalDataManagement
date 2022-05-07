@@ -22,10 +22,8 @@ import Person.PersonUtils;
 **/
 
 /**
- * This class is a small wrapper which controlled the basic behaviour of the "Tretment" class.
- * In the treatment record, we store the patient's ID, the medico record's ID,
- * all the involved medicos (ID), some syncronized information such as name, age 
- * and gender, and the optional description if we want to add some fields on it.
+ * This class is a small wrapper which controlled the basic behaviour of the "Treatment" class.
+ * 
  * 
  * 
  * @author Ichiru Take
@@ -37,5 +35,23 @@ import Person.PersonUtils;
 
 
 public class MedicalRecord extends BaseRecord {
-    
+    // ---------------------------------------------------------------------------------------------------------------------
+    private static final int NUMBER_OF_MAX_TREATMENTS = 100;
+
+    // ----------------------------------------------------------                         
+    private String MedicalRecordID;
+    private String Medico_ID;
+
+    public MedicalRecord(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName, 
+                         String Pt_Age, String Pt_Gender, boolean writable) {
+        super(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, writable);
+        this.MedicalRecordID = MedicalRecord_ID;
+    }
+
+    public MedicalRecord(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName, 
+                         String Pt_Age, String Pt_Gender) {
+        this(Patient_ID, MedicalRecord_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, true);
+    }
+
+
 }
