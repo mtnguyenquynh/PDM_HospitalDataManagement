@@ -38,6 +38,7 @@ import Person.PersonUtils;
  * 4) Descriptions: The desciption of the treatment: Mapping the {Index} - { Date, Time, Description, Medico_Name }.
  * 	  The {Date, Time} here is its creation time. Not the recording time by patient.
  * 
+ * Note that the "index" (integer) attribute started from zero, NOT from 1.
  * 
  * @author Ichiru Take
  * @version 0.0.1
@@ -79,7 +80,8 @@ public class Treatment extends BaseRecord {
 
 		DataUtils.CheckArgumentCondition(index >= -1, "The treatment index must started from -1. If -1, " + 
 										 "this treatment may not be available in the medical record.");
-
+		DataUtils.CheckArgumentCondition(TreatmentCode.ContainsThisKeyCode(code), 
+										 "This code=" + code + " is not available in any treatment.");
 		this.MedicalRecord_ID = MedicalRecord_ID;
 		this.index = index;
 		this.ClassificationCode = code;
