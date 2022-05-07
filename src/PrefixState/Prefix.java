@@ -83,7 +83,8 @@ public enum Prefix {
         for (Prefix p : Prefix.values()) {
             if (p.toString().equals(className)) { return p; }
         }
-        return null;
+        try { return Prefix.valueOf(className); }
+        catch (Exception e) { return null; }
     }
     public static boolean FindEnumByClassName(String className) { return Prefix.GetEnumByClassName(className) != null; }
 
