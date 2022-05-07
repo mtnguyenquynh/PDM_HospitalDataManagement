@@ -102,28 +102,45 @@ public class MedicoTask extends AbstractObject {
     }
 
     // ----------------------------------------------------------
-    public void AddTask(Treatment treatment) {
+    // API Function to add a new treatment to the "MedicoTask": Return True if success, False otherwise.
+    public boolean AddTask(Treatment treatment) throws Exception {
+        if (this.IsPoolFull()) { throw new Exception("MedicoTask is full"); }
         if (this.IsDistributedToThisMedico(treatment)) {
-            this.GetLocalPool().add(this.Getter(treatment));
+            String[] task = this.Getter(treatment);
+            if (!this.GetLocalPool().contains(task)) {
+                return this.GetLocalPool().add(task);
+            }
         }
+        return false;
     }
 
-    public void AddTask(MedicalRecord record) {
+    public boolean AddTask(MedicalRecord record) throws Exception {
+        if (this.IsPoolFull()) { throw new Exception("MedicoTask is full"); }
         if (this.IsDistributedToThisMedico(record)) {
-            this.GetLocalPool().add(this.Getter(record));
+            String[] task = this.Getter(record);
+            if (!this.GetLocalPool().contains(task)) {
+                return this.GetLocalPool().add(task);
+            }
         }
+        return false;
     }
 
-    public void RemoveTask(Treatment treatment) {
+    public boolean RemoveTask(Treatment treatment) {
         if (this.IsDistributedToThisMedico(treatment)) {
-            this.GetLocalPool().remove(this.Getter(treatment));
+            boolean res = this.GetLocalPool().remove(this.Getter(treatment));
+            if (res) { this.GetLocalPool().ensureCapacity(MedicoTask.GetMaxCapacity()); }
+            return res;
         }
+        return false;
     }
 
-    public void RemoveTask(MedicalRecord record) {
+    public boolean RemoveTask(MedicalRecord record) {
         if (this.IsDistributedToThisMedico(record)) {
-            this.GetLocalPool().remove(this.Getter(record));
+            boolean res = this.GetLocalPool().remove(this.Getter(record));
+            if (res) { this.GetLocalPool().ensureCapacity(MedicoTask.GetMaxCapacity()); }
+            return res;
         }
+        return false;
     }
 
     public void SortTask(boolean reverse) {
@@ -148,5 +165,5 @@ public class MedicoTask extends AbstractObject {
 
     // --------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
-
+    
 }
