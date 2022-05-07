@@ -2,11 +2,13 @@ package Treatment;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import BaseClass.BaseRecord;
-import Person.PersonUtils;
 import PrefixState.Prefix;
 import Utility.DataUtils;
+import Utility.JsonUtils;
 
 
 /**
@@ -42,7 +44,7 @@ import Utility.DataUtils;
 public class MedicalRecord extends BaseRecord {
     // ---------------------------------------------------------------------------------------------------------------------
     // Synchronized with Treatment.StandardizeIndex()
-    private static final int NUMBER_OF_MAX_TREATMENTS = Treatment.GetMaxTreatmentInMedicalRecords();       
+    private static final int NUMBER_OF_MAX_TREATMENTS = TreatmentUtils.GetMaxTreatmentInMedicalRecords();       
     private final ArrayList<Treatment> LocalPool;
 
     // ----------------------------------------------------------                         
@@ -131,7 +133,8 @@ public class MedicalRecord extends BaseRecord {
                                  "This treatment does not belong to this medical record.");
         BaseRecord.ValidateTwoNeighborRecords(this, treatment, true);
         this.AttemptToSetTreatmentIndex(treatment);
-        this.LocalPool.add(treatment);
+        if (treatment.GetTreatmentIndex() == - 1) { this.LocalPool.add(treatment); }
+        else { this.LocalPool.add(treatment.GetTreatmentIndex(), treatment); }
     }
 
     public Treatment CreateNewTreatment(String code) throws Exception {
@@ -167,20 +170,34 @@ public class MedicalRecord extends BaseRecord {
     }
 
     // --------------------------------------------------------------------------------------------------------------------
-    // TODO Serialization & Deserialization
-    public Hashtable<String, Object> Serialize() {
-		Hashtable<String, Object> TreatmentInformation = super.Serialize();
-		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
-		
-        for (Treatment TM: this.GetLocalPool()) {
-            TreatmentInformation.put(TM.GetStandardizedIndex(), TM.Serialize());
-        }
-		
+    // Serialization & Deserialization
+    public String GetToMedicalRecordFolder() { return TreatmentUtils.GetToMedicalRecordFolder(this); }
+    
 
-		return TreatmentInformation;
+    public Hashtable<String, Object> Serialize() {
+		Hashtable<String, Object> RecordInfo = super.Serialize();
+		RecordInfo.put("MedicalRecordID", this.GetMedicalRecordID());
+        RecordInfo.put("RDoc_MedicoID", this.GetRDoc_MedicoID());
+        RecordInfo.put("RNurse_MedicoID", this.GetRNurse_MedicoID());
+        
+        String folder = this.GetToMedicalRecordFolder();
+        RecordInfo.put("folder", folder);
+
+        String filename = folder + this.GetMedicalRecordID() + ".json";
+        
+        for (Treatment TM: this.GetLocalPool()) {
+            if (TM == null) { continue ; }
+            TM.Serialize();  // This is a must-have operation and it have returning value.
+            RecordInfo.put(TM.GetStandardizedIndex(), TM.GetToTreatmentFile());
+        }
+        RecordInfo.put("MedicalRecord", filename);
+
+        try { JsonUtils.SaveHashTableIntoJsonFile(filename, RecordInfo, null); }
+        catch (Exception e) { e.printStackTrace(); }
+		return RecordInfo;
 	}
 
-	public static Treatment Deserialize(Hashtable<String, Object> data) {
+	public static MedicalRecord Deserialize(Hashtable<String, Object> data) {
 		String Pt_ID = (String) data.get("Pt_ID");
         String Pt_FirstName = (String) data.get("Pt_FirstName");
         String Pt_LastName = (String) data.get("Pt_LastName");
@@ -188,35 +205,31 @@ public class MedicalRecord extends BaseRecord {
         String Pt_Gender = (String) data.get("Pt_Gender");
 
 		String MedicalRecordID = (String) data.get("MedicalRecordID");
-		int TreatmentIndex = Integer.parseInt((String) data.get("TreatmentIndex"));
-		String ClassificationCode = (String) data.get("ClassificationCode");
 
-        Treatment record = new Treatment(Pt_ID, MedicalRecordID, Pt_FirstName, Pt_LastName, Pt_Age, 
-										 Pt_Gender, TreatmentIndex, ClassificationCode, true);
+        MedicalRecord record = new MedicalRecord(Pt_ID, Pt_FirstName, Pt_LastName, Pt_Age, 
+                                                Pt_Gender, MedicalRecordID);
         record.SetDate((String) data.get("date"));
         record.SetTime((String) data.get("time"));
 
 		// Deserialize Medico, Supplementary, Resources, and Descriptions. These are stored in JSON files.
 		// So we need to call them
-		String MedicoInfo_File = (String) data.get("MedicoInfo");
-		String Supplementary_File = (String) data.get("Supplementary");
-		String Resources_File = (String) data.get("Resources");
-		String Descriptions_File = (String) data.get("Descriptions");
+        Iterator<Entry<String, Object>> iter = data.entrySet().iterator();
+        while (iter.hasNext()) {
+            Entry<String, Object> entry = iter.next();
+            String key = entry.getKey();
+            try {
+                Integer.parseInt(key);
+                try {
+                    Treatment TM = Treatment.DeserializeFromFile((String) entry.getValue());
+                    record.AddTreatment(TM);
+                } catch (Exception e) { e.printStackTrace(); }
 
-		try {
-			record.GetMedicoInfo().putAll(JsonUtils.LoadJsonFileToHashtable(MedicoInfo_File, null));
-
-			ArrayList<Object> Supplementary = JsonUtils.LoadJsonFileToArrayList(Supplementary_File, null);
-			record.GetSupplementary().addAll(DataUtils.CastToStringArrayFromObjectArray(Supplementary));
-
-			record.GetResources().putAll(JsonUtils.LoadJsonFileToHashtable(Resources_File, null));
-			record.GetDescriptions().putAll(JsonUtils.LoadJsonFileToHashtable(Descriptions_File, null));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		if (!(boolean) data.get("writable")) { record.CloseRecord(); }
-		return record;
+            } catch (NumberFormatException e) {
+                continue;
+            }
+        }
+        if (!(boolean) data.get("writable")) { record.CloseRecord(); }
+        return record;
 	}
 
 }

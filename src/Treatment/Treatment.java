@@ -7,7 +7,6 @@ import Object.Resource;
 import Staff.Medico;
 import Utility.DataUtils;
 import Utility.JsonUtils;
-import Person.PersonUtils;
 
 
 /**
@@ -58,8 +57,6 @@ public class Treatment extends BaseRecord {
 	private static final int MAX_NUM_SUPPLEMENTARY = 50;		// 50 supplementary materials are pre-allocated
 	private static final int MAX_NUM_DESCRIPTIONS = 100;		// 100 descriptions are pre-allocated
 	private static final int MAX_NUM_RESOURCES = 100;			// 100 resources are pre-allocated
-
-	private static final int MAX_INDEX = 3;					    // This is "power-coefficient" of number of Treatments.
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	private String MedicalRecord_ID; 					// Patient's Data
@@ -186,18 +183,10 @@ public class Treatment extends BaseRecord {
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// Getter & Setter 
-	public static int GetMaxTreatmentInMedicalRecords() { return (int) Math.pow(10, Treatment.MAX_INDEX); }
-
 	public String GetMedicalRecordID() { return this.MedicalRecord_ID; }
 	
 	public String GetStandardizedIndex() {
-		int index = this.GetTreatmentIndex();
-		// int MaxTreatments = Treatment.GetMaxTreatmentInMedicalRecords();
-		// if (index >= MaxTreatments) {
-		// 	String[] idxStr = {String.valueOf(index), String.valueOf(MaxTreatments)};
-		// 	throw new Exception("The treatment index is too large (index = ." + idxStr[0] + "> " + idxStr[1] + ")");
-		// }
-		return String.format("%" + String.valueOf(Treatment.MAX_INDEX) + "d", index);
+		return TreatmentUtils.GetStandardizedIndex(this.GetTreatmentIndex());
 	}
 
 	public String GetDerivedTreatmentID() throws Exception { 
@@ -220,7 +209,6 @@ public class Treatment extends BaseRecord {
 
 	public String GetClassificationCode() { return this.ClassificationCode; }
 
-
 	// ----------------------------------------------------------
 	public Hashtable<String, Object> GetMedicoInfo() { return this.MedicoInfo; }
 	public ArrayList<String> GetSupplementary() { return this.Supplementary; }
@@ -229,7 +217,13 @@ public class Treatment extends BaseRecord {
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// Serialization & Deserialization
-	
+	public String GetToMedicalRecordFolder() { return TreatmentUtils.GetToMedicalRecordFolder(this); }
+
+	public String GetToTreatmentFolder() { return TreatmentUtils.GetToTreatmentFolder(this); }
+
+	// This is the directory of the file after serialization.
+	public String GetToTreatmentFile() { return this.GetToMedicalRecordFolder() + this.GetStandardizedIndex() + ".json";  }
+
 	/**
 	 * This function not serializes the "treatment" into the JSONOBject-like object but actually
 	 * serialize the "treatment" into a JSON file.
@@ -247,26 +241,22 @@ public class Treatment extends BaseRecord {
 		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndex());
 		TreatmentInformation.put("ClassificationCode", this.GetClassificationCode());
 		
-		String directory, folder;
-		try { 
-			folder = PersonUtils.GetPatientRecordDirectory(this.GetPtFirstName(), false); 
-			TreatmentInformation.put("folder", folder); 		// Saved here to prevent failed compilation
-		} catch (Exception e) { // This is never called as standardization is done in the Patient class.
-			e.printStackTrace();
-		}
-		
-		// Note that at here the directory is: "database/PatientRecord/[FirstName-Tree]/".
+		// ----------------------------------------------------------
+		// Base folder = PersonUtils.GetPatientRecordDirectory(this.GetPtFirstName(), false);
+		// This achieves "database/PatientRecord/[FirstName-Tree]/" .
+
 		// To reach the true directory, we need to add the "Patient.ID" and "MedicalRecord.ID into it"
 		// The result is: "database/PatientRecord/[FirstName-Tree]/[Patient.ID]/[MedicalRecord.ID]/".
-		folder = TreatmentInformation.get("folder") + this.GetPtID() + "/" + this.GetMedicalRecordID() + "/";
+		String folder = this.GetToMedicalRecordFolder();
 		TreatmentInformation.put("folder", folder);
 
 		// After that, we needed to deepen down to the "TreatmentIndex"
 		// The result is: "database/.../[MedicalRecord.ID]/[Standardized-TreatmentIndex]/".
-		String subfolder = folder + this.GetStandardizedIndex() + "/";
+		String subfolder = this.GetToTreatmentFolder();
 		TreatmentInformation.put("subfolder", subfolder); 	// Saved here as cache	
 
 		try {
+			String directory;
 			directory = subfolder + "MedicoInfo.json";
 			TreatmentInformation.put("MedicoInfo", directory);
 			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetMedicoInfo(), null);
