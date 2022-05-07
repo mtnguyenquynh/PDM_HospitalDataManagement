@@ -1,6 +1,7 @@
 package Staff;
 
 import PrefixState.Prefix;
+import Utility.JsonUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -74,9 +75,11 @@ public class Medico extends Staff {
     // ----------------------------------------------------------
     // Department
     public DepartmentEnum GetDepartment() { return this.department; }
-    public void SetDepartment(DepartmentEnum department) throws Exception { this.department = department; }
+    public void SetDepartment(DepartmentEnum department) { this.department = department; }
     public void SetDepartment(String dept) throws Exception { 
-        this.department = DepartmentEnum.valueOf(dept); 
+        DepartmentEnum deptEnum = DepartmentEnum.GetEnum(dept);
+        JsonUtils.CheckArgumentCondition(deptEnum != null, "There are no such department: " + dept);
+        this.SetDepartment(DepartmentEnum.GetEnum(dept));
     }
 
 

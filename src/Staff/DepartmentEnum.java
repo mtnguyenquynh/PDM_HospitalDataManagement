@@ -107,7 +107,9 @@ public enum DepartmentEnum {
             if (deptEnumName.equals(dept) || deptEnumName == dept) { return deptEnum; }
             if (deptEnumName.equalsIgnoreCase(dept)) { return deptEnum; }
         }
-        return null;
+        
+        try { return DepartmentEnum.valueOf(dept); } 
+        catch (Exception e) { return null; }
     }
 
     public static boolean FindEnum(String dept) { return DepartmentEnum.GetEnum(dept) != null; }
