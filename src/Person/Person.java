@@ -41,6 +41,7 @@ public class Person extends IntermediateObject {
         this.phone_number = null;
         this.gender = null;
         this.nationality = null;
+        
         this.prefix = Prefix.Person;
     }
 

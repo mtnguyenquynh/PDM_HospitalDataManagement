@@ -126,18 +126,28 @@ public abstract class PersonUtils {
      * @return (String) The relative path of the person's information
      * @throws Exception If the name is not valid
      */
-    public static String GetPathByFirstName(String FirstName, boolean IsStandardized) throws Exception {
+    public static String[] SplitNameIntoTreePath(String FirstName, boolean IsStandardized) throws Exception {
         JsonUtils.CheckArgumentCondition(FirstName != null, "The input name is null");
         if (!IsStandardized) { FirstName = PersonUtils.StandardizeName(FirstName); }
         if (FirstName.contains(".")) { throw new Exception("The name cannot contain a single dot."); }
         if (FirstName.contains(" ")) { throw new Exception("The name must be a single word."); }
-        
-        int MaxLength = Math.min(PersonUtils.GetFirstNameDepth(), FirstName.length());
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < MaxLength; i++) {
-            sb.append(FirstName.substring(i, i + 1).toLowerCase() + "/");
+
+        String[] TreeName = new String[Math.min(PersonUtils.GetFirstNameDepth(), FirstName.length())];
+        for (int i = 0; i < TreeName.length; i++) {
+            TreeName[i] = FirstName.substring(i, i + 1).toLowerCase();
         }
-        return sb.toString();
+        return TreeName;
+    }
+    
+    public static String GetPathByFirstName(String FirstName, boolean IsStandardized, boolean AddFinalSlash) throws Exception {
+        String[] TreeName = PersonUtils.SplitNameIntoTreePath(FirstName, IsStandardized);
+        String path = String.join("/", TreeName);
+        if (AddFinalSlash) { path += "/"; }
+        return path;
+    }
+
+    public static String GetPathByFirstName(String FirstName, boolean IsStandardized) throws Exception {
+        return PersonUtils.GetPathByFirstName(FirstName, IsStandardized, true);
     }
 
     // ----------------------------------------------------------------------------------------------------------------------
