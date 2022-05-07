@@ -43,7 +43,7 @@ public class MedicalRecord extends BaseRecord {
 
     // ----------------------------------------------------------                         
     private String MedicalRecordID;
-    private String RDoc_Medico_ID, RNurse_MedicoID;             // This is the ID of the doctor and nurse who created the record    
+    private String RDoc_MedicoID, RNurse_MedicoID;             // This is the ID of the doctor and nurse who created the record    
     protected Prefix prefix;
 
     public MedicalRecord(String Patient_ID, String Pt_FirstName, String Pt_LastName, String Pt_Age, String Pt_Gender, 
@@ -56,7 +56,7 @@ public class MedicalRecord extends BaseRecord {
         this.prefix = MedicalRecord.GetPrefix();
         this.LocalPool = new ArrayList<Treatment>(MedicalRecord.NUMBER_OF_MAX_TREATMENTS);
         
-        this.RDoc_Medico_ID = "";                           // Default is empty field
+        this.RDoc_MedicoID = "";                           // Default is empty field
         this.RNurse_MedicoID = "";                          // Default is empty field
     }
 
@@ -99,10 +99,10 @@ public class MedicalRecord extends BaseRecord {
     public String GetThisPrefixCode() { return this.GetThisPrefix().GetPrefixCode(); }
 
     // ----------------------------------------------------------
-    public String GetRDoc_Medico_ID() { return this.RDoc_Medico_ID; }
-    public void SetRDoc_Medico_ID(String RDoc_Medico_ID) throws Exception {
-        DataUtils.CheckArgumentCondition(RDoc_Medico_ID != null, "ID cannot be null.");
-        this.RDoc_Medico_ID = RDoc_Medico_ID;
+    public String GetRDoc_MedicoID() { return this.RDoc_MedicoID; }
+    public void SetRDoc_MedicoID(String RDoc_MedicoID) throws Exception {
+        DataUtils.CheckArgumentCondition(RDoc_MedicoID != null, "ID cannot be null.");
+        this.RDoc_MedicoID = RDoc_MedicoID;
     }
 
     public String GetRNurse_MedicoID() { return this.RNurse_MedicoID; }
@@ -163,7 +163,7 @@ public class MedicalRecord extends BaseRecord {
     }
 
     // --------------------------------------------------------------------------------------------------------------------
-    // Serialization & Deserialization
-    
+    // TODO Serialization & Deserialization
+
 
 }
