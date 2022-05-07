@@ -38,6 +38,7 @@ public class BaseRecord extends AbstractRecord {
         this.Pt_Age = Pt_Age;
         this.Pt_Gender = Pt_Gender;
     }
+    
     public BaseRecord(String Patient_ID, String Pt_FirstName, String Pt_LastName, String Pt_Age, String Pt_Gender) {
         this(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, true);
     }

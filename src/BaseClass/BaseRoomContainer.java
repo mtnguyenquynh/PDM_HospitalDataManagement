@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import Person.Person;
+import Utility.DataUtils;
 import Utility.JsonUtils;
 
 /**
@@ -43,7 +44,7 @@ public class BaseRoomContainer extends AbstractObject {
 
     public BaseRoomContainer(String ID, int MaxCapacity) throws Exception {
         super(ID);
-        JsonUtils.CheckArgumentCondition(MaxCapacity >= 0, "The maximum capacity must be non-negative.");
+        DataUtils.CheckArgumentCondition(MaxCapacity >= 0, "The maximum capacity must be non-negative.");
 
         this.MaxCapacity = MaxCapacity;
         int capacity = BaseRoomContainer.GetSerializationCapacity();
@@ -61,12 +62,12 @@ public class BaseRoomContainer extends AbstractObject {
     // ---------------------------------------------------------------------------------------------------------------------
     // Find object in pool
     public String[] GetObject(String ID) {
-        JsonUtils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
+        DataUtils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
         return (String[]) this.GetLocalPool().get(ID); 
     }
 
     protected String[] GetObject(AbstractObject object) {
-        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        DataUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.GetObject(object.GetID());
     }
 
@@ -111,7 +112,7 @@ public class BaseRoomContainer extends AbstractObject {
     }
 
     protected int AddOrUpdateObject(AbstractObject object, int amount) throws Exception {
-        JsonUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
+        DataUtils.CheckArgumentCondition(object != null, "Object cannot be null.");
         return this.AddOrUpdateObject(object.GetID(), object.GetName(), amount);
     }
 
@@ -183,7 +184,7 @@ public class BaseRoomContainer extends AbstractObject {
     }
 
     protected int AddOrUpdatePerson(Person person) throws Exception {
-        JsonUtils.CheckArgumentCondition(person != null, "Person cannot be null.");
+        DataUtils.CheckArgumentCondition(person != null, "Person cannot be null.");
         return this.AddOrUpdatePerson(person.GetID(), person.GetName(), person.GetPhoneNumber());
     }
 
