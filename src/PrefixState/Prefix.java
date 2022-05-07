@@ -27,7 +27,12 @@ package PrefixState;
 public enum Prefix {
     // ---------------------------------------------------------------------------------------------------------------------
     // Declare enum constants here: Core System for Patient-Medico Interaction
+    Person("Ps-"),
     Patient("Pt-"),
+    Staff("St-"),
+    OtherStaff("OS-"),
+    
+    Medico("Md-"),
     Doctor("Dt-"),
     Nurse("Ns-"),
     MedicalRecord("MR-"),
@@ -37,7 +42,9 @@ public enum Prefix {
     
     // ---------------------------------------------------------------------------------------------------------------------
     // Declare enum constants here: Global Pool to keep track of objects in the hospital.
+    IntermediateObject("ImO-"),
     BaseObject("BO-"),
+    
     Tool("Tl-"),
     Resource("Rs-"),
     
@@ -76,7 +83,8 @@ public enum Prefix {
         for (Prefix p : Prefix.values()) {
             if (p.toString().equals(className)) { return p; }
         }
-        return null;
+        try { return Prefix.valueOf(className); }
+        catch (Exception e) { return null; }
     }
     public static boolean FindEnumByClassName(String className) { return Prefix.GetEnumByClassName(className) != null; }
 

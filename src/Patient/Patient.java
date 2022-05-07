@@ -1,5 +1,9 @@
 package Patient;
+import java.util.Hashtable;
+
 import Person.Person;
+import Person.PersonUtils;
+import PrefixState.Prefix;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -13,8 +17,8 @@ import Person.Person;
 
 /**
  * This is a dataclass which describes an instances of a patient.
- * which is also a base/abstract class to have better description on 
- * other classes such as Patient, Doctor, Nurse (medico).
+ * which have the privilege to access the first-layer internal system.
+ * But in this case, the "internal system" is not developed.
  * 
  * @author Ichiru Take
  * @version 0.0.1
@@ -25,19 +29,45 @@ import Person.Person;
 
 public class Patient extends Person {
 
-    public Patient(String ID, String name, String description) throws Exception {
+    public Patient(String ID, String name, String description, String last_name) throws Exception {
         super(ID, name, description);
+        this.prefix = Prefix.Patient;  
     }
 
-    public Patient(String ID, String name) throws Exception {
-        super(ID, name, null);
+    public Patient(String ID, String name, String last_name) throws Exception {
+        this(ID, name, null, last_name);
     }
+
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
+    public static Prefix GetPrefix() { return Prefix.Patient; }
+    public static String GetPrefixCode() { return Patient.GetPrefix().GetPrefixCode(); }
 
 
-    // -----------------------------------------------------------
-    // Setter Function
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Serialization & Deserialization
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> result = super.Serialize();
+        // If there are more attributes to be serialized, add them here.
+        return result;
+    }
+
+    public static Patient Deserialize(Hashtable<String, Object> data) throws Exception {
+        String ID = (String) data.get("id");
+        String name = (String) data.get("name");
+        String last_name = (String) data.get("last_name");
+        String description = (String) data.get("description");
+        Patient result = new Patient(ID, name, description, last_name);
+        
+        result.SetEmail((String) data.get("email"));
+        result.SetPhoneNumber((String) data.get("phone_number"));
+
+        String gender = (String) data.get("gender");
+        result.SetGender(PersonUtils.StandardizeGender(gender));
+
+        result.SetNationality((String) data.get("nationality"));
+        return result;
+    }
     
 }

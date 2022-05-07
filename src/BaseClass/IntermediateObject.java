@@ -2,6 +2,8 @@ package BaseClass;
 
 import java.util.Hashtable;
 
+import PrefixState.Prefix;
+
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
  * All Rights Reserved
@@ -28,9 +30,12 @@ import java.util.Hashtable;
 
 public class IntermediateObject extends AbstractObject {
     private String description;                    
+    protected Prefix prefix;
+
     public IntermediateObject(String ID, String name, String description) throws Exception {
         super(ID, name);
-        this.description = description;
+        this.description = (description == null) ? "": description;
+        this.prefix = IntermediateObject.GetPrefix();
     }
     
     public IntermediateObject(String ID) throws Exception { this(ID, "", null); }
@@ -41,6 +46,14 @@ public class IntermediateObject extends AbstractObject {
     public String GetDescription() { return this.description; }
     public void SetDescription(String description) { this.description = description; }
     
+    // ----------------------------------------------------------
+    public static Prefix GetPrefix() { return Prefix.IntermediateObject; }
+    public Prefix GetThisPrefix() { return this.prefix; }
+
+    public static String GetPrefixCode() { return IntermediateObject.GetPrefix().GetPrefixCode(); }
+    public String GetThisPrefixCode() { return this.GetThisPrefix().GetPrefixCode(); }
+
+
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
     public Hashtable<String, Object> Serialize() {

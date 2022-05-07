@@ -34,8 +34,8 @@ public class AbstractObject {
 
     private String ID, name;                    
     public AbstractObject(String ID, String name) throws Exception {
-        JsonUtils.CheckArgumentCondition(ID != null, "ID cannot be null.");
-        JsonUtils.CheckArgumentCondition(ID.length() > 0, "ID cannot be empty.");
+        DataUtils.CheckArgumentCondition(ID != null, "ID cannot be null.");
+        DataUtils.CheckArgumentCondition(ID.length() > 0, "ID cannot be empty.");
         if (name == null) { name = ""; }
         this.ID = ID;
         this.name = name;
@@ -43,9 +43,23 @@ public class AbstractObject {
 
     public AbstractObject(String ID) throws Exception { this(ID, ""); }
 
+    public AbstractObject(int ID, String name) throws Exception { this(String.valueOf(ID), name); }
+
+    public AbstractObject(int ID) throws Exception { this(String.valueOf(ID), ""); }
+
+    public AbstractObject() throws Exception { this(-1, ""); }
+
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter and Setter
     public String GetID() { return this.ID; }
+    public void SetID(String ID) throws Exception {
+        DataUtils.CheckArgumentCondition(ID != null, "ID cannot be null.");
+        DataUtils.CheckArgumentCondition(ID.length() > 0, "ID cannot be empty.");
+        
+        if (this.GetID().equals("-1")) { this.ID = ID; }
+        throw new Exception("The ID cannot be changed.");
+    }
+
     public String GetName() { return this.name; }
     public void SetName(String name) throws Exception { 
         JsonUtils.CheckArgumentCondition(name != null, "Object's name cannot be null.");

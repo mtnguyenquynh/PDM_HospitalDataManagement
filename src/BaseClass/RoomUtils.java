@@ -1,6 +1,7 @@
 package BaseClass;
 
 import Person.Person;
+import Utility.DataUtils;
 import Utility.JsonUtils;
 
 /**
@@ -37,7 +38,7 @@ public abstract class RoomUtils {
     }
 
     public static String[] GetPersonInformation(Person person) {
-        JsonUtils.CheckArgumentCondition(person != null, "Person cannot be null.");
+        DataUtils.CheckArgumentCondition(person != null, "Person cannot be null.");
         return RoomUtils.GetPersonInformation(person.GetID(), person.GetName(), person.GetPhoneNumber());
     }
 
@@ -72,9 +73,9 @@ public abstract class RoomUtils {
 
     // ---------------------------------------------------------------------------------------------------------------------
     public static void ValidateInput(String ID, String name, int number, boolean NumberValidation) {
-        JsonUtils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
-        JsonUtils.CheckArgumentCondition(name != null, "Object's name cannot be null.");
-        if (NumberValidation) { JsonUtils.CheckArgumentCondition(number >= 0, "The amount must be zero or positive."); }
+        DataUtils.CheckArgumentCondition(ID != null, "Object's ID cannot be null.");
+        DataUtils.CheckArgumentCondition(name != null, "Object's name cannot be null.");
+        if (NumberValidation) { DataUtils.CheckArgumentCondition(number >= 0, "The amount must be zero or positive."); }
     }
 
     public static void ValidateInput(String ID, String name, int number) {
