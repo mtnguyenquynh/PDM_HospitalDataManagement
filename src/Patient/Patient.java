@@ -1,5 +1,8 @@
 package Patient;
+import java.util.Hashtable;
+
 import Person.Person;
+import Person.PersonUtils;
 import PrefixState.Prefix;
 
 /**
@@ -35,15 +38,35 @@ public class Patient extends Person {
         this(ID, name, null);
     }
 
+
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
-
-
-    // ----------------------------------------------------------
     public static Prefix GetPrefix() { return Prefix.Patient; }
     public static String GetPrefixCode() { return Patient.GetPrefix().GetPrefixCode(); }
 
-    // -----------------------------------------------------------
-    // Setter Function
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Serialization & Deserialization
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> result = super.Serialize();
+        // If there are more attributes to be serialized, add them here.
+        return result;
+    }
+
+    public static Patient Deserialize(Hashtable<String, Object> data) throws Exception {
+        String ID = (String) data.get("id");
+        String name = (String) data.get("name");
+        String description = (String) data.get("description");
+        Patient result = new Patient(ID, name, description);
+        
+        result.SetEmail((String) data.get("email"));
+        result.SetPhoneNumber((String) data.get("phone_number"));
+
+        String gender = (String) data.get("gender");
+        result.SetGender(PersonUtils.StandardizeGender(gender));
+
+        result.SetNationality((String) data.get("nationality"));
+        return result;
+    }
     
 }

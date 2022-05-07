@@ -1,5 +1,8 @@
 package Staff;
 
+import java.util.Hashtable;
+
+import Person.PersonUtils;
 import PrefixState.Prefix;
 import Utility.JsonUtils;
 
@@ -82,5 +85,37 @@ public class Medico extends Staff {
         this.SetDepartment(DepartmentEnum.GetEnum(dept));
     }
 
+    // --------------------------------------------------------------------------------------------------------------------
+    // Serialization & Deserialization
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> result = super.Serialize();
+        // If there are more attributes to be serialized, add them here.
+        result.put("department", this.department.toString());
+
+        return result;
+    }
+
+    public static Medico Deserialize(Hashtable<String, Object> data) throws Exception {
+        // ----------------------------------------------------------
+        // Basic attributes
+        String ID = (String) data.get("id");
+        String name = (String) data.get("name");
+        String description = (String) data.get("description");
+        Medico result = new Medico(ID, name, description);
+        
+        result.SetEmail((String) data.get("email"));
+        result.SetPhoneNumber((String) data.get("phone_number"));
+
+        String gender = (String) data.get("gender");
+        result.SetGender(PersonUtils.StandardizeGender(gender));
+
+        result.SetNationality((String) data.get("nationality"));
+
+        // ----------------------------------------------------------
+        // Complex attributes
+        result.SetDepartment((String) data.get("department"));
+
+        return result;
+    }
 
 }
