@@ -3,16 +3,17 @@ package Staff;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Collections;
 import java.util.Comparator;
-import java.time.*;
 
 import BaseClass.AbstractObject;
 import Person.PersonUtils;
-import PrefixState.Prefix;
 import Treatment.MedicalRecord;
 import Treatment.Treatment;
 import Utility.DataUtils;
+import Utility.JsonUtils;
  
 
 /**
@@ -165,5 +166,63 @@ public class MedicoTask extends AbstractObject {
 
     // --------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization
-    
+    public String GetToMedicoTaskFolder() {
+        return PersonUtils.GetMedicoTaskDirectory() + "/" + this.GetMedicoID() + "/";
+    }
+
+    public String GetToMedicoTaskFile() {
+        String filename = this.GetIsActive() ? "Active.json" : "Storage.json";
+        return this.GetToMedicoTaskFolder() + filename;
+    }
+    /**
+	 * This function not serializes the "MedicoTask" into the JSONOBject-like object but actually
+	 * serialize the "MedicoTask" into a JSON file.
+	 * Depending on the "IsActive" value, the file will be named "Active.json" or "Storage.json".
+     * It is located at the following folder: "database/MedicoTask/<MedicoID>/". 
+	 */   
+    public Hashtable<String, Object> Serialize() {
+        Hashtable<String, Object> data = super.Serialize();
+        data.put("IsActive", this.GetIsActive());
+        for (int i = 0; i < this.GetLocalPool().size(); i++) {
+            String[] task = this.GetLocalPool().get(i);
+            data.put(String.valueOf(i), task);
+        }
+        
+        data.put("folder", this.GetToMedicoTaskFolder());
+        try {
+            String filename = this.GetToMedicoTaskFile();
+            data.put("MedicoTask", filename);
+            JsonUtils.SaveHashTableIntoJsonFile(filename, data, null);
+        } catch (Exception e) { e.printStackTrace(); }
+        return data;
+    }
+
+    public static MedicoTask Deserialize(Hashtable<String, Object> data) throws Exception {
+        String ID = (String) data.get("id");
+        boolean IsActive = (boolean) data.get("IsActive");
+        MedicoTask medicoTask = new MedicoTask(ID, IsActive);
+
+        Iterator<Entry<String, Object>> iter = data.entrySet().iterator();
+        
+        while (iter.hasNext()) {
+            Entry<String, Object> entry = iter.next();
+            String key = entry.getKey();
+            try {
+                Integer.parseInt(key);
+                String[] task = (String[]) entry.getValue();
+                medicoTask.GetLocalPool().add(task);
+            } catch (Exception e) {
+                // Do nothing
+            }
+        }
+        medicoTask.SortTask(false);
+        return medicoTask;
+    }
+
+    public static MedicoTask DeserializeFromFile(String diirectory) throws Exception {
+        Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(diirectory, null);
+        String VerifyKey = (String) data.get("MedicoTask");
+		DataUtils.CheckCondition(VerifyKey != null, "The loaded file is not a valid medical record.");
+        return MedicoTask.Deserialize(data);
+    }
 }

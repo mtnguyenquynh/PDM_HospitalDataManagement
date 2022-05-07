@@ -1,5 +1,7 @@
 package Person;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import Utility.DataUtils;
 
 /**
@@ -283,8 +285,10 @@ public abstract class PersonUtils {
     }
 
     public static String GetMedicoTaskDirectory(String name, boolean IsStandardized) throws Exception {
-        String directory = PersonUtils.GetMedicoTaskDirectory();
-        return PersonUtils.GetMergedDirectory(directory, name, IsStandardized);
+        // Don't use the directory directly, because the directory may not exist
+        // String directory = PersonUtils.GetMedicoTaskDirectory();
+        // return PersonUtils.GetMergedDirectory(directory, name, IsStandardized);
+        throw new NotImplementedException("This function is not implemented yet.");
     }
 
 }

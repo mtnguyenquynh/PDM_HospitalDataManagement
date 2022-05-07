@@ -188,14 +188,12 @@ public class MedicalRecord extends BaseRecord {
     
     /**
 	 * This function not serializes the "MedicalRecord" into the JSONOBject-like object but actually
-	 * serialize the "treatment" into a JSON file.
+	 * serialize the "MedicalRecord" into a JSON file.
 	 * 
 	 * The "folder" key is the core following path: "database/PatientRecord/[FirstName-Tree]/[Patient.ID]/[MedicalRecord.ID]/"
 	 * The "MedicalRecord" is stored at the following path: "[folder]/<MedicalRecord.ID>.json"
 	 * 
 	 */
-
-
     public Hashtable<String, Object> Serialize() {
 		Hashtable<String, Object> RecordInfo = super.Serialize();
 		RecordInfo.put("MedicalRecordID", this.GetMedicalRecordID());
