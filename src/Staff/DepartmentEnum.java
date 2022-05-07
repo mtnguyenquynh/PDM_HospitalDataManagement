@@ -1,5 +1,6 @@
 package Staff;
 
+import MedicalRecord.MedicalRecord;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -32,47 +33,80 @@ package Staff;
 
 
 public enum DepartmentEnum {
+    // --------------------------------------------------------------------------------------------------------------------
+    // See these two references first and comment later, including Github Copilot
     Accident_Emergency("Accident and Emergency"),
+    Administration("Administration"),
     Admissions("Admissions"),
     Anesthetics("Anesthetics"),
-    
+    Burn_Center("Burn Center"),
     Cardiology("Cardiology"),
-    Cardiothoracic_Surgery("Cardiothoracic Surgery"),
-    Chest_Surgery("Chest Surgery"),
-    Child_Care("Child Care"),
-    Child_Nursing("Child Nursing"),
+    Casuality("Casuality"),
+    CCSD("Central Sterile Services Department (CCSD)"),
+    Chaplaincy("Chaplaincy"),
+    CCU("Coronary Care Unit (CCU)"),
+    Clinical_Engineering("Clinical Engineering"),
+    CICU("Cardiac Intensive Care Unit (CICU)"),
     Critical_Care("Critical Care"),
-    Dermatology("Dermatology"),
-    Emergency("Emergency"),
-    Endocrinology("Endocrinology"),
+    Dialysis("Dialysis"),
+    Diagnostic_Imaging("Diagnostic Imaging"),
+    Discharge_Lounge("Discharge Lounge"),
+    Elderly_Service("Elderly Service"),
+    Finance("Finance"),
     Gastroenterology("Gastroenterology"),
+    General_Service("General Service"),
     General_Surgery("General Surgery"),
+    Geriatrics("Geriatrics"),
     Gynecology("Gynecology"),
     Hematology("Hematology"),
-    Infectious_Disease("Infectious Disease"),
-    Internal_Medicine("Internal Medicine"),
+    Health_Safety("Health and Safety"),
+    ICU("Intensive Care Unit (ICU)"),
+    ITC("Information Technology Center"),
+    HR("Human Resources (HR)"),
+    Infection_Control("Infection Control"),
+    Information_Management("Information Management"),
+    Maternity("Maternity"),
+    Medical_Records("Medical Records"),
     Neonatology("Neonatology"),
     Neurology("Neurology"),
-    Obstetrics("Obstetrics"),
+    Nephrology("Nephrology"),
+    Nursing("Nursing"),
+    Nutrition_Dietetics("Nutrition and Dietetics"),
+    Obstetrics_Gynecology("Obstetrics and Gynecology"),
+    Occupational_Therapy("Occupational Therapy"),
     Oncology("Oncology"),
     Ophthalmology("Ophthalmology"),
-    Orthopedics("Orthopedics"),
-    Otolaryngology("Otolaryngology"),
+    Orthopaedics("Orthopaedics"),
+    Otolaryngology("Otolaryngology (ENT)"),
+    Pain_Mangement("Pain Management"),
+    Patient_Accounts("Patient Accounts"),
     Pediatrics("Pediatrics"),
-    Physical_Therapy("Physical Therapy"),
-    Plastic_Surgery("Plastic Surgery"),
-    Podiatry("Podiatry"),
+    Pharmacy("Pharmacy"),
+    Physiotherapy("Physiotherapy"),
     Psychiatry("Psychiatry"),
+    Purchasing_Supplies("Purchasing and Supplies"),
     Radiology("Radiology"),
     Rheumatology("Rheumatology"),
-    Surgery("Surgery"),
-    Urology("Urology");
+    Sexual_Health("Sexual Health"),
+    Urology("Urology"),
+    Xray("X-ray"),
 
+    ;
 
     // --------------------------------------------------------------------------------------------------------------------
-    private String name;
-    DepartmentEnum(String name) {
-        this.name = name;
+    private final String name;
+    DepartmentEnum(String name) { this.name = name; }
+
+    public String GetFullName() { return this.name; }
+
+    public static DepartmentEnum GetEnum(String dept) {
+        for (DepartmentEnum deptEnum : DepartmentEnum.values()) {
+            String deptEnumString = deptEnum.toString();
+            String deptEnumName = deptEnum.GetFullName();
+            if (deptEnumString.equals(dept) || deptEnumString == dept) { return deptEnum; }
+            if (deptEnumName.equals(dept) || deptEnumName == dept) { return deptEnum; }
+        }
+        return null;
     }
 
 }
