@@ -241,8 +241,8 @@ public class MedicalRecord extends BaseRecord {
         return record;
 	}
 
-    public static MedicalRecord DeserializeFromFile(String directory) {
-        Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashTable(directory, null);
+    public static MedicalRecord DeserializeFromFile(String directory) throws Exception {
+        Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(directory, null);
         String VerifyKey = (String) data.get("MedicalRecord");
 		DataUtils.CheckCondition(VerifyKey != null, "The loaded file is not a valid medical record.");
         return MedicalRecord.Deserialize(data);
