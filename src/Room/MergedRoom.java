@@ -24,9 +24,6 @@ import org.json.simple.parser.JSONParser;
  * This class is to bind the relationship between the "RoomUnit" with the "ObjectRoom", 
  * "PatientRoom", and "MedicoRoom". See the description in each components. 
  * 
- * Task 01: Finding a room:
- * 
- * 
  * 
  * @author Ichiru Take
  * @version 0.0.1

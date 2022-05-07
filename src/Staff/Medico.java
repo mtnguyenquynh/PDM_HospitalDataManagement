@@ -37,7 +37,6 @@ import PrefixState.Prefix;
  * 1) https://www.disabled-world.com/definitions/hospital-departments.php
  * 2) https://www.nursesclass.com/2021/08/departments-in-a-hospital.html
  * 
- * 
 **/
 
 public class Medico extends Staff {

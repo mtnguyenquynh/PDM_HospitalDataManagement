@@ -23,6 +23,6 @@ package CoreSystem;
  * 1) 
 **/
 
-public class FromPatientSystem {
+public class PatientController {
     
 }
