@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Hashtable;
 
+import Utility.DataUtils;
 import Utility.JsonUtils;
 
 import org.json.simple.JSONObject;
@@ -134,7 +135,7 @@ public class MergedRoom {
     }
 
     public String GetWorkingDirectory() { 
-        JsonUtils.CheckArgumentCondition(this.GetRoom().GetID() != null, "The room cannot be loaded.");
+        DataUtils.CheckArgumentCondition(this.GetRoom().GetID() != null, "The room cannot be loaded.");
         return MergedRoom.GetRoomDirectory() + "/" + this.GetRoom().GetID(); 
     }
 

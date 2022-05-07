@@ -34,8 +34,8 @@ public class AbstractObject {
 
     private String ID, name;                    
     public AbstractObject(String ID, String name) throws Exception {
-        JsonUtils.CheckArgumentCondition(ID != null, "ID cannot be null.");
-        JsonUtils.CheckArgumentCondition(ID.length() > 0, "ID cannot be empty.");
+        DataUtils.CheckArgumentCondition(ID != null, "ID cannot be null.");
+        DataUtils.CheckArgumentCondition(ID.length() > 0, "ID cannot be empty.");
         if (name == null) { name = ""; }
         this.ID = ID;
         this.name = name;

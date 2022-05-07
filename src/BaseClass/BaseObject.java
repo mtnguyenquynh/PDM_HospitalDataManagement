@@ -3,7 +3,7 @@ package BaseClass;
 import java.util.Hashtable;
 
 import PrefixState.Prefix;
-import Utility.JsonUtils;
+import Utility.DataUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -39,7 +39,7 @@ public class BaseObject extends IntermediateObject {
 
     public BaseObject(String ID, String name, String description, int number) throws Exception {
         super(ID, name, description);
-        JsonUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        DataUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         this.number = number;
         this.prefix = Prefix.BaseObject;
     }
@@ -55,18 +55,18 @@ public class BaseObject extends IntermediateObject {
 
     public int GetNumber() { return this.number; }
     public void SetNumber(int number) { 
-        JsonUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        DataUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         this.number = number; 
     }
 
     public void IncrementNumber(int number) {
-        JsonUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        DataUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         if (number != 0) { this.number += number; }
     }
     public void DecrementNumber(int number) {
-        JsonUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
+        DataUtils.CheckArgumentCondition(number >= 0, "Number cannot be negative.");
         if (number != 0) {
-            JsonUtils.CheckArgumentCondition(this.number >= number, "Number cannot be negative.");
+            DataUtils.CheckArgumentCondition(this.number >= number, "Number cannot be negative.");
             this.number -= number;
         }
     }

@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import BaseClass.BaseObject;
 import BaseClass.IntermediateObject;
 import Person.Person;
+import Utility.DataUtils;
 import Utility.JsonUtils;
 import PrefixState.Prefix;
 
@@ -63,7 +64,7 @@ public class ID_Generator {
     private String ValidatePrefixAndGetDirectory(IntermediateObject object) {
         Prefix prefix = object.GetThisPrefix();
         String[] ID_Pool = this.ID_Store.get(prefix);
-        JsonUtils.CheckArgumentCondition(ID_Pool != null, "The ID Generator is not prepared for this object.");
+        DataUtils.CheckArgumentCondition(ID_Pool != null, "The ID Generator is not prepared for this object.");
         return ID_Pool[0];
     }
     

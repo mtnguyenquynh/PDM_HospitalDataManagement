@@ -77,6 +77,9 @@ public class Treatment extends BaseRecord {
 		super(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, 
 		      Pt_Gender, writable);
 
+		JsonUtils.CheckArgumentCondition(condition, message);
+
+
 		this.MedicalRecord_ID = MedicalRecord_ID;
 		this.index = index;
 		this.ClassificationCode = code;
@@ -95,7 +98,7 @@ public class Treatment extends BaseRecord {
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------
-	// Setters
+	// Setters-Advanced
 	public void AddMedico(Medico medico) {
 		if (!this.IsWritable()) { return; }
 		if (!this.GetMedicoInfo().containsKey(medico.GetID())) {
@@ -183,9 +186,17 @@ public class Treatment extends BaseRecord {
 	// Getter & Setter 
 	public String GetMedicalRecordID() { return this.MedicalRecord_ID; }
 
-	public int GetTreatmentIndexAsInt() { return this.index; }
+	public int GetTreatmentIndex() { return this.index; }
 	public String GetTreatmentIndexAsString() { 
-		return Treatment.prefix.GetPrefixCode() + String.format("%02d", this.GetTreatmentIndexAsInt());
+		return Treatment.prefix.GetPrefixCode() + String.format("%02d", this.GetTreatmentIndex());
+	}
+
+	public void SetTreatmentIndex(int index) {
+		if (!this.IsWritable()) { return; }
+		DataUtils.CheckArgumentCondition(this.GetTreatmentIndex() >= 0, 
+										"Treatment Index must be a non-negative integer.");
+		DataUtils.CheckArgumentCondition(index >= 0, "Updated index must be a non-negative integer.");								
+		if (this.index == -1) { this.index = index; }
 	}
 
 	public String GetClassificationCode() { return this.ClassificationCode; }
@@ -201,7 +212,7 @@ public class Treatment extends BaseRecord {
 	public Hashtable<String, Object> Serialize() {
 		Hashtable<String, Object> TreatmentInformation = super.Serialize();
 		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
-		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndexAsInt());
+		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndex());
 		TreatmentInformation.put("ClassificationCode", this.GetClassificationCode());
 		
 		String directory, folder;

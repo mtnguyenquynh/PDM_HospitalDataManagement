@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 import Person.PersonUtils;
 import PrefixState.Prefix;
-import Utility.JsonUtils;
+import Utility.DataUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -81,7 +81,7 @@ public class Medico extends Staff {
     public void SetDepartment(DepartmentEnum department) { this.department = department; }
     public void SetDepartment(String dept) throws Exception { 
         DepartmentEnum deptEnum = DepartmentEnum.GetEnum(dept);
-        JsonUtils.CheckArgumentCondition(deptEnum != null, "There are no such department: " + dept);
+        DataUtils.CheckArgumentCondition(deptEnum != null, "There are no such department: " + dept);
         this.SetDepartment(DepartmentEnum.GetEnum(dept));
     }
 

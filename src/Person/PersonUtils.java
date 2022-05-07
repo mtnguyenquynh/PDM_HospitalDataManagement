@@ -1,6 +1,6 @@
 package Person;
 
-import Utility.JsonUtils;
+import Utility.DataUtils;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -61,20 +61,20 @@ public abstract class PersonUtils {
 
         // Step 01) Remove all unnecessary spaces at the first and the last of the string 
         //          and lower-case all characters 
-        JsonUtils.CheckArgumentCondition(name != null, "The input name is null");
+        DataUtils.CheckArgumentCondition(name != null, "The input name is null");
 
         String NewName = name.trim().replaceAll("\\s+", " ").toLowerCase();
 
         // Step 02) Do validation: Check if there are any digit-like or special characters
-        JsonUtils.CheckArgumentCondition(!NewName.matches("[0-9]+"), 
+        DataUtils.CheckArgumentCondition(!NewName.matches("[0-9]+"), 
                                      "The name cannot be a digit-like string.");
-        JsonUtils.CheckArgumentCondition(!NewName.matches("[^a-zA-Z0-9.\\s]+"),
+        DataUtils.CheckArgumentCondition(!NewName.matches("[^a-zA-Z0-9.\\s]+"),
                                      "The name cannot contain special characters.");
 
         // Step 02) For each word, captialize the first character. For example: "harry" -> "Harry"
         String[] words = NewName.split(" ");
         for (String word: words) {
-            JsonUtils.CheckArgumentCondition(word.length() != 1 || !word.equals("."), 
+            DataUtils.CheckArgumentCondition(word.length() != 1 || !word.equals("."), 
                                          "The name cannot contain a dot.");
         }
         
@@ -100,7 +100,7 @@ public abstract class PersonUtils {
 
     public static int CountNameLength(String name, boolean IsStandardized) throws Exception {
         // This function is used to count the length of the name
-        JsonUtils.CheckArgumentCondition(name != null, "The input name is null");
+        DataUtils.CheckArgumentCondition(name != null, "The input name is null");
         if (!IsStandardized) { name = PersonUtils.StandardizeName(name); }
         return name.split(" ").length;
     }
@@ -127,7 +127,7 @@ public abstract class PersonUtils {
      * @throws Exception If the name is not valid
      */
     public static String[] SplitNameIntoTreePath(String FirstName, boolean IsStandardized) throws Exception {
-        JsonUtils.CheckArgumentCondition(FirstName != null, "The input name is null");
+        DataUtils.CheckArgumentCondition(FirstName != null, "The input name is null");
         if (!IsStandardized) { FirstName = PersonUtils.StandardizeName(FirstName); }
         if (FirstName.contains(".")) { throw new Exception("The name cannot contain a single dot."); }
         if (FirstName.contains(" ")) { throw new Exception("The name must be a single word."); }
@@ -173,41 +173,41 @@ public abstract class PersonUtils {
      * @throws Exception
      */
     public static String StandardizeEmail(String email) throws Exception {
-        JsonUtils.CheckArgumentCondition(email != null, "The input email is null");
+        DataUtils.CheckArgumentCondition(email != null, "The input email is null");
         String NewEmail = email.trim();
         if (NewEmail.length() == 0) { throw new Exception("The email is empty"); }
         
         // Step 01) Validation: Check if there are any "@" or "." characters
-        JsonUtils.CheckArgumentCondition(!NewEmail.contains(" "), "The email contain whitespace character.");
-        JsonUtils.CheckArgumentCondition(NewEmail.contains("@"), "The email does not contain an '@' character.");
-        JsonUtils.CheckArgumentCondition(NewEmail.contains("."), "The email does not contain a '.' character.");
+        DataUtils.CheckArgumentCondition(!NewEmail.contains(" "), "The email contain whitespace character.");
+        DataUtils.CheckArgumentCondition(NewEmail.contains("@"), "The email does not contain an '@' character.");
+        DataUtils.CheckArgumentCondition(NewEmail.contains("."), "The email does not contain a '.' character.");
 
         // Step 02) Validate each-part
         String[] parts = NewEmail.split("\\@");
-        JsonUtils.CheckArgumentCondition(parts.length == 2, "The email contain more than one '@' characters.");
+        DataUtils.CheckArgumentCondition(parts.length == 2, "The email contain more than one '@' characters.");
 
         String EmailName = parts[0];
         String EmailSupplier = parts[1];
 
         // Step 03) Validate the email name
-        JsonUtils.CheckArgumentCondition(EmailName.length() > 0, "The email name is empty.");
-        JsonUtils.CheckArgumentCondition(!EmailName.matches("[a-zA-Z0-9._]+"), 
+        DataUtils.CheckArgumentCondition(EmailName.length() > 0, "The email name is empty.");
+        DataUtils.CheckArgumentCondition(!EmailName.matches("[a-zA-Z0-9._]+"), 
                                      "The email name contain invalid special characters.");
-        JsonUtils.CheckArgumentCondition(!EmailName.substring(0).matches("[a-zA-Z0-9]"), 
+        DataUtils.CheckArgumentCondition(!EmailName.substring(0).matches("[a-zA-Z0-9]"), 
                                      "The email name contain invalid special characters at the beginning.");
-        JsonUtils.CheckArgumentCondition(!EmailName.substring(EmailName.length() - 1).matches("[a-zA-Z0-9]"), 
+        DataUtils.CheckArgumentCondition(!EmailName.substring(EmailName.length() - 1).matches("[a-zA-Z0-9]"), 
                                      "The email name contain invalid special characters at the end.");                                                     
 
         // Step 04) Validate the email supplier
-        JsonUtils.CheckArgumentCondition(EmailSupplier.contains("."), 
+        DataUtils.CheckArgumentCondition(EmailSupplier.contains("."), 
                                      "The email address does not contain a '.' character.");
 
-        JsonUtils.CheckArgumentCondition(EmailSupplier.length() > 0, "The email address is empty.");
-        JsonUtils.CheckArgumentCondition(!EmailSupplier.matches("[a-zA-Z._]+"),
+        DataUtils.CheckArgumentCondition(EmailSupplier.length() > 0, "The email address is empty.");
+        DataUtils.CheckArgumentCondition(!EmailSupplier.matches("[a-zA-Z._]+"),
                                      "The email address contain invalid special characters.");
-        JsonUtils.CheckArgumentCondition(!EmailSupplier.substring(0).matches("[a-zA-Z]"),
+        DataUtils.CheckArgumentCondition(!EmailSupplier.substring(0).matches("[a-zA-Z]"),
                                      "The email address contain invalid special characters at the beginning.");     
-        JsonUtils.CheckArgumentCondition(!EmailSupplier.substring(EmailSupplier.length() - 1).matches("[a-zA-Z]"),
+        DataUtils.CheckArgumentCondition(!EmailSupplier.substring(EmailSupplier.length() - 1).matches("[a-zA-Z]"),
                                      "The email address contain invalid special characters at the end.");
 
         // Step 05) Construct the standardized email
@@ -219,18 +219,18 @@ public abstract class PersonUtils {
         // The phone number can be mistaken as the home number, or the office number.
         // Thus we only generalize the phone number to the following format
         // The phone number can have region code (i.e +84, +86, etc)
-        JsonUtils.CheckArgumentCondition(phone != null, "The input phone number is null");
+        DataUtils.CheckArgumentCondition(phone != null, "The input phone number is null");
         String NewPhone = phone.trim();
 
-        JsonUtils.CheckArgumentCondition(NewPhone.length() > 0, "The phone number is empty.");
-        JsonUtils.CheckArgumentCondition(!NewPhone.matches("[+?][0-9]+"),
+        DataUtils.CheckArgumentCondition(NewPhone.length() > 0, "The phone number is empty.");
+        DataUtils.CheckArgumentCondition(!NewPhone.matches("[+?][0-9]+"),
                                      "The phone number contain invalid special characters.");
         int length = NewPhone.length();
         if (NewPhone.contains("+")) { length -= 1; }
         
         // This is to prevent magic phone number such as 113, 115 which are the emergency number
         // This condition is not created to fully compatible on all region.
-        JsonUtils.CheckArgumentCondition((length >= 8 && length <= 16), 
+        DataUtils.CheckArgumentCondition((length >= 8 && length <= 16), 
                                      "The phone number must be between 8 and 16 digits.");
 
         return NewPhone;
