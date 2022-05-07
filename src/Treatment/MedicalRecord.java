@@ -1,7 +1,10 @@
 package Treatment;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+
 import BaseClass.BaseRecord;
+import Person.PersonUtils;
 import PrefixState.Prefix;
 import Utility.DataUtils;
 
@@ -38,7 +41,8 @@ import Utility.DataUtils;
 
 public class MedicalRecord extends BaseRecord {
     // ---------------------------------------------------------------------------------------------------------------------
-    private static final int NUMBER_OF_MAX_TREATMENTS = 100;
+    // Synchronized with Treatment.StandardizeIndex()
+    private static final int NUMBER_OF_MAX_TREATMENTS = Treatment.GetMaxTreatmentInMedicalRecords();       
     private final ArrayList<Treatment> LocalPool;
 
     // ----------------------------------------------------------                         
@@ -164,6 +168,93 @@ public class MedicalRecord extends BaseRecord {
 
     // --------------------------------------------------------------------------------------------------------------------
     // TODO Serialization & Deserialization
+    public Hashtable<String, Object> Serialize() {
+		Hashtable<String, Object> TreatmentInformation = super.Serialize();
+		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
+		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndex());
+		TreatmentInformation.put("ClassificationCode", this.GetClassificationCode());
+		
+		String directory, folder;
+		try { 
+			folder = PersonUtils.GetPatientRecordDirectory(this.GetPtFirstName(), false); 
+			TreatmentInformation.put("folder", folder); 		// Saved here to prevent failed compilation
+		} catch (Exception e) { // This is never called as standardization is done in the Patient class.
+			e.printStackTrace();
+		}
+		
+		// Note that at here the directory is: "database/PatientRecord/[FirstName-Tree]/".
+		// To reach the true directory, we need to add the "Patient.ID" and "MedicalRecord.ID into it"
+		// The result is: "database/PatientRecord/[FirstName-Tree]/[Patient.ID]/[MedicalRecord.ID]/".
+		folder = TreatmentInformation.get("folder") + this.GetPtID() + "/" + this.GetMedicalRecordID() + "/";
+		TreatmentInformation.put("folder", folder);
 
+		// After that, we needed to deepen down to the "TreatmentIndex"
+		// The result is: "database/PatientRecord/[FirstName-Tree]/[Patient.ID]/[MedicalRecord.ID]/[TreatmentIndex]/".
+		String Subfolder = folder + this.GetTreatmentIndexAsString() + "/";
+		TreatmentInformation.put("Subfolder", Subfolder); 	// Saved here as cache	
+
+		try {
+			directory = Subfolder + "MedicoInfo.json";
+			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetMedicoInfo(), null);
+			TreatmentInformation.put("MedicoInfo", directory);
+
+			ArrayList<Object> CastedSupplementary = DataUtils.CastToObjectArrayFromStringArray(this.GetSupplementary());
+			directory = Subfolder + "Supplementary.json";
+			JsonUtils.SaveArrayListIntoJsonFile(directory, CastedSupplementary, null);
+			TreatmentInformation.put("Supplementary", directory);
+
+			directory = Subfolder + "Resources.json";
+			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetResources(), null);
+			TreatmentInformation.put("Resources", directory);
+
+			directory = Subfolder + "Descriptions.json";
+			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetDescriptions(), null);
+			TreatmentInformation.put("Descriptions", directory);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return TreatmentInformation;
+	}
+
+	public static Treatment Deserialize(Hashtable<String, Object> data) {
+		String Pt_ID = (String) data.get("Pt_ID");
+        String Pt_FirstName = (String) data.get("Pt_FirstName");
+        String Pt_LastName = (String) data.get("Pt_LastName");
+        String Pt_Age = (String) data.get("Pt_Age");
+        String Pt_Gender = (String) data.get("Pt_Gender");
+
+		String MedicalRecordID = (String) data.get("MedicalRecordID");
+		int TreatmentIndex = Integer.parseInt((String) data.get("TreatmentIndex"));
+		String ClassificationCode = (String) data.get("ClassificationCode");
+
+        Treatment record = new Treatment(Pt_ID, MedicalRecordID, Pt_FirstName, Pt_LastName, Pt_Age, 
+										 Pt_Gender, TreatmentIndex, ClassificationCode, true);
+        record.SetDate((String) data.get("date"));
+        record.SetTime((String) data.get("time"));
+
+		// Deserialize Medico, Supplementary, Resources, and Descriptions. These are stored in JSON files.
+		// So we need to call them
+		String MedicoInfo_File = (String) data.get("MedicoInfo");
+		String Supplementary_File = (String) data.get("Supplementary");
+		String Resources_File = (String) data.get("Resources");
+		String Descriptions_File = (String) data.get("Descriptions");
+
+		try {
+			record.GetMedicoInfo().putAll(JsonUtils.LoadJsonFileToHashtable(MedicoInfo_File, null));
+
+			ArrayList<Object> Supplementary = JsonUtils.LoadJsonFileToArrayList(Supplementary_File, null);
+			record.GetSupplementary().addAll(DataUtils.CastToStringArrayFromObjectArray(Supplementary));
+
+			record.GetResources().putAll(JsonUtils.LoadJsonFileToHashtable(Resources_File, null));
+			record.GetDescriptions().putAll(JsonUtils.LoadJsonFileToHashtable(Descriptions_File, null));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (!(boolean) data.get("writable")) { record.CloseRecord(); }
+		return record;
+	}
 
 }
