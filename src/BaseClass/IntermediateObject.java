@@ -35,7 +35,7 @@ public class IntermediateObject extends AbstractObject {
     public IntermediateObject(String ID, String name, String description) throws Exception {
         super(ID, name);
         this.description = (description == null) ? "": description;
-        this.prefix = Prefix.IntermediateObject;
+        this.prefix = IntermediateObject.GetPrefix();
     }
     
     public IntermediateObject(String ID) throws Exception { this(ID, "", null); }
@@ -47,10 +47,10 @@ public class IntermediateObject extends AbstractObject {
     public void SetDescription(String description) { this.description = description; }
     
     // ----------------------------------------------------------
-    public static Prefix GetPrefix() { return Prefix.BaseObject; }
+    public static Prefix GetPrefix() { return Prefix.IntermediateObject; }
     public Prefix GetThisPrefix() { return this.prefix; }
 
-    public static String GetPrefixCode() { return BaseObject.GetPrefix().GetPrefixCode(); }
+    public static String GetPrefixCode() { return IntermediateObject.GetPrefix().GetPrefixCode(); }
     public String GetThisPrefixCode() { return this.GetThisPrefix().GetPrefixCode(); }
 
 

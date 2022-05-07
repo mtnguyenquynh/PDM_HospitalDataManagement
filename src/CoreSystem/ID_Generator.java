@@ -8,6 +8,7 @@ import Person.Person;
 import Utility.DataUtils;
 import Utility.JsonUtils;
 import PrefixState.Prefix;
+import Treatment.MedicalRecord;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
@@ -59,14 +60,13 @@ public class ID_Generator {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Ultility functions to construct the ID
-    private String ValidatePrefixAndGetDirectory(IntermediateObject object) {
-        Prefix prefix = object.GetThisPrefix();
+    private String ValidatePrefixAndGetDirectory(Prefix prefix) {
         String[] ID_Pool = this.ID_Store.get(prefix);
         DataUtils.CheckArgumentCondition(ID_Pool != null, "The ID Generator is not prepared for this object.");
         return ID_Pool[0];
     }
     
-    private String ConstructID(Prefix prefix, int counter, int RuleValue) throws Exception {
+    private String ConstructID(Prefix prefix, long counter, int RuleValue) throws Exception {
         String notation = prefix.GetPrefixCodeNotation();
         switch (RuleValue) {
             case 1: { return notation + String.format("%6d", counter); }
@@ -76,11 +76,17 @@ public class ID_Generator {
             } 
             case 3: {
                 String temp = String.format("%10d", counter);
-                return notation + temp.substring(0, 5) + "-" + temp.substring(5);
+                return notation + temp.substring(0, 2) + "-" + temp.substring(2, 5) + 
+                       "-" + temp.substring(5);
             }
             default: { throw new Exception("The rule is not supported."); }
         }
     } 
+
+    private void ForceUpdateCounter(long count, String directory, Hashtable<String, Object> data) throws Exception {
+        data.put(ID_Generator.counter, count + 1);
+        JsonUtils.SaveHashTableIntoJsonFile(directory, data, null);
+    }
 
     /**
      * This function is an internal core-function used to generate the ID for the object.
@@ -93,28 +99,24 @@ public class ID_Generator {
      * @throws Exception: if the rule is not supported.
      */
 
-    public String _GenerateID_(IntermediateObject object, boolean forceUpdate, int RuleValue) throws Exception {
+    public String _GenerateID_(Prefix prefix, boolean forceUpdate, int RuleValue) throws Exception {
         // Step 1: Get the prefix and validate whether it is available to create the ID
-        String directory = this.ValidatePrefixAndGetDirectory(object);
+        String directory = this.ValidatePrefixAndGetDirectory(prefix);
         Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(directory, null);
 
         // Step 2: Construct the ID
-        int count = (int) data.get(ID_Generator.counter);
-        String ID = this.ConstructID(object.GetThisPrefix(), count, RuleValue);
+        long count = (long) data.get(ID_Generator.counter);
+        String ID = this.ConstructID(prefix, count, RuleValue);
 
         // Step 3: Update the counter
-        if (forceUpdate) {
-            data.put(ID_Generator.counter, count + 1);
-            JsonUtils.SaveHashTableIntoJsonFile(directory, data, null);
-        }
+        if (forceUpdate) { this.ForceUpdateCounter(count, directory, data); }
         return ID; 
     }
-
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Public functions to generate the ID
     public String GenerateObjectID(BaseObject TargetObject, boolean forceUpdate) throws Exception {
-        return this._GenerateID_(TargetObject, forceUpdate, 0);
+        return this._GenerateID_(TargetObject.GetThisPrefix(), forceUpdate, 1);
     }
 
     public String GenerateObjectID(BaseObject TargetObject) throws Exception {
@@ -122,11 +124,19 @@ public class ID_Generator {
     }
 
     public String GeneratePersonID(Person person, boolean forceUpdate) throws Exception {
-        return this._GenerateID_(person, forceUpdate, 1); 
+        return this._GenerateID_(person.GetThisPrefix(), forceUpdate, 2); 
     }
 
     public String GeneratePersonID(Person person) throws Exception {
         return this.GeneratePersonID(person, true);
+    }
+
+    public String GenerateObjectID(MedicalRecord TargetObject, boolean forceUpdate) throws Exception {
+        return this._GenerateID_(TargetObject.GetThisPrefix(), forceUpdate, 3);
+    }
+
+    public String GenerateObjectID(MedicalRecord TargetObject) throws Exception {
+        return this.GenerateObjectID(TargetObject, true);
     }
 
     // ---------------------------------------------------------------------------------------------------------------------

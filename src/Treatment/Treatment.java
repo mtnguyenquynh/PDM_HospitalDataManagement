@@ -80,7 +80,6 @@ public class Treatment extends BaseRecord {
 		DataUtils.CheckArgumentCondition(index >= -1, "The treatment index must started from -1. If -1, " + 
 										 "this treatment may not be available in the medical record.");
 
-
 		this.MedicalRecord_ID = MedicalRecord_ID;
 		this.index = index;
 		this.ClassificationCode = code;
@@ -186,6 +185,20 @@ public class Treatment extends BaseRecord {
 	// ---------------------------------------------------------------------------------------------------------------------
 	// Getter & Setter 
 	public String GetMedicalRecordID() { return this.MedicalRecord_ID; }
+	public String GetDerivedTreatmentID() throws Exception { 
+		// This is a derived function and would not be used any thing practical.
+		// Don't use this function in your code. This is just an extension for the future.
+		// For example, if MedicalRecord_ID is "MR-00-001-00012" and index = 3 
+		// --> DerivedTreatmentID = "MR-00-001-00012-003".
+		int caster = 3;
+		int index = this.GetTreatmentIndex();
+		int MAX_INDEX = (int) Math.pow(10, caster);
+		if (index >= MAX_INDEX) {
+			String[] idxStr = {String.valueOf(index), String.valueOf(MAX_INDEX)};
+			throw new Exception("The treatment index is too large (index = ." + idxStr[0] + "> " + idxStr[1] + ")");
+		}
+		return this.GetMedicalRecordID() + String.format("-%" + String.valueOf(caster) + "d", index); 
+	}
 
 	public int GetTreatmentIndex() { return this.index; }
 	public String GetTreatmentIndexAsString() { 
@@ -201,7 +214,7 @@ public class Treatment extends BaseRecord {
 	}
 
 	public String GetClassificationCode() { return this.ClassificationCode; }
-	
+
 
 	// ----------------------------------------------------------
 	public Hashtable<String, Object> GetMedicoInfo() { return this.MedicoInfo; }

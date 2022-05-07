@@ -1,5 +1,7 @@
 package Staff;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import Person.PersonUtils;
@@ -63,8 +65,17 @@ public class Medico extends Staff {
     
     // ----------------------------------------------------------
     // Alias function & Support new "prefix"
+    public static ArrayList<Prefix> GetAcceptedPrefix() {
+        ArrayList<Prefix> result = new ArrayList<Prefix>();
+        result.add(Prefix.Medico);
+        result.add(Prefix.Nurse);
+        result.add(Prefix.Doctor);
+        return result;
+    }
+
     private void SetPrefix(Prefix prefix) throws Exception {
-        if (prefix != Prefix.Doctor && prefix != Prefix.Nurse && prefix != Prefix.Medico) {
+        DataUtils.CheckArgumentCondition(prefix != null, "The prefix cannot be null");
+        if (!Medico.GetAcceptedPrefix().contains(prefix)) {
             throw new Exception("Invalid prefix. The accepted prefix is Doctor, Nurse, or Medico.");
         }
         this.prefix = prefix;
@@ -74,7 +85,6 @@ public class Medico extends Staff {
 
     public Prefix GetResponsibility() { return this.GetThisPrefix(); }
     
-
     // ----------------------------------------------------------
     // Department
     public DepartmentEnum GetDepartment() { return this.department; }

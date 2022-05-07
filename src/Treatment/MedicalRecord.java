@@ -41,18 +41,52 @@ public class MedicalRecord extends BaseRecord {
     // ----------------------------------------------------------                         
     private String MedicalRecordID;
     private String Medico_ID;
+    protected Prefix prefix;
 
-    public MedicalRecord(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName, 
-                         String Pt_Age, String Pt_Gender, boolean writable) {
+    public MedicalRecord(String Patient_ID, String Pt_FirstName, String Pt_LastName, String Pt_Age, String Pt_Gender, 
+                         boolean writable, String MedicalRecord_ID) {
         super(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, writable);
+        
         DataUtils.CheckArgumentCondition(MedicalRecord_ID != null, "The MedicalRecord_ID cannot be null.");
+        DataUtils.CheckArgumentCondition(MedicalRecord_ID.length() > 0, "The MedicalRecord_ID cannot be empty.");
         this.MedicalRecordID = MedicalRecord_ID;
+        this.prefix = MedicalRecord.GetPrefix();
     }
 
-    public MedicalRecord(String Patient_ID, String MedicalRecord_ID, String Pt_FirstName, String Pt_LastName, 
-                         String Pt_Age, String Pt_Gender) {
-        this(Patient_ID, MedicalRecord_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, true);
+    public MedicalRecord(String Patient_ID, String Pt_FirstName, String Pt_LastName, String Pt_Age, String Pt_Gender, 
+                         String MedicalRecord_ID) {
+        this(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, true, 
+             MedicalRecord_ID);
     }
+
+    public MedicalRecord(String Patient_ID, String Pt_FirstName, String Pt_LastName, String Pt_Age, String Pt_Gender, 
+                         boolean writable, int MedicalRecord_ID) {
+        this(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, true, 
+             String.valueOf(MedicalRecord_ID));        
+    }
+
+    public MedicalRecord(String Patient_ID, String Pt_FirstName, String Pt_LastName, String Pt_Age, String Pt_Gender) {
+        this(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, true, 
+             -1);
+    }
+
+    // --------------------------------------------------------------------------------------------------------------------
+    // Getter & Setter
+    public String GetMedicoRecordID() {  return this.MedicalRecordID; }
+    public void SetMedicoRecordID(String MedicalRecordID) throws Exception { 
+        DataUtils.CheckArgumentCondition(MedicalRecordID != null, "ID cannot be null.");
+        DataUtils.CheckArgumentCondition(MedicalRecordID.length() > 0, "ID cannot be empty.");
+        
+        if (this.GetMedicoRecordID().equals("-1")) { this.MedicalRecordID = MedicalRecordID; }
+        throw new Exception("The ID cannot be changed.");
+    }
+
+
+    public static Prefix GetPrefix() { return Prefix.MedicalRecord; }
+    public Prefix GetThisPrefix() { return this.prefix; }
+
+    public static String GetPrefixCode() { return MedicalRecord.GetPrefix().GetPrefixCode(); }
+    public String GetThisPrefixCode() { return this.GetThisPrefix().GetPrefixCode(); }
 
 
 }
