@@ -29,13 +29,13 @@ import PrefixState.Prefix;
 
 public class Patient extends Person {
 
-    public Patient(String ID, String name, String description) throws Exception {
+    public Patient(String ID, String name, String description, String last_name) throws Exception {
         super(ID, name, description);
         this.prefix = Prefix.Patient;  
     }
 
-    public Patient(String ID, String name) throws Exception {
-        this(ID, name, null);
+    public Patient(String ID, String name, String last_name) throws Exception {
+        this(ID, name, null, last_name);
     }
 
 
@@ -56,8 +56,9 @@ public class Patient extends Person {
     public static Patient Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
+        String last_name = (String) data.get("last_name");
         String description = (String) data.get("description");
-        Patient result = new Patient(ID, name, description);
+        Patient result = new Patient(ID, name, description, last_name);
         
         result.SetEmail((String) data.get("email"));
         result.SetPhoneNumber((String) data.get("phone_number"));

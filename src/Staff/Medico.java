@@ -47,14 +47,14 @@ public class Medico extends Staff {
     
     private DepartmentEnum department;
 
-    public Medico(String ID, String name, String description) throws Exception {
-        super(ID, name, description);
+    public Medico(String ID, String name, String description, String last_name) throws Exception {
+        super(ID, name, description, last_name);
         this.prefix = Prefix.Medico;
         this.department = null;
     }
 
-    public Medico(String ID, String name) throws Exception {
-        this(ID, name, null);
+    public Medico(String ID, String name, String last_name) throws Exception {
+        this(ID, name, null, last_name);
     }
     
 
@@ -100,8 +100,9 @@ public class Medico extends Staff {
         // Basic attributes
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
+        String last_name = (String) data.get("last_name");
         String description = (String) data.get("description");
-        Medico result = new Medico(ID, name, description);
+        Medico result = new Medico(ID, name, description, last_name);
         
         result.SetEmail((String) data.get("email"));
         result.SetPhoneNumber((String) data.get("phone_number"));

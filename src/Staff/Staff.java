@@ -30,12 +30,14 @@ import PrefixState.Prefix;
 
 public class Staff extends Person {
     
-    public Staff(String ID, String name, String description) throws Exception {
-        super(ID, name, description);
+    public Staff(String ID, String name, String description, String last_name) throws Exception {
+        super(ID, name, description, last_name);
         this.prefix = Prefix.Staff;
     }
 
-    public Staff(String ID, String name) throws Exception { this(ID, name, null); }
+    public Staff(String ID, String name, String last_name) throws Exception { 
+        this(ID, name, null, last_name); 
+    }
 
     // --------------------------------------------------------------------------------------------------------------------
     // Getter & Setter
@@ -53,8 +55,9 @@ public class Staff extends Person {
     public static Staff Deserialize(Hashtable<String, Object> data) throws Exception {
         String ID = (String) data.get("id");
         String name = (String) data.get("name");
+        String last_name = (String) data.get("last_name");
         String description = (String) data.get("description");
-        Staff result = new Staff(ID, name, description);
+        Staff result = new Staff(ID, name, description, last_name);
         
         result.SetEmail((String) data.get("email"));
         result.SetPhoneNumber((String) data.get("phone_number"));
