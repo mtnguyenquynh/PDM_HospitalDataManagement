@@ -88,7 +88,6 @@ public enum ResourceUnit {
     YD("Yard", "Length", 914.4),
     MI("Mile", "Length", 1609344.0),
     
-    
     ;
 
     // ---------------------------------------------------------------------------------------------------------------------
@@ -118,9 +117,11 @@ public enum ResourceUnit {
     // Find the correct enum here
     public static ResourceUnit GetEnum(String name, String type) {
         for (ResourceUnit p : ResourceUnit.values()) {
-            if (name == p.toString() || p.toString().equals(name)) { return p; }
-            if (type == p.toString() || p.toString().equals(type)) { return p; }
+            String pStr = p.toString();
+            if (name == pStr || pStr.equals(name)) { return p; }
+            if (type == pStr || pStr.equals(type)) { return p; }
             
+
             String p_name = p.GetName();
             String p_type = p.GetType();
 
@@ -130,11 +131,10 @@ public enum ResourceUnit {
                 continue;
             }
             // The type is guaranteed to be correct, so we can compare the name
-            if (p_name.equals(name)) { return p; } 
-            if (p_name.toLowerCase().equals(name.toLowerCase())) { return p; }
-            if (p_name.toUpperCase().equals(name.toUpperCase())) { return p; }
+            if (p_name.equals(name) || p_name.equalsIgnoreCase(name)) { return p; } 
         }
-        return null;
+        try { return ResourceUnit.valueOf(name); } 
+        catch (IllegalArgumentException e) { return ResourceUnit.UNIT; }
     }
     public static boolean FindEnum(String name, String type) { return ResourceUnit.GetEnum(name, type) != null; }
     public static ResourceUnit GetDefault() { return ResourceUnit.UNIT; }

@@ -1,7 +1,5 @@
 package Staff;
 
-import MedicalRecord.MedicalRecord;
-
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
  * All Rights Reserved
@@ -102,9 +100,12 @@ public enum DepartmentEnum {
     public static DepartmentEnum GetEnum(String dept) {
         for (DepartmentEnum deptEnum : DepartmentEnum.values()) {
             String deptEnumString = deptEnum.toString();
-            String deptEnumName = deptEnum.GetFullName();
             if (deptEnumString.equals(dept) || deptEnumString == dept) { return deptEnum; }
+            if (deptEnumString.equalsIgnoreCase(dept)) { return deptEnum; }
+
+            String deptEnumName = deptEnum.GetFullName();
             if (deptEnumName.equals(dept) || deptEnumName == dept) { return deptEnum; }
+            if (deptEnumName.equalsIgnoreCase(dept)) { return deptEnum; }
         }
         return null;
     }

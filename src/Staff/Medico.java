@@ -73,10 +73,11 @@ public class Medico extends Staff {
 
     // ----------------------------------------------------------
     // Department
-
     public DepartmentEnum GetDepartment() { return this.department; }
-
     public void SetDepartment(DepartmentEnum department) throws Exception { this.department = department; }
+    public void SetDepartment(String dept) throws Exception { 
+        this.department = DepartmentEnum.valueOf(dept); 
+    }
 
 
 }
