@@ -241,8 +241,8 @@ public abstract class PersonUtils {
     public static String StandardizeGender(boolean IsFemale) { return IsFemale ? "FEMALE": "MALE"; }
 
     public static boolean StandardizeGender(String IsFemale) throws Exception {
-        if (IsFemale == "FEMALE" || IsFemale.equals("FEMALE")) { return true; }
-        if (IsFemale == "MALE" || IsFemale.equals("MALE")) { return false; }
+        if (IsFemale == "FEMALE" || IsFemale.equals("FEMALE") || IsFemale.equalsIgnoreCase("FEMALE")) { return true; }
+        if (IsFemale == "MALE" || IsFemale.equals("MALE") || IsFemale.equalsIgnoreCase("MALE")) { return false; }
         throw new Exception("The gender is not standardized.");
     }
 
