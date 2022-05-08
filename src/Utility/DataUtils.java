@@ -83,4 +83,8 @@ public abstract class DataUtils {
         if (!condition) { throw new IllegalArgumentException(message); }
     }
 
+    public static void CheckCondition(boolean condition, String message) throws Exception {
+        if (!condition) { throw new Exception(message); }
+    }
+
 }

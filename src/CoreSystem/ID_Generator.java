@@ -3,7 +3,6 @@ package CoreSystem;
 import java.util.Hashtable;
 
 import BaseClass.BaseObject;
-import BaseClass.IntermediateObject;
 import Person.Person;
 import Utility.DataUtils;
 import Utility.JsonUtils;

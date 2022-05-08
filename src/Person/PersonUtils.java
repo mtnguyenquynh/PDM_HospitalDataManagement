@@ -1,5 +1,7 @@
 package Person;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import Utility.DataUtils;
 
 /**
@@ -239,8 +241,8 @@ public abstract class PersonUtils {
     public static String StandardizeGender(boolean IsFemale) { return IsFemale ? "FEMALE": "MALE"; }
 
     public static boolean StandardizeGender(String IsFemale) throws Exception {
-        if (IsFemale == "FEMALE" || IsFemale.equals("FEMALE")) { return true; }
-        if (IsFemale == "MALE" || IsFemale.equals("MALE")) { return false; }
+        if (IsFemale == "FEMALE" || IsFemale.equals("FEMALE") || IsFemale.equalsIgnoreCase("FEMALE")) { return true; }
+        if (IsFemale == "MALE" || IsFemale.equals("MALE") || IsFemale.equalsIgnoreCase("MALE")) { return false; }
         throw new Exception("The gender is not standardized.");
     }
 
@@ -283,8 +285,10 @@ public abstract class PersonUtils {
     }
 
     public static String GetMedicoTaskDirectory(String name, boolean IsStandardized) throws Exception {
-        String directory = PersonUtils.GetMedicoTaskDirectory();
-        return PersonUtils.GetMergedDirectory(directory, name, IsStandardized);
+        // Don't use the directory directly, because the directory may not exist
+        // String directory = PersonUtils.GetMedicoTaskDirectory();
+        // return PersonUtils.GetMergedDirectory(directory, name, IsStandardized);
+        throw new NotImplementedException("This function is not implemented yet.");
     }
 
 }

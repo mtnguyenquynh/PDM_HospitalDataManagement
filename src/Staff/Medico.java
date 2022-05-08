@@ -1,6 +1,5 @@
 package Staff;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -81,9 +80,9 @@ public class Medico extends Staff {
         this.prefix = prefix;
     }
 
-    public void SetResponsibility(Prefix prefix) throws Exception { this.SetPrefix(prefix); }
-
     public Prefix GetResponsibility() { return this.GetThisPrefix(); }
+
+    public void SetResponsibility(Prefix prefix) throws Exception { this.SetPrefix(prefix); }
     
     // ----------------------------------------------------------
     // Department
