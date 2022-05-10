@@ -1,3 +1,4 @@
+package UI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -105,7 +106,7 @@ public class Login_Page {
 
 		passwordField = new JPasswordField();
 		passwordField.setBounds(561, 429, 299, 30);
-		passwordField.setEchoChar('•');
+		passwordField.setEchoChar('ï¿½');
 		frmHDM.getContentPane().add(passwordField);
 
 		// Login button
