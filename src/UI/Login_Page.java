@@ -106,7 +106,7 @@ public class Login_Page {
 
 		passwordField = new JPasswordField();
 		passwordField.setBounds(561, 429, 299, 30);
-		passwordField.setEchoChar('�');
+		passwordField.setEchoChar('•');
 		frmHDM.getContentPane().add(passwordField);
 
 		// Login button
