@@ -3,15 +3,16 @@ import java.awt.Dimension;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.Font;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
-import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.Color;
 import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
