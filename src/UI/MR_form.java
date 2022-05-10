@@ -1,19 +1,18 @@
+package UI;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 
-import javax.swing.JTextField;
-import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class MR_form {
@@ -128,20 +127,26 @@ public class MR_form {
 		frmMR.getContentPane().add(btnInsert);
 		
 		//Button to find data
-		JButton btnFind = new JButton("Find");
-		btnFind.addActionListener(new ActionListener() {
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showInputDialog("Input the Medico Record ID you want to search");
 			}
 		});
-		btnFind.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
-		btnFind.setBounds(742, 429, 93, 36);
-		frmMR.getContentPane().add(btnFind);
+		btnSearch.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
+		btnSearch.setBounds(742, 429, 93, 36);
+		frmMR.getContentPane().add(btnSearch);
 		
-		//Button to remove data
-		JButton btnRemove = new JButton("Remove");
-		btnRemove.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
-		btnRemove.setBounds(857, 429, 153, 36);
-		frmMR.getContentPane().add(btnRemove);
+		JButton btnBack = new JButton("BACK");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Menu_Page menu = new Menu_Page();
+				menu.getClass();
+				frmMR.setVisible(false);
+			}
+		});
+		btnBack.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
+		btnBack.setBounds(54, 521, 93, 36);
+		frmMR.getContentPane().add(btnBack);
 	}
 }

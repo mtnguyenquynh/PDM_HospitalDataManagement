@@ -1,17 +1,19 @@
+package UI;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
 import javax.swing.JComboBox;
+import javax.swing.JButton;
 import javax.swing.JTextField;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JButton;
+
 
 public class Staff_form {
 
@@ -146,7 +148,29 @@ public class Staff_form {
 				}
 				else JOptionPane.showMessageDialog(lblNewLabel, "Wrong syntax for email, it should be @gmail.com");}
 		});
-		btnInsert.setBounds(832, 414, 97, 30);
+		btnInsert.setBounds(713, 414, 97, 30);
 		frmStaffData.getContentPane().add(btnInsert);
+		
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showInputDialog("Input info");
+			}
+		});
+		btnSearch.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
+		btnSearch.setBounds(832, 414, 97, 30);
+		frmStaffData.getContentPane().add(btnSearch);
+		
+		JButton btnBack = new JButton("BACK");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Menu_Page menu = new Menu_Page();
+				menu.getClass();
+				frmStaffData.setVisible(false);
+			}
+		});
+		btnBack.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
+		btnBack.setBounds(43, 620, 97, 30);
+		frmStaffData.getContentPane().add(btnBack);
 	}
 }

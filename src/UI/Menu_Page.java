@@ -1,15 +1,17 @@
+package UI;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
+
 
 public class Menu_Page {
 
@@ -48,7 +50,7 @@ public class Menu_Page {
 		frmMenu = new JFrame();
 		frmMenu.setTitle("MENU");
 		frmMenu.getContentPane().setBackground(Color.WHITE);
-		frmMenu.setBounds(0, 0, width, height);
+		frmMenu.setSize(width, height);
 		frmMenu.setVisible(true);
 		frmMenu.setResizable(true);
 		frmMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,8 +112,7 @@ public class Menu_Page {
 		JButton btnLogout = new JButton("Log Out");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login_Page login = new Login_Page();
-				login.getClass();
+				System.exit(0);
 			}
 		});
 		btnLogout.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
