@@ -92,16 +92,16 @@ public class GlobalPool_Menu {
 				System.exit(0);
 			}
 		});
-		btnBack.setBounds(1308, 10, 112, 52);
+		btnBack.setBounds(1176, 26, 112, 52);
 		frmPool.getContentPane().add(btnBack);
 		
 		JLabel lblResource = new JLabel("");
-		lblResource.setIcon(new ImageIcon(GlobalPool_Menu.class.getResource("/image/Resource.png")));
+		lblResource.setIcon(new ImageIcon(GlobalPool_Menu.class.getResource("image/Resource.png")));
 		lblResource.setBounds(755, 26, 327, 316);
 		frmPool.getContentPane().add(lblResource);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(GlobalPool_Menu.class.getResource("/image/Tool.png")));
+		lblNewLabel.setIcon(new ImageIcon(GlobalPool_Menu.class.getResource("image/Tool.png")));
 		lblNewLabel.setBounds(362, 26, 248, 316);
 		frmPool.getContentPane().add(lblNewLabel);
 	}
