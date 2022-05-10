@@ -4,6 +4,7 @@ Department (15 instances)
 Diagnostic (18 instances)
 Ref: https://www.britannica.com/topic/list-of-medical-tests-and-diagnostic-procedures-2074273#ref335438
 
+Job (2 instances)
 Medico (29 instances -> 22 nurses, 7 doctors)
 Medico-Room (19 instances)
 Medico-Treatment (2404 instances)
