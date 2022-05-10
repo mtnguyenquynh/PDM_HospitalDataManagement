@@ -1,3 +1,4 @@
+package UI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -15,13 +16,13 @@ import java.awt.event.ActionEvent;
 public class Tool_Page {
 
 	private JFrame frmTool;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
+	private JTextField idField;
+	private JTextField nameField;
+	private JTextField amountField;
+	private JTextField calculationField;
+	private JTextField supplierField;
+	private JTextField originalityField;
+	private JTextField material_field;
 
 	/**
 	 * Launch the application.
@@ -121,40 +122,40 @@ public class Tool_Page {
 		lblOriginality.setBounds(933, 206, 97, 21);
 		frmTool.getContentPane().add(lblOriginality);
 		
-		textField = new JTextField();
-		textField.setBounds(1158, 38, 96, 19);
-		frmTool.getContentPane().add(textField);
-		textField.setColumns(10);
+		idField = new JTextField();
+		idField.setBounds(1158, 38, 96, 19);
+		frmTool.getContentPane().add(idField);
+		idField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(1158, 77, 96, 19);
-		frmTool.getContentPane().add(textField_1);
+		nameField = new JTextField();
+		nameField.setColumns(10);
+		nameField.setBounds(1158, 77, 96, 19);
+		frmTool.getContentPane().add(nameField);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(1158, 108, 96, 19);
-		frmTool.getContentPane().add(textField_2);
+		amountField = new JTextField();
+		amountField.setColumns(10);
+		amountField.setBounds(1158, 108, 96, 19);
+		frmTool.getContentPane().add(amountField);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(1158, 138, 96, 19);
-		frmTool.getContentPane().add(textField_3);
+		calculationField = new JTextField();
+		calculationField.setColumns(10);
+		calculationField.setBounds(1158, 138, 96, 19);
+		frmTool.getContentPane().add(calculationField);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(1158, 173, 96, 19);
-		frmTool.getContentPane().add(textField_4);
+		supplierField = new JTextField();
+		supplierField.setColumns(10);
+		supplierField.setBounds(1158, 173, 96, 19);
+		frmTool.getContentPane().add(supplierField);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(1158, 204, 96, 19);
-		frmTool.getContentPane().add(textField_5);
+		originalityField = new JTextField();
+		originalityField.setColumns(10);
+		originalityField.setBounds(1158, 204, 96, 19);
+		frmTool.getContentPane().add(originalityField);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(1158, 239, 96, 19);
-		frmTool.getContentPane().add(textField_6);
+		material_field = new JTextField();
+		material_field.setColumns(10);
+		material_field.setBounds(1158, 239, 96, 19);
+		frmTool.getContentPane().add(material_field);
 		frmTool.setVisible(true);
 	}
 

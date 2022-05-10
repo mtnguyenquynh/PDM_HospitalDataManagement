@@ -113,7 +113,7 @@ public class Login_Page {
 		JButton btnLogin = new JButton("Log In");
 		btnLogin.setBounds(1064, 494, 96, 40);
 		btnLogin.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
-		btnLogin.addActionListener(new ActionListener() {
+                btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = UsernameField.getText();
 				String password = String.valueOf(passwordField.getPassword());
@@ -126,6 +126,7 @@ public class Login_Page {
 				}
 			}
 		});
+                frmHDM.getRootPane().setDefaultButton(btnLogin);//Press login with Enter key
 		frmHDM.getContentPane().add(btnLogin);
 	}
 }
