@@ -92,7 +92,7 @@ public class GlobalPool_Menu {
 				System.exit(0);
 			}
 		});
-		btnBack.setBounds(1308, 10, 112, 52);
+		btnBack.setBounds(1176, 26, 112, 52);
 		frmPool.getContentPane().add(btnBack);
 		
 		JLabel lblResource = new JLabel("");
