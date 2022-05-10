@@ -45,12 +45,11 @@ public enum ToolUnit {
     public static ToolUnit GetEnum(String name) {
         for (ToolUnit p : ToolUnit.values()) {
             String p_name = p.GetName();
-            if (p_name.equals(name)) { return p; } 
-            if (p_name.toLowerCase().equals(name.toLowerCase())) { return p; }
-            if (p_name.toUpperCase().equals(name.toUpperCase())) { return p; }
+            if (p_name.equals(name) || p_name.equalsIgnoreCase(name)) { return p; } 
             if (name == p.toString()) { return p; }
         }
-        return null;
+        try { return ToolUnit.valueOf(name); } 
+        catch (Exception e) { return null; }
     }
     public static boolean FindEnum(String name) { return ToolUnit.GetEnum(name) != null; }
     public static ToolUnit GetDefault() { return ToolUnit.UNIT; }

@@ -71,4 +71,20 @@ public abstract class DataUtils {
     }
 
 
+    // ---------------------------------------------------------------------------------------------------------------------
+    // Condition-checking
+    /**
+     * If the following condition is not met, the program will throw an exception.
+     * @param condition (boolean): The condition to be checked.
+     * @param message (String): The message to be printed if the condition is not met.
+     * @throws IllegalArgumentException
+     */
+    public static void CheckArgumentCondition(boolean condition, String message) throws IllegalArgumentException {
+        if (!condition) { throw new IllegalArgumentException(message); }
+    }
+
+    public static void CheckCondition(boolean condition, String message) throws Exception {
+        if (!condition) { throw new Exception(message); }
+    }
+
 }

@@ -125,7 +125,6 @@ public class TreatmentCode {
         System.out.println("----------------------------------------------------------------------------------");
     }
 
-
     // ---------------------------------------------------------------------------------------------------------------------
     // Getter Function
     public static Hashtable<String, Object> GetPool() { return TreatmentCode.Pool; }

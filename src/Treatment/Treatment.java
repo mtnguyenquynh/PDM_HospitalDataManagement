@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import BaseClass.BaseRecord;
 import Object.Resource;
-import PrefixState.Prefix;
 import Staff.Medico;
 import Utility.DataUtils;
 import Utility.JsonUtils;
-import Person.PersonUtils;
 
 
 /**
@@ -38,6 +36,7 @@ import Person.PersonUtils;
  * 4) Descriptions: The desciption of the treatment: Mapping the {Index} - { Date, Time, Description, Medico_Name }.
  * 	  The {Date, Time} here is its creation time. Not the recording time by patient.
  * 
+ * Note that the "index" (integer) attribute started from ZERO (0), NOT from one (1).
  * 
  * @author Ichiru Take
  * @version 0.0.1
@@ -58,7 +57,6 @@ public class Treatment extends BaseRecord {
 	private static final int MAX_NUM_SUPPLEMENTARY = 50;		// 50 supplementary materials are pre-allocated
 	private static final int MAX_NUM_DESCRIPTIONS = 100;		// 100 descriptions are pre-allocated
 	private static final int MAX_NUM_RESOURCES = 100;			// 100 resources are pre-allocated
-	private static final Prefix prefix = Prefix.Treatment;		// Prefix for the treatment
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	private String MedicalRecord_ID; 					// Patient's Data
@@ -77,6 +75,10 @@ public class Treatment extends BaseRecord {
 		super(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, 
 		      Pt_Gender, writable);
 
+		DataUtils.CheckArgumentCondition(index >= -1, "The treatment index must started from -1. If -1, " + 
+										 "this treatment may not be available in the medical record.");
+		DataUtils.CheckArgumentCondition(TreatmentCode.ContainsThisKeyCode(code), 
+										 "This code=" + code + " is not available in any treatment.");
 		this.MedicalRecord_ID = MedicalRecord_ID;
 		this.index = index;
 		this.ClassificationCode = code;
@@ -95,7 +97,7 @@ public class Treatment extends BaseRecord {
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------
-	// Setters
+	// Setters-Advanced
 	public void AddMedico(Medico medico) {
 		if (!this.IsWritable()) { return; }
 		if (!this.GetMedicoInfo().containsKey(medico.GetID())) {
@@ -182,10 +184,27 @@ public class Treatment extends BaseRecord {
 	// ---------------------------------------------------------------------------------------------------------------------
 	// Getter & Setter 
 	public String GetMedicalRecordID() { return this.MedicalRecord_ID; }
+	
+	public String GetStandardizedIndex() {
+		return TreatmentUtils.GetStandardizedIndex(this.GetTreatmentIndex());
+	}
 
-	public int GetTreatmentIndexAsInt() { return this.index; }
-	public String GetTreatmentIndexAsString() { 
-		return Treatment.prefix.GetPrefixCode() + String.format("%02d", this.GetTreatmentIndexAsInt());
+	public String GetDerivedTreatmentID() throws Exception { 
+		// This is a derived function and would not be used any thing practical.
+		// Don't use this function in your code. This is just an extension for the future.
+		// For example, if MedicalRecord_ID is "MR-00-001-00012" and index = 3 
+		// --> DerivedTreatmentID = "MR-00-001-00012-003".
+		return this.GetMedicalRecordID() + "-" + this.GetStandardizedIndex(); 
+	}
+
+	public int GetTreatmentIndex() { return this.index; }
+
+	public void SetTreatmentIndex(int index) {
+		if (!this.IsWritable()) { return; }
+		DataUtils.CheckArgumentCondition(this.GetTreatmentIndex() >= 0, 
+										"Treatment Index must be a non-negative integer.");
+		DataUtils.CheckArgumentCondition(index >= 0, "Updated index must be a non-negative integer.");								
+		if (this.index == -1) { this.index = index; }
 	}
 
 	public String GetClassificationCode() { return this.ClassificationCode; }
@@ -198,44 +217,72 @@ public class Treatment extends BaseRecord {
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// Serialization & Deserialization
+	public String GetToMedicalRecordFolder() { return TreatmentUtils.GetToMedicalRecordFolder(this); }
+
+	public String GetToTreatmentFolder() { return TreatmentUtils.GetToTreatmentFolder(this); }
+
+	// This is the directory of the file after serialization.
+	public String GetToTreatmentFile() { return this.GetToMedicalRecordFolder() + this.GetStandardizedIndex() + ".json";  }
+
+	/**
+	 * This function not serializes the "treatment" into the JSONOBject-like object but actually
+	 * serialize the "treatment" into a JSON file.
+	 * 
+	 * The "folder" key is the core following path: "database/PatientRecord/[FirstName-Tree]/[Patient.ID]/[MedicalRecord.ID]/"
+	 * The "subfolder" key is the following path = "[folder]/[Standardized-TreatmentIndex]/"
+	 * The "Treatment" is stored at the following path: "[folder]/<Standardized-TreatmentIndex>.json"
+	 * All four supplementary files are stored at the following path: "[subfolder]/<SupplementaryFile>.json",
+	 * whose SupplementaryFile is "MedicoInfo", "Resources", "Descriptions", "Supplementary" (FileName ~~ key).
+	 * 
+	 */
 	public Hashtable<String, Object> Serialize() {
 		Hashtable<String, Object> TreatmentInformation = super.Serialize();
 		TreatmentInformation.put("MedicalRecordID", this.GetMedicalRecordID());
-		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndexAsInt());
+		TreatmentInformation.put("TreatmentIndex", (Object) this.GetTreatmentIndex());
 		TreatmentInformation.put("ClassificationCode", this.GetClassificationCode());
 		
-		String directory, folder;
-		try { 
-			folder = PersonUtils.GetPatientRecordDirectory(this.GetPtFirstName(), false); 
-			TreatmentInformation.put("folder", folder);
-		} catch (Exception e) { // This is never called as standardization is done in the Patient class.
-			e.printStackTrace();
-		}
-		
-		folder = (String) TreatmentInformation.get("folder") + Integer.toString(index) + "-";
+		// ----------------------------------------------------------
+		// Base folder = PersonUtils.GetPatientRecordDirectory(this.GetPtFirstName(), false);
+		// This achieves "database/PatientRecord/[FirstName-Tree]/" .
+
+		// To reach the true directory, we need to add the "Patient.ID" and "MedicalRecord.ID into it"
+		// The result is: "database/PatientRecord/[FirstName-Tree]/[Patient.ID]/[MedicalRecord.ID]/".
+		String folder = this.GetToMedicalRecordFolder();
 		TreatmentInformation.put("folder", folder);
+
+		// After that, we needed to deepen down to the "TreatmentIndex"
+		// The result is: "database/.../[MedicalRecord.ID]/[Standardized-TreatmentIndex]/".
+		String subfolder = this.GetToTreatmentFolder();
+		TreatmentInformation.put("subfolder", subfolder); 	// Saved here as cache	
+
 		try {
-			directory = folder + "MedicoInfo.json";
-			JsonUtils.SaveHashTableIntoJsonFile(folder + "MedicoInfo.json", this.GetMedicoInfo(), null);
+			String directory;
+			directory = subfolder + "MedicoInfo.json";
 			TreatmentInformation.put("MedicoInfo", directory);
+			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetMedicoInfo(), null);
+
 
 			ArrayList<Object> CastedSupplementary = DataUtils.CastToObjectArrayFromStringArray(this.GetSupplementary());
-			directory = folder + "Supplementary.json";
-			JsonUtils.SaveArrayListIntoJsonFile(folder + "Supplementary.json", CastedSupplementary, null);
+			directory = subfolder + "Supplementary.json";
 			TreatmentInformation.put("Supplementary", directory);
+			JsonUtils.SaveArrayListIntoJsonFile(directory, CastedSupplementary, null);
 
-			directory = folder + "Resources.json";
-			JsonUtils.SaveHashTableIntoJsonFile(folder + "Resources.json", this.GetResources(), null);
+
+			directory = subfolder + "Resources.json";
 			TreatmentInformation.put("Resources", directory);
+			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetResources(), null);
 
-			directory = folder + "Descriptions.json";
-			JsonUtils.SaveHashTableIntoJsonFile(folder + "Descriptions.json", this.GetDescriptions(), null);
+
+			directory = subfolder + "Descriptions.json";
 			TreatmentInformation.put("Descriptions", directory);
+			JsonUtils.SaveHashTableIntoJsonFile(directory, this.GetDescriptions(), null);
+			
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			directory = folder + this.GetStandardizedIndex() + ".json";
+			TreatmentInformation.put("Treatment", directory);
+			JsonUtils.SaveHashTableIntoJsonFile(directory, TreatmentInformation, null);
 
+		} catch (Exception e) { e.printStackTrace(); }
 		return TreatmentInformation;
 	}
 
@@ -276,6 +323,13 @@ public class Treatment extends BaseRecord {
 
 		if (!(boolean) data.get("writable")) { record.CloseRecord(); }
 		return record;
+	}
+
+	public static Treatment DeserializeFromFile(String directory) throws Exception {
+		Hashtable<String, Object> data = JsonUtils.LoadJsonFileToHashtable(directory, null);
+		String VerifyKey = (String) data.get("Treatment");
+		DataUtils.CheckCondition(VerifyKey != null, "The loaded file is not a valid medical-treatment record.");
+		return Treatment.Deserialize(data);
 	}
 
 }

@@ -40,7 +40,7 @@ public abstract class JsonUtils {
      * @throws IllegalArgumentException
      */
     public static void CheckArgumentCondition(boolean condition, String message) throws IllegalArgumentException {
-        if (!condition) { throw new IllegalArgumentException(message); }
+        DataUtils.CheckArgumentCondition(condition, message);
     }
 
     // ---------------------------------------------------------------------------------------------------------------------

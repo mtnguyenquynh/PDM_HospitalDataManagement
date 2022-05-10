@@ -2,6 +2,8 @@ package BaseClass;
 
 import java.util.Hashtable;
 
+import Utility.DataUtils;
+
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
  * All Rights Reserved
@@ -38,6 +40,7 @@ public class BaseRecord extends AbstractRecord {
         this.Pt_Age = Pt_Age;
         this.Pt_Gender = Pt_Gender;
     }
+    
     public BaseRecord(String Patient_ID, String Pt_FirstName, String Pt_LastName, String Pt_Age, String Pt_Gender) {
         this(Patient_ID, Pt_FirstName, Pt_LastName, Pt_Age, Pt_Gender, true);
     }
@@ -49,6 +52,29 @@ public class BaseRecord extends AbstractRecord {
     public String GetPtLastName() { return this.Pt_LastName; }
 	public String GetPtAge() { return this.Pt_Age; }
 	public String GetPtGender() { return this.Pt_Gender; }
+
+    public boolean ValidateTwoNeighborRecords(BaseRecord record, boolean raiseException) throws Exception {
+        if (raiseException) {
+            String msg = "These two records have different ";
+            DataUtils.CheckCondition(this.GetPtID() == record.GetPtID(), msg + "ID");
+            DataUtils.CheckCondition(this.GetPtFirstName() == record.GetPtFirstName(), msg + "first name");
+            DataUtils.CheckCondition(this.GetPtLastName() == record.GetPtLastName(), msg + "last name");
+            DataUtils.CheckCondition(this.GetPtAge() == record.GetPtAge(), msg + "age");
+            DataUtils.CheckCondition(this.GetPtGender() == record.GetPtGender(), msg + "gender");
+        } else {
+            if (this.GetPtID() != record.GetPtID()) { return false; }
+            if (this.GetPtFirstName() != record.GetPtFirstName()) { return false; }
+            if (this.GetPtLastName() != record.GetPtLastName()) { return false; }
+            if (this.GetPtAge() != record.GetPtAge()) { return false; }
+            if (this.GetPtGender() != record.GetPtGender()) { return false; }
+        }
+        return true;
+    }
+
+    public static boolean ValidateTwoNeighborRecords(BaseRecord FromRecord, BaseRecord ToRecord, 
+        boolean raiseException) throws Exception {
+        return FromRecord.ValidateTwoNeighborRecords(ToRecord, raiseException);
+    }
 
     // ---------------------------------------------------------------------------------------------------------------------
     // Serialization & Deserialization

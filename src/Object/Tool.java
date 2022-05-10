@@ -34,7 +34,6 @@ import PrefixState.Prefix;
 public class Tool extends BaseObject {
     // ---------------------------------------------------------------------------------------------------------------------
     private final ToolUnit unit;
-    private final Prefix prefix;
 
     public Tool(String ID, String name, String description, int amount, ToolUnit unit) throws Exception {
         // You may want to add more fields or attributes here.

@@ -3,7 +3,7 @@ package Room;
 
 import java.util.Hashtable;
 import BaseClass.BaseRoomContainer;
-import Utility.JsonUtils;
+import Utility.DataUtils;
 
 import Staff.Medico;
 
@@ -87,7 +87,7 @@ public class MedicoRoom extends BaseRoomContainer {
     public int GetCurrentNumberOfMedicos()  { return this.GetCurrentCapacity(); }
 
     public void SetNewNumberOfMedicos(int NumberOfMedicos) { 
-        JsonUtils.CheckArgumentCondition(NumberOfMedicos >= 0, "Number of Beds must be a non-negative integer.");
+        DataUtils.CheckArgumentCondition(NumberOfMedicos >= 0, "Number of Beds must be a non-negative integer.");
         this.SetMaxCapacity(NumberOfMedicos); 
     }
 
