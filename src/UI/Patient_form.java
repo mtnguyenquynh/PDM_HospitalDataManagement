@@ -2,6 +2,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -75,27 +76,29 @@ public class Patient_form {
 
 		// DoB field
 		JLabel lblDayOfBirth = new JLabel("Day of birth");
-		lblDayOfBirth.setBounds(401, 307, 115, 25);
+		lblDayOfBirth.setBounds(401, 303, 115, 25);
 		lblDayOfBirth.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
 		frmPatient.getContentPane().add(lblDayOfBirth);
 
 		JTextPane txtDob = new JTextPane();
-		txtDob.setBounds(551, 307, 341, 19);
+		txtDob.setBounds(551, 309, 341, 19);
 		frmPatient.getContentPane().add(txtDob);
 
 		// Phone field
 		JLabel lblPhoneNumber = new JLabel("Phone number");
-		lblPhoneNumber.setBounds(401, 342, 172, 37);
+		lblPhoneNumber.setBounds(401, 338, 172, 37);
 		lblPhoneNumber.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
 		frmPatient.getContentPane().add(lblPhoneNumber);
 
 		JTextPane txtPhone = new JTextPane();
 		txtPhone.setBounds(551, 349, 341, 19);
 		frmPatient.getContentPane().add(txtPhone);
+		
+
 
 		// Department field
 		JLabel lblDepartment = new JLabel("Department");
-		lblDepartment.setBounds(401, 407, 109, 49);
+		lblDepartment.setBounds(401, 458, 109, 49);
 		lblDepartment.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
 		frmPatient.getContentPane().add(lblDepartment);
 
@@ -104,7 +107,7 @@ public class Patient_form {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox cmbDepartment = new JComboBox(list);
 		cmbDepartment.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
-		cmbDepartment.setBounds(551, 419, 177, 25);
+		cmbDepartment.setBounds(551, 470, 177, 25);
 		frmPatient.getContentPane().add(cmbDepartment);
 		frmPatient.getContentPane().add(cmbDepartment);
 
@@ -139,28 +142,42 @@ public class Patient_form {
 		lblJob.setBounds(401, 378, 33, 37);
 		lblJob.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
 		frmPatient.getContentPane().add(lblJob);
-
+		
 		JTextPane txtJob = new JTextPane();
-		txtJob.setBounds(551, 384, 341, 19);
+		txtJob.setBounds(551, 385, 341, 19);
 		frmPatient.getContentPane().add(txtJob);
+
+		// Address field
+
+		JLabel lblAddress = new JLabel("Address");
+		lblAddress.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
+		lblAddress.setBounds(401, 411, 85, 49);
+		frmPatient.getContentPane().add(lblAddress);
+		
+		JTextPane txtAddress = new JTextPane();
+		txtAddress.setBounds(551, 425, 341, 19);
+		frmPatient.getContentPane().add(txtAddress);
 
 		// Button to insert data
 		JButton btnInsert = new JButton("Insert");
+		btnInsert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnInsert.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-		btnInsert.setBounds(659, 469, 85, 21);
+		btnInsert.setBounds(696, 523, 85, 21);
 		frmPatient.getContentPane().add(btnInsert);
 
 		// Button to search data
 		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showInputDialog("Input search info");
+			}
+		});
 		btnSearch.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-		btnSearch.setBounds(754, 469, 85, 21);
+		btnSearch.setBounds(807, 523, 85, 21);
 		frmPatient.getContentPane().add(btnSearch);
-
-		// Button to remove data
-		JButton btnRemove = new JButton("Remove");
-		btnRemove.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 15));
-		btnRemove.setBounds(849, 469, 115, 21);
-		frmPatient.getContentPane().add(btnRemove);
 
 		// Button to comeback Menu page
 		JButton btnBack = new JButton("BACK");
@@ -168,10 +185,12 @@ public class Patient_form {
 			public void actionPerformed(ActionEvent e) {
 				Menu_Page menu = new Menu_Page();
 				menu.getClass();
+				frmPatient.setVisible(false);
 			}
 		});
 		btnBack.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
-		btnBack.setBounds(39, 552, 94, 31);
+		btnBack.setBounds(38, 581, 94, 31);
 		frmPatient.getContentPane().add(btnBack);
+	
 	}
 }

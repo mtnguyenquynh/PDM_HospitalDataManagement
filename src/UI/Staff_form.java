@@ -146,7 +146,29 @@ public class Staff_form {
 				}
 				else JOptionPane.showMessageDialog(lblNewLabel, "Wrong syntax for email, it should be @gmail.com");}
 		});
-		btnInsert.setBounds(832, 414, 97, 30);
+		btnInsert.setBounds(713, 414, 97, 30);
 		frmStaffData.getContentPane().add(btnInsert);
+		
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showInputDialog("Input info");
+			}
+		});
+		btnSearch.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
+		btnSearch.setBounds(832, 414, 97, 30);
+		frmStaffData.getContentPane().add(btnSearch);
+		
+		JButton btnBack = new JButton("BACK");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Menu_Page menu = new Menu_Page();
+				menu.getClass();
+				frmStaffData.setVisible(false);
+			}
+		});
+		btnBack.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
+		btnBack.setBounds(43, 620, 97, 30);
+		frmStaffData.getContentPane().add(btnBack);
 	}
 }

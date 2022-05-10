@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -18,6 +19,7 @@ import java.awt.event.ActionEvent;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
+
 
  * All Rights Reserved
  * This file is part of HDM-Dev Team's project. The contents are
@@ -72,6 +74,7 @@ public class Login_Page {
 		frmHDM.setResizable(false);
 		frmHDM.setVisible(true);
 
+
 		// Set Login Page image
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(186, -11, 1200, 334);
@@ -119,7 +122,6 @@ public class Login_Page {
 				} else {
 					JOptionPane.showMessageDialog(lblNewLabel, "Invalid password or username!",
 							"Hospital Database Management", JOptionPane.WARNING_MESSAGE);
-					System.out.println(password);
 				}
 			}
 		});
