@@ -1,0 +1,23 @@
+CODE,Description,Functional Room
+20-Jul,Emergency Room (ER),TRUE
+5-Apr,Rehabilitation Unit (RhU),FALSE
+15-Feb,Emergency Room (ER),FALSE
+2-Jul,Laboratory (Lab),FALSE
+21-Jul,Emergency Room (ER),FALSE
+15-Jan,Rehabilitation Unit (RhU),TRUE
+10-Apr,Rehabilitation Unit (RhU),TRUE
+17-Jan,Laboratory (Lab),FALSE
+5-Mar,Rehabilitation Unit (RhU),TRUE
+11-Feb,Rehabilitation Unit (RhU),TRUE
+14-Aug,Laboratory (Lab),FALSE
+5-Jun,Rehabilitation Unit (RhU),TRUE
+5-Aug,Rehabilitation Unit (RhU),TRUE
+12-Feb,Emergency Room (ER),FALSE
+3-Mar,Laboratory (Lab),FALSE
+3-Jul,Rehabilitation Unit (RhU),TRUE
+22-Aug,Rehabilitation Unit (RhU),TRUE
+3-Feb,Emergency Room (ER),FALSE
+2-Apr,Step-Down Unit (SDU),FALSE
+16-Mar,Rehabilitation Unit (RhU),TRUE
+3-Jan,Rehabilitation Unit (RhU),TRUE
+6-Apr,Emergency Room (ER),FALSE
