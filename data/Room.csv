@@ -1,23 +1,23 @@
-CODE,Description,Functional Room
-Rm-1-01,Emergency Room (ER),TRUE
-Rm-1-02,Rehabilitation Unit (RhU),FALSE
-Rm-1-03,Emergency Room (ER),TRUE
-Rm-1-04,Laboratory (Lab),TRUE
-Rm-1-05,Emergency Room (ER),TRUE
-Rm-2-01,Rehabilitation Unit (RhU),FALSE
-Rm-2-02,Rehabilitation Unit (RhU),FALSE
-Rm-2-03,Laboratory (Lab),TRUE
-Rm-2-04,Rehabilitation Unit (RhU),FALSE
-Rm-2-05,Rehabilitation Unit (RhU),FALSE
-Rm-2-06,Laboratory (Lab),TRUE
-Rm-2-07,Rehabilitation Unit (RhU),FALSE
-Rm-2-08,Rehabilitation Unit (RhU),FALSE
-Rm-2-09,Step-Down Unit (SDU),TRUE
-Rm-3-01,Laboratory (Lab),TRUE
-Rm-3-02,Rehabilitation Unit (RhU),FALSE
-Rm-3-03,Rehabilitation Unit (RhU),FALSE
-Rm-3-04,Step-Down Unit (SDU),TRUE
-Rm-3-05,Step-Down Unit (SDU),TRUE
-Rm-3-06,Rehabilitation Unit (RhU),FALSE
-Rm-3-07,Rehabilitation Unit (RhU),FALSE
-Rm-3-08,Laboratory (Lab),TRUE
+CODE,Description,FunctionalRoom
+Rm-1-01,Emergency Room (ER),1
+Rm-1-02,Rehabilitation Unit (RhU),0
+Rm-1-03,Emergency Room (ER),1
+Rm-1-04,Laboratory (Lab),1
+Rm-1-05,Emergency Room (ER),1
+Rm-2-01,Rehabilitation Unit (RhU),0
+Rm-2-02,Rehabilitation Unit (RhU),0
+Rm-2-03,Laboratory (Lab),1
+Rm-2-04,Rehabilitation Unit (RhU),0
+Rm-2-05,Rehabilitation Unit (RhU),0
+Rm-2-06,Laboratory (Lab),1
+Rm-2-07,Rehabilitation Unit (RhU),0
+Rm-2-08,Rehabilitation Unit (RhU),0
+Rm-2-09,Step-Down Unit (SDU),1
+Rm-3-01,Laboratory (Lab),1
+Rm-3-02,Rehabilitation Unit (RhU),0
+Rm-3-03,Rehabilitation Unit (RhU),0
+Rm-3-04,Step-Down Unit (SDU),1
+Rm-3-05,Step-Down Unit (SDU),1
+Rm-3-06,Rehabilitation Unit (RhU),0
+Rm-3-07,Rehabilitation Unit (RhU),0
+Rm-3-08,Laboratory (Lab),1

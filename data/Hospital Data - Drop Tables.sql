@@ -14,7 +14,6 @@
  * 
  * --------------------------------------------------------------------
  * @database HospitalData
- * @author Ichiru Take
  * @version 0.0.1
  * References: http://www.sqlservertutorial.net/load-sample-database/
  * --------------------------------------------------------------------
