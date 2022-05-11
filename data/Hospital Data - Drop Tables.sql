@@ -22,7 +22,9 @@
 **/
 
 -- Drop the Tables
-ALTER TABLE LiveState.MedicoRoom DROP CONSTRAINT UniquePair_MedicoRoom;
+ALTER TABLE LiveState.MedicoRoom DROP CONSTRAINT UniquePair_MedicoRoom_1;
+ALTER TABLE LiveState.MedicoRoom DROP CONSTRAINT UniquePair_MedicoRoom_2;
+ALTER TABLE LiveState.MedicoRoom DROP CONSTRAINT UniquePair_MedicoRoom_3;
 ALTER TABLE LiveState.PatientRoom DROP CONSTRAINT UniquePair_PatientRoom;
 ALTER TABLE CoreData.MedicoTreatment DROP CONSTRAINT UniquePair_MedicoTreatment;
 GO
