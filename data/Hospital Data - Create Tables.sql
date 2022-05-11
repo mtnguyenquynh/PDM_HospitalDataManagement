@@ -125,7 +125,7 @@ CREATE TABLE CoreData.MedicoTreatment (
 	Medico_Work VARCHAR (250) NOT NULL,
 
 	-- Constraint --
-	CONSTRAINT UniquePair UNIQUE (Treatment_ID, Medico_ID),
+	CONSTRAINT UniquePair_MedicoTreatment UNIQUE (Treatment_ID, Medico_ID),
 );
 GO
 
@@ -136,7 +136,7 @@ CREATE TABLE LiveState.PatientRoom (
 	Patient_ID VARCHAR (50) NOT NULL UNIQUE FOREIGN KEY REFERENCES CoreData.Patient(ID) ON DELETE CASCADE ON UPDATE CASCADE,
 
 	-- Constraint --
-	CONSTRAINT UniquePair UNIQUE (Room_CODE, Patient_ID),
+	CONSTRAINT UniquePair_PatientRoom UNIQUE (Room_CODE, Patient_ID),
 );
 GO
 
@@ -144,9 +144,11 @@ CREATE TABLE LiveState.MedicoRoom (
 	-- Reference Keys --
 	Room_CODE VARCHAR (50) PRIMARY KEY NOT NULL FOREIGN KEY REFERENCES LiveState.Room(CODE) ON DELETE CASCADE ON UPDATE CASCADE,
 	Medico_ID VARCHAR (50) NOT NULL FOREIGN KEY REFERENCES CoreData.Medico(ID) ON DELETE CASCADE ON UPDATE CASCADE,
-	Opt_Medico_ID VARCHAR (50) DEFAULT NULL FOREIGN KEY REFERENCES CoreData.Medico(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+	Opt_Medico_ID VARCHAR (50) DEFAULT NULL FOREIGN KEY REFERENCES CoreData.Medico(ID) ON DELETE NO ACTION ON UPDATE NO ACTION,
 
 	-- Constraint --
-	CONSTRAINT UniquePair UNIQUE (Room_CODE, Medico_ID),
+	CONSTRAINT UniquePair_MedicoRoom_1 UNIQUE (Room_CODE, Medico_ID),
+	CONSTRAINT UniquePair_MedicoRoom_2 UNIQUE (Room_CODE, Opt_Medico_ID),
+	CONSTRAINT UniquePair_MedicoRoom_3 UNIQUE (Medico_ID, Opt_Medico_ID),
 );
 GO

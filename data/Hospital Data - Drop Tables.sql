@@ -22,12 +22,16 @@
 **/
 
 -- Drop the Tables
+ALTER TABLE LiveState.MedicoRoom DROP CONSTRAINT UniquePair_MedicoRoom;
+ALTER TABLE LiveState.PatientRoom DROP CONSTRAINT UniquePair_PatientRoom;
+ALTER TABLE CoreData.MedicoTreatment DROP CONSTRAINT UniquePair_MedicoTreatment;
+GO
+
 DROP TABLE IF EXISTS LiveState.MedicoRoom;
 DROP TABLE IF EXISTS LiveState.PatientRoom;
 
+DROP TABLE IF EXISTS CoreData.MedicoTreatment;
 DROP TABLE IF EXISTS CoreData.SicknessTreatment;
-DROP TABLE IF EXISTS CoreData.SicknessTreatment;
-
 DROP TABLE IF EXISTS CoreData.Treatment;
 
 DROP TABLE IF EXISTS CoreData.Medico;
@@ -38,8 +42,9 @@ DROP TABLE IF EXISTS CoreData.SicknessEnum;
 DROP TABLE IF EXISTS CoreData.DiagnosticEnum;
 DROP TABLE IF EXISTS CoreData.JobEnum;
 DROP TABLE IF EXISTS CoreData.DepartmentEnum;
+GO
 
 --Drop the Schemas
-
 DROP SCHEMA IF EXISTS LiveState;
 DROP SCHEMA IF EXISTS CoreData;
+GO
