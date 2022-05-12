@@ -3,11 +3,15 @@
         "include": [
             "/lib/json-20220320.jar",
             "/lib/json-simple-1-1.jar",
+            "/lib/mssql-jdbc-10.2.0.jre8.jar",
             "/lib/commons-lang3-3.12.0.jar",
+            "/lib/sqljdbc42.jar",
             "lib/**/*.jar"
         ],
         "exclude": [
-            "lib/json-20220320.jar"
+            "lib/json-20220320.jar",
+            "lib/mssql-jdbc-10.2.0.jre17.jar",
+            "lib/mssql-jdbc-10.2.0.jre11.jar"
         ]
     },
     "java.project.sourcePaths": [
@@ -15,7 +19,6 @@
     ],
     "java.progressReports.enabled": true,
     "java.project.exportJar.targetPath": "PDM_HospitalData_0_0_1.jar",
-    
     "java.codeGeneration.hashCodeEquals.useInstanceof": true,
     "java.codeGeneration.toString.limitElements": 0,
     "java.codeGeneration.toString.listArrayContents": true,
