@@ -1,4 +1,4 @@
-package image;
+package UI.image;
 
 import java.awt.EventQueue;
 

@@ -1,3 +1,4 @@
+package UI;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -76,7 +77,7 @@ public class Login_Page {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(186, -11, 1200, 334);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(Login_Page.class.getResource("/image/LoginPage.png")));
+		lblNewLabel.setIcon(new ImageIcon(Login_Page.class.getResource("src/UI/image/LoginPage.png")));
 		frmHDM.getContentPane().add(lblNewLabel);
 
 		// Handle username field
@@ -102,7 +103,7 @@ public class Login_Page {
 
 		passwordField = new JPasswordField();
 		passwordField.setBounds(561, 429, 299, 30);
-		passwordField.setEchoChar('•');
+		passwordField.setEchoChar('ï¿½');
 		frmHDM.getContentPane().add(passwordField);
 
 		// Login button
