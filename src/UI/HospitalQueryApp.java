@@ -1,23 +1,47 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
+/**
+ * Copyright (C) 2022-2022, HDM-Dev Team
+ * All Rights Reserved
+
+ * This file is part of HDM-Dev Team's project. The contents are
+ * fully covered, controlled, and acknowledged by the terms of the
+ * BSD-3 license, which is included in the file LICENSE.md, found
+ * at the root of the project's source code/tree repository.
+**/
+
+/**
+ * This class is a small wrapper which controlled the basic behaviour of the "Treatment" class.
+ * So what fields should we implemented to contain in this class? 
+ * 
+ * => In general, what we should implement is that 
+ * 1) The ID and some syncronized information of the "Patient"
+ * 2) The collection of "Treatment" inside this "MedicalRecord"
+ * 3) The medico(s) who is/are responsible for this "MedicalRecord". Note that this information
+ *    is sometimes useless in some scenarios, for example, during an traffic-rescuing emergency.
+ *    Thus these information is not needed in some scenarios.
+ * 
+ * 
+ * @author Ichiru Take
+ * @version 0.0.1
+ * 
+ * References:
+ * 1) https://www.codejava.net/java-se/jdbc/connect-to-microsoft-sql-server-via-jdbc
+ * 2) https://stackoverflow.com/questions/29316729/cant-connect-to-sql-server-database-using-jdbc
+ * 3) Principles of Database Management - Lab 05, 06
+**/
+
+
 package UI;
 
 import javax.swing.JOptionPane;
 import java.sql.*;
 
-
-/**
- *
- * @author Minh
- */
-public class frmMain extends javax.swing.JFrame {
+public class HospitalQueryApp extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmMain
+     * Creates new form HospitalQueryApp
      */
-    public frmMain() {
+    public HospitalQueryApp() {
         initComponents();
     }
 
@@ -152,20 +176,20 @@ public class frmMain extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HospitalQueryApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HospitalQueryApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HospitalQueryApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HospitalQueryApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmMain().setVisible(true);
+                new HospitalQueryApp().setVisible(true);
             }
         });
     }
