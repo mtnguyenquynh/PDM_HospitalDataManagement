@@ -13,8 +13,7 @@
  * This class is an interface connecting with the database. Database is located within
  * this folder under the "database/HospitalData.bak" file.
  * 
- * 
- * @author Ichiru Take
+ * @author Khang
  * @version 0.0.1
  * 
  * References:
@@ -28,6 +27,8 @@ package UI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -38,6 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -69,71 +71,83 @@ public class HospitalQueryApp extends JFrame {
         this.txtQuery = new JTextField();
         this.jScrollPane1 = new JScrollPane();
         this.txtResult = new JTextArea();
-        this.btnRun = new JButton();
+        this.btnRun = new JButton("RUN");
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        txtQuery.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                txtQueryActionPerformed(evt);
+        this.txtQuery.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) { btnRunActionPerformed(null); }       
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // TODO Auto-generated method stub 
             }
         });
 
-        txtResult.setColumns(20);
-        txtResult.setRows(5);
-        jScrollPane1.setViewportView(txtResult);
+        this.txtResult.setColumns(20);
+        this.txtResult.setRows(5);
+        this.jScrollPane1.setViewportView(txtResult);
 
-        btnRun.setText("Run");
-        btnRun.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        this.btnRun.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 btnRunActionPerformed(evt);
             }
         });
 
+
         GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        this.getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtQuery, GroupLayout.PREFERRED_SIZE, 451, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(this.jLabel1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(this.txtQuery, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnRun)
+                                .addComponent(this.btnRun)
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jScrollPane1)
+                                .addComponent(this.jScrollPane1, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                                 .addContainerGap()));
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtQuery, GroupLayout.PREFERRED_SIZE, 107,
+                                        .addComponent(this.txtQuery, GroupLayout.PREFERRED_SIZE, 107,
                                                 GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 33,
+                                        .addComponent(this.jLabel1, GroupLayout.PREFERRED_SIZE, 33,
                                                 GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnRun))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                                        .addComponent(this.btnRun))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addContainerGap()
+                                .addComponent(this.jScrollPane1, GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
                                 .addContainerGap()));
 
         pack();
-    }// </editor-fold>
+    }
 
     private void txtQueryActionPerformed(ActionEvent evt) {
 
     }
 
     private void btnRunActionPerformed(ActionEvent evt) {
-        if (txtQuery.getText().length() == 0) {
+        if (this.txtQuery.getText().length() == 0) {
             JOptionPane.showMessageDialog(null, "Please input query string!",
                     "Message", JOptionPane.WARNING_MESSAGE);
         }
-        txtResult.selectAll();
-        txtResult.replaceSelection("");
+        this.txtResult.selectAll();
+        this.txtResult.replaceSelection("");
         String connectionUrl = "jdbc:sqlserver://localhost:1434;databaseName=HospitalData;user=myproject;password=sa;"
                 + "encrypt=true;trustServerCertificate=true;";
 
@@ -142,10 +156,10 @@ public class HospitalQueryApp extends JFrame {
                 Statement stmt = con.createStatement();) {
             String SQL = txtQuery.getText();
             ResultSet rs = stmt.executeQuery(SQL);
+            System.out.println(rs);
 
             // Iterate through the data in the result set and display it.
             // process query results
-
             StringBuilder results = new StringBuilder();
             ResultSetMetaData metaData = rs.getMetaData();
             int numberOfColumns = metaData.getColumnCount();
@@ -183,7 +197,9 @@ public class HospitalQueryApp extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HospitalQueryApp().setVisible(true);
+                HospitalQueryApp HospitalApp = new HospitalQueryApp();
+                HospitalApp.setLocationRelativeTo(null);
+                HospitalApp.setVisible(true);
             }
         });
     }
