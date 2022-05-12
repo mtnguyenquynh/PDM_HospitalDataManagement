@@ -94,17 +94,17 @@ public class Menu_Page {
 
 		//Set image icon for patient, staff and MR page
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(Menu_Page.class.getResource("/image/Patient.png")));
+		lblNewLabel.setIcon(new ImageIcon(Menu_Page.class.getResource("src/UI/image/Patient.png")));
 		lblNewLabel.setBounds(223, 116, 253, 209);
 		frmMenu.getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(Menu_Page.class.getResource("/image/Staff.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(Menu_Page.class.getResource("src/UI/image/Staff.png")));
 		lblNewLabel_1.setBounds(637, 116, 245, 209);
 		frmMenu.getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(Menu_Page.class.getResource("/image/Record.png")));
+		lblNewLabel_2.setIcon(new ImageIcon(Menu_Page.class.getResource("src/UI/image/Record.png")));
 		lblNewLabel_2.setBounds(1061, 133, 184, 192);
 		frmMenu.getContentPane().add(lblNewLabel_2);
 

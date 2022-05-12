@@ -1,26 +1,24 @@
 package UI;
-//import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Toolkit;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
-
 
  * All Rights Reserved
  * This file is part of HDM-Dev Team's project. The contents are
@@ -75,12 +73,11 @@ public class Login_Page {
 		frmHDM.setResizable(false);
 		frmHDM.setVisible(true);
 
-
 		// Set Login Page image
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(186, -11, 1200, 334);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(Login_Page.class.getResource("image/LoginPage.png")));
+		lblNewLabel.setIcon(new ImageIcon(Login_Page.class.getResource("src/UI/image/LoginPage.png")));
 		frmHDM.getContentPane().add(lblNewLabel);
 
 		// Handle username field
@@ -106,14 +103,14 @@ public class Login_Page {
 
 		passwordField = new JPasswordField();
 		passwordField.setBounds(561, 429, 299, 30);
-		passwordField.setEchoChar('•');
+		passwordField.setEchoChar('�');
 		frmHDM.getContentPane().add(passwordField);
 
 		// Login button
 		JButton btnLogin = new JButton("Log In");
 		btnLogin.setBounds(1064, 494, 96, 40);
 		btnLogin.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
-                btnLogin.addActionListener(new ActionListener() {
+		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = UsernameField.getText();
 				String password = String.valueOf(passwordField.getPassword());
@@ -123,10 +120,10 @@ public class Login_Page {
 				} else {
 					JOptionPane.showMessageDialog(lblNewLabel, "Invalid password or username!",
 							"Hospital Database Management", JOptionPane.WARNING_MESSAGE);
+					System.out.println(password);
 				}
 			}
 		});
-                frmHDM.getRootPane().setDefaultButton(btnLogin);//Press login with Enter key
 		frmHDM.getContentPane().add(btnLogin);
 	}
 }
