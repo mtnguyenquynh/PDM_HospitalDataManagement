@@ -42,7 +42,7 @@ import javax.swing.WindowConstants;
  * 4) https://stackoverflow.com/questions/5616898/java-sql-sqlexception-no-suitable-driver-found-for-jdbcmicrosoftsqlserver
 **/
 
-/** This file initialize the GUI to access the hospital database **/
+/** This file design the login interface to access the hospital database **/
 
 public class LoginForm {
 
