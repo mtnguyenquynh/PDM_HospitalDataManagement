@@ -29,7 +29,7 @@ GO
 
 -- Load data into Enum
 BULK INSERT HospitalData.CoreData.DepartmentEnum
-FROM '\DepartmentEnum.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\DepartmentEnum.csv'
 WITH
     (
     FIRSTROW = 2,
