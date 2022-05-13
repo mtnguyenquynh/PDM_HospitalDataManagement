@@ -1,61 +1,58 @@
 package UI;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Toolkit;
-
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
-
  * All Rights Reserved
+
  * This file is part of HDM-Dev Team's project. The contents are
  * fully covered, controlled, and acknowledged by the terms of the
  * BSD-3 license, which is included in the file LICENSE.md, found
  * at the root of the project's source code/tree repository.
 **/
 
+/**
+ * @author Khang
+ * @version 0.0.1
+ * 
+ * References:
+ * 1) https://www.codejava.net/java-se/jdbc/connect-to-microsoft-sql-server-via-jdbc
+ * 2) https://stackoverflow.com/questions/29316729/cant-connect-to-sql-server-database-using-jdbc
+ * 3) Principles of Database Management - Lab 05, 06
+ * 4) https://stackoverflow.com/questions/5616898/java-sql-sqlexception-no-suitable-driver-found-for-jdbcmicrosoftsqlserver
+**/
+
 /** This file initialize the GUI to access the hospital database **/
 
-public class Login_Page {
+public class LoginForm {
 
 	private JFrame frmHDM;
 	private JTextField UsernameField;
 	private JPasswordField passwordField;
-
-	/**
-	 * Launch the application.
-	 */
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login_Page window = new Login_Page();
-					window.frmHDM.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the application.
 	 */
-	public Login_Page() {
+	public LoginForm() {
 		initialize();
 	}
 
@@ -73,11 +70,12 @@ public class Login_Page {
 		frmHDM.setResizable(false);
 		frmHDM.setVisible(true);
 
+
 		// Set Login Page image
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(186, -11, 1200, 334);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(Login_Page.class.getResource("src/UI/image/LoginPage.png")));
+		lblNewLabel.setIcon(new ImageIcon(LoginForm.class.getResource("image/LoginPage.png")));
 		frmHDM.getContentPane().add(lblNewLabel);
 
 		// Handle username field
@@ -103,27 +101,30 @@ public class Login_Page {
 
 		passwordField = new JPasswordField();
 		passwordField.setBounds(561, 429, 299, 30);
-		passwordField.setEchoChar('�');
+		passwordField.setEchoChar('•');
 		frmHDM.getContentPane().add(passwordField);
-
+                
+                
+                
 		// Login button
 		JButton btnLogin = new JButton("Log In");
 		btnLogin.setBounds(1064, 494, 96, 40);
 		btnLogin.setFont(new Font("Segoe UI Symbol", Font.BOLD, 18));
-		btnLogin.addActionListener(new ActionListener() {
+                btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username = UsernameField.getText();
-				String password = String.valueOf(passwordField.getPassword());
-				if (username.equals("pdm") && password.equals("123")) {
-					Menu_Page menu = new Menu_Page();
-					menu.getClass();
+                            String username = UsernameField.getText();
+                            String password = String.valueOf(passwordField.getPassword());
+				if (username.equals("admin") && password.equals("admin")) {
+					 HospitalQueryApp HospitalApp = new HospitalQueryApp();
+                     HospitalApp.setLocationRelativeTo(null);
+                     HospitalApp.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(lblNewLabel, "Invalid password or username!",
 							"Hospital Database Management", JOptionPane.WARNING_MESSAGE);
-					System.out.println(password);
 				}
 			}
 		});
+                frmHDM.getRootPane().setDefaultButton(btnLogin);//Press login with Enter key
 		frmHDM.getContentPane().add(btnLogin);
 	}
 }

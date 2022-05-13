@@ -50,7 +50,6 @@ import javax.swing.JTextField;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 
 public class HospitalQueryApp extends JFrame {
     // ---------------------------------------------------------------------------------------------------------------------
@@ -148,7 +147,7 @@ public class HospitalQueryApp extends JFrame {
         }
         this.txtResult.selectAll();
         this.txtResult.replaceSelection("");
-        String connectionUrl = "jdbc:sqlserver://localhost:1434;databaseName=HospitalData;user=myproject;password=sa;"
+        String connectionUrl = "jdbc:sqlserver://localhost:1434;databaseName=HospitalData;user=admin;password=admin;"
                 + "encrypt=true;trustServerCertificate=true;";
 
         try (
@@ -197,11 +196,8 @@ public class HospitalQueryApp extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                HospitalQueryApp HospitalApp = new HospitalQueryApp();
-                HospitalApp.setLocationRelativeTo(null);
-                HospitalApp.setVisible(true);
+                LoginForm window = new LoginForm();
             }
         });
     }
-
 }
