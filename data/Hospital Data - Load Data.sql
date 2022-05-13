@@ -29,7 +29,7 @@ GO
 
 -- Load data into Enum
 BULK INSERT HospitalData.CoreData.DepartmentEnum
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\DepartmentEnum.csv'
+FROM '\DepartmentEnum.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -42,7 +42,7 @@ SELECT * FROM CoreData.DepartmentEnum
 GO
 
 BULK INSERT HospitalData.CoreData.DiagnosticEnum
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\DiagnosticEnum.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\DiagnosticEnum.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -55,7 +55,7 @@ SELECT * FROM CoreData.DiagnosticEnum
 GO
 
 BULK INSERT HospitalData.CoreData.JobEnum
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\JobEnum.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\JobEnum.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -68,7 +68,7 @@ SELECT * FROM CoreData.JobEnum
 GO
 
 BULK INSERT HospitalData.CoreData.SicknessEnum
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\SicknessEnum.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\SicknessEnum.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -81,7 +81,7 @@ SELECT * FROM CoreData.SicknessEnum
 GO
 
 BULK INSERT HospitalData.LiveState.Room
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\Room.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\Room.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -96,7 +96,7 @@ GO
 -- Load data into Data
 SET DATEFORMAT ymd;
 BULK INSERT HospitalData.CoreData.Patient
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\Patient.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\Patient.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -112,7 +112,7 @@ SELECT * FROM CoreData.Patient
 GO
 
 BULK INSERT HospitalData.CoreData.Medico
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\Medico.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\Medico.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -128,7 +128,7 @@ SELECT * FROM CoreData.Medico
 GO
 
 BULK INSERT HospitalData.CoreData.Treatment
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\Treatment.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\Treatment.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -145,7 +145,7 @@ GO
 
 -- Load Edge table
 BULK INSERT HospitalData.CoreData.SicknessTreatment
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\SicknessTreatment.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\SicknessTreatment.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -161,7 +161,7 @@ SELECT * FROM CoreData.SicknessTreatment
 GO
 
 BULK INSERT HospitalData.CoreData.MedicoTreatment
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\MedicoTreatment.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\MedicoTreatment.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -177,7 +177,7 @@ SELECT * FROM CoreData.MedicoTreatment
 GO
 
 BULK INSERT HospitalData.LiveState.PatientRoom
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\PatientRoom.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\PatientRoom.csv'
 WITH
     (
     FIRSTROW = 2,
@@ -193,7 +193,7 @@ SELECT * FROM LiveState.PatientRoom
 GO
 
 BULK INSERT HospitalData.LiveState.MedicoRoom
-FROM 'D:\Minh\Books\Academic Curriculum\Study Year 2021 - 2022\Principles of Database Management\Project\Code\Data\new\My_Data\MedicoRoom.csv'
+FROM 'D:\A3 workshop\IU Workshop\PDM\Project Database\PDM_HospitalDataManagement\data\MedicoRoom.csv'
 WITH
     (
     FIRSTROW = 2,
