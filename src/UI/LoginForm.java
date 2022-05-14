@@ -116,8 +116,9 @@ public class LoginForm {
                             String password = String.valueOf(passwordField.getPassword());
 				if (username.equals("admin") && password.equals("admin")) {
 					 HospitalQueryApp HospitalApp = new HospitalQueryApp();
-                     HospitalApp.setLocationRelativeTo(null);
-                     HospitalApp.setVisible(true);
+                                        HospitalApp.setLocationRelativeTo(null);
+                                HospitalApp.setVisible(true);
+                                frmHDM.setVisible(false);
 				} else {
 					JOptionPane.showMessageDialog(lblNewLabel, "Invalid password or username!",
 							"Hospital Database Management", JOptionPane.WARNING_MESSAGE);
