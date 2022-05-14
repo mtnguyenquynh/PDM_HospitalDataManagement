@@ -21,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
+import java.sql.*;
+
 /**
  * Copyright (C) 2022-2022, HDM-Dev Team
  * All Rights Reserved
@@ -114,15 +116,21 @@ public class LoginForm {
 			public void actionPerformed(ActionEvent e) {
                             String username = UsernameField.getText();
                             String password = String.valueOf(passwordField.getPassword());
-				if (username.equals("admin") && password.equals("admin")) {
-					 HospitalQueryApp HospitalApp = new HospitalQueryApp();
-                                        HospitalApp.setLocationRelativeTo(null);
-                                HospitalApp.setVisible(true);
-                                frmHDM.setVisible(false);
-				} else {
-					JOptionPane.showMessageDialog(lblNewLabel, "Invalid password or username!",
-							"Hospital Database Management", JOptionPane.WARNING_MESSAGE);
-				}
+                            String url = "jdbc:sqlserver://localhost:1434;databaseName=HospitalData;user=" + username + ";password=" + password
+                + "encrypt=true;trustServerCertificate=true;";
+                        try {
+							Connection con = DriverManager.getConnection(url);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from CoreData.JobEnum");
+                        } catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, "Invalid database, port, password or username! " + ex.getMessage(), "Hospital Data", JOptionPane.WARNING_MESSAGE);
+                                return;
+                        }
+                        HospitalQueryApp HospitalApp = new HospitalQueryApp();
+                        HospitalApp.setLocationRelativeTo(null);
+                        HospitalApp.setVisible(true);
+                        frmHDM.setVisible(false);   
+                        
 			}
 		});
                 frmHDM.getRootPane().setDefaultButton(btnLogin);//Press login with Enter key
